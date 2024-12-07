@@ -76,4 +76,15 @@ export const appointmentList = [
     assingned: "Dr.Jacob",
     link: "",
   },
+  {
+    id: 8,
+    bookingid: "ID0000044",
+    patientname: "Ramesh",
+    type: "Fast Tag",
+    time: "2:30 pm",
+    status: "Completed",
+    department: "Consulting",
+    assingned: "Dr.Jacob",
+    link: "",
+  },
 ];

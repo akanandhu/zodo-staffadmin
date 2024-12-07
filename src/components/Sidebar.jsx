@@ -89,6 +89,21 @@ const Sidebar = (props) => {
 
                 <li className="submenu">
                   <Link
+                    className={
+                      props?.activeClassName === "doctor-manage" ? "active" : ""
+                    }
+                    id="menu-item4"
+                    to="/doctor-manage"
+                  >
+                    <span className="menu-side">
+                      <img src={menuicon08} alt="" />
+                    </span>{" "}
+                    <span> Doctor Manage </span>
+                  </Link>
+                </li>
+
+                <li className="submenu">
+                  <Link
                     to="/manage-hospitals"
                     id="menu-item3"
                     onClick={(e) =>

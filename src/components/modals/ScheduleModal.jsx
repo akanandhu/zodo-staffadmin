@@ -12,6 +12,7 @@ function ScheduleModal(props) {
       <Modal.Header closeButton>
         {/* <Modal.Title>Modal heading</Modal.Title>{" "} */}
       </Modal.Header>
+      
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
           Close

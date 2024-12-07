@@ -11787,3 +11787,10 @@ tr.ant-table-row.ant-table-row-level-0.ant-table-row-selected,
   border-top-right-radius: 0px;
   border-bottom-left-radius: 0px;
 }
+.view-action{
+  padding-left: 22.5%;
+}
+
+.doctor-search{
+  margin-top: -12.5px;
+}
