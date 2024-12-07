@@ -1,9 +1,13 @@
 import React, { useEffect } from 'react';
 import ApexCharts from 'apexcharts';
+import PropTypes from 'prop-types';
 
-const PatientChart = () => {
+const   PatientChart = (props) => {
+  const {id} = props;
+  console.log("ID ",id);
+
   useEffect(() => {
-    if (document.querySelector('#patient-chart')) {
+    if (document.querySelector(`#${id}`)) {
       const sColStackedOptions = {
         chart: {
           height: 230,
@@ -65,7 +69,7 @@ const PatientChart = () => {
       };
 
       const chart = new ApexCharts(
-        document.querySelector('#patient-chart'),
+        document.querySelector(`#${id}`),
         sColStackedOptions
       );
 
@@ -73,7 +77,11 @@ const PatientChart = () => {
     }
   }, []);
 
-  return <div id="patient-chart"></div>;
+  return <div id={id}></div>;
+};
+
+PatientChart.propTypes = {
+  id: PropTypes.node,
 };
 
 export default PatientChart;

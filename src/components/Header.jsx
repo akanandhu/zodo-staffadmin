@@ -96,7 +96,7 @@ const Header = () => {
             >
               <div className="user-names">
                 <h5>User </h5>
-                <span>Super Admin</span>
+                <span>Staff</span>
               </div>
               <span className="user-img">
                 <img src={user06} alt="Admin" />

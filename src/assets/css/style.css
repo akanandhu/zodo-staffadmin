@@ -1059,8 +1059,8 @@ textarea.form-control {
   margin-bottom: 15px;
 }
 .sidebar-menu ul .submenu .active {
-  background-color: #18A05F80;
-  color: #347D73;
+  background-color: #347D73;
+  color: #FCFCFC;
   font-weight: 500;
   margin-left: 10px;
   margin-right: 10px;
@@ -1256,7 +1256,7 @@ textarea.form-control {
   min-height: 24px;
   line-height: 18px;
   transition: all 0.2s ease-in-out 0s;
-  background: rgba(46, 55, 164, 0.05);
+  background: #EBF2F1;
   border-radius: 8px;
   width: 40px;
   height: 40px;
@@ -6681,7 +6681,7 @@ a.status-red {
 .status-green,
 a.status-green {
   background: rgba(0, 211, 199, 0.1);
-  color: #00d3c7;
+  color: #05A95C;
 }
 .status-orange,
 a.status-orange {
@@ -10578,7 +10578,7 @@ textarea.form-control {
     -webkit-transition: none 0s ease 0s;
   }
   .nav-tabs.nav-tabs-solid {
-    background-color: #fafafa;
+    /* background-color: #fafafa; */
     border: 0;
   }
   .nav-tabs.nav-tabs-solid > li {

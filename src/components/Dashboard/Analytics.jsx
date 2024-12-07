@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import Select from 'react-select'
+import Select from "react-select";
 import PatientChart from "./PaitentChart";
-function Analytics() {
-    const [bookingType] = useState([
-      { value: 1, label: "Hospital Booking" },
-    ]);
-  const [selectedOption, setSelectedOption] = useState(bookingType[0]);
+import PropTypes from "prop-types";
+function Analytics(props) {
+  const { bookingType, id } = props;
+  const [selectedOption, setSelectedOption] = useState(bookingType ? bookingType[0] : []);
+  
   return (
     <>
       <div className="row">
@@ -15,8 +15,9 @@ function Analytics() {
               <div className="chart-title patient-visit">
                 <h4>Analytics</h4>
                 <div>
-                  
-                  <h6>Total bookings <span className="analytics-count">2000</span></h6>
+                  <h6>
+                    Total bookings <span className="analytics-count">2000</span>
+                  </h6>
                 </div>
                 <div className="form-group mb-0">
                   <Select
@@ -59,16 +60,18 @@ function Analytics() {
                   />
                 </div>
               </div>
-              <div id="patient-chart" />
-              <PatientChart />
+              <div id={id} />
+              <PatientChart id={id}/>
             </div>
           </div>
         </div>
-
-        
       </div>
     </>
   );
 }
 
+Analytics.propTypes = {
+  bookingType: PropTypes.node,
+  id: PropTypes.node,
+};
 export default Analytics;
