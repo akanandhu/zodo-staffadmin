@@ -6,9 +6,9 @@ function Tabs(props) {
   const { tabData } = props;
   return (
     <>
-      <ul className="nav nav-tabs nav-tabs-solid nav-tabs-rounded mt-3 bg-white">
+      <ul className="nav nav-tabs nav-tabs-solid nav-tabs-rounded mt-3 bg-white tabs-list">
         {tabData.map((item, i) => (
-          <li className="nav-item bg-white rounded-pill" key={item.id + i}>
+          <li className="nav-item bg-white rounded-pill p-2" key={item.id + i}>
             <Link
               className={`nav-link ${i === 0 ? "active" : ""}`}
               to={`#${item.id}`}

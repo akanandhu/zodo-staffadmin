@@ -30,6 +30,7 @@ import Dashboard from "./components/pages/Dashboard/Dashboard";
 import ManageRequest from "./components/pages/Hospitals/ManageRequest";
 import DoctorRequest from "./components/pages/Doctors/DoctorRequest";
 import EditDoctor from "./components/pages/Doctors/EditDoctor";
+import Appointment from "./components/pages/Appointment/Appointment";
 
 //Accounts
 const Approuter = () => {
@@ -57,6 +58,7 @@ const Approuter = () => {
             element={<SettingsChangePassword />}
           />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/appointment" element={<Appointment />} />
           <Route
             path="/dashboard/fasttag-revenue"
             element={<FasttagRevenue />}

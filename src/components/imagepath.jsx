@@ -12,6 +12,7 @@ export { default as baricon } from "../assets/img/icons/bar-icon.svg";
 export { default as baricon1 } from "../assets/img/icons/bar-icon.svg";
 
 export { default as searchnormal } from "../assets/img/icons/search-normal.svg";
+export { default as adduser } from "../assets/img/icons/add-user.svg";
 export { default as noteicon } from "../assets/img/icons/note-icon-02.svg";
 export { default as imguser } from "../assets/img/user.jpg";
 export { default as noteicon1 } from "../assets/img/icons/note-icon-01.svg";

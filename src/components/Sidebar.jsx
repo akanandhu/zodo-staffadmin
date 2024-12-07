@@ -10,13 +10,14 @@ const Sidebar = (props) => {
   const handleClick = (e, item, item1, item3) => {
     const div = document.querySelector(`#${item}`);
     const ulDiv = document.querySelector(`.${item1}`);
-    
-    ulDiv.style.display === "block"
-      ? (ulDiv.style.display = "none")
-      : (ulDiv.style.display = "block");
-    div.classList.contains("subdrop")
-      ? div.classList.remove("subdrop")
-      : div.classList.add("subdrop");
+    if (ulDiv) {
+      ulDiv.style.display === "block"
+        ? (ulDiv.style.display = "none")
+        : (ulDiv.style.display = "block");
+      div.classList.contains("subdrop")
+        ? div.classList.remove("subdrop")
+        : div.classList.add("subdrop");
+    }
   };
 
   useEffect(() => {
@@ -73,6 +74,21 @@ const Sidebar = (props) => {
 
                 <li className="submenu">
                   <Link
+                    className={
+                      props?.activeClassName === "appointment" ? "active" : ""
+                    }
+                    id="menu-item2"
+                    to="/appointment"
+                  >
+                    <span className="menu-side">
+                      <img src={menuicon08} alt="" />
+                    </span>{" "}
+                    <span> Appointment </span>
+                  </Link>
+                </li>
+
+                <li className="submenu">
+                  <Link
                     to="/manage-hospitals"
                     id="menu-item3"
                     onClick={(e) =>
@@ -88,7 +104,7 @@ const Sidebar = (props) => {
                     <span className="menu-side">
                       <img src={menuicon08} alt="" />
                     </span>{" "}
-                    <span> Manage </span> <span className="menu-arrow" />
+                    <span> Hospital </span> <span className="menu-arrow" />
                   </Link>
                   <ul style={{ display: "none" }} className="menu-items3">
                     <li>
@@ -98,9 +114,9 @@ const Sidebar = (props) => {
                             ? "submenu-active"
                             : "submenu-normal"
                         }
-                        to="/manage-hospitals"
+                        to="#"
                       >
-                        Hospitals
+                        Services
                       </Link>
                     </li>
                     <li>
@@ -110,9 +126,21 @@ const Sidebar = (props) => {
                             ? "submenu-active"
                             : "submenu-normal"
                         }
-                        to="/manage-doctors"
+                        to="#"
                       >
-                        Doctors
+                        Department
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={
+                          props?.activeClassName === "manage-doctors"
+                            ? "submenu-active"
+                            : "submenu-normal"
+                        }
+                        to="#"
+                      >
+                        Edit Hospital
                       </Link>
                     </li>
                   </ul>

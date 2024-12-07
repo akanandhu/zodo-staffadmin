@@ -300,7 +300,7 @@ table.table td h2 span {
 }
 .card-box {
   background-color: #fff;
-  border-radius: 12px;
+  border-radius: 6px;
   margin-bottom: 30px;
   padding: 20px;
   position: relative;
@@ -551,8 +551,8 @@ table.table td h2 span {
 .btn-info.active,
 .btn-info:active,
 .open > .dropdown-toggle.btn-info {
-  background-color: #028ee1;
-  border: 1px solid #028ee1;
+  background-color: #347D73;
+  border: 1px solid #347D73;
 }
 .btn-info.active.focus,
 .btn-info.active:focus,
@@ -563,8 +563,8 @@ table.table td h2 span {
 .open > .dropdown-toggle.btn-info.focus,
 .open > .dropdown-toggle.btn-info:focus,
 .open > .dropdown-toggle.btn-info:hover {
-  background-color: #028ee1;
-  border: 1px solid #028ee1;
+  background-color: #347D73;
+  border: 1px solid #347D73;
 }
 .btn-warning {
   background: #ffbc34;
@@ -11694,7 +11694,7 @@ tr.ant-table-row.ant-table-row-level-0.ant-table-row-selected,
 }
 .has-search .form-control {
   padding-left: 2.375rem;
-  margin-top: 20px;
+  /* margin-top: 20px; */
 }
 .search-container{
   width: 100%;
@@ -11757,4 +11757,33 @@ tr.ant-table-row.ant-table-row-level-0.ant-table-row-selected,
 }
 .x-btn:hover{
   color: gray;
+}
+
+.create-btn{
+  height: 40px;
+  width: 100px;
+}
+.tabs-list{
+  width: fit-content;
+}
+
+.schedule-btn{
+  font-size: 10px;
+  padding: 7px 10px 7px 10px;
+}
+
+
+.custom-modal .modal-dialog{
+  position: fixed; 
+  bottom: 0; 
+  right: 0; 
+  margin: 0;
+  width: 70%; 
+  height: 98%; 
+}
+.custom-modal .modal-content { 
+  height: 100%; /* Ensure the content fills the modal */ 
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
 }
