@@ -1,10 +1,42 @@
 export const usersList = [
-    {
-        id:1,
-        name: "James Johnson",
-        empid: "GMc0001",
-        joiningDate:"03/12/2024",
-        department:"Cardiology",
-        role:"Admin",
-    }
-]
+  {
+    id: 1,
+    name: "James Johnson",
+    email: "james@gmail.com",
+    empid: "GMc0001",
+    joiningDate: "03/12/2024",
+    department: "Cardiology",
+    pricing: "$20/hr",
+    role: "Admin",
+  },
+  {
+    id: 2,
+    name: "James Johnson",
+    email: "james@gmail.com",
+    empid: "GMc0001",
+    joiningDate: "03/12/2024",
+    department: "Cardiology",
+    pricing: "$20/hr",
+    role: "User",
+  },
+  {
+    id: 3,
+    name: "James Johnson",
+    email: "james@gmail.com",
+    empid: "GMc0002",
+    joiningDate: "03/12/2024",
+    department: "Cardiology",
+    pricing: "$20/hr",
+    role: "Admin",
+  },
+  {
+    id: 4,
+    name: "James Johnson",
+    email: "james@gmail.com",
+    empid: "GMc0003",
+    joiningDate: "03/12/2024",
+    department: "ENT",
+    pricing: "$20/hr",
+    role: "Admin",
+  },
+];

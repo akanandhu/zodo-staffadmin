@@ -169,7 +169,7 @@ textarea.form-control {
   float: left;
 }
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .display-block {
   display: block;
@@ -665,7 +665,7 @@ table.table td h2 span {
   width: 100%;
 }
 .card-title {
-  margin-bottom: 1.125rem;
+  margin-bottom: 0.5rem;
 }
 .dropdown-action .dropdown-toggle:after {
   display: none;
@@ -8558,6 +8558,7 @@ blockquote p {
 .modal.custom-modal {
   background-color: rgba(0, 0, 0, 0.66);
 }
+
 .custom-modal .modal-content {
   border: 0;
   background-color: #fff;
@@ -8568,6 +8569,9 @@ blockquote p {
 .modal.custom-modal.modal-bg {
   background-color: rgba(0, 0, 0, 0.66);
 }
+
+
+
 .custom-modal.modal-bg .modal-content {
   background-color: #fff;
   text-align: center;
@@ -10409,8 +10413,8 @@ textarea.form-control {
   color: #fff;
 }
 .choose-file-btn{
-  height: 40px;
-  width: 200px;
+  height: 25px;
+  width: 100px;
   border: 1px solid #008f64;
   display: flex;
   flex-direction: column;
@@ -10418,9 +10422,12 @@ textarea.form-control {
   justify-content: center;
   color: #008f64;
 }
+.choose-file-label{
+  font-size: 12px;
+}
 .upload-preview{
-  width: 100px;
-  height: 100px;
+  width:75px;
+  height: 75px;
   background-color: gainsboro;
   display: flex;
   justify-content: center;
@@ -11781,16 +11788,79 @@ tr.ant-table-row.ant-table-row-level-0.ant-table-row-selected,
   width: 70%; 
   height: 98%; 
 }
+
+.doctor-custom-modal .modal-dialog{
+  position: fixed; 
+  bottom: 0; 
+  right: 0; 
+  margin: 0;
+  width: 80%; 
+  max-width: 80%;
+  height: 98%;
+}
+
+
 .custom-modal .modal-content { 
   height: 100%; /* Ensure the content fills the modal */ 
   border-bottom-right-radius: 0px;
   border-top-right-radius: 0px;
   border-bottom-left-radius: 0px;
 }
+.doctor-custom-modal .modal-content { 
+  height: 100%; /* Ensure the content fills the modal */ 
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
 .view-action{
   padding-left: 22.5%;
 }
 
 .doctor-search{
   margin-top: -12.5px;
+}
+.table-text{
+  padding-top: 1px;
+  padding-left: 1%;
+}
+.table-text h6{
+  font-size: 14px;
+  font-weight: 600;
+  color: #03182C;
+}
+.table-text p{
+  color: #6C757D;
+  font-size: 12px;
+  margin-top: -10px;
+}
+.text-muted{
+  font-size: 12px;
+}
+
+.upload-text{
+  width: 30%;
+  line-height: 20px;
+}
+
+.doctor-timeslot{
+  height: 74.9vh;
+  overflow-y: auto;
+}
+
+.timeslot-container{
+  width: 100%;
+}
+
+.dcotors-table{
+  margin-top: -18px;
+}
+.staff-table{
+  margin-top: -18px;
+
+}
+.status-select{
+  height: 35px;
+  width: 150px;
+  padding-left: 10px;
 }

@@ -4,8 +4,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { adduser } from "../imagepath";
+// import AddSaff from "../modals/AddStaff/AddSaff";
 // import { morning_img_01 } from "../imagepath";
 function Hero() {
+  // const [showCreateStaff,setShowCreateStaff] = useState(false);
   return (
     <div className="good-morning-blk mt-3">
       <div className="row">
@@ -35,19 +37,31 @@ function Hero() {
             </button>
             <div className="dropdown-menu">
               <Link className="dropdown-item" to="#">
-                <span><img src={adduser} alt="create"/></span> <span className="ps-1">Create a Staff</span>
+                <span>
+                  <img src={adduser} alt="create" />
+                </span>{" "}
+                <span className="ps-1">Create a Staff</span>
               </Link>
               <div className="dropdown-divider" />
               <Link className="dropdown-item" to="#">
-              <span><img src={adduser} alt="create"/></span> <span className="ps-1">Create a Admin Staff</span>
+                <span>
+                  <img src={adduser} alt="create" />
+                </span>{" "}
+                <span className="ps-1">Create a Admin Staff</span>
               </Link>
               <div className="dropdown-divider" />
               <Link className="dropdown-item" to="#">
-              <span><img src={adduser} alt="create"/></span> <span className="ps-1">Create a Doctor</span>
+                <span>
+                  <img src={adduser} alt="create" />
+                </span>{" "}
+                <span className="ps-1">Create a Doctor</span>
               </Link>
               <div className="dropdown-divider" />
               <Link className="dropdown-item" to="#">
-              <span><img src={adduser} alt="create"/></span> <span className="ps-1">Create a Department</span>
+                <span>
+                  <img src={adduser} alt="create" />
+                </span>{" "}
+                <span className="ps-1">Create a Department</span>
               </Link>
             </div>
           </div>

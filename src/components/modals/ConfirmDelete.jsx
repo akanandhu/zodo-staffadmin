@@ -34,8 +34,8 @@ function ConfirmDelete(props) {
       <Modal.Footer className="border-0">
         <button
           to="#"
-          data-bs-toggle="modal"
-          data-bs-target="#delete_invoices_details"
+          // data-bs-toggle="modal"
+          // data-bs-target="#delete_invoices_details"
           className="hospital-draft-btn text-primary modal-btn"
           onClick={() => setShow(false)}
         >
@@ -43,8 +43,8 @@ function ConfirmDelete(props) {
         </button>
         <button
           to="#"
-          data-bs-toggle="modal"
-          data-bs-target="#save_invocies_details"
+          // data-bs-toggle="modal"
+          // data-bs-target="#save_invocies_details"
           className="hospital-add-btn ms-1 text-white modal-btn border-0"
         >
           Yes, Delete

@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import SearchBox from "../searchbox/SearchBox";
-import { addicon } from "../imagepath";
 import { Link } from "react-router-dom";
-import AddDoctor from "../modals/AddDoctor/AddDoctor";
+import AddSaff from "../modals/AddStaff/AddSaff";
+import { addicon } from "../imagepath";
 
-function DoctorSearch() {
+function StaffSearch() {
   const [show, setShow] = useState(false);
   return (
     <div className="ps-3 pe-3 doctor-search card-box">
-      <div className="row  d-flex align-items-center">
+      <div className="row  d-flex align-items-center bg-white">
         <div className="col-12  col-md-1">
           <div className="doctor-table-blk">
-            <h3>All Doctors</h3>
+            <h3>All Staffs</h3>
           </div>
         </div>
         <div className="col-12 col-md-3 ms-md-4">
@@ -33,15 +33,15 @@ function DoctorSearch() {
             >
               <img src={addicon} alt="add" />
               <span className="ms-2 me-2" onClick={() => setShow(true)}>
-                Add Doctor
+                Add Staff
               </span>
             </Link>
           </div>
         </div>
       </div>
-      <AddDoctor show={show} setShow={setShow} title="Add Doctor"/>
+      <AddSaff show={show} setShow={setShow} title="Add Staff" />
     </div>
   );
 }
 
-export default DoctorSearch;
+export default StaffSearch;

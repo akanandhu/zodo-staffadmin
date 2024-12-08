@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import { usersList } from "../configs/usersList";
-import DataTable from "./DataTable";
-import { user_profile } from "../imagepath";
-import { Link } from "react-router-dom";
 import ConfirmDelete from "../modals/ConfirmDelete";
-import AddDoctor from "../modals/AddDoctor/AddDoctor";
+import { Link } from "react-router-dom";
+import EditStaff from "../modals/AddStaff/EditStaff";
+import { user_profile } from "../imagepath";
+import DataTable from "./DataTable";
 
-function DoctorsTable() {
+
+function StaffTable() {
   const [show, setShow] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
 
   const columns = [
     {
-      title: "Doctor Name",
+      title: "Staff Name",
       dataIndex: "name",
       sorter: (a, b) => a.name.length - b.name.length,
       render: (item, record) => (
@@ -42,8 +43,8 @@ function DoctorsTable() {
       sorter: (a, b) => a.department.length - b.department.length,
     },
     {
-      title: "Pricing",
-      dataIndex: "pricing",
+      title: "Role",
+      dataIndex: "role",
       sorter: (a, b) => a.pricing.length - b.pricing.length,
     },
     {
@@ -62,7 +63,7 @@ function DoctorsTable() {
                 <i className="fas fa-ellipsis-v" />
               </Link>
               <div className="dropdown-menu dropdown-menu-end">
-              <Link
+                <Link
                   className="dropdown-item"
                   to
                   // onClick={()=>setShowEdit(true)}
@@ -73,7 +74,7 @@ function DoctorsTable() {
                 <Link
                   className="dropdown-item"
                   to
-                  onClick={()=>setShowEdit(true)}
+                  onClick={() => setShowEdit(true)}
                 >
                   <i className="far fa-edit me-2" />
                   Edit
@@ -93,12 +94,12 @@ function DoctorsTable() {
     },
   ];
   return (
-    <div className="dcotors-table">
+    <div className="staff-table">
       <DataTable columns={columns} dataSource={usersList} />
-      <ConfirmDelete setShow={setShow} show={show} title="Doctor" />
-      <AddDoctor setShow={setShowEdit} show={showEdit} title="Doctor" />
+      <ConfirmDelete setShow={setShow} show={show} title="Staff" />
+      <EditStaff setShow={setShowEdit} show={showEdit} title="Edit Staff" />
     </div>
   );
 }
 
-export default DoctorsTable;
+export default StaffTable;

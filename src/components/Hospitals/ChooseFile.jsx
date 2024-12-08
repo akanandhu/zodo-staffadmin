@@ -10,11 +10,8 @@ function ChooseFile() {
         <small className="text-muted">preview</small>
       </div>
       <div className="col ms-md-2">
-        <div>
-          <small className="w-25 text-muted">Please upload square image.</small>
-        </div>
-        <div>
-          <small className="w-25 text-muted">size less than 2 MB</small>
+        <div className="upload-text">
+          <small className="text-muted">Please upload square image of size less than 2 MB</small>
         </div>
         <button
           className="choose-file-btn mt-2 bg-white"
@@ -26,7 +23,7 @@ function ChooseFile() {
             // id="inputGroupFile02"
             id="fileInput"
           />
-          <span>Choose file</span>
+          <span className="choose-file-label">Choose file</span>
         </button>
       </div>
     </div>
