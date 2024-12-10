@@ -1,13 +1,21 @@
 {
   /* /Page Header */
 }
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { adduser } from "../imagepath";
+import CreateStaffModal from "../modals/Dashboard/CreateStaffModal";
+import CreateDoctorModal from "../modals/Dashboard/CreateDoctorModal";
+import DepartmentMoadl from "../modals/Dashboard/DepartmentMoadl";
 // import AddSaff from "../modals/AddStaff/AddSaff";
 // import { morning_img_01 } from "../imagepath";
 function Hero() {
-  // const [showCreateStaff,setShowCreateStaff] = useState(false);
+  const [showCreateStaff, setShowCreateStaff] = useState(false);
+  const [showAdminStaff, setShowAdminStaff] = useState(false);
+  const [showCreateDoctor, setShowCreateDoctor] = useState(false);
+  const [showDepartment, setShowDepartment] = useState(false);
+  
+
   return (
     <div className="good-morning-blk mt-3">
       <div className="row">
@@ -36,28 +44,28 @@ function Hero() {
               Create
             </button>
             <div className="dropdown-menu">
-              <Link className="dropdown-item" to="#">
+              <Link className="dropdown-item" to="#" onClick={()=>setShowCreateStaff(true)}>
                 <span>
                   <img src={adduser} alt="create" />
                 </span>{" "}
                 <span className="ps-1">Create a Staff</span>
               </Link>
               <div className="dropdown-divider" />
-              <Link className="dropdown-item" to="#">
+              <Link className="dropdown-item" to="#" onClick={()=>setShowAdminStaff(true)}>
                 <span>
                   <img src={adduser} alt="create" />
                 </span>{" "}
                 <span className="ps-1">Create a Admin Staff</span>
               </Link>
               <div className="dropdown-divider" />
-              <Link className="dropdown-item" to="#">
+              <Link className="dropdown-item" to="#" onClick={()=>setShowCreateDoctor(true)}>
                 <span>
                   <img src={adduser} alt="create" />
                 </span>{" "}
                 <span className="ps-1">Create a Doctor</span>
               </Link>
               <div className="dropdown-divider" />
-              <Link className="dropdown-item" to="#">
+              <Link className="dropdown-item" to="#" onClick={()=> setShowDepartment(true)}>
                 <span>
                   <img src={adduser} alt="create" />
                 </span>{" "}
@@ -67,6 +75,10 @@ function Hero() {
           </div>
         </div>
       </div>
+      <CreateStaffModal show={showCreateStaff} setShow={setShowCreateStaff} title="Create Staff"/>
+      <CreateStaffModal show={showAdminStaff} setShow={setShowAdminStaff} title="Create Admin Staff"/>
+      <CreateDoctorModal show={showCreateDoctor} setShow={setShowCreateDoctor} title="Create Doctor"/>
+      <DepartmentMoadl show={showDepartment} setShow={setShowDepartment} title="Create Department"/>
     </div>
   );
 }

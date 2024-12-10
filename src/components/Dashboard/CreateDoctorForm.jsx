@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import ChooseFile from "../../Hospitals/ChooseFile";
+import ChooseFile from "../Hospitals/ChooseFile";
 import Select from "react-select";
+import DoctorTimeslot from "../modals/AddDoctor/DoctorTimeslot";
 
-function Overview() {
+function CreateDoctorForm() {
   const [selectedOption, setSelectedOption] = useState(null);
   const jobtitle = [
     { value: "doctor", label: "Doctor" },
@@ -108,6 +109,7 @@ function Overview() {
         </div>
       </div>
 
+      <DoctorTimeslot />
       <h4 className="card-title mt-2">Registration Details {"(Optional)"}</h4>
 
       <div className="row">
@@ -146,4 +148,4 @@ function Overview() {
   );
 }
 
-export default Overview;
+export default CreateDoctorForm;

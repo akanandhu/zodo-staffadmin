@@ -1,0 +1,88 @@
+import { apollo_logo } from "../imagepath";
+
+export const servicesList = [
+  {
+    id: 1,
+    name: "X Ray",
+    logo: apollo_logo,
+    status: "Active",
+    totalFasttags: 30,
+  },
+  {
+    id: 2,
+    name: "Blood Test",
+    logo: apollo_logo,
+    status: "Active",
+    totalFasttags: 30,
+  },
+  {
+    id: 3,
+    name: "ECG",
+    logo: apollo_logo,
+    status: "Active",
+    totalFasttags: 30,
+  },
+  {
+    id: 4,
+    name: "LFT",
+    logo: apollo_logo,
+    status: "Active",
+    totalFasttags: 30,
+  },
+  {
+    id: 5,
+    name: "MRI",
+    logo: apollo_logo,
+    status: "Active",
+    totalFasttags: 30,
+  },
+  {
+    id: 6,
+    name: "Blood Sugar Test",
+    logo: apollo_logo,
+    status: "Active",
+    totalFasttags: 30,
+  },
+  {
+    id: 7,
+    name: "Biopsy",
+    logo: apollo_logo,
+    status: "Active",
+    totalFasttags: 30,
+  },
+  {
+    id: 8,
+    name: "PET Scan",
+    logo: apollo_logo,
+    status: "Active",
+    totalFasttags: 30,
+  },
+  {
+    id: 9,
+    name: "CT Scan",
+    logo: apollo_logo,
+    status: "Active",
+    totalFasttags: 30,
+  },
+  {
+    id: 10,
+    name: "Covid Test",
+    logo: apollo_logo,
+    status: "Active",
+    totalFasttags: 30,
+  },
+  {
+    id: 11,
+    name: "BP Test",
+    logo: apollo_logo,
+    status: "Active",
+    totalFasttags: 30,
+  },
+  {
+    id: 12,
+    name: "Ultrasound scans",
+    logo: apollo_logo,
+    status: "Active",
+    totalFasttags: 30,
+  },
+];

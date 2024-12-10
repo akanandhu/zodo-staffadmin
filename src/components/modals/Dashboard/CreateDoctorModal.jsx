@@ -1,23 +1,18 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
-import TransparentTabs from "../../tabs/TransparentTabs";
-import Overview from "./Overview";
-import DoctorTimeslot from "./DoctorTimeslot";
-function AddDoctor(props) {
+import CreateDoctorForm from "../../Dashboard/CreateDoctorForm";
+
+function CreateDoctorModal(props) {
   const { show, setShow, title } = props;
   const handleClose = () => {
     setShow(false);
   };
-  const tabData = [
-    { id: "add_dr_overview", title: "Overview", content: <Overview /> },
-    { id: "dr_timeslot", title: "Time Slot", content: <DoctorTimeslot /> },
-  ];
   return (
     <Modal
       show={show}
       onHide={handleClose}
-      className="doctor-custom-modal"
+      className="create-custom-modal"
       style={{ maxWidth: "none" }}
       backdropClassName="hospital-modal-backdrop"
     >
@@ -25,8 +20,8 @@ function AddDoctor(props) {
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body className="pt-0 pb-0">
-        <TransparentTabs tabData={tabData} />
-        <div className="d-flex justify-content-between ps-3 pe-3">
+        <CreateDoctorForm/>
+        <div className="d-flex justify-content-between ps-3 pe-3 pb-5">
           <Button
             variant="outline-primary"
             onClick={handleClose}
@@ -43,10 +38,10 @@ function AddDoctor(props) {
   );
 }
 
-AddDoctor.propTypes = {
+CreateDoctorModal.propTypes = {
   show: PropTypes.node,
   setShow: PropTypes.node,
   title: PropTypes.node,
 };
 
-export default AddDoctor;
+export default CreateDoctorModal;

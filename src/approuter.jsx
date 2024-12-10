@@ -33,6 +33,7 @@ import EditDoctor from "./components/pages/Doctors/EditDoctor";
 import Appointment from "./components/pages/Appointment/Appointment";
 import DoctorManage from "./components/pages/Doctors/DoctorManage";
 import StaffManage from "./components/pages/Staff/StaffManage";
+import HospitalServices from "./components/pages/Hospitals/HospitalServices";
 
 //Accounts
 const Approuter = () => {
@@ -63,6 +64,7 @@ const Approuter = () => {
           <Route path="/appointment" element={<Appointment />} />
           <Route path="/doctor-manage" element={<DoctorManage />} />
           <Route path="/staff-manage" element={<StaffManage />} />
+          <Route path="/hospital-services" element={<HospitalServices />} />
           
           <Route
             path="/dashboard/fasttag-revenue"
