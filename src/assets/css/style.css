@@ -11785,8 +11785,9 @@ tr.ant-table-row.ant-table-row-level-0.ant-table-row-selected,
   bottom: 0; 
   right: 0; 
   margin: 0;
-  width: 70%; 
-  height: 98%; 
+  width: 50%; 
+  height: 98%;
+  max-width: 70%;
 }
 
 .doctor-custom-modal .modal-dialog{
@@ -11878,4 +11879,24 @@ tr.ant-table-row.ant-table-row-level-0.ant-table-row-selected,
   height: 35px;
   width: 150px;
   padding-left: 10px;
+}
+
+.schedule-modal{
+  margin-left: 20px;
+  padding-top: 5px;
+}
+
+.schedule-modal h5{
+  font-size: 18px;
+}
+
+.schedule-modal small{
+  font-size: 14px;
+}
+
+.schedule-profile{
+  height: 80px;
+  width: 80px;
+  background-color: #474d52;
+  border-radius: 100%;
 }

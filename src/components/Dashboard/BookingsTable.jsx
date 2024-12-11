@@ -1,15 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { Table } from "antd";
 import { bookings } from "../configs/bookings";
-import { itemRender, onShowSizeChange } from "../Pagination";
+import DataTable from "../Tables/DataTable";
 
 function BookingsTable() {
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const onSelectChange = (newSelectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", selectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
+  
   const columns = [
     {
       title: "Booking ID",
@@ -64,29 +59,10 @@ function BookingsTable() {
     },
   ];
 
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
   return (
     <div className="card-box">
-      <h5>Recent Booking Requests</h5>
-      <div className="table-responsive">
-        <Table
-          pagination={{
-            total: bookings.length,
-            showSizeChanger: true,
-            // showTotal: (total, range) =>
-            //   `Showing ${range[0]} to ${range[1]} of ${total} entries`,
-            onShowSizeChange: onShowSizeChange,
-            itemRender: itemRender,
-          }}
-          columns={columns}
-          dataSource={bookings}
-          rowSelection={rowSelection}
-          rowKey={(record) => record.id}
-        />
-      </div>
+      <h4>Recent Booking Requests</h4>
+      <DataTable columns={columns} dataSource={bookings} />
     </div>
   );
 }

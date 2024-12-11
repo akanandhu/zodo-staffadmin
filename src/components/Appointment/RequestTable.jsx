@@ -1,21 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { itemRender, onShowSizeChange } from "../Pagination";
 import { appointmentRequets } from "../configs/appointmentRequests";
-import { Table } from "antd";
-import ScheduleModal from "../modals/ScheduleModal";
+import ScheduleModal from "../modals/Schedule/ScheduleModal";
+import DataTable from "../Tables/DataTable";
 
 function RequestTable() {
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [show,setShow] = useState(false);
-  const onSelectChange = (newSelectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", selectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
+  const [show, setShow] = useState(false);
+
   const columns = [
     {
       title: "Patient Name",
@@ -70,7 +61,7 @@ function RequestTable() {
         <Link
           to
           className="hospital-add-btn rounded-pill ms-md-1 text-white schedule-btn"
-          onClick={()=>setShow(true)}
+          onClick={() => setShow(true)}
         >
           Schedule Now
         </Link>
@@ -79,23 +70,7 @@ function RequestTable() {
   ];
   return (
     <div className="card-box mt-3">
-      <div className="table-responsive">
-        <Table
-          pagination={{
-            total: appointmentRequets.length,
-            showSizeChanger: true,
-            // showTotal: (total, range) =>
-            //   `Showing ${range[0]} to ${range[1]} of ${total} entries`,
-            onShowSizeChange: onShowSizeChange,
-            itemRender: itemRender,
-          }}
-          columns={columns}
-          dataSource={appointmentRequets}
-          rowSelection={rowSelection}
-          rowKey={(record) => record.id}
-        />
-      </div>
-
+      <DataTable columns={columns} dataSource={appointmentRequets} />
       <ScheduleModal show={show} setShow={setShow} />
     </div>
   );

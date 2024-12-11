@@ -1,22 +1,14 @@
-import { DatePicker, Table } from "antd";
-import React, { useState } from "react";
+import { DatePicker } from "antd";
+import React from "react";
 import ExportTable from "../assests/ExportTable";
 import SearchBox from "../searchbox/SearchBox";
 import PropTypes from "prop-types";
-import { itemRender, onShowSizeChange } from "../Pagination";
 import { Link } from "react-router-dom";
+import DataTable from "../Tables/DataTable";
 
 function AppointmentTable(props) {
   const { appointmentList } = props;
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const onSelectChange = (newSelectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", selectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
+
   const columns = [
     {
       title: "Booking ID",
@@ -91,23 +83,7 @@ function AppointmentTable(props) {
           <ExportTable />
         </div>
       </div>
-
-      <div className="table-responsive">
-        <Table
-          pagination={{
-            total: appointmentList.length,
-            showSizeChanger: true,
-            // showTotal: (total, range) =>
-            //   `Showing ${range[0]} to ${range[1]} of ${total} entries`,
-            onShowSizeChange: onShowSizeChange,
-            itemRender: itemRender,
-          }}
-          columns={columns}
-          dataSource={appointmentList}
-          rowSelection={rowSelection}
-          rowKey={(record) => record.id}
-        />
-      </div>
+      <DataTable columns={columns} dataSource={appointmentList} />
     </div>
   );
 }

@@ -5,12 +5,14 @@ import { Link } from "react-router-dom";
 import SearchBox from "../searchbox/SearchBox";
 import { DatePicker, Table } from "antd";
 import ExportTable from "../assests/ExportTable";
-import ScheduleModal from "../modals/ScheduleModal";
+import ScheduleModal from "../modals/Schedule/ScheduleModal";
+import DataTable from "../Tables/DataTable";
 
 function FasttagTable(props) {
   const { appointmentList } = props;
   const [show, setShow] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [title, setTitle] = useState("");
   const onSelectChange = (newSelectedRowKeys) => {
     console.log("selectedRowKeys changed: ", selectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
@@ -18,6 +20,16 @@ function FasttagTable(props) {
   const rowSelection = {
     selectedRowKeys,
     onChange: onSelectChange,
+  };
+  const handleSchedule = (record) => {
+    const detail = {
+      patientname: record.patientname,
+      age: 24,
+      gender: "Male",
+      mobile: "+91 9837354565689",
+    };
+    setTitle(detail);
+    setShow(true);
   };
   const columns = [
     {
@@ -71,12 +83,14 @@ function FasttagTable(props) {
             <Link
               to
               className="hospital-add-btn rounded-pill ms-md-1 text-white schedule-btn"
-              onClick={() => setShow(true)}
+              onClick={() => handleSchedule(record)}
             >
               Schedule Now
             </Link>
           ) : (
-            <Link to className="view-action">View</Link>
+            <Link to className="view-action">
+              View
+            </Link>
           )}
         </div>
       ),
@@ -103,7 +117,7 @@ function FasttagTable(props) {
           <ExportTable />
         </div>
       </div>
-
+      <DataTable dataSource={appointmentList} columns={columns} />
       <div className="table-responsive">
         <Table
           pagination={{
@@ -120,7 +134,7 @@ function FasttagTable(props) {
           rowKey={(record) => record.id}
         />
       </div>
-      <ScheduleModal show={show} setShow={setShow} />
+      <ScheduleModal show={show} setShow={setShow} title={title} />
     </div>
   );
 }
