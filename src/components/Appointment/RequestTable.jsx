@@ -6,6 +6,18 @@ import DataTable from "../Tables/DataTable";
 
 function RequestTable() {
   const [show, setShow] = useState(false);
+  const [title, setTitle] = useState("");
+
+  const handleSchedule = (record) => {
+    const detail = {
+      patientname: record.patientname,
+      age: 24,
+      gender: "Male",
+      mobile: "+91 9837354565689",
+    };
+    setTitle(detail);
+    setShow(true);
+  };
 
   const columns = [
     {
@@ -57,11 +69,12 @@ function RequestTable() {
     {
       title: "Action",
       dataIndex: "action",
-      render: () => (
+      render: (item, record) => (
         <Link
           to
           className="hospital-add-btn rounded-pill ms-md-1 text-white schedule-btn"
-          onClick={() => setShow(true)}
+          // onClick={() => setShow(true)}
+          onClick={() => handleSchedule(record)}
         >
           Schedule Now
         </Link>
@@ -71,7 +84,7 @@ function RequestTable() {
   return (
     <div className="card-box mt-3">
       <DataTable columns={columns} dataSource={appointmentRequets} />
-      <ScheduleModal show={show} setShow={setShow} />
+      <ScheduleModal show={show} setShow={setShow} title={title}/>
     </div>
   );
 }

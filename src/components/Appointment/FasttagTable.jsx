@@ -1,9 +1,8 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-import { itemRender, onShowSizeChange } from "../Pagination";
 import { Link } from "react-router-dom";
 import SearchBox from "../searchbox/SearchBox";
-import { DatePicker, Table } from "antd";
+import { DatePicker } from "antd";
 import ExportTable from "../assests/ExportTable";
 import ScheduleModal from "../modals/Schedule/ScheduleModal";
 import DataTable from "../Tables/DataTable";
@@ -11,16 +10,9 @@ import DataTable from "../Tables/DataTable";
 function FasttagTable(props) {
   const { appointmentList } = props;
   const [show, setShow] = useState(false);
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [title, setTitle] = useState("");
-  const onSelectChange = (newSelectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", selectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
+ 
+ 
   const handleSchedule = (record) => {
     const detail = {
       patientname: record.patientname,
@@ -118,22 +110,6 @@ function FasttagTable(props) {
         </div>
       </div>
       <DataTable dataSource={appointmentList} columns={columns} />
-      <div className="table-responsive">
-        <Table
-          pagination={{
-            total: appointmentList.length,
-            showSizeChanger: true,
-            // showTotal: (total, range) =>
-            //   `Showing ${range[0]} to ${range[1]} of ${total} entries`,
-            onShowSizeChange: onShowSizeChange,
-            itemRender: itemRender,
-          }}
-          columns={columns}
-          dataSource={appointmentList}
-          rowSelection={rowSelection}
-          rowKey={(record) => record.id}
-        />
-      </div>
       <ScheduleModal show={show} setShow={setShow} title={title} />
     </div>
   );
