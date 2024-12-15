@@ -41,7 +41,7 @@ function ScheduleModal(props) {
 
       <Modal.Body className="pt-0 pb-0">
         <ScheduleForm/>
-        <div className="d-flex justify-content-between ps-3 pe-3 pb-5">
+        <div className="d-flex justify-content-between ps-3 pe-3 pb-5 pt-5">
           <Button
             variant="outline-primary"
             onClick={handleClose}

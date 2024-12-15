@@ -11900,3 +11900,26 @@ tr.ant-table-row.ant-table-row-level-0.ant-table-row-selected,
   background-color: #474d52;
   border-radius: 100%;
 }
+.time-btn{
+  width: 100px;
+  background-color: #F9FAFB;
+  color: #6B7280;
+  margin: 5px 5px 5px 5px;
+}
+.time-btn:hover{
+  background-color: #F9FAFB;
+  color: #6B7280;
+  border: 1px solid #347D73;
+}
+.time-btn:active,
+.time-btn:focus{
+  background-color: #F6F0DD !important;
+  color: #CA9A02 !important;
+  /* border: 1px solid #347D73; */
+  border: none !important;
+}
+
+.schedule-form{
+  min-height: 65vh;
+}
+

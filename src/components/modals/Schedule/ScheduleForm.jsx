@@ -23,7 +23,7 @@ function ScheduleForm() {
     },
   ];
   return (
-    <div>
+    <div className="schedule-form">
       <div className="row mt-2">
         <div className="col-md-6">
           <div className="form-group">
