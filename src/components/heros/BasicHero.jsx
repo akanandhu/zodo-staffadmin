@@ -7,7 +7,7 @@ function BasicHero(props) {
     const { title } = props;
     const navigate = useNavigate();
   return (
-    <div className="card-box profile-header mb-4 mt-3 d-flex align-items-center">
+    <div className="card-box profile-header mb-3 mt-3 d-flex align-items-center">
       <div className='basic-hero-header'>
         <Link to onClick={() => navigate(-1)}>
           <img src={arrow_left} alt="" />

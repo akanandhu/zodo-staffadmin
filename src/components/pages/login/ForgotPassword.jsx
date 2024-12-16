@@ -1,9 +1,6 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { login02, loginlogo } from '../../imagepath';
-import { loginicon01 } from '../../imagepath';
-import { loginicon02 } from '../../imagepath';
-import { loginicon03 } from '../../imagepath';
 const ForgotPassword = () => {
     return (
         <div>
@@ -51,25 +48,7 @@ const ForgotPassword = () => {
                                                 </div>
                                             </form>
                                             {/* /Form */}
-                                            <div className="next-sign">
-                                                <p className="account-subtitle">
-                                                    Need an account?
-                                                    <Link to ="/login">  Login</Link>
-                                                </p>
-                                                {/* Social Login */}
-                                                <div className="social-login">
-                                                  <  Link to="#">
-                                                        <img src={loginicon01} alt="#"/>
-                                                    </Link>
-                                                  <  Link to="#">
-                                                        <img src={loginicon02} alt="#"/>
-                                                    </Link>
-                                                  <  Link to="#">
-                                                        <img src={loginicon03} alt="#"/>
-                                                    </Link>
-                                                </div>
-                                                {/* /Social Login */}
-                                            </div>
+                                
                                         </div>
                                     </div>
                                 </div>

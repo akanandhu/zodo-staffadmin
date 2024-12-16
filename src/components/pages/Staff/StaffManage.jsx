@@ -5,7 +5,7 @@ import BasicHero from "../../heros/BasicHero";
 import StaffSearch from "../../Staffs/StaffSearch";
 import StaffTable from "../../Tables/StaffTable";
 
-function StaffManage() {
+function  StaffManage() {
     const breadCrumpData = [
         {
           name: "Staff",

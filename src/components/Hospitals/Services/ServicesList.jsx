@@ -4,7 +4,7 @@ import ServiceCard from "./ServiceCard";
 
 function ServicesList() {
   return (
-    <div className="row">
+    <div className="row mt-3">
       {servicesList.map((item) => (
         <div className="col-sm-6 col-lg-4 col-xl-4 d-flex" key={item.id}>
           <ServiceCard servicesData={item} />

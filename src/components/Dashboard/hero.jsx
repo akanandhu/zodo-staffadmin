@@ -36,7 +36,7 @@ function Hero() {
           <div className="btn-group">
             <button
               type="button"
-              className="btn btn-primary dropdown-toggle me-1 rounded-pill create-btn"
+              className="btn-primary dropdown-toggle me-1 rounded-pill create-btn text-white"
               data-bs-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"

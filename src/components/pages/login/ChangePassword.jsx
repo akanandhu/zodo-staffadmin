@@ -1,5 +1,5 @@
-import React from 'react'
-import { login02, loginicon01, loginicon02, loginicon03, loginlogo } from '../../imagepath';
+import React from 'react';
+import { login02, loginlogo } from '../../imagepath';
 import { Link } from "react-router-dom";
 const ChangePassword = () => {
   return (
@@ -47,24 +47,6 @@ const ChangePassword = () => {
                   </div>
                 </form>
                 {/* /Form */}
-                <div className="next-sign">
-                  <p className="account-subtitle">
-                    Need an account? <Link to="login.html">Login</Link>
-                  </p>
-                  {/* Social Login */}
-                  <div className="social-login">
-                    <Link to="#">
-                      <img src={loginicon01} alt="#" />
-                    </Link>
-                    <Link to="#">
-                      <img src={loginicon02} alt="#" />
-                    </Link>
-                    <Link to="#">
-                      <img src={loginicon03} alt="#" />
-                    </Link>
-                  </div>
-                  {/* /Social Login */}
-                </div>
               </div>
             </div>
           </div>

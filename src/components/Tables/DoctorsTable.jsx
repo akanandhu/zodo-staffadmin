@@ -67,7 +67,7 @@ function DoctorsTable() {
                   to
                   // onClick={()=>setShowEdit(true)}
                 >
-                  <i className="far fa-edit me-2" />
+                  <i className="far fa-eye me-2" />
                   View
                 </Link>
                 <Link
@@ -93,7 +93,7 @@ function DoctorsTable() {
     },
   ];
   return (
-    <div className="dcotors-table">
+    <div className="mt-3">
       <DataTable columns={columns} dataSource={usersList} />
       <ConfirmDelete setShow={setShow} show={show} title="Doctor" />
       <AddDoctor setShow={setShowEdit} show={showEdit} title="Doctor" />

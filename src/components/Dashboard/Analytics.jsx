@@ -35,9 +35,7 @@ function Analytics(props) {
                         borderColor: state.isFocused
                           ? "none"
                           : "2px solid rgba(46, 55, 164, 0.1);",
-                        boxShadow: state.isFocused
-                          ? "0 0 0 1px #2e37a4"
-                          : "none",
+                        boxShadow: state.isFocused ? "0 0 0 1px #05A95C" : "none",
                         "&:hover": {
                           borderColor: state.isFocused
                             ? "none"
@@ -46,6 +44,13 @@ function Analytics(props) {
                         borderRadius: "10px",
                         fontSize: "14px",
                         minHeight: "45px",
+                      }),
+                      option: (provided, state) => ({
+                          ...provided, 
+                          backgroundColor: state.isSelected ? '#347D73' : provided.backgroundColor,
+                          '&:active':{
+                              backgroundColor: state.isSelected ? '#347D73' : provided.backgroundColor,
+                            }
                       }),
                       dropdownIndicator: (base, state) => ({
                         ...base,

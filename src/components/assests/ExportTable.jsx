@@ -7,7 +7,7 @@ function ExportTable() {
     <div className="form-group local-forms">
       <Link to className="outlined-btn form-control">
         <img src={exporticon} alt="" />
-        <span className="ms-2 me-2">Export</span>
+        <span className="ms-2 me-2 text-primary">Export</span>
       </Link>
     </div>
   );

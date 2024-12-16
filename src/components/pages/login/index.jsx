@@ -54,7 +54,7 @@ const Login = () => {
                             Password <span className="login-danger">*</span>
                           </label>
                           <input
-                            type={passwordVisible ? "password" : ""}
+                            type={!passwordVisible ? "password" : ""}
                             className="form-control pass-input"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
@@ -63,7 +63,7 @@ const Login = () => {
                             className="toggle-password"
                             onClick={togglePasswordVisibility}
                           >
-                            {passwordVisible ? (
+                            {!passwordVisible ? (
                               <EyeOff className="react-feather-custom" />
                             ) : (
                               <Eye className="react-feather-custom" />

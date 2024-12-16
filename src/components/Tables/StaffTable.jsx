@@ -68,7 +68,7 @@ function StaffTable() {
                   to
                   // onClick={()=>setShowEdit(true)}
                 >
-                  <i className="far fa-edit me-2" />
+                  <i className="far fa-eye me-2" />
                   View
                 </Link>
                 <Link
@@ -94,7 +94,7 @@ function StaffTable() {
     },
   ];
   return (
-    <div className="staff-table">
+    <div className="mt-3">
       <DataTable columns={columns} dataSource={usersList} />
       <ConfirmDelete setShow={setShow} show={show} title="Staff" />
       <EditStaff setShow={setShowEdit} show={showEdit} title="Edit Staff" />
