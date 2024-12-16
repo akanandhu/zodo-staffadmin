@@ -19,9 +19,9 @@ function AddSaff(props) {
       <Modal.Header closeButton className="border-0">
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
-      <Modal.Body className="pt-0 pb-0">
+      <Modal.Body className="pt-0 pb-0 overflow-y-auto">
         <CreateStaff />
-        <div className="d-flex justify-content-between ps-3 pe-3">
+        <div className="d-flex justify-content-between ps-3 pe-3 mt-3 mb-4">
           <Button
             variant="outline-primary"
             onClick={handleClose}

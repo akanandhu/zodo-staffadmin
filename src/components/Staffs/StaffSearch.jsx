@@ -30,9 +30,10 @@ function StaffSearch() {
               // data-bs-target="#save_invocies_details"
               // className="hospital-add-btn rounded-pill ms-1"
               className="hospital-add-btn rounded-pill ms-1 text-white ps-4 pe-4 pt-2 pb-2"
+              onClick={() => setShow(true)}
             >
               <img src={addicon} alt="add" />
-              <span className="ms-2 me-2" onClick={() => setShow(true)}>
+              <span className="ms-2 me-2" >
                 Add Staff
               </span>
             </Link>
