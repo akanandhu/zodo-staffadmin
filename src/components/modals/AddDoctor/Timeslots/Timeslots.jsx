@@ -1,5 +1,6 @@
 import { TextField } from "@mui/material";
 import React, { useState } from "react";
+import FasttagToggle from "../../../FasttagRevenue/FasttagToggle";
 
 function Timeslots() {
   const [startTime, setStartTime] = useState();
@@ -7,6 +8,12 @@ function Timeslots() {
   return (
     <div>
       <div>
+        <div
+          style={{ display: "flex", marginTop: 10, gap: 8, fontWeight: 500 }}
+        >
+          <FasttagToggle />
+          Auto Slotting
+        </div>
         <h5 className="card-title mt-4">Fasttag</h5>
         <div className="row timeslot-container">
           <div className="col-12 col-md-6 col-xl-4">
@@ -60,6 +67,7 @@ function Timeslots() {
             </div>
           </div>
         </div>
+        <div style={{ color: "#1077DA", fontSize: "" }}>+ add more Timings</div>
       </div>
 
       <div>
@@ -81,6 +89,9 @@ function Timeslots() {
                   }}
                 />
               </div>
+            </div>
+            <div style={{ color: "#1077DA", fontSize: "" }}>
+              + add more Timings
             </div>
           </div>
           <div className="col-12 col-md-6 col-xl-4">

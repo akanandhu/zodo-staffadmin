@@ -28,7 +28,7 @@ function StaffSearch() {
                 onClick={() => setShow(true)}
               >
                 <img src={addicon} alt="add" />
-                <span className="ms-2 me-2">Add Doctor</span>
+                <span className="ms-2 me-2">Add Staff</span>
               </Link>
             </div>
           </div>

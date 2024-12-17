@@ -4,13 +4,6 @@ import Select from "react-select";
 
 function CreateStaff() {
   const [selectedOption, setSelectedOption] = useState(null);
-
-  const jobtitle = [{ value: "staff", label: "Staff" }];
-
-  const roles = [
-    { value: "admin", label: "Admin" },
-    { value: "user", label: "User" },
-  ];
   const department = [
     { value: "ent", label: "ENT" },
     { value: "gynaecology", label: "Gynaecology" },
@@ -65,26 +58,7 @@ function CreateStaff() {
       </div>
 
       <div className="row">
-        <div className="col-md-4">
-          <div className="form-group">
-            <label>Job Title</label>
-            <Select
-              defaultValue={selectedOption}
-              onChange={setSelectedOption}
-              options={jobtitle}
-            />
-          </div>
-        </div>
-        <div className="col-md-4">
-          <div className="form-group">
-            <label>Specialisation</label>
-            <Select
-              defaultValue={selectedOption}
-              onChange={setSelectedOption}
-              options={roles}
-            />
-          </div>
-        </div>
+       
         <div className="col-md-4">
           <div className="form-group">
             <label>Department</label>

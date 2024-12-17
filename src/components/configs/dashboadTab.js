@@ -1,19 +1,18 @@
 import AppointmentInfo from "../Dashboard/AppointmentInfo";
 import FastTag from "../Dashboard/FastTag";
 import HospitalStaf from "../Dashboard/HospitalStaf";
-import HospitalStaffs from "../Dashboard/HospitalStaffs";
 
 export const dashboardTab = [
-  { id: "appointment", title: "Appoinment", content: <AppointmentInfo/> },
-  { id: "hospitalstaff", title: "Hospital Staff", content: <HospitalStaf/> },
+  { id: "appointment", title: "Appointment", content: <AppointmentInfo /> },
+  { id: "hospitalstaff", title: "Hospital Staff", content: <FastTag /> },
   {
     id: "fasttag",
     title: "Fasttag",
-    content: <FastTag/>,
+    content: <HospitalStaf />,
   },
-  {
-    id: "stafs",
-    title: "Hospital Staffs",
-    content: <HospitalStaffs/>,
-  },
+  // {
+  //   id: "stafs",
+  //   title: "Hospital Staffs",
+  //   content: <HospitalStaffs />,
+  // },
 ];

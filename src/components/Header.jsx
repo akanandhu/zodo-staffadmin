@@ -58,13 +58,13 @@ const Header = () => {
             <img src={logo} width={108} height={38} alt="" />{" "}
           </Link>
         </div>
-        <Link id="toggle_btn" to="#" onClick={handlesidebar}>
+        {/* <Link id="toggle_btn" to="#" onClick={handlesidebar}>
           <img src={baricon} alt="" />
-        </Link>
+        </Link> */}
         <Link id="mobile_btn" className="mobile_btn float-start" to="#" onClick={handlesidebarmobilemenu}>
           <img src={baricon1} alt="" />
         </Link>
-        <div className="top-nav-search mob-view">
+        {/* <div className="top-nav-search mob-view">
           <form>
             <input
               type="text"
@@ -75,7 +75,7 @@ const Header = () => {
               <img src={searchnormal} alt="" />
             </Link>
           </form>
-        </div>
+        </div> */}
         <ul className="nav user-menu float-end">
           
           {/* <li className="nav-item dropdown d-none d-sm-block">

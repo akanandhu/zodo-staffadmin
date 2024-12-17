@@ -5,6 +5,7 @@ import SearchBox from "../searchbox/SearchBox";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import DataTable from "../Tables/DataTable";
+import { pdficon } from "../imagepath";
 
 function AppointmentTable(props) {
   const { appointmentList } = props;
@@ -59,7 +60,16 @@ function AppointmentTable(props) {
     {
       title: "Action",
       dataIndex: "action",
-      render: () => <Link to>View</Link>,
+      render: () => {
+        return (
+          <div style={{ display: "flex", gap: 8 }}>
+            <Link to>View</Link>
+            <Link to>
+              <img src={pdficon} alt="Pdf Icon" width={17} />
+            </Link>
+          </div>
+        );
+      },
     },
   ];
   return (
