@@ -34,17 +34,18 @@ import Appointment from "./components/pages/Appointment/Appointment";
 import DoctorManage from "./components/pages/Doctors/DoctorManage";
 import StaffManage from "./components/pages/Staff/StaffManage";
 import HospitalServices from "./components/pages/Hospitals/HospitalServices";
+import ProtectedRouter from "./ProtectedRouter";
 
 //Accounts
 const Approuter = () => {
   // eslint-disable-next-line no-unused-vars
   // const config = "/react/template"
-  
+
   return (
     <>
       <BrowserRouter basename="/">
         <Routes>
-          <Route path="/" element={<Login />} />
+          {/* <Route path="/" element={<Login />} /> */}
           <Route path="/login" element={<Login />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/signup" element={<Signup />} />
@@ -60,60 +61,80 @@ const Approuter = () => {
             path="/settingschangepassword"
             element={<SettingsChangePassword />}
           />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/appointment" element={<Appointment />} />
-          <Route path="/doctor-manage" element={<DoctorManage />} />
-          <Route path="/staff-manage" element={<StaffManage />} />
-          <Route path="/hospital-services" element={<HospitalServices />} />
-          
-          <Route
-            path="/dashboard/fasttag-revenue"
-            element={<FasttagRevenue />}
-          />
-          <Route path="dashboard/fasttag-issued" element={<FasttagIssued />} />
-          <Route
-            path="/dashboard/settlement-requests"
-            element={<SettlementRequests />}
-          />
-          <Route
-            path="/dashboard/settlement-requests/:id"
-            element={<ManageSettlement />}
-          />
-          {/* <Route
+
+          <Route element={<ProtectedRouter />}>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/appointment" element={<Appointment />} />
+            <Route path="/doctor-manage" element={<DoctorManage />} />
+            <Route path="/staff-manage" element={<StaffManage />} />
+            <Route path="/hospital-services" element={<HospitalServices />} />
+
+            <Route
+              path="/dashboard/fasttag-revenue"
+              element={<FasttagRevenue />}
+            />
+            <Route
+              path="dashboard/fasttag-issued"
+              element={<FasttagIssued />}
+            />
+            <Route
+              path="/dashboard/settlement-requests"
+              element={<SettlementRequests />}
+            />
+            <Route
+              path="/dashboard/settlement-requests/:id"
+              element={<ManageSettlement />}
+            />
+            {/* <Route
             path="/dashboard/fasttag-issued/:id"
             element={<FasttagDetails />}
-          /> */}
-          <Route path="/doctorlist" element={<DoctorList />} />
-          {/* Manage Hospital */}
-          <Route path="/manage-hospitals" element={<Hospitals />} />
+            /> */}
+            <Route path="/doctorlist" element={<DoctorList />} />
+            {/* Manage Hospital */}
+            <Route path="/manage-hospitals" element={<Hospitals />} />
 
-          <Route
-            path="/manage-hospitals/add-hospital"
-            element={<AddHospital />}
-          />
-          <Route path="/manage-hospitals/:id" element={<HospitalDetails />} />
-          <Route
-            path="/manage-hospitals/manage-request/:id"
-            element={<ManageRequest />}
-          />
-          <Route
-            path="/manage-hospitals/manage-request/:id/edit"
-            element={<EditHospital />}
-          />
-          <Route path="/manage-hospitals/:id/edit" element={<EditHospital />} />
-          {/* Manage Doctors */}
-          <Route path="/manage-doctors" element={<Doctors />} />
-          <Route path="/manage-doctors/:id" element={<DoctorDetails />} />
-          <Route path="/manage-doctors/add-doctors" element={<AddDoctors />} />
-          <Route path="/manage-doctors/edit-doctor/:id" element={<AddDoctors />} />
-          <Route path="manage-doctors/request/:id/edit" element={<EditDoctor />} />
-          
+            <Route
+              path="/manage-hospitals/add-hospital"
+              element={<AddHospital />}
+            />
+            <Route path="/manage-hospitals/:id" element={<HospitalDetails />} />
+            <Route
+              path="/manage-hospitals/manage-request/:id"
+              element={<ManageRequest />}
+            />
+            <Route
+              path="/manage-hospitals/manage-request/:id/edit"
+              element={<EditHospital />}
+            />
+            <Route
+              path="/manage-hospitals/:id/edit"
+              element={<EditHospital />}
+            />
+            {/* Manage Doctors */}
+            <Route path="/manage-doctors" element={<Doctors />} />
+            <Route path="/manage-doctors/:id" element={<DoctorDetails />} />
+            <Route
+              path="/manage-doctors/add-doctors"
+              element={<AddDoctors />}
+            />
+            <Route
+              path="/manage-doctors/edit-doctor/:id"
+              element={<AddDoctors />}
+            />
+            <Route
+              path="manage-doctors/request/:id/edit"
+              element={<EditDoctor />}
+            />
 
-          <Route path="/manage-doctors/request/:id" element={<DoctorRequest />} />
-          <Route
-            path="/manage-doctors/specialization"
-            element={<Specialization />}
-          />
+            <Route
+              path="/manage-doctors/request/:id"
+              element={<DoctorRequest />}
+            />
+            <Route
+              path="/manage-doctors/specialization"
+              element={<Specialization />}
+            />
+          </Route>
         </Routes>
       </BrowserRouter>
       <div className="sidebar-overlay"></div>

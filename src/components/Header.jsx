@@ -11,8 +11,12 @@ import {
   settingicon01,
   noteicon1,
 } from "./imagepath";
+import { useAuth } from "../hooks/useAuth";
 
 const Header = () => {
+  const {user} = useAuth();
+  const userName = user?.first_name + user?.last_name || "User";
+  const userRole = user?.user_type || "Role"
   const handlesidebar = () => {
     document.body.classList.toggle("mini-sidebar");
   };
@@ -95,8 +99,8 @@ const Header = () => {
               data-bs-toggle="dropdown"
             >
               <div className="user-names">
-                <h5>User </h5>
-                <span>Staff</span>
+                <h5>{userName}</h5>
+                <span>{userRole}</span>
               </div>
               <span className="user-img">
                 <img src={user06} alt="Admin" />

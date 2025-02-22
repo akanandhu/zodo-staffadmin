@@ -1,26 +1,45 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { login02, loginlogo } from "../../imagepath";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import { useState } from "react";
 import { Eye, EyeOff } from "feather-icons-react/build/IconComponents";
+import { useAuth } from "../../../hooks/useAuth";
+import FullscreenLoader from "../../loaders/FullscreenLoader";
+import { useForm } from "react-hook-form";
 
 const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [password, setPassword] = useState("");
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
 
+  const { login, user, validationError, isLoading } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogin = (data) => {
+    login(data, {
+      onSuccess: () => {
+        navigate("/");
+      },
+    });
+  };
+  console.log("Auth user", user);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   return (
     <>
-      {/* Main Wrapper */}
+      {isLoading && <FullscreenLoader />}
       <div className="main-wrapper login-body">
         <div className="container-fluid px-0">
           <div className="row">
-            {/* Login logo */}
             <div className="col-lg-6 login-wrap">
               <div className="login-sec">
                 <div className="log-img">
@@ -28,8 +47,6 @@ const Login = () => {
                 </div>
               </div>
             </div>
-            {/* /Login logo */}
-            {/* Login Content */}
             <div className="col-lg-6 login-wrap-bg">
               <div className="login-wrapper">
                 <div className="loginbox">
@@ -42,12 +59,27 @@ const Login = () => {
                       </div>
                       <h2>Login</h2>
                       {/* Form */}
-                      <form>
+                      <form onSubmit={handleSubmit(handleLogin)}>
                         <div className="form-group">
                           <label>
                             Email <span className="login-danger">*</span>
                           </label>
-                          <input className="form-control" type="text" />
+                          <input
+                            className={`form-control ${
+                              errors !== undefined && errors["email"]
+                                ? "is-invalid"
+                                : ""
+                            }`}
+                            type="text"
+                            {...register("email", {
+                              required: "Email is required",
+                            })}
+                          />
+                          {errors !== undefined && errors["email"] && (
+                            <div className="invalid-feedback">
+                              {errors !== undefined && errors["email"].message}
+                            </div>
+                          )}
                         </div>
                         <div className="form-group">
                           <label>
@@ -55,21 +87,45 @@ const Login = () => {
                           </label>
                           <input
                             type={!passwordVisible ? "password" : ""}
-                            className="form-control pass-input"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            className={`form-control pass-input ${
+                              errors !== undefined && errors["password"]
+                                ? "is-invalid"
+                                : ""
+                            }`}
+                            {...register("password", {
+                              required: "Password is required",
+                            })}
+                            // value={password}
+                            // onChange={(e) => setPassword(e.target.value)}
                           />
-                          <span
-                            className="toggle-password"
-                            onClick={togglePasswordVisibility}
-                          >
-                            {!passwordVisible ? (
-                              <EyeOff className="react-feather-custom" />
-                            ) : (
-                              <Eye className="react-feather-custom" />
-                            )}
-                          </span>
+                          {errors !== undefined && errors["password"] ? null : (
+                            <span
+                              className="toggle-password"
+                              onClick={togglePasswordVisibility}
+                            >
+                              {!passwordVisible ? (
+                                <EyeOff className="react-feather-custom" />
+                              ) : (
+                                <Eye className="react-feather-custom" />
+                              )}
+                            </span>
+                          )}
+                          {errors !== undefined && errors["password"] && (
+                            <div className="invalid-feedback">
+                              {errors !== undefined &&
+                                errors["password"].message}
+                            </div>
+                          )}
                         </div>
+
+                        {validationError && (
+                          <div
+                            className="pb-2 text-danger"
+                            style={{ fontSize: "15px" }}
+                          >
+                            {validationError}
+                          </div>
+                        )}
                         <div className="forgotpass">
                           <div className="remember-me">
                             <label className="custom_check mr-2 mb-0 d-inline-flex remember-me">
@@ -82,12 +138,13 @@ const Login = () => {
                           <Link to="/forgotpassword">Forgot Password?</Link>
                         </div>
                         <div className="form-group login-btn">
-                          <Link
-                            to="/dashboard"
+                          <button
+                            type="submit"
+                            // to="/dashboard"
                             className="btn btn-primary btn-block"
                           >
                             Login
-                          </Link>
+                          </button>
                         </div>
                       </form>
                     </div>
