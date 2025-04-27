@@ -2,16 +2,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { right_chevron } from "../../imagepath";
 import PropTypes from "prop-types";
-
+import { apollo_logo } from "../../imagepath";
 function ServiceCard(props) {
   const { servicesData } = props;
   return (
-    <div className="card invoices-grid-card w-100" key={servicesData.id}>
+    <div className="card invoices-grid-card w-100">
       <Link to>
         <div className="card-body">
           <div className="row align-items-center hospital-card">
             <div className="col">
-              <img src={servicesData.logo} alt="#" />
+              <img src={apollo_logo} alt="#" />
             </div>
             <div className="col-auto">
               <img src={right_chevron} alt="#" />
@@ -21,7 +21,7 @@ function ServiceCard(props) {
                 <h5>{servicesData.name}</h5>
               </div>
               <div className="col-auto">
-                <h5 className="text-primary">{servicesData.status}</h5>
+                <h5 className="text-primary">active</h5>
               </div>
             </div>
 
@@ -30,7 +30,7 @@ function ServiceCard(props) {
                 <p>TOTAL FAST TAG</p>
               </div>
               <div className="col-auto">
-                <h5>{servicesData.totalFasttags}</h5>
+                <h5>0</h5>
               </div>
             </div>
           </div>

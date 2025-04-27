@@ -63,6 +63,7 @@ const Sidebar = (props) => {
                     }
                     id="menu-item"
                     to="/dashboard"
+                    
                   >
                     <span className="menu-side">
                       <img src={dashboard} alt="" />

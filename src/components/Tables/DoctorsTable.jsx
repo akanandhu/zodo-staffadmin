@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { usersList } from "../configs/usersList";
 import DataTable from "./DataTable";
 import { user_profile } from "../imagepath";
 import { Link } from "react-router-dom";
 import ConfirmDelete from "../modals/ConfirmDelete";
 import AddDoctor from "../modals/AddDoctor/AddDoctor";
+import PropTypes from "prop-types";
 
-function DoctorsTable() {
+function DoctorsTable(props) {
+  const { doctorsList } = props;
+  console.log("doctorsList", doctorsList);
+  
   const [show, setShow] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
 
@@ -62,7 +65,7 @@ function DoctorsTable() {
                 <i className="fas fa-ellipsis-v" />
               </Link>
               <div className="dropdown-menu dropdown-menu-end">
-              <Link
+                <Link
                   className="dropdown-item"
                   to
                   // onClick={()=>setShowEdit(true)}
@@ -73,7 +76,7 @@ function DoctorsTable() {
                 <Link
                   className="dropdown-item"
                   to
-                  onClick={()=>setShowEdit(true)}
+                  onClick={() => setShowEdit(true)}
                 >
                   <i className="far fa-edit me-2" />
                   Edit
@@ -94,11 +97,15 @@ function DoctorsTable() {
   ];
   return (
     <div className="mt-3">
-      <DataTable columns={columns} dataSource={usersList} />
+      <DataTable columns={columns} dataSource={doctorsList ?? []} />
       <ConfirmDelete setShow={setShow} show={show} title="Doctor" />
       <AddDoctor setShow={setShowEdit} show={showEdit} title="Doctor" />
     </div>
   );
 }
 
+// props validation
+DoctorsTable.propTypes = {
+  doctorsList: PropTypes.node,
+};
 export default DoctorsTable;

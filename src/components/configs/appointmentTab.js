@@ -14,9 +14,9 @@ export const appointmentTab = [
   },
 ];
 
-const ongoingAppointments = appointmentList.filter((item)=> item.status === "Pending");
-const cancelledAppointments = appointmentList.filter((item)=> item.status === "Cancelled");
-const completedAppointments = appointmentList.filter((item)=> item.status === "Completed");
+const ongoingAppointments = appointmentList?.filter((item)=> item.status === "Pending");
+const cancelledAppointments = appointmentList?.filter((item)=> item.status === "Cancelled");
+const completedAppointments = appointmentList?.filter((item)=> item.status === "Completed");
 
 
 export const appointmentDataTab = [

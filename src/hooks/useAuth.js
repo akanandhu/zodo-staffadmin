@@ -11,22 +11,26 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const queryClient = useQueryClient();
   const [user, setUser] = useState(null);
+  const [accessToken, setAccessToken] = useState(null);
   const [validationError, setValidationError] = useState(null);
 
-  // Fetch authenticated user
-  //   const { data, isLoading } = useQuery({
-  //     queryKey: ["user"],
-  //     queryFn: getUser,
-  //     retry: false, // Prevent retries if user is not authenticated
-  //     onSuccess: (userData) => setUser(userData),
-  //     onError: () => setUser(null),
-  //   });
+
+
+  const saveAccessToken = (token) => {
+    setAccessToken(token);
+  };
+
+  const clearAccessToken = () => {
+    setAccessToken(null);
+  };
 
   // Login mutation
   const loginMutation = useMutation({
     mutationFn: login,
     onSuccess: (data) => {
+      const token = data?.data?.tokens?.accessToken;
       localStorage.setItem("token", data?.data?.tokens?.accessToken);
+      setAccessToken(token);
       setUser(data.data);
       queryClient.invalidateQueries(["user"]); // Refresh user data
     },
@@ -53,6 +57,9 @@ export const AuthProvider = ({ children }) => {
         isLoading: loginMutation.isPending,
         login: loginMutation.mutate,
         validationError,
+        saveAccessToken,
+        clearAccessToken,
+        accessToken,
         // logout: logoutMutation.mutate,
       }}
     >

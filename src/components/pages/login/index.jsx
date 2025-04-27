@@ -22,7 +22,7 @@ const Login = () => {
   const handleLogin = (data) => {
     login(data, {
       onSuccess: () => {
-        navigate("/");
+        navigate("/dashboard");
       },
     });
   };

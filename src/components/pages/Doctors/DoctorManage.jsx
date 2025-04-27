@@ -4,6 +4,7 @@ import Layout from "../../layout/Layout";
 import BasicHero from "../../heros/BasicHero";
 import DoctorSearch from "../../Doctors/DoctorSearch";
 import DoctorsTable from "../../Tables/DoctorsTable";
+import { useDoctorsList } from "../../../hooks/doctors/useDoctorsList";
 
 function DoctorManage() {
   const breadCrumpData = [
@@ -13,6 +14,10 @@ function DoctorManage() {
       link: "/doctor-manage",
     },
   ];
+
+  const hospital_id = "24d0328a-c87e-411c-9b17-e15fc7c2e909";
+  const { data: doctorsList } = useDoctorsList(hospital_id);
+
   return (
     <Layout activeClassName="doctor-manage" id="menu-item4" id1="menu-items4">
       <div className="page-wrapper">
@@ -21,7 +26,7 @@ function DoctorManage() {
           {/* <Tabs tabData={appointmentTab} /> */}
           <BasicHero title="Doctor Details (4)"/>
           <DoctorSearch/>
-          <DoctorsTable/>
+          <DoctorsTable doctorsList={doctorsList}/>
         </div>
       </div>
     </Layout>

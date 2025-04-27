@@ -4,6 +4,7 @@ import Layout from "../../layout/Layout";
 import BasicHero from "../../heros/BasicHero";
 import ServiceSearch from "../../Hospitals/Services/ServiceSearch";
 import ServicesList from "../../Hospitals/Services/ServicesList";
+import { useServicesList } from "../../../hooks/useServicesList";
 
 function HospitalServices() {
   const breadCrumpData = [
@@ -18,6 +19,8 @@ function HospitalServices() {
       link: "/hospital-services",
     },
   ];
+
+  const { data: servicesList } = useServicesList();
   return (
     <Layout
       activeClassName="hospital-services"
@@ -27,9 +30,9 @@ function HospitalServices() {
       <div className="page-wrapper">
         <div className="content">
           <Breadcrumb data={breadCrumpData} />
-          <BasicHero title="Services"/>
+          <BasicHero title="Services" />
           <ServiceSearch />
-          <ServicesList/>
+          <ServicesList servicesData={servicesList}/>
           {/* <HospitalHero tabData={tabData} />
           <HospitalsList tabData={tabData} /> */}
           {/* <LoadMore/> */}
