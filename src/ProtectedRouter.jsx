@@ -11,9 +11,7 @@ function ProtectedRouter(props) {
   const userRole = user?.user_type;  
   const token = localStorage.getItem("token");
   // const { data: user, isLoading } = useGetUser();
-  if (isLoading) return <FullscreenLoader />;
-  console.log(allowedRoles, "allowedRoles");
-  
+  if (isLoading) return <FullscreenLoader />;  
   if (user && allowedRoles && !allowedRoles.includes(userRole)) {
     return <Navigate to="/unauthorized" replace />;
   }

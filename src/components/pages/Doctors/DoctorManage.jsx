@@ -5,8 +5,10 @@ import BasicHero from "../../heros/BasicHero";
 import DoctorSearch from "../../Doctors/DoctorSearch";
 import DoctorsTable from "../../Tables/DoctorsTable";
 import { useDoctorsList } from "../../../hooks/doctors/useDoctorsList";
+import { useAuth } from "../../../hooks/useAuth";
 
 function DoctorManage() {
+  const { user } = useAuth();
   const breadCrumpData = [
     {
       name: "Doctors",
@@ -14,8 +16,7 @@ function DoctorManage() {
       link: "/doctor-manage",
     },
   ];
-
-  const hospital_id = "24d0328a-c87e-411c-9b17-e15fc7c2e909";
+  const hospital_id = user && user["hospital_id"];
   const { data: doctorsList } = useDoctorsList(hospital_id);
 
   return (
@@ -24,9 +25,9 @@ function DoctorManage() {
         <div className="content">
           <Breadcrumb data={breadCrumpData} />
           {/* <Tabs tabData={appointmentTab} /> */}
-          <BasicHero title="Doctor Details (4)"/>
-          <DoctorSearch/>
-          <DoctorsTable doctorsList={doctorsList}/>
+          <BasicHero title="Doctor Details (4)" />
+          <DoctorSearch />
+          <DoctorsTable doctorsList={doctorsList} />
         </div>
       </div>
     </Layout>
