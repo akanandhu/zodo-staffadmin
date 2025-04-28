@@ -8,6 +8,8 @@ import Tabs from "../../tabs/Tabs";
 import { dashboardTab } from "../../configs/dashboadTab";
 
 function Dashboard() {
+  
+
   const breadCrumpData = [
     {
       name: "Dashboard",

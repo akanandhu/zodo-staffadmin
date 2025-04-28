@@ -1,30 +1,24 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect} from "react";
-import { Link } from "react-router-dom";
-import {
-  logo,
-  baricon,
-  baricon1,
-  searchnormal,
-  noteicon,
-  user06,
-  settingicon01,
-  noteicon1,
-} from "./imagepath";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { logo, baricon1, user06 } from "./imagepath";
 import { useAuth } from "../hooks/useAuth";
 
 const Header = () => {
-  const {user} = useAuth();
+  const { user, setUser } = useAuth();
+  const navigate = useNavigate();
   const userName = user?.first_name + user?.last_name || "User";
-  const userRole = user?.user_type || "Role"
+  const userRole = user?.user_type || "Role";
   const handlesidebar = () => {
     document.body.classList.toggle("mini-sidebar");
   };
 
   const handlesidebarmobilemenu = () => {
     document.body.classList.toggle("slide-nav");
-    document.getElementsByTagName("html")[0].classList.toggle('menu-opened');
-    document.getElementsByClassName("sidebar-overlay")[0].classList.toggle("opened");
+    document.getElementsByTagName("html")[0].classList.toggle("menu-opened");
+    document
+      .getElementsByClassName("sidebar-overlay")[0]
+      .classList.toggle("opened");
   };
 
   const openDrawer = () => {
@@ -54,6 +48,13 @@ const Header = () => {
       // maximizeBtn.removeEventListener('click', handleClick);
     };
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Remove the token from local storage
+    const token = localStorage.getItem("token"); // Check if the token is removed
+    setUser(null); // Clear the user state
+    navigate("/login"); // Redirect to the login page
+  };
   return (
     <div className="main-wrapper">
       <div className="header">
@@ -65,7 +66,12 @@ const Header = () => {
         {/* <Link id="toggle_btn" to="#" onClick={handlesidebar}>
           <img src={baricon} alt="" />
         </Link> */}
-        <Link id="mobile_btn" className="mobile_btn float-start" to="#" onClick={handlesidebarmobilemenu}>
+        <Link
+          id="mobile_btn"
+          className="mobile_btn float-start"
+          to="#"
+          onClick={handlesidebarmobilemenu}
+        >
           <img src={baricon1} alt="" />
         </Link>
         {/* <div className="top-nav-search mob-view">
@@ -81,7 +87,6 @@ const Header = () => {
           </form>
         </div> */}
         <ul className="nav user-menu float-end">
-          
           {/* <li className="nav-item dropdown d-none d-sm-block">
             <Link
               onClick={openDrawer}
@@ -116,7 +121,7 @@ const Header = () => {
               <Link className="dropdown-item" to="/settingssociallink">
                 Settings
               </Link>
-              <Link className="dropdown-item" to="/login">
+              <Link className="dropdown-item" to="/login" onClick={handleLogout}>
                 Logout
               </Link>
             </div>
@@ -146,7 +151,7 @@ const Header = () => {
             <Link className="dropdown-item" to="/settings">
               Settings
             </Link>
-            <Link className="dropdown-item" to="/login">
+            <Link className="dropdown-item" to onClick={handleLogout}>
               Logout
             </Link>
           </div>
@@ -236,7 +241,10 @@ const Header = () => {
                       <span className="avatar">C</span>
                     </div>
                     <div className="list-body">
-                      <span className="message-author"> Catherine Manseau </span>
+                      <span className="message-author">
+                        {" "}
+                        Catherine Manseau{" "}
+                      </span>
                       <span className="message-time">12:28 AM</span>
                       <div className="clearfix"></div>
                       <span className="message-content">

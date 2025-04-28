@@ -2,8 +2,6 @@ import FasttagTable from "../Appointment/FasttagTable";
 import { appointmentList } from "./appointmentList";
 const fasttagAppointments = appointmentList?.filter((item)=> item.type === "Fast Tag");
 const ongoingAppointments = fasttagAppointments?.filter((item)=> item.status === "Pending");
-console.log("On gng ", ongoingAppointments);
-
 // const cancelledAppointments = appointmentList.filter((item)=> item.status === "Cancelled");
 const completedAppointments = fasttagAppointments?.filter((item)=> item.status === "Completed");
 export const appointmentRequestTab = [

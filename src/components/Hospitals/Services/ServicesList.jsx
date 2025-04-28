@@ -3,7 +3,6 @@ import ServiceCard from "./ServiceCard";
 import PropTypes from "prop-types";
 function ServicesList(props) {
   const { servicesData } = props;
-  console.log("servicesData", servicesData);  
   return (
     <div className="row mt-3">
       {Array.isArray(servicesData) && servicesData.map((item) => (

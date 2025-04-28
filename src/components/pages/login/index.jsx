@@ -16,17 +16,22 @@ const Login = () => {
     setPasswordVisible(!passwordVisible);
   };
 
-  const { login, user, validationError, isLoading } = useAuth();
+  const { user, login, validationError, isLoading } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = (data) => {
     login(data, {
       onSuccess: () => {
-        navigate("/dashboard");
+        const userRole = user?.user_type;        
+        if (userRole === "hsAdmin") {
+          navigate("/dashboard");
+        }
+        if (userRole === "staff") {
+          navigate("/appointment");
+        }
       },
     });
   };
-  console.log("Auth user", user);
 
   const {
     register,

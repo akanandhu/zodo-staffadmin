@@ -35,36 +35,54 @@ import DoctorManage from "./components/pages/Doctors/DoctorManage";
 import StaffManage from "./components/pages/Staff/StaffManage";
 import HospitalServices from "./components/pages/Hospitals/HospitalServices";
 import ProtectedRouter from "./ProtectedRouter";
+import { useAuth } from "./hooks/useAuth";
+import PublicRoute from "./components/PublicRoute";
 
 //Accounts
 const Approuter = () => {
   // eslint-disable-next-line no-unused-vars
   // const config = "/react/template"
-
+  const { user } = useAuth();
   return (
     <>
       <BrowserRouter basename="/">
         <Routes>
-          {/* <Route path="/" element={<Login />} /> */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/forgotpassword" element={<ForgotPassword />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/lockscreen" element={<LockScreen />} />
-          <Route path="/changepassword" element={<ChangePassword />} />
-          <Route path="/error" element={<Error />} />
-          <Route path="/server-error" element={<ServerError />} />
-          <Route path="/blankpage" element={<BlankPage />} />
-          <Route path="/settings" element={<Setting />} />
-          <Route path="/settingssociallink" element={<Settingssociallinks />} />
-          <Route
-            path="/settingschangepassword"
-            element={<SettingsChangePassword />}
-          />
+          <Route element={<PublicRoute />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/forgotpassword" element={<ForgotPassword />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/lockscreen" element={<LockScreen />} />
+            <Route path="/changepassword" element={<ChangePassword />} />
+            <Route path="/error" element={<Error />} />
+            <Route path="/server-error" element={<ServerError />} />
+            <Route path="/blankpage" element={<BlankPage />} />
+            <Route path="/settings" element={<Setting />} />
+            <Route
+              path="/settingssociallink"
+              element={<Settingssociallinks />}
+            />
+            <Route
+              path="/settingschangepassword"
+              element={<SettingsChangePassword />}
+            />
+          </Route>
 
-          <Route element={<ProtectedRouter />}>
-            <Route path="/dashboard" element={<Dashboard />} />
+          <Route
+            element={
+              <ProtectedRouter allowedRoles={user?.user_type && ["staff"]} />
+            }
+          >
             <Route path="/appointment" element={<Appointment />} />
+          </Route>
+
+          <Route
+            element={
+              <ProtectedRouter allowedRoles={user?.user_type && "hsAdmin"} />
+            }
+          >
+            <Route path="/dashboard" element={<Dashboard />} />
+            {/* <Route path="/appointment" element={<Appointment />} /> */}
             <Route path="/doctor-manage" element={<DoctorManage />} />
             <Route path="/staff-manage" element={<StaffManage />} />
             <Route path="/hospital-services" element={<HospitalServices />} />

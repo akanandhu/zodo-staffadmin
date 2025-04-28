@@ -65,6 +65,7 @@
     "react-slick": "^0.29.0",
     "react-stars": "^2.2.5",
     "react-tag-input-component": "^2.0.2",
+    "react-toastify": "^11.0.5",
     "slick-carousel": "^1.8.1",
     "source-map-loader": "^4.0.1",
     "util": "^0.12.5",

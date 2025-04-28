@@ -1,7 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { login } from "../apis/auth";
+import { useGetUser } from "./useGetUser";
+// import { useGetUser } from "./useGetUser";
 // import { login, logout, getUser } from "./authService";
 
 // Create Context for Authentication
@@ -13,9 +15,8 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
   const [validationError, setValidationError] = useState(null);
-
-
-
+  const { mutate: getUser } = useGetUser();
+  // const { data: userData } = useGetUser();
   const saveAccessToken = (token) => {
     setAccessToken(token);
   };
@@ -23,11 +24,29 @@ export const AuthProvider = ({ children }) => {
   const clearAccessToken = () => {
     setAccessToken(null);
   };
+  // console.log("User data", userData);
+
+  // Fetch user data when the component mounts
+  const fetchUserData = async () => {
+    const token = localStorage.getItem("token"); // Get the token from local storage
+    if (token) {
+      const user = await getUser(); // Fetch user data if token exists
+      // console.log("User data from local storage", user);
+      setUser(user?.data?.data);
+    } else {
+      setUser(null); // Set user to null if no token is found
+    }
+  };
+  useEffect(() => {
+    fetchUserData();
+  }, []);
 
   // Login mutation
   const loginMutation = useMutation({
     mutationFn: login,
     onSuccess: (data) => {
+      console.log("Login data", data);
+
       const token = data?.data?.tokens?.accessToken;
       localStorage.setItem("token", data?.data?.tokens?.accessToken);
       setAccessToken(token);
@@ -40,6 +59,14 @@ export const AuthProvider = ({ children }) => {
     },
   });
 
+  // Login mutation
+  // const getUserMutation = () => {
+  //   return useQuery({
+  //     queryKey: ["user"], // Unique query key
+  //     queryFn: () => getUser(),
+  //   });
+  // };
+
   // Logout mutation
   // const logoutMutation = useMutation({
   //   mutationFn: logout,
@@ -50,6 +77,15 @@ export const AuthProvider = ({ children }) => {
   //   },
   // });
 
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token"); // Get the token from local storage
+  //   console.log("Token from local storage", token);
+
+  //   if (token) {
+  //     setAccessToken(token);
+  //     getUserMutation(); // Fetch user data if token exists
+  //   }
+  // }, []);
   return (
     <AuthContext.Provider
       value={{
@@ -60,6 +96,8 @@ export const AuthProvider = ({ children }) => {
         saveAccessToken,
         clearAccessToken,
         accessToken,
+        setUser,
+        // getUser: getUserMutation.mutate,
         // logout: logoutMutation.mutate,
       }}
     >

@@ -5,7 +5,6 @@ import { itemRender, onShowSizeChange } from "../../Pagination";
 function TransactionTable() {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const onSelectChange = (newSelectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", selectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
   };
   const columns = [

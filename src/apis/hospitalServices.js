@@ -1,9 +1,7 @@
 import apiClient from "./apiClient";
 
 export const getServicesList = async () => {
-  const response = await apiClient.get(`hospital-services`);
-  console.log("response", response?.data?.data);
-  
+  const response = await apiClient.get(`hospital-services`);  
   return response.data?.data ?? [];
 };
 

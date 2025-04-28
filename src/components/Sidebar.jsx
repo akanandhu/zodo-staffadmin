@@ -4,9 +4,12 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { dashboard, logout_01, menuicon08 } from "./imagepath";
 import Scrollbars from "react-custom-scrollbars-2";
+import { useAuth } from "../hooks/useAuth";
 
 const Sidebar = (props) => {
   const [sidebar, setSidebar] = useState("");
+  const { user } = useAuth();
+  const userRole = user?.user_type;
   const handleClick = (e, item, item1, item3) => {
     const div = document.querySelector(`#${item}`);
     const ulDiv = document.querySelector(`.${item1}`);
@@ -56,126 +59,144 @@ const Sidebar = (props) => {
               onMouseOver={expandMenuOpen}
             >
               <ul className="mt-5">
-                <li className="submenu">
-                  <Link
-                    className={
-                      props?.activeClassName === "dashboard" ? "active" : ""
-                    }
-                    id="menu-item"
-                    to="/dashboard"
-                    
-                  >
-                    <span className="menu-side">
-                      <img src={dashboard} alt="" />
-                    </span>{" "}
-                    <span> Dashboard </span>
-                    {/* <span className="menu-arrow" /> */}
-                  </Link>
-                </li>
+                {userRole === "hsAdmin" && (
+                  <li className="submenu">
+                    <Link
+                      className={
+                        props?.activeClassName === "dashboard" ? "active" : ""
+                      }
+                      id="menu-item"
+                      to="/dashboard"
+                    >
+                      <span className="menu-side">
+                        <img src={dashboard} alt="" />
+                      </span>{" "}
+                      <span> Dashboard </span>
+                      {/* <span className="menu-arrow" /> */}
+                    </Link>
+                  </li>
+                )}
 
-                <li className="submenu">
-                  <Link
-                    className={
-                      props?.activeClassName === "appointment" ? "active" : ""
-                    }
-                    id="menu-item2"
-                    to="/appointment"
-                  >
-                    <span className="menu-side">
-                      <img src={menuicon08} alt="" />
-                    </span>{" "}
-                    <span> Appointment </span>
-                  </Link>
-                </li>
+                {userRole === "staff" && (
+                  <li className="submenu">
+                    <Link
+                      className={
+                        props?.activeClassName === "appointment" ? "active" : ""
+                      }
+                      id="menu-item2"
+                      to="/appointment"
+                    >
+                      <span className="menu-side">
+                        <img src={menuicon08} alt="" />
+                      </span>{" "}
+                      <span> Appointment </span>
+                    </Link>
+                  </li>
+                )}
 
-                <li className="submenu">
-                  <Link
-                    className={
-                      props?.activeClassName === "doctor-manage" ? "active" : ""
-                    }
-                    id="menu-item4"
-                    to="/doctor-manage"
-                  >
-                    <span className="menu-side">
-                      <img src={menuicon08} alt="" />
-                    </span>{" "}
-                    <span> Doctor Manage </span>
-                  </Link>
-                </li>
+                {userRole === "hsAdmin" && (
+                  <li className="submenu">
+                    <Link
+                      className={
+                        props?.activeClassName === "doctor-manage"
+                          ? "active"
+                          : ""
+                      }
+                      id="menu-item4"
+                      to="/doctor-manage"
+                    >
+                      <span className="menu-side">
+                        <img src={menuicon08} alt="" />
+                      </span>{" "}
+                      <span> Doctor Manage </span>
+                    </Link>
+                  </li>
+                )}
 
-                <li className="submenu">
-                  <Link
-                    className={
-                      props?.activeClassName === "staff-manage" ? "active" : ""
-                    }
-                    id="menu-item5"
-                    to="/staff-manage"
-                  >
-                    <span className="menu-side">
-                      <img src={menuicon08} alt="" />
-                    </span>{" "}
-                    <span> Staff Manage </span>
-                  </Link>
-                </li>
+                {userRole === "hsAdmin" && (
+                  <li className="submenu">
+                    <Link
+                      className={
+                        props?.activeClassName === "staff-manage"
+                          ? "active"
+                          : ""
+                      }
+                      id="menu-item5"
+                      to="/staff-manage"
+                    >
+                      <span className="menu-side">
+                        <img src={menuicon08} alt="" />
+                      </span>{" "}
+                      <span> Staff Manage </span>
+                    </Link>
+                  </li>
+                )}
 
-                <li className="submenu">
-                  <Link
-                    to="/hospital-services"
-                    id="menu-item3"
-                    onClick={(e) =>
-                      handleClick(e, "menu-item3", "menu-items3", "menu-items3")
-                    }
-                    className={
-                      props?.activeClassName === "hospital-services" ||
-                      props?.activeClassName === "manage-doctors"
-                        ? "active"
-                        : ""
-                    }
-                  >
-                    <span className="menu-side">
-                      <img src={menuicon08} alt="" />
-                    </span>{" "}
-                    <span> Hospital </span> <span className="menu-arrow" />
-                  </Link>
-                  <ul style={{ display: "none" }} className="menu-items3">
-                    <li>
-                      <Link
-                        className={
-                          props?.activeClassName === "hospital-services"
-                            ? "submenu-active"
-                            : "submenu-normal"
-                        }
-                        to="/hospital-services"
-                      >
-                        Services
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className={
-                          props?.activeClassName === "manage-doctors"
-                            ? "submenu-active"
-                            : "submenu-normal"
-                        }
-                        to="#"
-                      >
-                        Department
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className={
-                          props?.activeClassName === "manage-doctors"
-                            ? "submenu-active"
-                            : "submenu-normal"
-                        }
-                        to="#"
-                      >
-                        Edit Hospital
-                      </Link>
-                    </li>
-                  </ul>
-                </li>
+                {userRole === "hsAdmin" && (
+                  <li className="submenu">
+                    <Link
+                      to="/hospital-services"
+                      id="menu-item3"
+                      onClick={(e) =>
+                        handleClick(
+                          e,
+                          "menu-item3",
+                          "menu-items3",
+                          "menu-items3"
+                        )
+                      }
+                      className={
+                        props?.activeClassName === "hospital-services" ||
+                        props?.activeClassName === "manage-doctors"
+                          ? "active"
+                          : ""
+                      }
+                    >
+                      <span className="menu-side">
+                        <img src={menuicon08} alt="" />
+                      </span>{" "}
+                      <span> Hospital </span> <span className="menu-arrow" />
+                    </Link>
+                    <ul style={{ display: "none" }} className="menu-items3">
+                      <li>
+                        <Link
+                          className={
+                            props?.activeClassName === "hospital-services"
+                              ? "submenu-active"
+                              : "submenu-normal"
+                          }
+                          to="/hospital-services"
+                        >
+                          Services
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          className={
+                            props?.activeClassName === "manage-doctors"
+                              ? "submenu-active"
+                              : "submenu-normal"
+                          }
+                          to="#"
+                        >
+                          Department
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          className={
+                            props?.activeClassName === "manage-doctors"
+                              ? "submenu-active"
+                              : "submenu-normal"
+                          }
+                          to="#"
+                        >
+                          Edit Hospital
+                        </Link>
+                      </li>
+                    </ul>
+                  </li>
+                )}
               </ul>
               <div className="logout-btn submenu">
                 <Link
