@@ -6,7 +6,7 @@ function PublicRoute() {
   const { user } = useAuth();
   const accessToken = localStorage.getItem("token");
   if (accessToken && user?.user_type === "hsAdmin") {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/" replace />;
   }
 
   if (accessToken && user?.user_type === "staff") {

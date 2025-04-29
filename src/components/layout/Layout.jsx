@@ -3,6 +3,8 @@ import Header from "../Header";
 import Sidebar from "../Sidebar";
 import PropTypes from "prop-types";
 function Layout(props) {
+  console.log("Active class name ",props?.activeClassName);
+  
   return (
     <>
       <Header />

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import CreateStaff from "../AddStaff/CreateStaff";
 import PropTypes from "prop-types";
 
@@ -21,19 +21,8 @@ function CreateStaffModal(props) {
       </Modal.Header>
       <Modal.Body className="pt-0 pb-0">
         {/* <TransparentTabs tabData={tabData} /> */}
-        <CreateStaff />
-        <div className="d-flex justify-content-between ps-3 pe-3 pb-5 pt-3">
-          <Button
-            variant="outline-primary"
-            onClick={handleClose}
-            className="ps-5 pe-5"
-          >
-            Back
-          </Button>
-          <Button variant="primary" onClick={handleClose} className="ps-5 pe-5">
-            Submit
-          </Button>
-        </div>
+        <CreateStaff handleClose={handleClose}/>
+        
       </Modal.Body>
     </Modal>
   );

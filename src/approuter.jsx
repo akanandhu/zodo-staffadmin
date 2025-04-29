@@ -81,7 +81,7 @@ const Approuter = () => {
               <ProtectedRouter allowedRoles={user?.user_type && "hsAdmin"} />
             }
           >
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/" element={<Dashboard />} />
             {/* <Route path="/appointment" element={<Appointment />} /> */}
             <Route path="/doctor-manage" element={<DoctorManage />} />
             <Route path="/staff-manage" element={<StaffManage />} />

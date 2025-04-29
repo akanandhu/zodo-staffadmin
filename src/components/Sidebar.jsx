@@ -63,10 +63,10 @@ const Sidebar = (props) => {
                   <li className="submenu">
                     <Link
                       className={
-                        props?.activeClassName === "dashboard" ? "active" : ""
+                        props?.activeClassName === "" ? "active" : ""
                       }
                       id="menu-item"
-                      to="/dashboard"
+                      to="/"
                     >
                       <span className="menu-side">
                         <img src={dashboard} alt="" />

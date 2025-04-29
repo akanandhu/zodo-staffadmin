@@ -14,12 +14,12 @@ function Dashboard() {
     {
       name: "Dashboard",
       status: "active",
-      link: "/dashboard",
+      link: "/",
     },
   ];
 
   return (
-    <Layout activeClassName="dashboard">
+    <Layout activeClassName="">
       <div className="page-wrapper">
         <div className="content">
           <Breadcrumb data={breadCrumpData} />
