@@ -11,20 +11,20 @@ export const useGetUser = () => {
       await queryClient.cancelQueries({ queryKey: ["user"] });
       // Get previous hospital list before deleting
     },
-    onSuccess: (data) => {
-      const message = data.message;
+    onSuccess: () => {
+      // const message = data.message;
       // Invalidate and refetch the hospitals query after a successful mutation
       queryClient.invalidateQueries("user");
       //   navigate("/manage-hospitals");
-      toast.success(message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      // toast.success(message, {
+      //   position: "top-right",
+      //   autoClose: 5000,
+      //   hideProgressBar: false,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   progress: undefined,
+      // });
     },
     onError: (error, id, context) => {
       const errorMessage = error?.response?.data?.message || "Failed";

@@ -1,10 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { bookings } from "../configs/bookings";
+// import { bookings } from "../configs/bookings";
 import DataTable from "../Tables/DataTable";
+import { useHospitalAppointments } from "../../hooks/appointments/useHospitalAppointments";
+import { useAuth } from "../../hooks/useAuth";
 
 function BookingsTable() {
-  
+  const { user } = useAuth();
+
+  const hospitalId = user?.hospital_id;
+  const { data: bookings, isLoading } = useHospitalAppointments(hospitalId);
+  // console.log(bookings);
+  console.log(isLoading);
+
   const columns = [
     {
       title: "Booking ID",
@@ -62,7 +70,7 @@ function BookingsTable() {
   return (
     <div className="card-box">
       <h4>Recent Booking Requests</h4>
-      <DataTable columns={columns} dataSource={bookings} />
+      <DataTable columns={columns} dataSource={bookings ?? []} />
     </div>
   );
 }

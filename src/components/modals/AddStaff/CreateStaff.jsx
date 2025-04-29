@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ChooseFile from "../../Hospitals/ChooseFile";
 import { FormProvider, useForm } from "react-hook-form";
 import InputField from "../../Inputfields/InputField";
@@ -6,21 +6,48 @@ import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 import SelectField from "../../Inputfields/SelectField";
 import TextArea from "../../Inputfields/TextArea";
+import { useAuth } from "../../../hooks/useAuth";
+import { useDepartmentList } from "../../../hooks/departments/useDepartmentList";
+import { useAdduser } from "../../../hooks/users/useAdduser";
 
 function CreateStaff(props) {
   const { handleClose } = props;
-  const methods = useForm();
-  const onCreateStaff = (data) => {
-    console.log("Form Data: ", data);
-    // Add your form submission logic here
-  };
+  const { user } = useAuth();
+  const [status, setStatus] = useState(true);
+  const hospitalId = user["hospital_id"];
+  const { data: departmentList, isLoading } = useDepartmentList(hospitalId);
 
-  const departmentOptions = [
-    { value: "ent", label: "ENT" },
-    { value: "gynaecology", label: "Gynaecology" },
-    { value: "pediatry", label: "Pediatry" },
-    { value: "cardiology", label: "Cardiology" },
-  ];
+  const { mutate, isLoading: userLoading } = useAdduser();
+  const methods = useForm();
+  const onCreateStaff = async (data) => {
+    // Add your form submission logic here
+    const staff = {
+      first_name: data.staffname,
+      last_name: "",
+      email: data.staffemail,
+      phone: data.phone,
+      // department: data.department,
+      // username: data.username,
+      password: data.password,
+      // address: {
+      //   pincode: data.pincode,
+      //   street: data.street,
+      //   city: data.city,
+      //   state: data.state,
+      //   address: data.address,
+      // },
+      user_type: "staff",
+      role: "user",
+      is_active: status,
+    };
+    await mutate(staff);
+    methods.reset();
+    handleClose();
+  };
+  const departmentOptions = departmentList?.map((department) => ({
+    label: department.name,
+    value: department.id,
+  }));
 
   return (
     <FormProvider {...methods}>
@@ -33,9 +60,12 @@ function CreateStaff(props) {
             <ChooseFile />
           </div>
           <div className="col-md-4 d-flex justify-content-end">
-            <select className="hospital-draft-btn text-primary status-select">
-              <option>Active</option>
-              <option>In Active</option>
+            <select
+              className="hospital-draft-btn text-primary status-select"
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              <option value={true}>Active</option>
+              <option value={false}>In Active</option>
             </select>
           </div>
         </div>
@@ -86,6 +116,7 @@ function CreateStaff(props) {
                 isMultiSelect={true}
                 placeholder="Select Department"
                 validationMessage="Department is required"
+                isLoading={isLoading}
               />
             </div>
           </div>
@@ -185,7 +216,13 @@ function CreateStaff(props) {
             Back
           </Button>
           <Button variant="primary" className="ps-5 pe-5" type="submit">
-            Submit
+            {userLoading && (
+              <span
+                className="spinner-border spinner-border-sm"
+                aria-hidden="true"
+              ></span>
+            )}
+            <span className="ps-2">Submit</span>
           </Button>
         </div>
       </form>

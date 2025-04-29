@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import DepartmentForm from "../../Dashboard/DepartmentForm";
 
 function DepartmentMoadl(props) {
@@ -8,6 +8,7 @@ function DepartmentMoadl(props) {
   const handleClose = () => {
     setShow(false);
   };
+  
   return (
     <Modal
       show={show}
@@ -22,19 +23,8 @@ function DepartmentMoadl(props) {
       <Modal.Body className="pt-0 pb-0">
         {/* <TransparentTabs tabData={tabData} /> */}
         {/* <CreateStaff /> */}
-        <DepartmentForm/>
-        <div className="d-flex justify-content-between ps-3 pe-3 pb-5 pt-4">
-          <Button
-            variant="outline-primary"
-            onClick={handleClose}
-            className="ps-5 pe-5"
-          >
-            Back
-          </Button>
-          <Button variant="primary" onClick={handleClose} className="ps-5 pe-5">
-            Submit
-          </Button>
-        </div>
+        <DepartmentForm handleClose={handleClose}/>
+        
       </Modal.Body>
     </Modal>
   );

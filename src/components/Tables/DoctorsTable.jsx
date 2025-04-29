@@ -7,9 +7,7 @@ import AddDoctor from "../modals/AddDoctor/AddDoctor";
 import PropTypes from "prop-types";
 
 function DoctorsTable(props) {
-  const { doctorsList } = props;
-  console.log("doctorsList", doctorsList);
-  
+  const { doctorsList } = props;  
   const [show, setShow] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
 

@@ -37,6 +37,7 @@ import HospitalServices from "./components/pages/Hospitals/HospitalServices";
 import ProtectedRouter from "./ProtectedRouter";
 import { useAuth } from "./hooks/useAuth";
 import PublicRoute from "./components/PublicRoute";
+import { ToastContainer } from "react-toastify";
 
 //Accounts
 const Approuter = () => {
@@ -45,6 +46,7 @@ const Approuter = () => {
   const { user } = useAuth();
   return (
     <>
+      <ToastContainer />
       <BrowserRouter basename="/">
         <Routes>
           <Route element={<PublicRoute />}>
