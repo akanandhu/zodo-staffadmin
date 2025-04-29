@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import CreateDoctorForm from "../../Dashboard/CreateDoctorForm";
 
 function CreateDoctorModal(props) {
@@ -20,19 +20,7 @@ function CreateDoctorModal(props) {
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body className="pt-0 pb-0">
-        <CreateDoctorForm/>
-        <div className="d-flex justify-content-between ps-3 pe-3 pb-5">
-          <Button
-            variant="outline-primary"
-            onClick={handleClose}
-            className="ps-5 pe-5"
-          >
-            Back
-          </Button>
-          <Button variant="primary" onClick={handleClose} className="ps-5 pe-5">
-            Submit
-          </Button>
-        </div>
+        <CreateDoctorForm handleClose={handleClose}/>
       </Modal.Body>
     </Modal>
   );

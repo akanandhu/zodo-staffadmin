@@ -11,7 +11,7 @@ import { useDepartmentList } from "../../../hooks/departments/useDepartmentList"
 import { useAdduser } from "../../../hooks/users/useAdduser";
 
 function CreateStaff(props) {
-  const { handleClose } = props;
+  const { handleClose, userType } = props;
   const { user } = useAuth();
   const [status, setStatus] = useState(true);
   const hospitalId = user["hospital_id"];
@@ -21,34 +21,64 @@ function CreateStaff(props) {
   const methods = useForm();
   const onCreateStaff = async (data) => {
     // Add your form submission logic here
-    const staff = {
-      first_name: data.staffname,
-      last_name: "",
-      email: data.staffemail,
-      phone: data.phone,
-      // department: data.department,
-      // username: data.username,
-      password: data.password,
-      // address: {
-      //   pincode: data.pincode,
-      //   street: data.street,
-      //   city: data.city,
-      //   state: data.state,
-      //   address: data.address,
-      // },
-      user_type: "staff",
-      role: "user",
-      is_active: status,
-    };
-    await mutate(staff);
-    methods.reset();
-    handleClose();
+    if (userType === "staff") {
+      const staff = {
+        first_name: data.staffname,
+        last_name: "",
+        email: data.staffemail,
+        phone: data.phone,
+        // department: data.department,
+        // username: data.username,
+        password: data.password,
+        // address: {
+        //   pincode: data.pincode,
+        //   street: data.street,
+        //   city: data.city,
+        //   state: data.state,
+        //   address: data.address,
+        // },
+        user_type: "staff",
+        role: data.role.value,
+        is_active: status,
+      };
+      await mutate(staff);
+    }
+    if (userType === "hsAdmin") {
+      console.log("hsAdmin role", data.role.value);
+      
+      const hsAdmin = {
+        first_name: data.staffname,
+        last_name: "",
+        email: data.staffemail,
+        phone: data.phone,
+        // department: data.department,
+        // username: data.username,
+        password: data.password,
+        // address: {
+        //   pincode: data.pincode,
+        //   street: data.street,
+        //   city: data.city,
+        //   state: data.state,
+        //   address: data.address,
+        // },
+        user_type: "hsAdmin",
+        role: data.role.value,
+        is_active: status,
+        hospital_id: hospitalId,
+      };
+      await mutate(hsAdmin);
+    }
+    // methods.reset();
+    // handleClose();
   };
   const departmentOptions = departmentList?.map((department) => ({
     label: department.name,
     value: department.id,
   }));
-
+  const roleOptions = [
+    { label: "Admin", value: "admin" },
+    { label: "User", value: "user" },
+  ];
   return (
     <FormProvider {...methods}>
       <form
@@ -107,6 +137,32 @@ function CreateStaff(props) {
         </div>
 
         <div className="row">
+          <div className="col-md-4">
+            <div className="form-group">
+              <InputField
+                name="jobtitle"
+                label="Job Title"
+                // validation={{ required: "Job title is required" }}
+                placeholder="Enter job title"
+                type="text"
+              />
+            </div>
+          </div>
+
+          <div className="col-md-4">
+            <div className="form-group">
+              <SelectField
+                options={roleOptions}
+                label="Role"
+                name="role"
+                isMultiSelect={false}
+                placeholder="Select role"
+                validationMessage="Role is required"
+                // isLoading={isLoading}
+              />
+            </div>
+          </div>
+
           <div className="col-md-4">
             <div className="form-group">
               <SelectField
@@ -233,6 +289,7 @@ function CreateStaff(props) {
 // props validation
 CreateStaff.propTypes = {
   handleClose: PropTypes.func.isRequired,
+  userType: PropTypes.string.isRequired,
 };
 
 export default CreateStaff;

@@ -4,7 +4,7 @@ import CreateStaff from "../AddStaff/CreateStaff";
 import PropTypes from "prop-types";
 
 function CreateStaffModal(props) {
-  const { show, setShow, title } = props;
+  const { show, setShow, title, userType } = props;
   const handleClose = () => {
     setShow(false);
   };
@@ -21,8 +21,7 @@ function CreateStaffModal(props) {
       </Modal.Header>
       <Modal.Body className="pt-0 pb-0">
         {/* <TransparentTabs tabData={tabData} /> */}
-        <CreateStaff handleClose={handleClose}/>
-        
+        <CreateStaff handleClose={handleClose} userType={userType}/>
       </Modal.Body>
     </Modal>
   );
@@ -32,6 +31,7 @@ CreateStaffModal.propTypes = {
   show: PropTypes.node,
   setShow: PropTypes.node,
   title: PropTypes.node,
+  userType: PropTypes.node,
 };
 
 export default CreateStaffModal;

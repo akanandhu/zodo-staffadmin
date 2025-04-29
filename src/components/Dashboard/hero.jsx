@@ -97,11 +97,13 @@ function Hero() {
         show={showCreateStaff}
         setShow={setShowCreateStaff}
         title="Create Staff"
+        userType="staff"
       />
       <CreateStaffModal
         show={showAdminStaff}
         setShow={setShowAdminStaff}
         title="Create Admin Staff"
+        userType="hsAdmin"
       />
       <CreateDoctorModal
         show={showCreateDoctor}
