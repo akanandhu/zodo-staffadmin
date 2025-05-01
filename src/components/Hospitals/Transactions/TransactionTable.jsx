@@ -2,7 +2,9 @@ import { Table } from "antd";
 import React, { useState } from "react";
 import { hospitalTransactions } from "../../configs/hospitalTransactions";
 import { itemRender, onShowSizeChange } from "../../Pagination";
-function TransactionTable() {
+import PropTypes from "prop-types";
+function TransactionTable(props) {
+  const { bookings } = props;
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const onSelectChange = (newSelectedRowKeys) => {
     setSelectedRowKeys(newSelectedRowKeys);
@@ -10,7 +12,7 @@ function TransactionTable() {
   const columns = [
     {
       title: "DATE ISSUED",
-      dataIndex: "date",
+      dataIndex: "createdAt",
       sorter: (a, b) => a.date.length - b.date.length,
     },
     {
@@ -25,7 +27,7 @@ function TransactionTable() {
     },
     {
       title: "DUE DATE",
-      dataIndex: "dueDate",
+      dataIndex: "appointmentDate",
       sorter: (a, b) => a.dueDate.length - b.dueDate.length,
     },
     {
@@ -36,7 +38,7 @@ function TransactionTable() {
         <div
           className={`${
             (item === "Overdue" && "delete-badge status-red") ||
-            (item === "Refunded" && "delete-badge status-orange") ||
+            (item === "started" && "delete-badge status-orange") ||
             (item === "Paid" && "delete-badge status-green")
           }`}
         >
@@ -76,12 +78,17 @@ function TransactionTable() {
           itemRender: itemRender,
         }}
         columns={columns}
-        dataSource={hospitalTransactions}
+        dataSource={bookings}
         rowSelection={rowSelection}
         rowKey={(record) => record.id}
       />
     </div>
   );
 }
+
+// props validation
+TransactionTable.propTypes = {
+  bookings: PropTypes.array.isRequired,
+};
 
 export default TransactionTable;

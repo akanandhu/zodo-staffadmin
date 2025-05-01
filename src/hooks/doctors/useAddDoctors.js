@@ -11,6 +11,8 @@ export const useAddDoctors = () => {
       await queryClient.cancelQueries({ queryKey: ["doctors"] });
     },
     onSuccess: (data) => {
+      console.log(data);
+      
       const message = data?.message || "Doctor added successfully";
       queryClient.invalidateQueries(["doctors"]);
       //   navigate("/manage-doctors");

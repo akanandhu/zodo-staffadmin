@@ -12,8 +12,8 @@ import { useDepartmentList } from "../../hooks/departments/useDepartmentList";
 import { useSpecialisationList } from "../../hooks/specialisation/useSpecialisationList";
 
 function CreateDoctorForm(props) {
-  const { user } = useAuth();
   const { handleClose } = props;
+  const { user } = useAuth();
   const hospital_id = user?.hospital_id;
   const methods = useForm();
   const { data: departmentList, isLoading: departmentLoading } =
@@ -27,10 +27,12 @@ function CreateDoctorForm(props) {
     { value: "staff", label: "Staff" },
   ];
 
-  const specialisationOptions = Array.isArray(specialisationList) ? specialisationList?.map((item) => ({
-    value: item.id,
-    label: item.name,
-  })): [];
+  const specialisationOptions = Array.isArray(specialisationList)
+    ? specialisationList?.map((item) => ({
+        value: item.id,
+        label: item.name,
+      }))
+    : [];
 
   const departmentOptions = departmentList?.map((item) => ({
     value: item.id,
@@ -39,14 +41,24 @@ function CreateDoctorForm(props) {
 
   const onCreateDoctor = async (data) => {
     const doctor = {
-      first_name: data.doctorname,
-      last_name: "",
+      // name: data.doctorname,
+      // email: data.doctoremail,
+      // phone_number: data.phone,
+      // hospital_id: hospital_id,
+      // // department_id: data.departments.map((item) => item.value),
+      // specifications_id: data?.specialisations?.map((item) => item.value),
+      // pricing: parseInt(data.pricing),
+
+      name: data.doctorname,
       email: data.doctoremail,
-      phone: data.phone,
+      profile_pic: "www.link.com",
+      city: "Kochi",
+      pricing: parseInt(data.pricing),
+      specifications_id: data?.specialisations?.map((item) => item.value),
+      phone_number: data.phone,
       hospital_id: hospital_id,
-      department_id: data.departments.map((item) => item.value),
-      specifications_id: [''],
-      pricing: data.pricing,
+      registration_details: {},
+      department_id: data?.departments?.map((item) => item.value),
     };
     await mutate(doctor);
     methods.reset();
@@ -93,13 +105,6 @@ function CreateDoctorForm(props) {
         <div className="row">
           <div className="col-md-6">
             <div className="form-group">
-              <label>Phone Number</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Enter phone number"
-              />
-
               <InputField
                 name="phone"
                 label="Phone Number"
@@ -144,7 +149,7 @@ function CreateDoctorForm(props) {
                 name="specialisations"
                 isMultiSelect={true}
                 placeholder="Select specialisation"
-                // validationMessage="Specialisations are required"
+                validationMessage="Specialisations are required"
                 isLoading={specialisationLoading}
               />
             </div>

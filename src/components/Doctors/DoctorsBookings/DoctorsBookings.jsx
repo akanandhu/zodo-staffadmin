@@ -3,8 +3,11 @@ import BookingsCard from "../../Hospitals/TotalBookings/BookingsCard";
 import { DatePicker } from "antd";
 import TransactionTable from "../../Hospitals/Transactions/TransactionTable";
 import ExportTable from "../../assests/ExportTable";
+import PropTypes from "prop-types";
+import { useDoctorAppointments } from "../../../hooks/appointments/userDoctorAppointments";
 
-function DoctorsBookings() {
+function DoctorsBookings(props) {
+  const { doctorId } = props;
   const bookinsDetails = [
     {
       id: 1,
@@ -25,6 +28,9 @@ function DoctorsBookings() {
       operation: "Cancellation",
     },
   ];
+
+  const { data:bookings } = useDoctorAppointments(doctorId);
+  
   return (
     <div>
       <div className="row mt-2">
@@ -60,7 +66,7 @@ function DoctorsBookings() {
             </div>
           </div>
           <div className="col-12 col-md-6 col-xl-3">
-            <ExportTable/>
+            <ExportTable />
           </div>
         </div>
         <div>
@@ -68,11 +74,16 @@ function DoctorsBookings() {
         </div>
 
         <div className="table-responsive">
-          <TransactionTable />
+          <TransactionTable bookings={bookings}/>
         </div>
       </div>
     </div>
   );
 }
+
+// props validation
+DoctorsBookings.propTypes = {
+  doctorId: PropTypes.string.isRequired,
+};
 
 export default DoctorsBookings;

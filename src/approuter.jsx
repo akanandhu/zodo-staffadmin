@@ -132,7 +132,7 @@ const Approuter = () => {
             />
             {/* Manage Doctors */}
             <Route path="/manage-doctors" element={<Doctors />} />
-            <Route path="/manage-doctors/:id" element={<DoctorDetails />} />
+            <Route path="/doctor-manage/:id" element={<DoctorDetails />} />
             <Route
               path="/manage-doctors/add-doctors"
               element={<AddDoctors />}

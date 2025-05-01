@@ -17,10 +17,13 @@ import DoctorsFinance from "./DoctorsFinance/DoctorsFinance";
 import DoctorsBookings from "./DoctorsBookings/DoctorsBookings";
 import ConfirmDelete from "../modals/ConfirmDelete";
 import ToggleDisable from "../modals/ToggleDisable";
+import PropTypes from "prop-types";
+import { useDoctorView } from "../../hooks/doctors/useDoctorView";
 
-function DoctorDetailsCard() {
+function DoctorDetailsCard(props) {
+  const { doctorId } = props;
+  const { data } = useDoctorView(doctorId);
   const navigate = useNavigate();
-  //   const { id } = useParams();
   const [show, setShow] = useState(false);
   const [disableshow, setdisableShow] = useState(false);
   const [disable, setdisable] = useState(false);
@@ -30,7 +33,7 @@ function DoctorDetailsCard() {
     {
       id: "dr_bookings",
       title: "Total Bookings",
-      content: <DoctorsBookings />,
+      content: <DoctorsBookings doctorId={doctorId}/>,
     },
   ];
 
@@ -135,7 +138,7 @@ function DoctorDetailsCard() {
               <div className="col">
                 {/* <div className="col-md-4"> */}
                 <div className="profile-info-left pt-3">
-                  <h3 className="user-name m-t-0 mb-0">Dr. Sunny kuriakose</h3>
+                  <h3 className="user-name m-t-0 mb-0">Dr. {data?.name}</h3>
                   <small className="text-muted">MBBS</small>
                 </div>
                 {/* </div> */}
@@ -149,7 +152,7 @@ function DoctorDetailsCard() {
                 <span className="text">
                   <div className="text-dark">
                     <img src={phone_icon} alt="phone" />{" "}
-                    <span className="ms-1">770-889-6484</span>
+                    <span className="ms-1">{data?.phone_number}</span>
                   </div>
                 </span>
               </li>
@@ -157,7 +160,7 @@ function DoctorDetailsCard() {
                 <span className="text">
                   <div className="text-dark">
                     <img src={email_icon} alt="email" />{" "}
-                    <span className="ms-1">apollo@example.com</span>
+                    <span className="ms-1">{data?.email}</span>
                   </div>
                 </span>
               </li>
@@ -204,12 +207,14 @@ function DoctorDetailsCard() {
                 <ul className="payment-info w-1">
                   <li>
                     <span className="payment-title">
-                      Education: <span className="fw-semibold text-black">MBBS</span>
+                      Education:{" "}
+                      <span className="fw-semibold text-black">MBBS</span>
                     </span>
                   </li>
                   <li className="mt-3 mb-3">
                     <span className="payment-title">
-                      Specialization: <span className="fw-semibold text-black">ENT</span>
+                      Specialization:{" "}
+                      <span className="fw-semibold text-black">ENT</span>
                     </span>
                   </li>
                 </ul>
@@ -222,11 +227,17 @@ function DoctorDetailsCard() {
                 <ul className="payment-info w-1">
                   <li>
                     <span className="payment-title">
-                      Account Number: <span className="fw-semibold text-black">111234567900</span>
+                      Account Number:{" "}
+                      <span className="fw-semibold text-black">
+                        111234567900
+                      </span>
                     </span>
                   </li>
                   <li className="mt-3 mb-3">
-                    <span className="payment-title">Bank Name: <span className="fw-semibold text-black">Federal</span></span>
+                    <span className="payment-title">
+                      Bank Name:{" "}
+                      <span className="fw-semibold text-black">Federal</span>
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -234,11 +245,17 @@ function DoctorDetailsCard() {
                 <ul className="payment-info">
                   <li>
                     <span className="payment-title">
-                      IFSC Code: <span className="fw-semibold text-black">111234567900</span> 
+                      IFSC Code:{" "}
+                      <span className="fw-semibold text-black">
+                        111234567900
+                      </span>
                     </span>
                   </li>
                   <li className="mt-3 mb-3">
-                    <span className="payment-title">UPI ID: <span className="fw-semibold text-black">123@oksbi</span></span>
+                    <span className="payment-title">
+                      UPI ID:{" "}
+                      <span className="fw-semibold text-black">123@oksbi</span>
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -326,5 +343,10 @@ function DoctorDetailsCard() {
     </div>
   );
 }
+
+// props validation
+DoctorDetailsCard.propTypes = {
+  doctorId: PropTypes.node,
+};
 
 export default DoctorDetailsCard;

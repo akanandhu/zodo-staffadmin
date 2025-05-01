@@ -10,7 +10,7 @@ function DoctorsTable(props) {
   const { doctorsList } = props;  
   const [show, setShow] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
-
+  
   const columns = [
     {
       title: "Doctor Name",
@@ -29,18 +29,23 @@ function DoctorsTable(props) {
     {
       title: "Employe ID",
       dataIndex: "empid",
-      sorter: (a, b) => a.empid.length - b.empid.length,
+      // sorter: (a, b) => a.empid.length - b.empid.length,
     },
 
     {
       title: "Joining Date",
       dataIndex: "joiningDate",
-      sorter: (a, b) => a.joiningDate.length - b.joiningDate.length,
+      // sorter: (a, b) => a.joiningDate.length - b.joiningDate.length,
     },
     {
       title: "Department",
-      dataIndex: "department",
-      sorter: (a, b) => a.department.length - b.department.length,
+      dataIndex: "departments",
+      // sorter: (a, b) => a.department.length - b.department.length,
+      // render: (item) => (
+      //   <div className="table-text">
+      //     <h6>{item}hs</h6>
+      //   </div>
+      // ),
     },
     {
       title: "Pricing",
@@ -50,7 +55,7 @@ function DoctorsTable(props) {
     {
       title: "",
       dataIndex: "FIELD8",
-      render: () => (
+      render: (item, record) => (
         <>
           <div className="text-end">
             <div className="dropdown dropdown-action">
@@ -65,7 +70,7 @@ function DoctorsTable(props) {
               <div className="dropdown-menu dropdown-menu-end">
                 <Link
                   className="dropdown-item"
-                  to
+                  to={`${record.id}`}
                   // onClick={()=>setShowEdit(true)}
                 >
                   <i className="far fa-eye me-2" />

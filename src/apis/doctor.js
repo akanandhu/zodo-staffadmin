@@ -5,7 +5,14 @@ export const getDoctorsListById = async (id) => {
   return response?.data?.data ?? [];
 };
 
+export const getDoctorsListByDoctorId = async (id) => {
+  const response = await apiClient.get(`doctors/${id}`);
+  return response?.data;
+};
+
 export const addDoctors = async (doctorsData) => {
   const response = await apiClient.post("/doctors", doctorsData);
   return response.data;
 };
+
+
