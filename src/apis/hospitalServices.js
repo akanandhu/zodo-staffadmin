@@ -10,10 +10,10 @@ export const getServicesList = async () => {
 //     return response.data;
 //   };
 
-// export const addDepartment = async (departmentData) => {
-//   const response = await apiClient.post("/departments", departmentData);
-//   return response.data || [];
-// };
+export const addHospitalService = async (serviceData) => {
+  const response = await apiClient.post("/hospital-services", serviceData);
+  return response.data || [];
+};
 
 // export const deleteDepartment = async (id) => {
 //   const response = await apiClient.delete(`/departments/${id}`);

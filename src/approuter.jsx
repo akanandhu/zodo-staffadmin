@@ -91,6 +91,7 @@ const Approuter = () => {
             <Route path="/staff-manage" element={<StaffManage />} />
             <Route path="/hospital/services" element={<HospitalServices />} />
             <Route path="/hospital/departments" element={<Departments />} />
+            <Route path="/hospital/edit" element={<EditHospital />} />
 
             <Route
               path="/dashboard/fasttag-revenue"
@@ -125,14 +126,14 @@ const Approuter = () => {
               path="/manage-hospitals/manage-request/:id"
               element={<ManageRequest />}
             />
-            <Route
+            {/* <Route
               path="/manage-hospitals/manage-request/:id/edit"
               element={<EditHospital />}
             />
             <Route
               path="/manage-hospitals/:id/edit"
               element={<EditHospital />}
-            />
+            /> */}
             {/* Manage Doctors */}
             <Route path="/manage-doctors" element={<Doctors />} />
               <Route path="/finance" element={<Finance />} />

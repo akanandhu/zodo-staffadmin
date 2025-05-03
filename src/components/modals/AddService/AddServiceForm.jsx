@@ -1,0 +1,111 @@
+import React from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { useAuth } from "../../../hooks/useAuth";
+import { useCreateService } from "../../../hooks/hospital-services/useCreateService";
+import PropTypes from "prop-types";
+import InputField from "../../Inputfields/InputField";
+import TextArea from "../../Inputfields/TextArea";
+import ChooseFile from "../../Hospitals/ChooseFile";
+function AddServiceForm(props) {
+  const { handleClose } = props;
+  const methods = useForm();
+  const { hospitalId } = useAuth();
+  const { mutate, isLoading } = useCreateService();
+  const onCreateDepartment = async (data) => {
+    const service = {
+      name: data.serviceName,
+      description: data.message,
+      hospital_id: hospitalId,
+      price: parseInt(data.price),
+      strike_through_price: parseInt(data.strikePrice),
+    };
+    await mutate(service);
+    // methods.reset();
+    // handleClose(); // Close the modal after successful submission
+  };
+  return (
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(onCreateDepartment)}>
+        <div className="row mt-4">
+          <div className="col-md-12 ms-md-2">
+            <ChooseFile />
+          </div>
+        </div>
+        <div className="form-group mt-2">
+          <div className="col-md-12">
+            <InputField
+              name="serviceName"
+              label="Service Name"
+              validation={{ required: "Service Name is required" }}
+              placeholder="Enter Service Name"
+              type="text"
+            />
+          </div>
+        </div>
+
+        <div className="form-group mt-2 row">
+          <div className="col-md-6">
+            <InputField
+              name="price"
+              label="Price"
+              validation={{ required: "Price is required" }}
+              placeholder="Enter Price"
+              type="text"
+            />
+          </div>
+          <div className="col-md-6">
+            <InputField
+              name="strikePrice"
+              label="Strike Price"
+              validation={{ required: "Strike Price is required" }}
+              placeholder="Enter Strike Price"
+              type="text"
+            />
+          </div>
+        </div>
+        <div className="form-group">
+          <div className="col-md-12">
+            <TextArea
+              name="message"
+              label="Message"
+              placeholder="Type message here"
+            />
+          </div>
+        </div>
+
+        <div className="form-group d-flex justify-content-end pt-3">
+          <button
+            to="#"
+            //   data-bs-toggle="modal"
+            //   data-bs-target="#delete_invoices_details"
+            className="hospital-draft-btn text-primary pt-1 pb-1 ps-3 pe-3 rounded"
+            onClick={() => handleClose()}
+          >
+            Cancel
+          </button>
+          <button
+            to="#"
+            //   data-bs-toggle="modal"
+            //   data-bs-target="#save_invocies_details"
+            className="hospital-add-btn ms-1 text-white border-0 pt-1 pb-1 ps-3 pe-3 rounded"
+          >
+            {isLoading && (
+              <span
+                className="spinner-border spinner-border-sm"
+                aria-hidden="true"
+              ></span>
+            )}
+            <span className="ps-2">Save</span>
+          </button>
+        </div>
+      </form>
+    </FormProvider>
+  );
+}
+
+// validate props
+AddServiceForm.propTypes = {
+  handleClose: PropTypes.func.isRequired,
+};
+
+export default AddServiceForm;

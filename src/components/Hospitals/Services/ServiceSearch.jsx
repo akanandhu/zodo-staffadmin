@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import SearchBox from "../../searchbox/SearchBox";
 import { Link } from "react-router-dom";
 import { addicon } from "../../imagepath";
+import AddHospitalServices from "../../modals/AddService/AddHospitalServices";
 
 function ServiceSearch() {
+  const [show, setShow] = useState(false);
   return (
+
     // <div className="ps-3 pe-3 doctor-search card-box">
     //   <div className="row  d-flex align-items-center bg-white">
     //     <div className="col-12  col-md-1">
@@ -57,7 +60,7 @@ function ServiceSearch() {
               <Link
                 to
                 className="hospital-add-btn rounded-pill ms-1 text-white ps-4 pe-4 pt-2 pb-2"
-                // onClick={() => setShow(true)}
+                onClick={() => setShow(true)}
               >
                 <img src={addicon} alt="add" />
                 <span className="ms-2 me-2">Add Service</span>
@@ -66,6 +69,7 @@ function ServiceSearch() {
           </div>
         </div>
       </div>
+      <AddHospitalServices setShow={setShow} show={show}/>
     </div>
   );
 }

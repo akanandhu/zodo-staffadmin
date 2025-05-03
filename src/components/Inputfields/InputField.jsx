@@ -23,7 +23,7 @@ function InputField(props) {
         placeholder={placeholder}
         disabled={disabled}
         className={`form-control ${
-          errors !== undefined && errors[name] ? "is-invalid" : ""
+          errors !== undefined && errors[name]  ? "is-invalid" : ""
         }`}
         {...register(name, validation)}
         defaultValue={defaultValue}

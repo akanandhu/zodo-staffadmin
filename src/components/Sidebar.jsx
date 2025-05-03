@@ -144,7 +144,9 @@ const Sidebar = (props) => {
                         )
                       }
                       className={
-                        props?.activeClassName === "hospital-services" || props?.activeClassName  === "hospital-departments" ||
+                        props?.activeClassName === "hospital-services" ||
+                        props?.activeClassName === "hospital-departments" ||
+                        props?.activeClassName === "edit-hospital" ||
                         props?.activeClassName === "manage-doctors"
                           ? "active"
                           : ""
@@ -183,11 +185,12 @@ const Sidebar = (props) => {
                       <li>
                         <Link
                           className={
-                            props?.activeClassName === "manage-doctors"
+                            props?.activeClassName === "edit-hospital"
                               ? "submenu-active"
                               : "submenu-normal"
                           }
-                          to="#"
+                          // to="#"
+                          to="/hospital/edit"
                         >
                           Edit Hospital
                         </Link>

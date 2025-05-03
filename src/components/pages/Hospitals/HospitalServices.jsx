@@ -4,7 +4,7 @@ import Layout from "../../layout/Layout";
 import BasicHero from "../../heros/BasicHero";
 import ServiceSearch from "../../Hospitals/Services/ServiceSearch";
 import ServicesList from "../../Hospitals/Services/ServicesList";
-import { useServicesList } from "../../../hooks/useServicesList";
+import { useServicesList } from "../../../hooks/hospital-services/useServicesList";
 
 function HospitalServices() {
   const breadCrumpData = [
