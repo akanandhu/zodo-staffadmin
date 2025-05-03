@@ -1,6 +1,8 @@
 import React from "react";
 import Layout from "../../layout/Layout";
 import Breadcrumb from "../../breadcrump/Breadcrumb";
+import { financeTab } from "../../configs/financeTabs";
+import Tabs from "../../tabs/Tabs";
 
 function Finance() {
   const breadCrumpData = [
@@ -15,6 +17,7 @@ function Finance() {
       <div className="page-wrapper">
         <div className="content">
           <Breadcrumb data={breadCrumpData} />
+          <Tabs tabData={financeTab} />
         </div>
       </div>
     </Layout>
