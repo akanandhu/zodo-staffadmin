@@ -1,8 +1,8 @@
 import React from "react";
-import InfoCards from "../../Dashboard/Info_cards";
-import BookingsTable from "../../Dashboard/BookingsTable";
-import { doctors, fasttag, profile_hospitals } from "../../imagepath";
-import Analytics from "../../Dashboard/Analytics";
+import InfoCards from "../Dashboard/Info_cards";
+import BookingsTable from "../Dashboard/BookingsTable";
+import { doctors, fasttag, profile_hospitals } from "../imagepath";
+import Analytics from "../Dashboard/Analytics";
 
 function Payout() {
   const basicInformation = [
