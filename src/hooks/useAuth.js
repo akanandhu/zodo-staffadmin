@@ -13,6 +13,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const queryClient = useQueryClient();
   const [user, setUser] = useState(null);
+  const [hospitalId, setHospitalId] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
   const [validationError, setValidationError] = useState(null);
   const { mutate: getUser } = useGetUser();
@@ -33,7 +34,12 @@ export const AuthProvider = ({ children }) => {
       const user = await getUser(); // Fetch user data if token exists
       // console.log("User data from local storage", user);
       setUser(user?.data?.data);
+      const hospitalId = user?.data?.data?.hospital_id;
+      if (hospitalId) {
+        setHospitalId(hospitalId); // Set hospital ID if it exists
+      }
     } else {
+      setHospitalId(null);
       setUser(null); // Set user to null if no token is found
     }
   };
@@ -46,11 +52,11 @@ export const AuthProvider = ({ children }) => {
     mutationFn: login,
     onSuccess: (data) => {
       console.log("Login data", data);
-
       const token = data?.data?.tokens?.accessToken;
       localStorage.setItem("token", data?.data?.tokens?.accessToken);
       setAccessToken(token);
       setUser(data.data);
+      setHospitalId(data?.data?.hospital_id); // Set hospital ID from login response
       queryClient.invalidateQueries(["user"]); // Refresh user data
     },
     onError: (error) => {
@@ -99,6 +105,7 @@ export const AuthProvider = ({ children }) => {
         setUser,
         // getUser: getUserMutation.mutate,
         // logout: logoutMutation.mutate,
+        hospitalId
       }}
     >
       {children}

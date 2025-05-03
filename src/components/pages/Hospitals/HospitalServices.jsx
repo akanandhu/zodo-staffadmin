@@ -11,12 +11,12 @@ function HospitalServices() {
     {
       name: "Hospitals",
       status: "inactive",
-      link: "/hospital-services",
+      link: "/hospital/services",
     },
     {
       name: "Services",
       status: "active",
-      link: "/hospital-services",
+      link: "/hospital/services",
     },
   ];
 

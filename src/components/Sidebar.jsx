@@ -133,7 +133,7 @@ const Sidebar = (props) => {
                 {userRole === "hsAdmin" && (
                   <li className="submenu">
                     <Link
-                      to="/hospital-services"
+                      to
                       id="menu-item3"
                       onClick={(e) =>
                         handleClick(
@@ -144,7 +144,7 @@ const Sidebar = (props) => {
                         )
                       }
                       className={
-                        props?.activeClassName === "hospital-services" ||
+                        props?.activeClassName === "hospital-services" || props?.activeClassName  === "hospital-departments" ||
                         props?.activeClassName === "manage-doctors"
                           ? "active"
                           : ""
@@ -163,7 +163,7 @@ const Sidebar = (props) => {
                               ? "submenu-active"
                               : "submenu-normal"
                           }
-                          to="/hospital-services"
+                          to="/hospital/services"
                         >
                           Services
                         </Link>
@@ -171,11 +171,11 @@ const Sidebar = (props) => {
                       <li>
                         <Link
                           className={
-                            props?.activeClassName === "manage-doctors"
+                            props?.activeClassName === "hospital-departments"
                               ? "submenu-active"
                               : "submenu-normal"
                           }
-                          to="#"
+                          to="/hospital/departments"
                         >
                           Department
                         </Link>

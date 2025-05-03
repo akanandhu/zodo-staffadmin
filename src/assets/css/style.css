@@ -1645,7 +1645,7 @@ textarea.form-control {
   background-color: #fff;
   border-radius: 12px;
   backdrop-filter: blur(2px);
-  margin-bottom: 30px;
+  margin-bottom: 15px;
   padding: 20px;
   position: relative;
 }

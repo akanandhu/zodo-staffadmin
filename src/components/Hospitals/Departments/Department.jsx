@@ -1,39 +1,19 @@
 import React from "react";
-import DepartmentHero from "../../heros/DepartmentHero";
+// import DepartmentHero from "../../heros/DepartmentHero";
 import DepartmentCard from "./DepartmentCard";
+import PropTypes from "prop-types";
 
-function Department() {
-  const depatments = [
-    {
-      id: 1,
-      department: "Surgical Department",
-      peopleCount: 8,
-    },
-    {
-      id: 2,
-      department: "Radiology Department",
-      peopleCount: 8,
-    },
-    {
-      id: 3,
-      department: "Maternal & Child Health Services",
-      peopleCount: 8,
-    },
-    {
-      id: 4,
-      department: "Cardiology",
-      peopleCount: 8,
-    },
-  ];
+function Department(props) {
+  const { departmentList } = props;
   return (
     <div>
-      <DepartmentHero />
+      {/* <DepartmentHero /> */}
       <div className="row mt-3">
-        {depatments.map((item) => {
+        {departmentList?.map((item) => {
           return (
             <div
               className="col-md-3 col-sm-6 col-lg-3 col-xl-3"
-              key={item.id + item.department}
+              key={item.id}
             >
               <DepartmentCard data={item} />
             </div>
@@ -43,5 +23,8 @@ function Department() {
     </div>
   );
 }
-
+// props validation
+Department.propTypes = {
+  departmentList: PropTypes.array,
+};
 export default Department;

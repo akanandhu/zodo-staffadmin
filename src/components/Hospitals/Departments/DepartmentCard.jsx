@@ -1,18 +1,23 @@
 import React from "react";
-import { right_chevron } from "../../imagepath";
+// import { right_chevron } from "../../imagepath";
 import PropTypes from "prop-types";
 
 function DepartmentCard(props) {
   const { data } = props;
   return (
-    <div className="dash-widget h-75">
+    <div className="dash-widget">
       <div className="dash-content dash-count flex-grow-1 department-card">
-        <h6>{data.department}</h6>
+        <h6>{data?.name}</h6>
         <div className="row">
           <p className="text-dark col">{data.peopleCount} Person</p>
-          <div className="col-auto">
-            <img src={right_chevron} alt="#" />
-          </div>
+          {data?.status === "active" ? (
+            <p className="col-auto text-success">
+              {/* <img src={right_chevron} alt="#" /> */}
+              Active
+            </p>
+          ) : (
+            <p className="col-auto text-danger">Inactive</p>
+          )}
         </div>
       </div>
     </div>

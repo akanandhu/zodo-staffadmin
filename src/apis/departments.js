@@ -1,8 +1,10 @@
 import apiClient from "./apiClient";
 
-export const getDepartmentList = async (id) => {
-  const response = await apiClient.get(`/departments/?hospital_id=${id}`);
-  return response.data;
+export const getDepartmentList = async (id, searchTerm) => {
+  const response = await apiClient.get(
+    `/departments/?hospital_id=${id}${searchTerm ? `&name=${searchTerm}` : ""}`
+  );
+  return response.data || [];
 };
 
 export const addDepartment = async (departmentData) => {
