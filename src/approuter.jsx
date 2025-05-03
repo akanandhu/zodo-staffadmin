@@ -38,6 +38,7 @@ import ProtectedRouter from "./ProtectedRouter";
 import { useAuth } from "./hooks/useAuth";
 import PublicRoute from "./components/PublicRoute";
 import { ToastContainer } from "react-toastify";
+import Finance from "./components/pages/Finance/Finance";
 
 //Accounts
 const Approuter = () => {
@@ -132,6 +133,8 @@ const Approuter = () => {
             />
             {/* Manage Doctors */}
             <Route path="/manage-doctors" element={<Doctors />} />
+              <Route path="/finance" element={<Finance />} />
+            <Route path="/manage-doctors/add-doctor" element={<AddDoctors />} />
             <Route path="/doctor-manage/:id" element={<DoctorDetails />} />
             <Route
               path="/manage-doctors/add-doctors"

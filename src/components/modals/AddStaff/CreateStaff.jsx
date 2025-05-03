@@ -40,31 +40,45 @@ function CreateStaff(props) {
         user_type: "staff",
         role: data.role.value,
         is_active: status,
+        hospital_id: hospitalId,
       };
       await mutate(staff);
     }
     if (userType === "hsAdmin") {
       console.log("hsAdmin role", data.role.value);
-      
+
       const hsAdmin = {
-        first_name: data.staffname,
-        last_name: "",
-        email: data.staffemail,
+        // first_name: data.staffname,
+        // last_name: "",
+        // email: data.staffemail,
+        // phone: data.phone,
+        // // department: data.department,
+        // // username: data.username,
+        // password: data.password,
+        // // address: {
+        // //   pincode: data.pincode,
+        // //   street: data.street,
+        // //   city: data.city,
+        // //   state: data.state,
+        // //   address: data.address,
+        // // },
+        // user_type: "hsAdmin",
+        // role: data.role.value,
+        // is_active: status,
+        // hospital_id: hospitalId,
         phone: data.phone,
-        // department: data.department,
-        // username: data.username,
-        password: data.password,
-        // address: {
-        //   pincode: data.pincode,
-        //   street: data.street,
-        //   city: data.city,
-        //   state: data.state,
-        //   address: data.address,
-        // },
-        user_type: "hsAdmin",
+        first_name: data.staffname,
+        email: data.staffemail,
+        last_name: "balan",
         role: data.role.value,
-        is_active: status,
+        address: {
+          line: "dd",
+        },
+        job_title: data.jobtitle,
+        department_id: data.department?.value,
+        user_type: "staff",
         hospital_id: hospitalId,
+        password: data.password,
       };
       await mutate(hsAdmin);
     }
@@ -169,7 +183,7 @@ function CreateStaff(props) {
                 options={departmentOptions}
                 label="Department"
                 name="department"
-                isMultiSelect={true}
+                isMultiSelect={false}
                 placeholder="Select Department"
                 validationMessage="Department is required"
                 isLoading={isLoading}

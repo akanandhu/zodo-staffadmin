@@ -62,9 +62,7 @@ const Sidebar = (props) => {
                 {userRole === "hsAdmin" && (
                   <li className="submenu">
                     <Link
-                      className={
-                        props?.activeClassName === "" ? "active" : ""
-                      }
+                      className={props?.activeClassName === "" ? "active" : ""}
                       id="menu-item"
                       to="/"
                     >
@@ -195,6 +193,23 @@ const Sidebar = (props) => {
                         </Link>
                       </li>
                     </ul>
+                  </li>
+                )}
+
+                {userRole === "hsAdmin" && (
+                  <li className="submenu">
+                    <Link
+                      className={
+                        props?.activeClassName === "finance" ? "active" : ""
+                      }
+                      id="menu-item4"
+                      to="/finance"
+                    >
+                      <span className="menu-side">
+                        <img src={menuicon08} alt="" />
+                      </span>{" "}
+                      <span> Finance </span>
+                    </Link>
                   </li>
                 )}
               </ul>
