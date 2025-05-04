@@ -13,8 +13,6 @@ function Appointment() {
     },
   ];
   
-
- 
   return (
     <Layout activeClassName="appointment" id="menu-item2" id1="menu-items2">
       <div className="page-wrapper">

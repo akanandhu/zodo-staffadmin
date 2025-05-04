@@ -36,26 +36,33 @@ function StaffTable() {
       ),
     },
     {
-      title: "Employe ID",
-      dataIndex: "empid",
+      title: "Phone",
+      dataIndex: "phone",
       // sorter: (a, b) => a.empid.length - b.empid.length,
     },
 
     {
       title: "Joining Date",
       dataIndex: "created_at",
-      sorter: (a, b) => a.joiningDate.length - b.joiningDate.length,
+      render:(item, record)=>{
+        const date = record?.created_at;
+        const dateOnly = new Date(date).toLocaleDateString();
+        return (
+          <div>{dateOnly}</div>
+        )
+      }
+      // sorter: (a, b) => a.joiningDate.length - b.joiningDate.length,
     },
     {
       title: "Department",
       dataIndex: "departments",
       // sorter: (a, b) => a.department.length - b.department.length,
     },
-    {
-      title: "Role",
-      dataIndex: "role",
-      sorter: (a, b) => a.pricing.length - b.pricing.length,
-    },
+    // {
+    //   title: "Role",
+    //   dataIndex: "role",
+    //   sorter: (a, b) => a.pricing.length - b.pricing.length,
+    // },
     {
       title: "",
       dataIndex: "FIELD8",

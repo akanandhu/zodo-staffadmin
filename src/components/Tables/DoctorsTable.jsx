@@ -31,14 +31,14 @@ function DoctorsTable(props) {
       ),
     },
     {
-      title: "Employe ID",
-      dataIndex: "empid",
+      title: "Phone",
+      dataIndex: "phone_number",
       // sorter: (a, b) => a.empid.length - b.empid.length,
     },
 
     {
       title: "Joining Date",
-      dataIndex: "joiningDate",
+      dataIndex: "work_start_date",
       // sorter: (a, b) => a.joiningDate.length - b.joiningDate.length,
     },
     {
