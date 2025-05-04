@@ -7,7 +7,7 @@ function ServiceCard(props) {
   const { servicesData } = props;
   return (
     <div className="card invoices-grid-card w-100">
-      <Link to>
+      <Link to={`/hospital/services/${servicesData.id}`}>
         <div className="card-body">
           <div className="row align-items-center hospital-card">
             <div className="col">

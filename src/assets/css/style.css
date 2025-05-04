@@ -1645,7 +1645,7 @@ textarea.form-control {
   background-color: #fff;
   border-radius: 12px;
   backdrop-filter: blur(2px);
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   padding: 20px;
   position: relative;
 }
@@ -11805,6 +11805,17 @@ tr.ant-table-row.ant-table-row-level-0.ant-table-row-selected,
   max-width: 80%;
   height: 98%;
 }
+
+.paymentrequest-custom-modal .modal-dialog{
+  position: fixed; 
+  bottom: 0; 
+  right: 0; 
+  margin: 0;
+  width: 40%; 
+  max-width: 80%;
+  height: 80%;
+}
+
 .create-custom-modal .modal-dialog{
   /* position: fixed;  */
   /* bottom: 0; 
@@ -11829,6 +11840,13 @@ tr.ant-table-row.ant-table-row-level-0.ant-table-row-selected,
   border-bottom-left-radius: 0px;
 }
 .doctor-custom-modal .modal-content { 
+  height: 100%; /* Ensure the content fills the modal */ 
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+.paymentrequest-custom-modal .modal-content { 
   height: 100%; /* Ensure the content fills the modal */ 
   border-bottom-right-radius: 0px;
   border-top-right-radius: 0px;
@@ -11936,4 +11954,47 @@ tr.ant-table-row.ant-table-row-level-0.ant-table-row-selected,
 .search-hero-header h3{
   font-size: 18px;
   font-weight: 600;
+}
+
+.main-balance{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.main-balance p {
+  color: #21212180;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.main-balance h4{
+  color: #000000;
+  font-size: 1.2rem;
+  margin-top: -12.5px;
+  font-weight: 800;
+}
+
+.settlement-card{
+  display: flex;
+  justify-content: space-between;
+  background-color: #F0F2F7;
+  padding: 10px 20px 10px 20px;
+}
+.settlemet-details{
+  text-align: center;
+}
+
+.settlemet-details p {
+  color: #21212180;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.settlemet-details h4{
+  color: #000000;
+  font-size: 1rem;
+  margin-top: -12.5px;
+  font-weight: 600;
+}
+
+.payment-request-container{
+  height: 61vh;
 }

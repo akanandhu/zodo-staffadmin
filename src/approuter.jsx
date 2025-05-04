@@ -40,6 +40,7 @@ import PublicRoute from "./components/PublicRoute";
 import { ToastContainer } from "react-toastify";
 import Finance from "./components/pages/Finance/Finance";
 import Departments from "./components/pages/Hospitals/Departments";
+import ViewHospitalService from "./components/pages/Hospitals/ViewHospitalService";
 
 //Accounts
 const Approuter = () => {
@@ -90,6 +91,7 @@ const Approuter = () => {
             <Route path="/doctor-manage" element={<DoctorManage />} />
             <Route path="/staff-manage" element={<StaffManage />} />
             <Route path="/hospital/services" element={<HospitalServices />} />
+            <Route path="/hospital/services/:id" element={<ViewHospitalService />} />
             <Route path="/hospital/departments" element={<Departments />} />
             <Route path="/hospital/edit" element={<EditHospital />} />
 

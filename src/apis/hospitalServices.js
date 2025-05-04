@@ -1,14 +1,14 @@
 import apiClient from "./apiClient";
 
 export const getServicesList = async () => {
-  const response = await apiClient.get(`hospital-services`);  
+  const response = await apiClient.get(`hospital-services`);
   return response.data?.data ?? [];
 };
 
-// export const getServicesListById = async (id) => {
-//     const response = await apiClient.get(`/departments/?hospital_id=${id}`);
-//     return response.data;
-//   };
+export const getServicesById = async (id) => {
+  const response = await apiClient.get(`/hospital-services/${id}`);
+  return response?.data?.data || {};
+};
 
 export const addHospitalService = async (serviceData) => {
   const response = await apiClient.post("/hospital-services", serviceData);

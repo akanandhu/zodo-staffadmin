@@ -59,7 +59,7 @@ function EditHospitalForm() {
       location: data?.town,
       address: {
         lineOne: data?.companyName,
-        lineTwo: data?.address + " " + data?.street,
+        lineTwo: data?.address,
         city: data?.town,
         district: data?.district,
         state: data?.state,

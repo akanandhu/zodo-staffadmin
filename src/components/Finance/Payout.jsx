@@ -1,8 +1,8 @@
 import React from "react";
-import InfoCards from "../Dashboard/Info_cards";
 import BookingsTable from "../Dashboard/BookingsTable";
 import { doctors, fasttag, profile_hospitals } from "../imagepath";
 import Analytics from "../Dashboard/Analytics";
+import SettlementCard from "./SettlementCard";
 
 function Payout() {
   const basicInformation = [
@@ -62,7 +62,7 @@ function Payout() {
   return (
     <div>
       <div className="row mt-3">
-        <InfoCards info={basicInformation} />
+        <SettlementCard info={basicInformation}/>
       </div>
       <Analytics bookingType={bookingType} id="appointment-chart" />
       <BookingsTable />
