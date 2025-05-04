@@ -63,8 +63,8 @@ function Overview(props) {
       department_id: data?.departments?.map((item) => item.value),
     };
     await mutate(doctor);
-    // methods.reset();
-    // handleClose();
+    methods.reset();
+    handleClose();
   };
   return (
     <FormProvider {...methods}>

@@ -10,12 +10,16 @@ import { useHospitalStaffs } from "../../hooks/users/useHospitalStaffs";
 function StaffTable() {
   const [show, setShow] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
+  const [selectedStaff,setSelectedStaff] = useState(null);
   const { user } = useAuth();
   const hospitalId = user?.hospital_id;
   const { data: staffsList, isLoading } = useHospitalStaffs(hospitalId);
   console.log("staffsList", staffsList);
   console.log("isLoading", isLoading);
-
+  const handleEditClick = (id)=>{
+    setSelectedStaff(id);
+    setShowEdit(true)
+  }
   const columns = [
     {
       title: "Staff Name",
@@ -55,7 +59,7 @@ function StaffTable() {
     {
       title: "",
       dataIndex: "FIELD8",
-      render: () => (
+      render: (item, record) => (
         <>
           <div className="text-end">
             <div className="dropdown dropdown-action">
@@ -70,8 +74,7 @@ function StaffTable() {
               <div className="dropdown-menu dropdown-menu-end">
                 <Link
                   className="dropdown-item"
-                  to
-                  // onClick={()=>setShowEdit(true)}
+                  to={`/staff-manage/${record.id}`}
                 >
                   <i className="far fa-eye me-2" />
                   View
@@ -79,7 +82,7 @@ function StaffTable() {
                 <Link
                   className="dropdown-item"
                   to
-                  onClick={() => setShowEdit(true)}
+                  onClick={()=>handleEditClick(record.id)}
                 >
                   <i className="far fa-edit me-2" />
                   Edit
@@ -102,7 +105,7 @@ function StaffTable() {
     <div className="mt-3">
       <DataTable columns={columns} dataSource={staffsList ? staffsList : []} />
       <ConfirmDelete setShow={setShow} show={show} title="Staff" />
-      <EditStaff setShow={setShowEdit} show={showEdit} title="Edit Staff" />
+      <EditStaff setShow={setShowEdit} show={showEdit} title="Edit Staff" selectedStaff={selectedStaff}/>
     </div>
   );
 }

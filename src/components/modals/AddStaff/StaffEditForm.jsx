@@ -1,89 +1,44 @@
-import React, { useState } from "react";
-import ChooseFile from "../../Hospitals/ChooseFile";
-import { FormProvider, useForm } from "react-hook-form";
-import InputField from "../../Inputfields/InputField";
-import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
+import { useViewStaff } from "../../../hooks/staff/useViewStaff";
+import { FormProvider, useForm } from "react-hook-form";
+import ChooseFile from "../../Hospitals/ChooseFile";
+import InputField from "../../Inputfields/InputField";
 import SelectField from "../../Inputfields/SelectField";
-import TextArea from "../../Inputfields/TextArea";
-import { useAuth } from "../../../hooks/useAuth";
 import { useDepartmentList } from "../../../hooks/departments/useDepartmentList";
-import { useAdduser } from "../../../hooks/users/useAdduser";
+import { useAuth } from "../../../hooks/useAuth";
+import TextArea from "../../Inputfields/TextArea";
+import { Button } from "react-bootstrap";
+import { useEditStaff } from "../../../hooks/staff/useEditStaff";
 
-function CreateStaff(props) {
-  const { handleClose, userType } = props;
-  const { user } = useAuth();
-  const [status, setStatus] = useState(true);
-  const hospitalId = user["hospital_id"];
+function StaffEditForm(props) {
+  const { handleClose, selectedStaff } = props;
+  const { hospitalId } = useAuth();
+  const { data: staff } = useViewStaff(selectedStaff);
   const { data: departmentList, isLoading } = useDepartmentList(hospitalId);
-  const { mutate, isLoading: userLoading } = useAdduser();
+  const [status, setStatus] = useState(true);
   const methods = useForm();
-  const onCreateStaff = async (data) => {
-    // Add your form submission logic here
-    if (userType === "staff") {
-      const staff = {
-        first_name: data.staffname,
-        last_name: "",
-        email: data.staffemail,
-        phone: data.phone,
-        // department: data.department,
-        // username: data.username,
-        password: data.password,
-        // address: {
-        //   pincode: data.pincode,
-        //   street: data.street,
-        //   city: data.city,
-        //   state: data.state,
-        //   address: data.address,
-        // },
-        user_type: "staff",
-        role: data.role.value,
+  const { mutate, isLoading: userLoading } = useEditStaff();
+  useEffect(() => {
+    if (staff) {
+      methods.reset({
+        staffname: staff.first_name,
+        staffemail: staff.email,
+        phone: staff.phone,
+        jobtitle: staff.job_title,
+        role: "",
+        department: staff.departments,
+        username: "",
+        password: staff.password,
+        pincode: staff?.address?.pincode,
+        street: staff?.address?.street,
+        address: staff?.address?.line,
+        city: staff?.address?.city,
+        state: staff?.address?.state,
         is_active: status,
-        hospital_id: hospitalId,
-      };
-      await mutate(staff);
+      });
     }
-    if (userType === "hsAdmin") {
-      console.log("hsAdmin role", data.role.value);
-
-      const hsAdmin = {
-        // first_name: data.staffname,
-        // last_name: "",
-        // email: data.staffemail,
-        // phone: data.phone,
-        // // department: data.department,
-        // // username: data.username,
-        // password: data.password,
-        // // address: {
-        // //   pincode: data.pincode,
-        // //   street: data.street,
-        // //   city: data.city,
-        // //   state: data.state,
-        // //   address: data.address,
-        // // },
-        // user_type: "hsAdmin",
-        // role: data.role.value,
-        // is_active: status,
-        // hospital_id: hospitalId,
-        phone: data.phone,
-        first_name: data.staffname,
-        email: data.staffemail,
-        last_name: "balan",
-        role: data.role.value,
-        address: {
-          line: "dd",
-        },
-        job_title: data.jobtitle,
-        department_id: data.department?.value,
-        user_type: "staff",
-        hospital_id: hospitalId,
-        password: data.password,
-      };
-      await mutate(hsAdmin);
-    }
-    // methods.reset();
-    // handleClose();
-  };
+  }, [selectedStaff, methods, staff]);
   const departmentOptions = departmentList?.map((department) => ({
     label: department.name,
     value: department.id,
@@ -93,8 +48,32 @@ function CreateStaff(props) {
     { label: "User", value: "user" },
   ];
 
-  
-
+  const onCreateStaff = async (data) => {
+    const staff = {
+      first_name: data.staffname,
+      last_name: "",
+      email: data.staffemail,
+      phone: data.phone,
+      department: data.departments,
+      // username: data.username,
+      password: data.password,
+      address: {
+        //   pincode: data.pincode,
+        //   street: data.street,
+        //   city: data.city,
+        //   state: data.state,
+        //   address: data.address,
+        line: data?.address,
+      },
+      user_type: "staff",
+    //   role: data.role.value,
+      is_active: status,
+      hospital_id: hospitalId,
+    };
+    mutate({ id: selectedStaff, data: staff });
+    // methods.reset();
+    // handleClose();
+  };
   return (
     <FormProvider {...methods}>
       <form
@@ -302,11 +281,9 @@ function CreateStaff(props) {
   );
 }
 
-// props validation
-CreateStaff.propTypes = {
-  handleClose: PropTypes.func.isRequired,
-  userType: PropTypes.string.isRequired,
+StaffEditForm.propTypes = {
   selectedStaff: PropTypes.node,
+  handleClose: PropTypes.func.isRequired,
 };
 
-export default CreateStaff;
+export default StaffEditForm;

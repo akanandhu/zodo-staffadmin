@@ -25,7 +25,7 @@ function DoctorManage() {
         <div className="content">
           <Breadcrumb data={breadCrumpData} />
           {/* <Tabs tabData={appointmentTab} /> */}
-          <BasicHero title="Doctor Details (4)" />
+          <BasicHero title="Doctor Details" />
           <DoctorSearch />
           <DoctorsTable doctorsList={doctorsList} />
         </div>

@@ -11,3 +11,13 @@ export const getHospitalStaffs = async (hospitalId) => {
   );
   return response?.data?.data || [];
 };
+
+export const getStaffByUserid = async (id) => {
+  const response = await apiClient.get(`users/${id}`);
+  return response?.data?.data || {};
+};
+
+export const updateStaffByUserid = async ({ id, data }) => {
+  const response = await apiClient.patch(`users/${id}`,data);
+  return response?.data?.data || {};
+};

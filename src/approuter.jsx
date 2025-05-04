@@ -41,6 +41,7 @@ import { ToastContainer } from "react-toastify";
 import Finance from "./components/pages/Finance/Finance";
 import Departments from "./components/pages/Hospitals/Departments";
 import ViewHospitalService from "./components/pages/Hospitals/ViewHospitalService";
+import StaffDetails from "./components/pages/Staff/StaffDetails";
 
 //Accounts
 const Approuter = () => {
@@ -90,6 +91,7 @@ const Approuter = () => {
             {/* <Route path="/appointment" element={<Appointment />} /> */}
             <Route path="/doctor-manage" element={<DoctorManage />} />
             <Route path="/staff-manage" element={<StaffManage />} />
+            <Route path="/staff-manage/:id" element={<StaffDetails />} />
             <Route path="/hospital/services" element={<HospitalServices />} />
             <Route path="/hospital/services/:id" element={<ViewHospitalService />} />
             <Route path="/hospital/departments" element={<Departments />} />

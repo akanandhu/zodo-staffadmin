@@ -19,7 +19,7 @@ function  StaffManage() {
         <div className="content">
           <Breadcrumb data={breadCrumpData} />
           {/* <Tabs tabData={appointmentTab} /> */}
-          <BasicHero title="Staff Details (4)" />
+          <BasicHero title="Staff Details" />
           <StaffSearch />
           <StaffTable />
         </div>
