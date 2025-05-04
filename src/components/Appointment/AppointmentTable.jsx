@@ -9,7 +9,6 @@ import { pdficon } from "../imagepath";
 
 function AppointmentTable(props) {
   const { appointmentList } = props;
-
   const columns = [
     {
       title: "Booking ID",

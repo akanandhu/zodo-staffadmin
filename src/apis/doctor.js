@@ -16,3 +16,8 @@ export const addDoctors = async (doctorsData) => {
 };
 
 
+export const editDoctor = async ({ id, data }) => {
+  const response = await apiClient.patch(`/doctors/${id}`, data);
+  return response.data;
+};
+

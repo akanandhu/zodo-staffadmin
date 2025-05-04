@@ -3,14 +3,18 @@ import DataTable from "./DataTable";
 import { user_profile } from "../imagepath";
 import { Link } from "react-router-dom";
 import ConfirmDelete from "../modals/ConfirmDelete";
-import AddDoctor from "../modals/AddDoctor/AddDoctor";
 import PropTypes from "prop-types";
+import EditDoctor from "../modals/AddDoctor/EditDoctor";
 
 function DoctorsTable(props) {
-  const { doctorsList } = props;  
+  const { doctorsList } = props;
   const [show, setShow] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
-  
+  const [selectedDoctor, setSelectedDoctor] = useState(null);
+  const handleEdit = (id) => {
+    setShowEdit(true);
+    setSelectedDoctor(id);
+  };
   const columns = [
     {
       title: "Doctor Name",
@@ -79,7 +83,7 @@ function DoctorsTable(props) {
                 <Link
                   className="dropdown-item"
                   to
-                  onClick={() => setShowEdit(true)}
+                  onClick={() => handleEdit(record.id)}
                 >
                   <i className="far fa-edit me-2" />
                   Edit
@@ -102,7 +106,12 @@ function DoctorsTable(props) {
     <div className="mt-3">
       <DataTable columns={columns} dataSource={doctorsList ?? []} />
       <ConfirmDelete setShow={setShow} show={show} title="Doctor" />
-      <AddDoctor setShow={setShowEdit} show={showEdit} title="Doctor" />
+      <EditDoctor
+        setShow={setShowEdit}
+        show={showEdit}
+        title="Edit Doctor"
+        selectedDoctor={selectedDoctor}
+      />
     </div>
   );
 }

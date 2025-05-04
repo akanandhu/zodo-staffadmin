@@ -12,12 +12,15 @@ function Appointment() {
       link: "/appointment",
     },
   ];
+  
+
+ 
   return (
     <Layout activeClassName="appointment" id="menu-item2" id1="menu-items2">
       <div className="page-wrapper">
         <div className="content">
           <Breadcrumb data={breadCrumpData} />
-          <Tabs tabData={appointmentTab}/>
+          <Tabs tabData={appointmentTab} />
         </div>
       </div>
     </Layout>
