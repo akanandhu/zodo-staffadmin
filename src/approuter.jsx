@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./components/pages/login";
 import Settingssociallinks from "./components/settings/Settingssociallinks";
 import SettingsChangePassword from "./components/settings/SettingsChangePassword";
-import DoctorList from "./components/doctor/DoctorList";
+// import DoctorList from "./components/doctor/DoctorList";
 import ForgotPassword from "./components/pages/login/ForgotPassword";
 import Signup from "./components/pages/login/Signup";
 import Register from "./components/pages/login/Register";
@@ -14,22 +14,8 @@ import Error from "./components/pages/login/Error";
 import ServerError from "./components/pages/login/ServerError";
 import BlankPage from "./components/pages/login/BlankPage";
 import Setting from "./components/settings/Setting";
-import Hospitals from "./components/pages/Hospitals/Hospitals";
-import Doctors from "./components/pages/Doctors/Doctors";
-import HospitalDetails from "./components/pages/Hospitals/HospitalDetails";
 import EditHospital from "./components/pages/Hospitals/EditHospital";
-import AddHospital from "./components/pages/Hospitals/AddHospital";
 import DoctorDetails from "./components/pages/Doctors/DoctorDetails";
-import AddDoctors from "./components/pages/Doctors/AddDoctors";
-import Specialization from "./components/pages/Doctors/Specialization";
-import FasttagIssued from "./components/pages/Dashboard/FasttagIssued";
-import FasttagRevenue from "./components/pages/Dashboard/FasttagRevenue";
-import SettlementRequests from "./components/pages/Dashboard/SettlementRequests";
-import ManageSettlement from "./components/pages/Dashboard/ManageSettlement";
-import Dashboard from "./components/pages/Dashboard/Dashboard";
-import ManageRequest from "./components/pages/Hospitals/ManageRequest";
-import DoctorRequest from "./components/pages/Doctors/DoctorRequest";
-import EditDoctor from "./components/pages/Doctors/EditDoctor";
 import Appointment from "./components/pages/Appointment/Appointment";
 import DoctorManage from "./components/pages/Doctors/DoctorManage";
 import StaffManage from "./components/pages/Staff/StaffManage";
@@ -42,6 +28,7 @@ import Finance from "./components/pages/Finance/Finance";
 import Departments from "./components/pages/Hospitals/Departments";
 import ViewHospitalService from "./components/pages/Hospitals/ViewHospitalService";
 import StaffDetails from "./components/pages/Staff/StaffDetails";
+import Dashboard from "./components/pages/Dashboard/Dashboard";
 
 //Accounts
 const Approuter = () => {
@@ -90,6 +77,7 @@ const Approuter = () => {
             <Route path="/" element={<Dashboard />} />
             {/* <Route path="/appointment" element={<Appointment />} /> */}
             <Route path="/doctor-manage" element={<DoctorManage />} />
+            <Route path="/doctor-manage/:id" element={<DoctorDetails />} />
             <Route path="/staff-manage" element={<StaffManage />} />
             <Route path="/staff-manage/:id" element={<StaffDetails />} />
             <Route path="/hospital/services" element={<HospitalServices />} />
@@ -97,7 +85,9 @@ const Approuter = () => {
             <Route path="/hospital/departments" element={<Departments />} />
             <Route path="/hospital/edit" element={<EditHospital />} />
 
-            <Route
+
+
+            {/* <Route
               path="/dashboard/fasttag-revenue"
               element={<FasttagRevenue />}
             />
@@ -108,20 +98,20 @@ const Approuter = () => {
             <Route
               path="/dashboard/settlement-requests"
               element={<SettlementRequests />}
-            />
-            <Route
+            /> */}
+            {/* <Route
               path="/dashboard/settlement-requests/:id"
               element={<ManageSettlement />}
-            />
+            /> */}
             {/* <Route
             path="/dashboard/fasttag-issued/:id"
             element={<FasttagDetails />}
             /> */}
-            <Route path="/doctorlist" element={<DoctorList />} />
+            {/* <Route path="/doctorlist" element={<DoctorList />} /> */}
             {/* Manage Hospital */}
-            <Route path="/manage-hospitals" element={<Hospitals />} />
+            {/* <Route path="/manage-hospitals" element={<Hospitals />} /> */}
 
-            <Route
+            {/* <Route
               path="/manage-hospitals/add-hospital"
               element={<AddHospital />}
             />
@@ -129,7 +119,7 @@ const Approuter = () => {
             <Route
               path="/manage-hospitals/manage-request/:id"
               element={<ManageRequest />}
-            />
+            /> */}
             {/* <Route
               path="/manage-hospitals/manage-request/:id/edit"
               element={<EditHospital />}
@@ -139,15 +129,15 @@ const Approuter = () => {
               element={<EditHospital />}
             /> */}
             {/* Manage Doctors */}
-            <Route path="/manage-doctors" element={<Doctors />} />
+            {/* <Route path="/manage-doctors" element={<Doctors />} /> */}
               <Route path="/finance" element={<Finance />} />
-            <Route path="/manage-doctors/add-doctor" element={<AddDoctors />} />
-            <Route path="/doctor-manage/:id" element={<DoctorDetails />} />
-            <Route
+            {/* <Route path="/manage-doctors/add-doctor" element={<AddDoctors />} /> */}
+            {/* <Route path="/doctor-manage/:id" element={<DoctorDetails />} /> */}
+            {/* <Route
               path="/manage-doctors/add-doctors"
               element={<AddDoctors />}
-            />
-            <Route
+            /> */}
+            {/* <Route
               path="/manage-doctors/edit-doctor/:id"
               element={<AddDoctors />}
             />
@@ -163,7 +153,7 @@ const Approuter = () => {
             <Route
               path="/manage-doctors/specialization"
               element={<Specialization />}
-            />
+            /> */}
           </Route>
         </Routes>
       </BrowserRouter>
