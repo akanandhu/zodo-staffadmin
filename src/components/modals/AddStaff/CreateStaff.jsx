@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ChooseFile from "../../Hospitals/ChooseFile";
 import { FormProvider, useForm } from "react-hook-form";
 import InputField from "../../Inputfields/InputField";
@@ -9,15 +9,24 @@ import TextArea from "../../Inputfields/TextArea";
 import { useAuth } from "../../../hooks/useAuth";
 import { useDepartmentList } from "../../../hooks/departments/useDepartmentList";
 import { useAdduser } from "../../../hooks/users/useAdduser";
+import { useHospitalStaffs } from "../../../hooks/users/useHospitalStaffs";
 
 function CreateStaff(props) {
   const { handleClose, userType } = props;
-  const { user } = useAuth();
   const [status, setStatus] = useState(true);
-  const hospitalId = user["hospital_id"];
+  const { hospitalId } = useAuth();
   const { data: departmentList, isLoading } = useDepartmentList(hospitalId);
-  const { mutate, isLoading: userLoading } = useAdduser();
+  const { mutate, isLoading: userLoading } = useAdduser(hospitalId);
+  const { data: hospitalStaffs } = useHospitalStaffs(hospitalId);
   const methods = useForm();
+
+  useEffect(() => {
+    if (hospitalStaffs) {
+      methods.reset();
+      // handleClose();
+    }
+  }, [hospitalStaffs]);
+
   const onCreateStaff = async (data) => {
     // Add your form submission logic here
     if (userType === "staff") {
@@ -26,22 +35,28 @@ function CreateStaff(props) {
         last_name: "",
         email: data.staffemail,
         phone: data.phone,
-        // department: data.department,
+        department_id: data.department.value,
         // username: data.username,
-        password: data.password,
-        // address: {
-        //   pincode: data.pincode,
-        //   street: data.street,
-        //   city: data.city,
-        //   state: data.state,
-        //   address: data.address,
-        // },
+        // password: data.password,
+        address: {
+          line: data.address,
+          pincode: data.pincode,
+          street: data.street,
+          city: data.city,
+          state: data.state,
+          // address: data.address,
+        },
+        job_title: data.jobtitle,
         user_type: "staff",
         role: data.role.value,
         is_active: status,
         hospital_id: hospitalId,
       };
+
       await mutate(staff);
+
+      // methods.reset();
+      // handleClose();
     }
     if (userType === "hsAdmin") {
       console.log("hsAdmin role", data.role.value);
@@ -92,8 +107,6 @@ function CreateStaff(props) {
     { label: "Admin", value: "admin" },
     { label: "User", value: "user" },
   ];
-
-  
 
   return (
     <FormProvider {...methods}>
@@ -194,7 +207,7 @@ function CreateStaff(props) {
           </div>
         </div>
 
-        <div className="row">
+        {/* <div className="row">
           <div className="col-md-6">
             <div className="form-group">
               <InputField
@@ -217,7 +230,7 @@ function CreateStaff(props) {
               />
             </div>
           </div>
-        </div>
+        </div> */}
 
         <h4 className="card-title mt-2">Address</h4>
         <div className="row">

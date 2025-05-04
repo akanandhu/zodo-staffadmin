@@ -1,20 +1,22 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { updateStaffByUserid } from "../../apis/users";
+import { deleteStaffByUserid } from "../../apis/users";
 
-export const useEditStaff = () => {
+const useDeleteStaff = () => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: updateStaffByUserid, // API function to create
-    onMutate: async () => {
+    mutationFn: deleteStaffByUserid, // API function to delete hospital
+    onMutate: async (id) => {
       // Cancel any ongoing queries for hospitals to prevent race conditions
-      await queryClient.cancelQueries({ queryKey: ["staff"] });
+      await queryClient.cancelQueries({ queryKey: ["staffs"] });
+      // Optimistically update the cache
+      queryClient.setQueryData(["staffs"], (oldStaffs) => ({
+        ...oldStaffs,
+        data: oldStaffs?.data?.filter((staff) => staff.id !== id),
+      }));
     },
-    onSuccess: (data, variables) => {
-      const message = data?.message || "Staff updated successfully";
-      // queryClient.setQueryData(["hospital", variables.id], data);
-      // queryClient.invalidateQueries({ queryKey: ["hospitals"] });
-      queryClient.invalidateQueries({ queryKey: ["staff", variables.id] });
+    onSuccess: (data) => {
+      const message = data.message;
       toast.success(message, {
         position: "top-right",
         autoClose: 5000,
@@ -26,15 +28,14 @@ export const useEditStaff = () => {
       });
     },
     onError: (error, id, context) => {
+        console.log("Delete staff error ",error);
+        
+      const errotMessage = error?.response?.data?.message || "Failed to delete hospital";
       // Rollback if there is an error
-      console.log("Some error ", error);
-
-      if (context?.previousStaff) {
-        queryClient.setQueryData(["hospital"], context.previousStaff);
+      if (context?.previousHospitals) {
+        queryClient.setQueryData(["staffs"], context.previousStaffs);
       }
-      const errorMessage =
-        error?.response?.data?.message || "Failed to edit hospital";
-      toast.error(errorMessage, {
+      toast.error(errotMessage, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -51,3 +52,5 @@ export const useEditStaff = () => {
     isLoading: mutation.isPending,
   };
 };
+
+export default useDeleteStaff;

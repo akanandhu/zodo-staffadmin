@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { addUser } from "../../apis/users";
 
-export const useAdduser = () => {
+export const useAdduser = (hospitalId) => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: addUser, // API function to create
@@ -17,6 +17,7 @@ export const useAdduser = () => {
           data.user_type ? "as " + data.user_type : ""
         }`;
       queryClient.invalidateQueries(["user"]);
+      queryClient.invalidateQueries(["staffs", hospitalId], data);
       toast.success(message, {
         position: "top-right",
         autoClose: 5000,

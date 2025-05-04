@@ -7,7 +7,7 @@ export const addUser = async (userData) => {
 
 export const getHospitalStaffs = async (hospitalId) => {
   const response = await apiClient.get(
-    `/users?page=1&limit=10&user_type=staff&hospital_id=${hospitalId}`
+    `/users?page=1&limit=10&hospital_id=${hospitalId}`
   );
   return response?.data?.data || [];
 };
@@ -19,5 +19,12 @@ export const getStaffByUserid = async (id) => {
 
 export const updateStaffByUserid = async ({ id, data }) => {
   const response = await apiClient.patch(`users/${id}`,data);
+  return response?.data?.data || {};
+};
+
+export const deleteStaffByUserid = async (id) => {
+  const response = await apiClient.delete(`users/${id}`);
+  console.log("Response ",response);
+  
   return response?.data?.data || {};
 };
