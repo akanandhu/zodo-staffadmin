@@ -41,14 +41,6 @@ function CreateDoctorForm(props) {
 
   const onCreateDoctor = async (data) => {
     const doctor = {
-      // name: data.doctorname,
-      // email: data.doctoremail,
-      // phone_number: data.phone,
-      // hospital_id: hospital_id,
-      // // department_id: data.departments.map((item) => item.value),
-      // specifications_id: data?.specialisations?.map((item) => item.value),
-      // pricing: parseInt(data.pricing),
-
       name: data.doctorname,
       email: data.doctoremail,
       profile_pic: "www.link.com",
@@ -203,7 +195,6 @@ function CreateDoctorForm(props) {
             </div>
           </div>
         </div>
-
         <div className="d-flex justify-content-between ps-3 pe-3 pb-5">
           <Button
             variant="outline-primary"
