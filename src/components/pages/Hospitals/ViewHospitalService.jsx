@@ -4,7 +4,8 @@ import Breadcrumb from "../../breadcrump/Breadcrumb";
 import { useParams } from "react-router-dom";
 import { useValidateId } from "../../../hooks/useValidateId";
 import { useViewService } from "../../../hooks/hospital-services/useViewService";
-import ServiceDetails from "../../Hospitals/Services/ServiceDetails";
+import BasicHero from "../../heros/BasicHero";
+import ServicesTable from "../../Hospitals/Services/ServicesTable";
 
 function ViewHospitalService() {
   const { id } = useParams();
@@ -37,7 +38,9 @@ function ViewHospitalService() {
       <div className="page-wrapper">
         <div className="content">
           <Breadcrumb data={breadCrumpData} />
-          <ServiceDetails serviceDetails={service ?? {}}/>
+          <BasicHero title={service?.name} />
+          <ServicesTable selectedService={service?.id}/>
+          {/* <ServiceDetails serviceDetails={service ?? {}}/> */}
         </div>
       </div>
     </Layout>

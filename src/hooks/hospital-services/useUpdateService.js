@@ -1,18 +1,18 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { updateStaffByUserid } from "../../apis/users";
+import { editHospitalService } from "../../apis/hospitalServices";
 
-export const useEditStaff = () => {
+export const useUpdateService = () => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: updateStaffByUserid, // API function to create
+    mutationFn: editHospitalService, // API function to create
     onMutate: async () => {
       // Cancel any ongoing queries for hospitals to prevent race conditions
-      await queryClient.cancelQueries({ queryKey: ["staff"] });
+      await queryClient.cancelQueries({ queryKey: ["services"] });
     },
     onSuccess: (data, variables) => {
-      const message = data?.message || "Staff updated successfully";
-      queryClient.invalidateQueries({ queryKey: ["staff", variables.id] });
+      const message = data?.message || "Service updated successfully";
+      queryClient.invalidateQueries({ queryKey: ["services", variables.id] });
       toast.success(message, {
         position: "top-right",
         autoClose: 5000,
@@ -25,11 +25,11 @@ export const useEditStaff = () => {
     },
     onError: (error, id, context) => {
       // Rollback if there is an error
-      if (context?.previousStaff) {
-        queryClient.setQueryData(["hospital"], context.previousStaff);
+      if (context?.previousService) {
+        queryClient.setQueryData(["service"], context.previousService);
       }
       const errorMessage =
-        error?.response?.data?.message || "Failed to edit staff";
+        error?.response?.data?.message || "Failed to update service";
       toast.error(errorMessage, {
         position: "top-right",
         autoClose: 5000,

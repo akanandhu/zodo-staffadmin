@@ -15,6 +15,11 @@ export const addHospitalService = async (serviceData) => {
   return response.data || [];
 };
 
+export const editHospitalService = async ({ id, data }) => {
+  const response = await apiClient.patch(`/hospital-services/${id}`, data);
+  return response.data;
+};
+
 // export const deleteDepartment = async (id) => {
 //   const response = await apiClient.delete(`/departments/${id}`);
 //   return response.data;
