@@ -24,7 +24,5 @@ export const updateStaffByUserid = async ({ id, data }) => {
 
 export const deleteStaffByUserid = async (id) => {
   const response = await apiClient.delete(`users/${id}`);
-  console.log("Response ",response);
-  
-  return response?.data?.data || {};
+  return response?.data || {};
 };

@@ -10,6 +10,7 @@ function FasttagToggle(props) {
         id={`${index ? "status_" + index : "status_0"}`}
         className="check"
         onClick={() => setToggleFasttag(!toggleFasttag)}
+        checked={toggleFasttag}
       />
       <label
         htmlFor={`${index ? "status_" + index : "status_0"}`}

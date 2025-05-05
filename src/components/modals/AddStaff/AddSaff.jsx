@@ -20,7 +20,7 @@ function AddSaff(props) {
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body className="pt-0 pb-0 overflow-y-auto">
-        <CreateStaff handleClose={handleClose} userType="staff"/>
+        <CreateStaff handleClose={handleClose}/>
       </Modal.Body>
     </Modal>
   );

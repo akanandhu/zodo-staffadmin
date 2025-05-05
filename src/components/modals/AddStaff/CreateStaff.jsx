@@ -28,74 +28,30 @@ function CreateStaff(props) {
   }, [hospitalStaffs]);
 
   const onCreateStaff = async (data) => {
-    // Add your form submission logic here
-    if (userType === "staff") {
-      const staff = {
-        first_name: data.staffname,
-        last_name: "",
-        email: data.staffemail,
-        phone: data.phone,
-        department_id: data.department.value,
-        // username: data.username,
-        // password: data.password,
-        address: {
-          line: data.address,
-          pincode: data.pincode,
-          street: data.street,
-          city: data.city,
-          state: data.state,
-          // address: data.address,
-        },
-        job_title: data.jobtitle,
-        user_type: "staff",
-        role: data.role.value,
-        is_active: status,
-        hospital_id: hospitalId,
-      };
-
-      await mutate(staff);
-
-      // methods.reset();
-      // handleClose();
-    }
-    if (userType === "hsAdmin") {
-      console.log("hsAdmin role", data.role.value);
-
-      const hsAdmin = {
-        // first_name: data.staffname,
-        // last_name: "",
-        // email: data.staffemail,
-        // phone: data.phone,
-        // // department: data.department,
-        // // username: data.username,
-        // password: data.password,
-        // // address: {
-        // //   pincode: data.pincode,
-        // //   street: data.street,
-        // //   city: data.city,
-        // //   state: data.state,
-        // //   address: data.address,
-        // // },
-        // user_type: "hsAdmin",
-        // role: data.role.value,
-        // is_active: status,
-        // hospital_id: hospitalId,
-        phone: data.phone,
-        first_name: data.staffname,
-        email: data.staffemail,
-        last_name: "balan",
-        role: data.role.value,
-        address: {
-          line: "dd",
-        },
-        job_title: data.jobtitle,
-        department_id: data.department?.value,
-        user_type: "staff",
-        hospital_id: hospitalId,
-        password: data.password,
-      };
-      await mutate(hsAdmin);
-    }
+    const departmentIds = data.department.map((item)=> item.value);
+    const staff = {
+      first_name: data.staffname,
+      last_name: "",
+      email: data.staffemail,
+      phone: data.phone,
+      department_ids: departmentIds,
+      // username: data.username,
+      password: data.password,
+      address: {
+        line: data.address,
+        pincode: data.pincode,
+        street: data.street,
+        city: data.city,
+        state: data.state,
+        // address: data.address,
+      },
+      job_title: data.jobtitle,
+      user_type: userType ?? data.role.value,
+      // role: data.role.value,
+      is_active: status,
+      hospital_id: hospitalId,
+    };
+    await mutate(staff);
     // methods.reset();
     // handleClose();
   };
@@ -104,8 +60,8 @@ function CreateStaff(props) {
     value: department.id,
   }));
   const roleOptions = [
-    { label: "Admin", value: "admin" },
-    { label: "User", value: "user" },
+    { label: "HsAdmin", value: "hsAdmin" },
+    { label: "Staff", value: "staff" },
   ];
 
   return (
@@ -171,26 +127,28 @@ function CreateStaff(props) {
               <InputField
                 name="jobtitle"
                 label="Job Title"
-                // validation={{ required: "Job title is required" }}
+                validation={{ required: "Job title is required" }}
                 placeholder="Enter job title"
                 type="text"
               />
             </div>
           </div>
 
-          <div className="col-md-4">
-            <div className="form-group">
-              <SelectField
-                options={roleOptions}
-                label="Role"
-                name="role"
-                isMultiSelect={false}
-                placeholder="Select role"
-                validationMessage="Role is required"
-                // isLoading={isLoading}
-              />
+          {!userType && (
+            <div className="col-md-4">
+              <div className="form-group">
+                <SelectField
+                  options={roleOptions}
+                  label="Role"
+                  name="role"
+                  isMultiSelect={false}
+                  placeholder="Select role"
+                  validationMessage="Role is required"
+                  // isLoading={isLoading}
+                />
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="col-md-4">
             <div className="form-group">
@@ -198,7 +156,7 @@ function CreateStaff(props) {
                 options={departmentOptions}
                 label="Department"
                 name="department"
-                isMultiSelect={false}
+                isMultiSelect={true}
                 placeholder="Select Department"
                 validationMessage="Department is required"
                 isLoading={isLoading}
@@ -207,18 +165,18 @@ function CreateStaff(props) {
           </div>
         </div>
 
-        {/* <div className="row">
-          <div className="col-md-6">
-            <div className="form-group">
-              <InputField
-                name="username"
-                label="User Name"
-                validation={{ required: "Username is required" }}
-                placeholder="Enter user name"
-                type="text"
-              />
-            </div>
-          </div>
+        <div className="row">
+          {/* <div className="col-md-6">
+              <div className="form-group">
+                <InputField
+                  name="username"
+                  label="User Name"
+                  validation={{ required: "Username is required" }}
+                  placeholder="Enter user name"
+                  type="text"
+                />
+              </div>
+            </div> */}
           <div className="col-md-6">
             <div className="form-group">
               <InputField
@@ -230,7 +188,7 @@ function CreateStaff(props) {
               />
             </div>
           </div>
-        </div> */}
+        </div>
 
         <h4 className="card-title mt-2">Address</h4>
         <div className="row">

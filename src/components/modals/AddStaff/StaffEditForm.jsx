@@ -12,24 +12,37 @@ import { Button } from "react-bootstrap";
 import { useEditStaff } from "../../../hooks/staff/useEditStaff";
 
 function StaffEditForm(props) {
-  const { handleClose, selectedStaff } = props;
+  const { handleClose, selectedStaff, userType } = props;
   const { hospitalId } = useAuth();
   const { data: staff } = useViewStaff(selectedStaff);
   const { data: departmentList, isLoading } = useDepartmentList(hospitalId);
   const [status, setStatus] = useState(true);
   const methods = useForm();
   const { mutate, isLoading: userLoading } = useEditStaff();
+  const departmentOptions = departmentList?.map((department) => ({
+    label: department.name,
+    value: department.id,
+  }));
+  const roleOptions = [
+    { label: "HsAdmin", value: "hsAdmin" },
+    { label: "Staff", value: "staff" },
+  ];
   useEffect(() => {
     if (staff) {
+      const departments = staff?.departments.map((item) => {
+        const department = { label: item.name, value: item.id };
+        return department;
+      });
+      const roleOption = roleOptions.find((item)=> item.value === staff.user_type);
       methods.reset({
         staffname: staff.first_name,
         staffemail: staff.email,
         phone: staff.phone,
         jobtitle: staff.job_title,
-        role: "",
-        department: staff.departments,
-        username: "",
-        password: staff.password,
+        role: roleOption,
+        department: departments,
+        // username: "",
+        // password: staff.password,
         pincode: staff?.address?.pincode,
         street: staff?.address?.street,
         address: staff?.address?.line,
@@ -39,34 +52,27 @@ function StaffEditForm(props) {
       });
     }
   }, [selectedStaff, methods, staff]);
-  const departmentOptions = departmentList?.map((department) => ({
-    label: department.name,
-    value: department.id,
-  }));
-  const roleOptions = [
-    { label: "Admin", value: "admin" },
-    { label: "User", value: "user" },
-  ];
+  
+  
 
-  const onCreateStaff = async (data) => {
+  const onEditStaff = async (data) => {
+    const departmentIds = data.department.map((item) => item.value);
     const staff = {
       first_name: data.staffname,
       last_name: "",
       email: data.staffemail,
       phone: data.phone,
-      department: data.departments,
-      // username: data.username,
-      password: data.password,
+      department_ids: departmentIds,
       address: {
-        //   pincode: data.pincode,
-        //   street: data.street,
-        //   city: data.city,
-        //   state: data.state,
-        //   address: data.address,
+        pincode: data.pincode,
+        street: data.street,
+        city: data.city,
+        state: data.state,
+        address: data.address,
         line: data?.address,
       },
-      user_type: "staff",
-    //   role: data.role.value,
+      user_type: userType,
+      //   role: data.role.value,
       is_active: status,
       hospital_id: hospitalId,
     };
@@ -78,7 +84,7 @@ function StaffEditForm(props) {
     <FormProvider {...methods}>
       <form
         className="bg-white rounded ps-1 pe-1"
-        onSubmit={methods.handleSubmit(onCreateStaff)}
+        onSubmit={methods.handleSubmit(onEditStaff)}
       >
         <div className="row">
           <div className="col-md-8">
@@ -137,7 +143,7 @@ function StaffEditForm(props) {
               <InputField
                 name="jobtitle"
                 label="Job Title"
-                // validation={{ required: "Job title is required" }}
+                validation={{ required: "Job title is required" }}
                 placeholder="Enter job title"
                 type="text"
               />
@@ -164,7 +170,7 @@ function StaffEditForm(props) {
                 options={departmentOptions}
                 label="Department"
                 name="department"
-                isMultiSelect={false}
+                isMultiSelect={true}
                 placeholder="Select Department"
                 validationMessage="Department is required"
                 isLoading={isLoading}
@@ -173,7 +179,7 @@ function StaffEditForm(props) {
           </div>
         </div>
 
-        <div className="row">
+        {/* <div className="row">
           <div className="col-md-6">
             <div className="form-group">
               <InputField
@@ -196,7 +202,7 @@ function StaffEditForm(props) {
               />
             </div>
           </div>
-        </div>
+        </div> */}
 
         <h4 className="card-title mt-2">Address</h4>
         <div className="row">
@@ -284,6 +290,7 @@ function StaffEditForm(props) {
 StaffEditForm.propTypes = {
   selectedStaff: PropTypes.node,
   handleClose: PropTypes.func.isRequired,
+  userType: PropTypes.string.isRequired,
 };
 
 export default StaffEditForm;

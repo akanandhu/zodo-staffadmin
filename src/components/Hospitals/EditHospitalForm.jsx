@@ -10,83 +10,100 @@ import { useViewHospital } from "../../hooks/hospital/useViewHospital";
 import { useNavigate } from "react-router-dom";
 import { useEditHostpital } from "../../hooks/hospital/useEditHospitals";
 import FullscreenLoader from "../loaders/FullscreenLoader";
+import { toast } from "react-toastify";
 
 function EditHospitalForm() {
   const methods = useForm();
   const navigate = useNavigate();
-  const { hospitalId } = useAuth();
+  const { user, hospitalId } = useAuth();
   const { data: hospitalDetails } = useViewHospital(hospitalId);
-  const [toggleFasttag, setToggleFasttag] = useState(
-    hospitalDetails?.fasttag?.enabled || false
-  );
+  const [toggleFasttag, setToggleFasttag] = useState(false)
   const { mutate, isLoading } = useEditHostpital();
+  
   useEffect(() => {
-    if(hospitalDetails){
-        methods.reset({
-          hospitalName: hospitalDetails?.name,
-          // set default values for other fields as needed
-          adminName: hospitalDetails?.admin_name,
-          adminEmail: hospitalDetails?.admin_email,
-          adminPassword: hospitalDetails?.admin_password,
-          website: hospitalDetails?.website,
-          gstnumber: hospitalDetails?.gst,
-          companyName: hospitalDetails?.address?.lineOne,
-          street: hospitalDetails?.address?.city,
-          address: hospitalDetails?.address?.lineTwo,
-          town: hospitalDetails?.address?.city,
-    
-          district: hospitalDetails?.address?.district,
-          state: hospitalDetails?.address?.state,
-          pincode: hospitalDetails?.address?.pincode,
-          accountNumber: hospitalDetails?.bank_account?.account_number,
-          verifyAccountnumber: hospitalDetails?.bank_account?.verify_account_number,
-          accountHoldername: "",
-          ifsc: hospitalDetails?.bank_account?.ifsc,
-          billingAccountHoldername: hospitalDetails?.billing_address?.lineOne,
-    
-          billingStreet: hospitalDetails?.billing_address?.city,
-          billingAddress: hospitalDetails?.billing_address?.lineTwo,
-          billingTown: hospitalDetails?.billing_address?.city,
-          billingDistrict: hospitalDetails?.billing_address?.district,
-          companyWebsite: hospitalDetails?.billing_address?.website,
-        });
+    if (hospitalDetails) {
+      const fastTag = hospitalDetails?.fastTag?.enabled
+      console.log("fasttag",fastTag);
+      setToggleFasttag(fastTag);
+      methods.reset({
+        hospitalName: hospitalDetails?.name,
+        // set default values for other fields as needed
+        adminName: user?.first_name,
+        adminEmail: user?.email,
+        adminPassword: user?.password,
+        website: hospitalDetails?.website,
+        gstnumber: hospitalDetails?.gst,
+        companyName: hospitalDetails?.address?.lineOne,
+        street: hospitalDetails?.address?.city,
+        address: hospitalDetails?.address?.lineTwo,
+        town: hospitalDetails?.address?.city,
+
+        district: hospitalDetails?.address?.district,
+        state: hospitalDetails?.address?.state,
+        pincode: hospitalDetails?.address?.pincode,
+        accountNumber: hospitalDetails?.bank_account?.account_number,
+        verifyAccountnumber:
+          hospitalDetails?.bank_account?.verify_account_number,
+        accountHoldername: "",
+        ifsc: hospitalDetails?.bank_account?.ifsc,
+        billingAccountHoldername: hospitalDetails?.billing_address?.lineOne,
+
+        billingStreet: hospitalDetails?.billing_address?.city,
+        billingAddress: hospitalDetails?.billing_address?.lineTwo,
+        billingTown: hospitalDetails?.billing_address?.city,
+        billingDistrict: hospitalDetails?.billing_address?.district,
+        companyWebsite: hospitalDetails?.billing_address?.website,
+      });
     }
   }, [hospitalDetails, methods]);
   const onEditHospital = async (data) => {
-    const hospital = {
-      name: data?.hospitalName,
-      logo: "hihihi",
-      location: data?.town,
-      address: {
-        lineOne: data?.companyName,
-        lineTwo: data?.address,
-        city: data?.town,
-        district: data?.district,
-        state: data?.state,
-        pincode: data?.pincode,
-      },
-      billing_address: {
-        lineOne: data?.billingAccountHoldername,
-        lineTwo: data?.billingAddress + " " + data?.billingStreet,
-        city: data?.billingTown,
-        district: data?.billingDistrict,
-        state: data?.billingState,
-        pincode: data?.billingPincode,
-      },
-      admin: {
-        name: data?.adminName,
-        email: data?.adminEmail,
-        password: data?.adminPassword,
-      },
-      fastTag: {
-        enabled: toggleFasttag,
-        count: 0,
-        price: 0,
-      },
-    gst: data?.gstnumber, 
-    website: data?.website,
-    };
-    await mutate({ id: hospitalId, data: hospital });
+    if (data.accountNumber !== data.verifyAccountnumber) {
+      const errorMessage = "Account number mismatch"
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else {
+      const hospital = {
+        name: data?.hospitalName,
+        logo: "hihihi",
+        location: data?.town,
+        address: {
+          lineOne: data?.companyName,
+          lineTwo: data?.address,
+          city: data?.town,
+          district: data?.district,
+          state: data?.state,
+          pincode: data?.pincode,
+        },
+        billing_address: {
+          lineOne: data?.billingAccountHoldername,
+          lineTwo: data?.billingAddress,
+          city: data?.billingTown,
+          district: data?.billingDistrict,
+          state: data?.billingState,
+          pincode: data?.billingPincode,
+        },
+        admin: {
+          name: data?.adminName,
+          email: data?.adminEmail,
+          password: data?.adminPassword,
+        },
+        fastTag: {
+          enabled: toggleFasttag,
+          count: 0,
+          price: 0,
+        },
+        gst: data?.gstnumber,
+        website: data?.companyWebsite,
+      };
+      await mutate({ id: hospitalId, data: hospital });
+    }
   };
   return (
     <FormProvider {...methods}>
@@ -149,7 +166,7 @@ function EditHospitalForm() {
         </div>
 
         <div className="row">
-          <div className="col-md-6">
+          {/* <div className="col-md-6">
             <div className="form-group">
               <InputField
                 name="website"
@@ -160,7 +177,7 @@ function EditHospitalForm() {
                 defaultValue={hospitalDetails?.website}
               />
             </div>
-          </div>
+          </div> */}
         </div>
         <h4 className="card-title">GSTIN</h4>
         <div className="w-50">
@@ -208,7 +225,7 @@ function EditHospitalForm() {
           </div>
         </div> */}
 
-        <h4 className="card-title mt-3">Company Location</h4>
+        <h4 className="card-title mt-3">Company Address</h4>
         <div className="row">
           <div className="col-md-4">
             <InputField
@@ -306,7 +323,7 @@ function EditHospitalForm() {
               <InputField
                 name="accountNumber"
                 label=""
-                validation={{ required: "Account Number is required" }}
+                // validation={{ required: "Account Number is required" }}
                 placeholder="Account Number"
                 type="text"
               />
@@ -317,7 +334,7 @@ function EditHospitalForm() {
               <InputField
                 name="verifyAccountnumber"
                 label=""
-                validation={{ required: "Account Number is required" }}
+                // validation={{ required: "Account Number is required" }}
                 placeholder="Verify Account Number"
                 type="text"
               />
@@ -332,7 +349,7 @@ function EditHospitalForm() {
                 name="accountHoldername"
                 label=""
                 validation={{
-                  required: "Account Holder Name is required",
+                  // required: "Account Holder Name is required",
                 }}
                 placeholder="Account Holder Name"
                 type="text"
@@ -344,7 +361,7 @@ function EditHospitalForm() {
               <InputField
                 name="ifsc"
                 label=""
-                validation={{ required: "IFSC Code is required" }}
+                // validation={{ required: "IFSC Code is required" }}
                 placeholder="IFSC"
                 type="text"
               />
@@ -465,7 +482,7 @@ function EditHospitalForm() {
           <div className="form-group">
             <InputField
               name="companyWebsite"
-              label="Company Website"
+              label="Hospital Website"
               validation={{ required: "Company Website is required" }}
               placeholder="Enter Company Website"
               type="text"

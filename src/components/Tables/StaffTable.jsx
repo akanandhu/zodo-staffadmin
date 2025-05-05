@@ -12,13 +12,15 @@ function StaffTable() {
   const [show, setShow] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [selectedStaff, setSelectedStaff] = useState(null);
+  const [userType, setUserType] = useState("");
   const { hospitalId } = useAuth();
   const { data: staffsList, isLoading } = useHospitalStaffs(hospitalId);
   const { mutate } = useDeleteStaff();
   console.log("staffsList", staffsList);
   console.log("isLoading", isLoading);
 
-  const handleEditClick = (id) => {
+  const handleEditClick = (id, user_type) => {
+    setUserType(user_type);
     setSelectedStaff(id);
     setShowEdit(true);
   };
@@ -29,7 +31,7 @@ function StaffTable() {
   };
   const handleDelete = async () => {
     console.log("Log click");
-    
+
     await mutate(selectedStaff);
     setShow(false);
   };
@@ -79,18 +81,14 @@ function StaffTable() {
         const departments =
           departmentLen !== 0 &&
           record?.departments?.reduce((acc, current) => {
-            console.log("Current ", current);
-
             return acc + current.name + `${departmentLen !== 0 ? "" : ","} `;
           }, "");
-        console.log("departments ", departments);
-
         return <div>{departments}</div>;
       },
     },
     {
-      title: "Role",
-      dataIndex: "role",
+      title: "Type",
+      dataIndex: "user_type",
       // sorter: (a, b) => a.pricing.length - b.pricing.length,
     },
     {
@@ -109,17 +107,17 @@ function StaffTable() {
                 <i className="fas fa-ellipsis-v" />
               </Link>
               <div className="dropdown-menu dropdown-menu-end">
-                <Link
+                {/* <Link
                   className="dropdown-item"
                   to={`/staff-manage/${record.id}`}
                 >
                   <i className="far fa-eye me-2" />
                   View
-                </Link>
+                </Link> */}
                 <Link
                   className="dropdown-item"
                   to
-                  onClick={() => handleEditClick(record.id)}
+                  onClick={() => handleEditClick(record.id, record.user_type)}
                 >
                   <i className="far fa-edit me-2" />
                   Edit
@@ -127,7 +125,7 @@ function StaffTable() {
                 <Link
                   className="dropdown-item"
                   to="#"
-                  onClick={()=>handleDeleteClick(record.id)}
+                  onClick={() => handleDeleteClick(record.id)}
                 >
                   <i className="fa fa-trash-alt m-r-5"></i> Delete
                 </Link>
@@ -152,6 +150,7 @@ function StaffTable() {
         show={showEdit}
         title="Edit Staff"
         selectedStaff={selectedStaff}
+        userType={userType}
       />
     </div>
   );
