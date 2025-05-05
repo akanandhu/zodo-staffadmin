@@ -13,11 +13,12 @@ function StaffTable() {
   const [showEdit, setShowEdit] = useState(false);
   const [selectedStaff, setSelectedStaff] = useState(null);
   const [userType, setUserType] = useState("");
-  const { hospitalId } = useAuth();
+  const { hospitalId, user } = useAuth();
   const { data: staffsList, isLoading } = useHospitalStaffs(hospitalId);
   const { mutate, isLoading:deleteLoading } = useDeleteStaff();
   console.log("staffsList", staffsList);
   console.log("isLoading", isLoading);
+  const filteredStafflist = staffsList ? staffsList.filter((item)=> item.email !== user.email) : [];
 
   const handleEditClick = (id, user_type) => {
     setUserType(user_type);
@@ -138,7 +139,7 @@ function StaffTable() {
   ];
   return (
     <div className="mt-3">
-      <DataTable columns={columns} dataSource={staffsList ? staffsList : []} />
+      <DataTable columns={columns} dataSource={filteredStafflist} />
       <ConfirmDelete
         setShow={setShow}
         show={show}

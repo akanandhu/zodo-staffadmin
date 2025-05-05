@@ -16,7 +16,7 @@ const useDeleteStaff = () => {
       }));
     },
     onSuccess: (data) => {
-      const message = data.message;
+      const message = data.message || "User deleted successfully";
       toast.success(message, {
         position: "top-right",
         autoClose: 5000,
@@ -26,6 +26,7 @@ const useDeleteStaff = () => {
         draggable: true,
         progress: undefined,
       });
+      queryClient.invalidateQueries(["staffs"]);
     },
     onError: (error, id, context) => {        
       const errotMessage = error?.response?.data?.message || "Failed to delete hospital";

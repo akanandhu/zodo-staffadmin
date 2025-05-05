@@ -16,7 +16,7 @@ const useDeleteDoctor = () => {
       }));
     },
     onSuccess: (data) => {
-      const message = data.message || "Successfully removed doctor";
+      const message = data.message || "Successfully deleted doctor";
       toast.success(message, {
         position: "top-right",
         autoClose: 5000,

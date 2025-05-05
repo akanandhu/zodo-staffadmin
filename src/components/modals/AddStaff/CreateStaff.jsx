@@ -47,7 +47,7 @@ function CreateStaff(props) {
       },
       job_title: data.jobtitle,
       user_type: userType ?? data.role.value,
-      // role: data.role.value,
+      role: data.role.value,
       is_active: status,
       hospital_id: hospitalId,
     };
