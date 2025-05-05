@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ChooseFile from "../../Hospitals/ChooseFile";
 import { FormProvider, useForm } from "react-hook-form";
 import InputField from "../../Inputfields/InputField";
@@ -9,22 +9,19 @@ import { useSpecialisationList } from "../../../hooks/specialisation/useSpeciali
 import { useAddDoctors } from "../../../hooks/doctors/useAddDoctors";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
+import { useDoctorsList } from "../../../hooks/doctors/useDoctorsList";
 
 function Overview(props) {
   const { handleClose } = props;
   const { hospitalId } = useAuth();
   const methods = useForm();
   const [joiningDate, setJoiningDate] = useState();
+  const { data: doctorsList } = useDoctorsList(hospitalId);
   const { data: departmentList, isLoading: departmentLoading } =
     useDepartmentList(hospitalId);
   const { data: specialisationList, isLoading: specialisationLoading } =
     useSpecialisationList(hospitalId);
   const { mutate, isLoading } = useAddDoctors(hospitalId);
-  const jobtitle = [
-    { value: "doctor", label: "Doctor" },
-    { value: "staff", label: "Staff" },
-  ];
-
   const specialisationOptions = Array.isArray(specialisationList)
     ? specialisationList?.map((item) => ({
         value: item.id,
@@ -37,24 +34,24 @@ function Overview(props) {
     label: item.name,
   }));
 
+  useEffect(() => {
+    if (doctorsList) {
+      methods.reset();
+    }
+  }, [doctorsList]);
+
   const onCreateDoctor = async (data) => {
     const doctor = {
-      // name: data.doctorname,
-      // email: data.doctoremail,
-      // phone_number: data.phone,
-      // hospitalId: hospitalId,
-      // // department_id: data.departments.map((item) => item.value),
-      // specifications_id: data?.specialisations?.map((item) => item.value),
-      // pricing: parseInt(data.pricing),
-
       name: data.doctorname,
       email: data.doctoremail,
       profile_pic: "www.link.com",
-      city: "Kochi",
+      // city: "Kochi",
       pricing: parseInt(data.pricing),
       specifications_id: data?.specialisations?.map((item) => item.value),
       phone_number: data.phone,
       hospital_id: hospitalId,
+      // job_title: data.jobTitle,
+      // work_start_date: joiningDate,
       registration_details: {
         registration_number: data.registrationNumber,
         council_name: data.councilName,
@@ -62,10 +59,15 @@ function Overview(props) {
       },
       department_id: data?.departments?.map((item) => item.value),
     };
+    console.log("Doctor", doctor);
+
+    // console.log(mutate);
+
     await mutate(doctor);
-    methods.reset();
-    handleClose();
+    // methods.reset();
+    // handleClose();
   };
+
   return (
     <FormProvider {...methods}>
       <form
@@ -131,14 +133,12 @@ function Overview(props) {
         <div className="row">
           <div className="col-md-4">
             <div className="form-group">
-              <SelectField
-                options={jobtitle}
+              <InputField
+                name="jobTitle"
                 label="Job Title"
-                name="jobtitle"
-                isMultiSelect={true}
-                placeholder="Select job title"
-                validationMessage="Job title is required"
-                // isLoading={isLoading}
+                validation={{ required: "Jobtitle is required" }}
+                placeholder="Enter job title"
+                type="text"
               />
             </div>
           </div>

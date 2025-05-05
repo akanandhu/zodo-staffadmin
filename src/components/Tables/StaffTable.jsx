@@ -15,7 +15,7 @@ function StaffTable() {
   const [userType, setUserType] = useState("");
   const { hospitalId } = useAuth();
   const { data: staffsList, isLoading } = useHospitalStaffs(hospitalId);
-  const { mutate } = useDeleteStaff();
+  const { mutate, isLoading:deleteLoading } = useDeleteStaff();
   console.log("staffsList", staffsList);
   console.log("isLoading", isLoading);
 
@@ -144,6 +144,7 @@ function StaffTable() {
         show={show}
         title="Staff"
         handleDelete={handleDelete}
+        isLoading={deleteLoading}
       />
       <EditStaff
         setShow={setShowEdit}

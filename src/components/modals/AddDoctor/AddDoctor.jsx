@@ -16,7 +16,7 @@ function AddDoctor(props) {
   return (
     <Modal
       show={show}
-      onHide={handleClose}
+      onHide={()=>handleClose()}
       className="doctor-custom-modal"
       style={{ maxWidth: "none" }}
       backdropClassName="hospital-modal-backdrop"

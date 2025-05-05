@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ChooseFile from "../Hospitals/ChooseFile";
 import DoctorTimeslot from "../modals/AddDoctor/DoctorTimeslot";
 import InputField from "../Inputfields/InputField";
@@ -10,22 +10,17 @@ import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { useDepartmentList } from "../../hooks/departments/useDepartmentList";
 import { useSpecialisationList } from "../../hooks/specialisation/useSpecialisationList";
-
+import { useDoctorsList } from "../../hooks/doctors/useDoctorsList";
 function CreateDoctorForm(props) {
   const { handleClose } = props;
-  const { user } = useAuth();
-  const hospital_id = user?.hospital_id;
+  const { hospitalId } = useAuth();
   const methods = useForm();
+  const { data: doctorsList } = useDoctorsList(hospitalId);
   const { data: departmentList, isLoading: departmentLoading } =
-    useDepartmentList(hospital_id);
+    useDepartmentList(hospitalId);
   const { data: specialisationList, isLoading: specialisationLoading } =
-    useSpecialisationList(hospital_id);
-  const { mutate, isLoading } = useAddDoctors(hospital_id);
-
-  const jobtitle = [
-    { value: "doctor", label: "Doctor" },
-    { value: "staff", label: "Staff" },
-  ];
+    useSpecialisationList(hospitalId);
+  const { mutate, isLoading } = useAddDoctors(hospitalId);
 
   const specialisationOptions = Array.isArray(specialisationList)
     ? specialisationList?.map((item) => ({
@@ -39,16 +34,21 @@ function CreateDoctorForm(props) {
     label: item.name,
   }));
 
+  useEffect(() => {
+    if (doctorsList) {
+      methods.reset();
+    }
+  }, [doctorsList]);
+
   const onCreateDoctor = async (data) => {
     const doctor = {
       name: data.doctorname,
       email: data.doctoremail,
       profile_pic: "www.link.com",
-      city: "Kochi",
       pricing: parseInt(data.pricing),
       specifications_id: data?.specialisations?.map((item) => item.value),
       phone_number: data.phone,
-      hospital_id: hospital_id,
+      hospital_id: hospitalId,
       registration_details: {},
       department_id: data?.departments?.map((item) => item.value),
     };
@@ -122,14 +122,12 @@ function CreateDoctorForm(props) {
         <div className="row">
           <div className="col-md-4">
             <div className="form-group">
-              <SelectField
-                options={jobtitle}
+              <InputField
+                name="jobTitle"
                 label="Job Title"
-                name="jobtitle"
-                isMultiSelect={true}
-                placeholder="Select job title"
-                validationMessage="Job title is required"
-                // isLoading={isLoading}
+                validation={{ required: "Job title is required" }}
+                placeholder="Enter job title"
+                type="text"
               />
             </div>
           </div>

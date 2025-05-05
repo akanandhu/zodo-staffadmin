@@ -23,10 +23,6 @@ function EditOverview(props) {
   const { data: specialisationList, isLoading: specialisationLoading } =
     useSpecialisationList(hospitalId);
   const { mutate, isLoading } = useEditDoctors();
-  const jobtitle = [
-    { value: "doctor", label: "Doctor" },
-    { value: "staff", label: "Staff" },
-  ];
 
   const specialisationOptions = Array.isArray(specialisationList)
     ? specialisationList?.map((item) => ({
@@ -42,19 +38,23 @@ function EditOverview(props) {
 
   useEffect(() => {
     if (doctor) {
+      // const selectedDepartments = doctor?.department.filter((item)=> )
       methods.reset({
         doctorname: doctor.name,
         doctoremail: doctor.email,
-        // profile_pic: "www.link.com",
+        profile_pic: "www.link.com",
         // city: "Kochi",
+        jobTitle:doctor?.job_title,
         pricing: doctor.pricing,
         specialisations: doctor.specifications_id?.map((item) => item.value),
         phone: doctor?.phone_number,
         registrationNumber: doctor?.registration_details?.registration_number,
-        council_name: doctor?.registration_details?.council_name,
-        joiningDate: doctor?.registration_details?.joining_date,
+        councilName:doctor?.registration_details?.council_name,
+        // joiningDate: doctor?.registration_details?.joining_date,
         departments: doctor?.departments_id?.map((item) => item.value),
       });
+
+      setJoiningDate(doctor?.registration_details?.joining_date);
     }
   }, [doctor, methods]);
 
@@ -73,6 +73,7 @@ function EditOverview(props) {
       profile_pic: "www.link.com",
       // city: "",
       pricing: parseInt(data.pricing),
+      // job_title:data.jobTitle,
       // specifications_id: data?.specialisations?.map((item) => item.value),
       phone_number: data.phone,
       hospital_id: hospitalId,
@@ -152,14 +153,12 @@ function EditOverview(props) {
         <div className="row">
           <div className="col-md-4">
             <div className="form-group">
-              <SelectField
-                options={jobtitle}
+              <InputField
+                name="jobTitle"
                 label="Job Title"
-                name="jobtitle"
-                isMultiSelect={true}
-                placeholder="Select job title"
-                validationMessage="Job title is required"
-                // isLoading={isLoading}
+                validation={{ required: "Job title is required" }}
+                placeholder="Enter job title"
+                type="text"
               />
             </div>
           </div>
@@ -235,8 +234,9 @@ function EditOverview(props) {
               <input
                 type="date"
                 className="form-control"
-                placeholder="Enter council name"
+                placeholder="Enter joining date"
                 onChange={(e) => setJoiningDate(e.target.value)}
+                value={joiningDate}
               />
             </div>
           </div>

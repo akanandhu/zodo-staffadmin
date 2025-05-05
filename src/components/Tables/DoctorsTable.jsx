@@ -1,19 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DataTable from "./DataTable";
 import { user_profile } from "../imagepath";
 import { Link } from "react-router-dom";
 import ConfirmDelete from "../modals/ConfirmDelete";
 import PropTypes from "prop-types";
 import EditDoctor from "../modals/AddDoctor/EditDoctor";
+import useDeleteDoctor from "../../hooks/doctors/useDeleteDoctor";
+import { useAuth } from "../../hooks/useAuth";
+import { useDoctorsList } from "../../hooks/doctors/useDoctorsList";
 
 function DoctorsTable(props) {
   const { doctorsList } = props;
   const [show, setShow] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
+  const { hospitalId } = useAuth();
+  const { data: doctorsData } = useDoctorsList(hospitalId);
+  const { mutate, isLoading } = useDeleteDoctor();
+
+  useEffect(() => {
+    if (doctorsData) {
+      setShow(false);
+    }
+  }, [doctorsData]);
+
   const handleEdit = (id) => {
     setShowEdit(true);
     setSelectedDoctor(id);
+  };
+
+  const handleDeleteClick = (id) => {
+    setSelectedDoctor(id);
+    setShow(true);
+  };
+
+  const handleDelete = async () => {
+    await mutate(selectedDoctor);
   };
   const columns = [
     {
@@ -72,14 +94,14 @@ function DoctorsTable(props) {
                 <i className="fas fa-ellipsis-v" />
               </Link>
               <div className="dropdown-menu dropdown-menu-end">
-                <Link
+                {/* <Link
                   className="dropdown-item"
                   to={`${record.id}`}
                   // onClick={()=>setShowEdit(true)}
                 >
                   <i className="far fa-eye me-2" />
                   View
-                </Link>
+                </Link> */}
                 <Link
                   className="dropdown-item"
                   to
@@ -91,7 +113,7 @@ function DoctorsTable(props) {
                 <Link
                   className="dropdown-item"
                   to="#"
-                  onClick={() => setShow(true)}
+                  onClick={() => handleDeleteClick(record.id)}
                 >
                   <i className="fa fa-trash-alt m-r-5"></i> Delete
                 </Link>
@@ -105,7 +127,13 @@ function DoctorsTable(props) {
   return (
     <div className="mt-3">
       <DataTable columns={columns} dataSource={doctorsList ?? []} />
-      <ConfirmDelete setShow={setShow} show={show} title="Doctor" />
+      <ConfirmDelete
+        setShow={setShow}
+        show={show}
+        title="Doctor"
+        handleDelete={handleDelete}
+        isLoading={isLoading}
+      />
       <EditDoctor
         setShow={setShowEdit}
         show={showEdit}

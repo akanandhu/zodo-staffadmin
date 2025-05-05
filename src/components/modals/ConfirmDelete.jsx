@@ -3,7 +3,7 @@ import React from "react";
 import { Modal } from "react-bootstrap";
 
 function ConfirmDelete(props) {
-  const { show, setShow, title, handleDelete } = props;
+  const { show, setShow, title, handleDelete, isLoading } = props;
   return (
     <Modal
       show={show}
@@ -45,9 +45,15 @@ function ConfirmDelete(props) {
           // data-bs-toggle="modal"
           // data-bs-target="#save_invocies_details"
           className="hospital-add-btn ms-1 text-white modal-btn border-0"
-          onClick={()=> handleDelete()}
+          onClick={() => handleDelete()}
         >
-          Yes, Delete
+          {isLoading && (
+            <span
+              className="spinner-border spinner-border-sm"
+              aria-hidden="true"
+            ></span>
+          )}
+          <span className="ps-2">Yes</span>
         </button>
       </Modal.Footer>
     </Modal>
@@ -59,6 +65,7 @@ ConfirmDelete.propTypes = {
   setShow: PropTypes.node,
   title: PropTypes.node,
   handleDelete: PropTypes.node,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 export default ConfirmDelete;

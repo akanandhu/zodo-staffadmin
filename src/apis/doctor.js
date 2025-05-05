@@ -21,3 +21,7 @@ export const editDoctor = async ({ id, data }) => {
   return response.data;
 };
 
+export const deleteDoctorById = async (id) => {
+  const response = await apiClient.delete(`doctors/${id}`);
+  return response?.data || {};
+};

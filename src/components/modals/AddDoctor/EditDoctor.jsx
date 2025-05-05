@@ -14,7 +14,6 @@ function EditDoctor(props) {
     { id: "edit_dr_overview", title: "Overview", content: <EditOverview selectedDoctor={selectedDoctor}/> },
     { id: "dr_timeslot", title: "Time Slot", content: <DoctorTimeslot /> },
   ];
-
   
   return (
     <Modal
