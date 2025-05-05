@@ -3,9 +3,9 @@ import { Table } from "antd";
 import { onShowSizeChange, itemRender } from "../Pagination";
 import PropTypes from "prop-types";
 const DataTable = (props) => {
-  const { columns, dataSource } = props;
-  console.log("Source data",dataSource);
-  
+  const { columns, dataSource, loading } = props;
+  console.log("Source data", dataSource);
+
   return (
     <div className="table-responsive">
       <Table
@@ -17,6 +17,7 @@ const DataTable = (props) => {
         }}
         columns={columns}
         dataSource={dataSource}
+        loading={loading}
         // rowSelection={rowSelection}
         // rowKey={(record) => record.id}
       />
@@ -27,6 +28,7 @@ const DataTable = (props) => {
 DataTable.propTypes = {
   columns: PropTypes.node,
   dataSource: PropTypes.node,
+  loading: PropTypes.bool,
 };
 
 export default DataTable;

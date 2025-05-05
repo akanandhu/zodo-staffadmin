@@ -82,7 +82,7 @@ function StaffTable() {
         const departments =
           departmentLen !== 0 &&
           record?.departments?.reduce((acc, current) => {
-            return acc + current.name + `${departmentLen !== 0 ? "" : ","} `;
+            return acc + current.name + " ";
           }, "");
         return <div>{departments}</div>;
       },
