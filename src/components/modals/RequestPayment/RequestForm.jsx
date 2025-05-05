@@ -3,14 +3,33 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import InputField from "../../Inputfields/InputField";
+import { useInitiateSettlement } from "../../../hooks/settlements/useInitiateSettlement";
+import { useAuth } from "../../../hooks/useAuth";
+import { useEffect } from "react";
+import { useSettlementList } from "../../../hooks/settlements/useSettlementList";
 
 function RequestForm(props) {
   const { handleClose } = props;
-  console.log(handleClose);
   const methods = useForm();
+  const { hospitalId } = useAuth();
+  const { mutate, isLoading } = useInitiateSettlement();
+  const { data: settlements } = useSettlementList(hospitalId);
 
-  const onRequestPayment = (data) => {
-    console.log(data);
+  useEffect(() => {
+    if(settlements){
+      methods.reset();
+    }
+  }, [settlements])
+  
+
+  const onRequestPayment = async (data) => {
+    const paymentRequest = {
+      hospital_id: hospitalId,
+      // "doctor_id":"",
+      amount: data.requestAmount,
+      note: "",
+    };
+    await mutate(paymentRequest);
   };
   return (
     <>
@@ -56,7 +75,13 @@ function RequestForm(props) {
               className="ps-5 pe-5"
               type="submit"
             >
-              Request Now
+              {isLoading && (
+                <span
+                  className="spinner-border spinner-border-sm"
+                  aria-hidden="true"
+                ></span>
+              )}
+              <span className="ps-2">Request Now</span>
             </Button>
           </div>
         </form>

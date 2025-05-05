@@ -26,9 +26,9 @@ function SettlementCard(props) {
               </div>
               <div className="dash-content dash-count flex-grow-1">
                 <h4>{item.title}</h4>
-                {item?.title !== "Next Settlement Date" ? (
+                {item?.type !== "paymentrequest" ? (
                   <h2>
-                    {" "}
+                    {item?.type === "currency" && "₹"}
                     <CountUp delay={0.4} end={item.count} duration={0.6} />
                   </h2>
                 ) : (

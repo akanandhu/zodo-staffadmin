@@ -13,6 +13,7 @@ function Payout() {
       count: 140,
       percentageUp: 20,
       link: "",
+      type:"normal"
     },
     {
       id: 2,
@@ -21,38 +22,43 @@ function Payout() {
       count: 250,
       percentageUp: 40,
       link: "",
+      type:"normal"
     },
     {
       id: 3,
-      title: "Payout Scheduled On",
+      title: "Total Transactions",
       icon: fasttag,
       count: 121,
       percentageUp: 40,
       link: "",
+      type:"normal"
     },
     {
       id: 4,
-      title: "Total Revenue Received",
+      title: "Normal Booking Revenue",
       icon: fasttag,
-      count: 121,
+      count: 14000,
       percentageUp: 40,
       link: "",
+      type:"currency"
     },
     {
       id: 5,
       title: "Fast Tag Revenue",
       icon: fasttag,
-      count: 121,
+      count: 25000,
       percentageUp: 40,
       link: "",
+      type:"currency"
     },
     {
       id: 6,
-      title: "Next Settlement Date",
+      title: "Next Settlement Date (05 march)",
       icon: fasttag,
       count: 121,
       percentageUp: 40,
       link: "",
+      type:"paymentrequest"
     },
   ];
   const bookingType = [
