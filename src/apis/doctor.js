@@ -5,6 +5,11 @@ export const getDoctorsListById = async (id) => {
   return response?.data?.data ?? [];
 };
 
+export const getHospitalDoctorsListByQuery = async (id,query) => {
+  const response = await apiClient.get(`doctors?hospital_id=${id}&${query}`);
+  return response?.data?.data ?? [];
+};
+
 export const getDoctorsListByDoctorId = async (id) => {
   const response = await apiClient.get(`doctors/${id}`);
   return response?.data;

@@ -1,21 +1,21 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Layout from "../../layout/Layout";
 import Breadcrumb from "../../breadcrump/Breadcrumb";
 import BasicHero from "../../heros/BasicHero";
 import { useAuth } from "../../../hooks/useAuth";
 import { useDepartmentList } from "../../../hooks/departments/useDepartmentList";
 import Department from "../../Hospitals/Departments/Department";
-import DepartmentSearch from "../../Hospitals/Departments/DepartmentSearch";
-import { useDebounce } from "../../../hooks/useDebounce";
-
+import ButtonSerchHero from "../../heros/ButtonSerchHero";
+import CenteredModal from "../../modals/CenteredModal";
+import DepartmentForm from "../../modals/AddDepartment/DepartmentForm";
 function Departments() {
-  const [query, setQuery] = useState("");
-  const searchTerm = useDebounce(query, 500);
-  const handleQuery = (searchTerm) => {
-    setQuery(searchTerm);
-  };
+  const [show, setShow] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const query = searchTerm ? `name=${searchTerm}` : "";
+  console.log(query);
+  
   const { hospitalId } = useAuth();
-  const { data: departmentsList } = useDepartmentList(hospitalId, searchTerm);
+  const { data: departmentsList } = useDepartmentList(hospitalId, query);
   console.log("Search term", searchTerm);
 
   const breadCrumpData = [
@@ -30,6 +30,17 @@ function Departments() {
       link: "/hospital/departments",
     },
   ];
+  const handleSearch = (searchTerm) => {
+    setSearchTerm(searchTerm);
+  };
+  const handleShow = () => {
+    setShow(true);
+  };
+
+  const handleCloseModal = () => {
+    setShow(false);
+  };
+
   return (
     <Layout
       activeClassName="hospital-departments"
@@ -40,10 +51,23 @@ function Departments() {
         <div className="content">
           <Breadcrumb data={breadCrumpData} />
           <BasicHero title="Departments" />
-          <DepartmentSearch handleQuery={handleQuery} />
+          <ButtonSerchHero
+            handleShow={handleShow}
+            title="All Departments"
+            handleSearchterm={handleSearch}
+            buttonTitle="Add Department"
+          />
+          {/* <DepartmentSearch handleQuery={handleQuery} /> */}
           <Department departmentList={departmentsList ?? []} />
         </div>
       </div>
+      <CenteredModal
+        show={show}
+        handleClose={handleCloseModal}
+        title="Add Department"
+      >
+        <DepartmentForm handleClose={handleCloseModal} />
+      </CenteredModal>
     </Layout>
   );
 }

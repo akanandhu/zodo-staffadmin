@@ -1,9 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import { getDepartmentList } from "../../apis/departments";
+import {
+  getDepartmentList,
+  getDepartmentListByQuery,
+} from "../../apis/departments";
 
-export const useDepartmentList = (id, searchTerm) => {
+export const useDepartmentList = (id, query) => {
   return useQuery({
-    queryKey: ["departments", id, searchTerm], // Unique query key
-    queryFn: () => getDepartmentList(id, searchTerm),
+    queryKey: ["departments", id, query], // Unique query key
+    queryFn: () =>
+      query ? getDepartmentListByQuery(id, query) : getDepartmentList(id),
   });
 };

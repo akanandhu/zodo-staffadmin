@@ -3,7 +3,7 @@ import React from "react";
 import { useFormContext } from "react-hook-form";
 
 function InputField(props) {
-  const { name, label, type, validation, placeholder, disabled, defaultValue } =
+  const { name, label, type, validation, placeholder, disabled, defaultValue, pattern } =
     props;
   const {
     register,
@@ -27,6 +27,7 @@ function InputField(props) {
         }`}
         {...register(name, validation)}
         defaultValue={defaultValue}
+        pattern={pattern}
       />
       {errors !== undefined && errors[name] && (
         <div className="invalid-feedback">
@@ -45,6 +46,7 @@ InputField.propTypes = {
   placeholder: PropTypes.node,
   disabled: PropTypes.node,
   defaultValue: PropTypes.node,
+  pattern: PropTypes.string
 };
 
 export default InputField;

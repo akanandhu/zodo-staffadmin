@@ -4,8 +4,6 @@ import { onShowSizeChange, itemRender } from "../Pagination";
 import PropTypes from "prop-types";
 const DataTable = (props) => {
   const { columns, dataSource, loading } = props;
-  console.log("Source data", dataSource);
-
   return (
     <div className="table-responsive">
       <Table

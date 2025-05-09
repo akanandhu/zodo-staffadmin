@@ -5,6 +5,16 @@ export const getServicesList = async () => {
   return response.data?.data ?? [];
 };
 
+export const getHospitalServicesList = async (id) => {
+  const response = await apiClient.get(`hospital-services/${id}`);
+  return response.data?.data ?? [];
+};
+
+export const getHospitalServicesListByQuery = async (id,query) => {
+  const response = await apiClient.get(`hospital-services/${id}`,query);
+  return response.data?.data ?? [];
+};
+
 export const getServicesById = async (id) => {
   const response = await apiClient.get(`/hospital-services/${id}`);
   return response?.data?.data || {};

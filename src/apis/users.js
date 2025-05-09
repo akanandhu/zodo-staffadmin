@@ -12,6 +12,13 @@ export const getHospitalStaffs = async (hospitalId) => {
   return response?.data?.data || [];
 };
 
+export const getHospitalStaffsByQuery = async (hospitalId,query) => {
+  const response = await apiClient.get(
+    `/users?hospital_id=${hospitalId}&${query}`
+  );
+  return response?.data?.data || [];
+};
+
 export const getStaffByUserid = async (id) => {
   const response = await apiClient.get(`users/${id}`);
   return response?.data?.data || {};

@@ -8,7 +8,6 @@ import PropTypes from "prop-types";
 
 function ServiceDetails(props) {
   const { serviceDetails } = props;
-  console.log(serviceDetails);
   
   const navigate = useNavigate();
   return (

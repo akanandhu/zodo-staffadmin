@@ -4,21 +4,26 @@ import EditStaff from "../modals/AddStaff/EditStaff";
 import { user_profile } from "../imagepath";
 import DataTable from "./DataTable";
 import { useAuth } from "../../hooks/useAuth";
-import { useHospitalStaffs } from "../../hooks/users/useHospitalStaffs";
+// import { useHospitalStaffs } from "../../hooks/users/useHospitalStaffs";
 import { Link } from "react-router-dom";
 import useDeleteStaff from "../../hooks/staff/useDeleteStaff";
+import { formatDate } from "../configs/formatDate";
+import PropTypes from "prop-types";
 
-function StaffTable() {
+function StaffTable(props) {
+  const { staffsList, isLoading } = props;
   const [show, setShow] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [selectedStaff, setSelectedStaff] = useState(null);
   const [userType, setUserType] = useState("");
-  const { hospitalId, user } = useAuth();
-  const { data: staffsList, isLoading } = useHospitalStaffs(hospitalId);
-  const { mutate, isLoading:deleteLoading } = useDeleteStaff();
+  const { user } = useAuth();
+  // const { data: staffsList, isLoading } = useHospitalStaffs(hospitalId);
+  const { mutate, isLoading: deleteLoading } = useDeleteStaff();
   console.log("staffsList", staffsList);
   console.log("isLoading", isLoading);
-  const filteredStafflist = staffsList ? staffsList.filter((item)=> item.email !== user.email) : [];
+  const filteredStafflist = staffsList
+    ? staffsList.filter((item) => item.email !== user.email)
+    : [];
 
   const handleEditClick = (id, user_type) => {
     setUserType(user_type);
@@ -62,6 +67,7 @@ function StaffTable() {
     {
       title: "Joining Date",
       dataIndex: "created_at",
+      render: (item) => <div>{formatDate(item)}</div>,
       // render:(item, record)=>{
       //   const date = record?.created_at;
       //   const dateOnly = new Date(date).toLocaleDateString();
@@ -139,7 +145,11 @@ function StaffTable() {
   ];
   return (
     <div className="mt-3">
-      <DataTable columns={columns} dataSource={filteredStafflist} />
+      <DataTable
+        columns={columns}
+        dataSource={filteredStafflist}
+        loading={isLoading}
+      />
       <ConfirmDelete
         setShow={setShow}
         show={show}
@@ -157,5 +167,10 @@ function StaffTable() {
     </div>
   );
 }
+
+StaffTable.propTypes = {
+  staffsList: PropTypes.array,
+  isLoading: PropTypes.bool,
+};
 
 export default StaffTable;

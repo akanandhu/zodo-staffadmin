@@ -1,10 +1,13 @@
-import React from "react";
+import { useState } from "react";
 import Breadcrumb from "../../breadcrump/Breadcrumb";
 import Layout from "../../layout/Layout";
 import BasicHero from "../../heros/BasicHero";
-import ServiceSearch from "../../Hospitals/Services/ServiceSearch";
 import ServicesList from "../../Hospitals/Services/ServicesList";
-import { useServicesList } from "../../../hooks/hospital-services/useServicesList";
+import ButtonSerchHero from "../../heros/ButtonSerchHero";
+import { useAuth } from "../../../hooks/useAuth";
+import { useHospitalServices } from "../../../hooks/hospital-services/useHospitalServices";
+import CenteredModal from "../../modals/CenteredModal";
+import AddServiceForm from "../../modals/AddService/AddServiceForm";
 
 function HospitalServices() {
   const breadCrumpData = [
@@ -19,8 +22,22 @@ function HospitalServices() {
       link: "/hospital/services",
     },
   ];
+  const [show, setShow] = useState(false);
+  const { hospitalId } = useAuth();
+  const [searchTerm, setSearchTerm] = useState("");
+  const query = searchTerm ? `name=${searchTerm}` : "";
+  const { data: servicesList } = useHospitalServices(hospitalId, query);
+  const handleShow = () => {
+    setShow(true);
+  };
 
-  const { data: servicesList } = useServicesList();
+  const handleSearch = (searchTerm) => {
+    setSearchTerm(searchTerm);
+  };
+  const handleCloseModal = () => {
+    setShow(false);
+  };
+
   return (
     <Layout
       activeClassName="hospital-services"
@@ -31,13 +48,22 @@ function HospitalServices() {
         <div className="content">
           <Breadcrumb data={breadCrumpData} />
           <BasicHero title="Services" />
-          <ServiceSearch />
-          <ServicesList servicesData={servicesList}/>
+          {/* <ServiceSearch /> */}
+          <ButtonSerchHero
+            handleShow={handleShow}
+            title="All Services"
+            handleSearchterm={handleSearch}
+            buttonTitle="Add Service"
+          />
+          <ServicesList servicesData={servicesList} />
           {/* <HospitalHero tabData={tabData} />
           <HospitalsList tabData={tabData} /> */}
           {/* <LoadMore/> */}
         </div>
       </div>
+      <CenteredModal  show={show} handleClose={handleCloseModal} title="Add Services">
+            <AddServiceForm handleClose={handleCloseModal}/>
+      </CenteredModal>
     </Layout>
   );
 }

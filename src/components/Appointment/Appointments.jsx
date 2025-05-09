@@ -7,7 +7,7 @@ import { useHospitalAppointments } from "../../hooks/appointments/useHospitalApp
 function Appointments() {
   // const { appointments, loading } = props;
   const { hospitalId } = useAuth();
-  const { data:appointmentList, isLoading } = useHospitalAppointments(hospitalId)
+  const { data:appointmentList, isLoading } = useHospitalAppointments(hospitalId);
   const onGoing = appointmentList?.filter((item)=> item.status === "started");
   const cancelled = appointmentList?.filter((item)=> item.status === "cancelled");
   const completed = appointmentList?.filter((item)=> item.status === "completed");

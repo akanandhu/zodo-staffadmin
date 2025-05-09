@@ -9,7 +9,11 @@ function BookingsTable() {
   const { user } = useAuth();
 
   const hospitalId = user?.hospital_id;
-  const { data: bookings, isLoading } = useHospitalAppointments(hospitalId);
+  const query = "status=started";
+  const { data: bookings, isLoading } = useHospitalAppointments(
+    hospitalId,
+    query
+  );
   // console.log(bookings);
   console.log(isLoading);
 
@@ -36,7 +40,7 @@ function BookingsTable() {
       title: "Time",
       dataIndex: "timeSlot",
       // sorter: (a, b) => a.time.length - b.time.length,
-      render: (item) => <div>{item}</div>,
+      render: (item) => <div>{item ? item : "N/A"}</div>,
     },
     {
       title: "Status",
@@ -45,7 +49,7 @@ function BookingsTable() {
       render: (item) => (
         <div
           className={`delete-badge ${
-            (item === "Cancelled" && "status-red") ||
+            (item === "cancelled" && "status-red") ||
             (item === "started" && "status-orange") ||
             (item === "completed" && "status-green")
           }`}
@@ -62,7 +66,7 @@ function BookingsTable() {
     {
       title: "Assigned",
       dataIndex: "assingned",
-      render: (item, record) => <div>{record?.doctor?.name}</div>,
+      render: (item, record) => <div>Dr.{record?.doctor?.name}</div>,
       // sorter: (a, b) => a.assingned.length - b.assingned.length,
     },
     // {

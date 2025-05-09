@@ -12,13 +12,17 @@ function AddServiceForm(props) {
   const { hospitalId } = useAuth();
   const { mutate, isLoading } = useCreateService();
   const onCreateService = async (data) => {
+    console.log(data);
+    
     const service = {
       name: data.serviceName,
       description: data.message,
       hospital_id: hospitalId,
-      price: parseInt(data.price),
-      strike_through_price: parseInt(data.strikePrice),
+      price: Number(data.price),
+      strike_through_price: Number(data.strikePrice),
     };
+    console.log(service);
+    
     await mutate(service);
     // methods.reset();
     // handleClose(); // Close the modal after successful submission
@@ -51,6 +55,7 @@ function AddServiceForm(props) {
               validation={{ required: "Price is required" }}
               placeholder="Enter Price"
               type="text"
+              pattern="[0-9]*[.,]?[0-9]*"
             />
           </div>
           <div className="col-md-6">
@@ -60,6 +65,7 @@ function AddServiceForm(props) {
               validation={{ required: "Strike Price is required" }}
               placeholder="Enter Strike Price"
               type="text"
+              pattern="[0-9]*[.,]?[0-9]*"
             />
           </div>
         </div>
@@ -69,6 +75,7 @@ function AddServiceForm(props) {
               name="message"
               label="Message"
               placeholder="Type message here"
+              
             />
           </div>
         </div>

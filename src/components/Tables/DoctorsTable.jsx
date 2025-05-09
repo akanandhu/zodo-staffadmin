@@ -10,7 +10,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useDoctorsList } from "../../hooks/doctors/useDoctorsList";
 
 function DoctorsTable(props) {
-  const { doctorsList } = props;
+  const { doctorsList, loading } = props;
   const [show, setShow] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
@@ -61,6 +61,7 @@ function DoctorsTable(props) {
     {
       title: "Joining Date",
       dataIndex: "work_start_date",
+      render:(item)=><div>{item ? item : "N/A"}</div>
       // sorter: (a, b) => a.joiningDate.length - b.joiningDate.length,
     },
     {
@@ -72,11 +73,23 @@ function DoctorsTable(props) {
       //     <h6>{item}hs</h6>
       //   </div>
       // ),
+      render: (item, record) => {
+        // const department = record?.departments[0]
+        // console.log("Department ",record?.departments);
+        const departmentLen = record?.departments?.length;
+        const departments =
+          departmentLen !== 0 &&
+          record?.departments?.reduce((acc, current) => {
+            return acc + current.name + " ";
+          }, "");
+        return <div>{departments}</div>;
+      },
     },
     {
       title: "Pricing",
       dataIndex: "pricing",
       sorter: (a, b) => a.pricing.length - b.pricing.length,
+      render: (item) => <div>₹{item}</div>,
     },
     {
       title: "",
@@ -126,7 +139,7 @@ function DoctorsTable(props) {
   ];
   return (
     <div className="mt-3">
-      <DataTable columns={columns} dataSource={doctorsList ?? []} />
+      <DataTable columns={columns} dataSource={doctorsList ?? []} loading={loading}/>
       <ConfirmDelete
         setShow={setShow}
         show={show}
@@ -147,5 +160,6 @@ function DoctorsTable(props) {
 // props validation
 DoctorsTable.propTypes = {
   doctorsList: PropTypes.node,
+  loading: PropTypes.bool
 };
 export default DoctorsTable;

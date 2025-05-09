@@ -58,7 +58,7 @@ function AppointmentTable(props) {
       title: "Assigned",
       dataIndex: "assingned",
       // sorter: (a, b) => a.assingned.length - b.assingned.length,
-      render: (item, record) => <div>{record?.doctor?.name}</div>,
+      render: (item, record) => <div>Dr.{record?.doctor?.name}</div>,
     },
     {
       title: "Action",
