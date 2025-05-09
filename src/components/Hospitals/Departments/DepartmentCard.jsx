@@ -63,7 +63,6 @@ function DepartmentCard(props) {
               </Link>
             </div>
           </div>
-          {/* <img src={three_dots_menu} alt="#" width={15} height={15}/> */}
         </div>
       </div>
       <div className="row">

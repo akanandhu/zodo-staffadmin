@@ -1,25 +1,37 @@
-import React from "react";
 import Layout from "../../layout/Layout";
 import Breadcrumb from "../../breadcrump/Breadcrumb";
-import Tabs from "../../tabs/Tabs";
 import RequestedAppointments from "../../Appointment/RequestedAppointments";
 import AppointmentFasttags from "../../Appointment/AppointmentFasttags";
 import Appointments from "../../Appointment/Appointments";
 import { useAuth } from "../../../hooks/useAuth";
 import { useHospitalAppointments } from "../../../hooks/appointments/useHospitalAppointments";
+import ButtonTabs from "../../tabs/ButtonTabs";
 // import Appointments from '../../Appointment/Appointments'
 function Appointment() {
   const { hospitalId } = useAuth();
-  const { data: appointmentsList, isLoading } = useHospitalAppointments(hospitalId);
-  console.log("Hospital id ", appointmentsList);
+  const { data: appointmentsList, isLoading } =
+    useHospitalAppointments(hospitalId);
 
   const appointmentTab = [
-    { id: "appointment", title: "Appoinment", content: <Appointments appointments={appointmentsList} loading={isLoading}/> },
-    { id: "requested", title: "Requested", content: <RequestedAppointments /> },
+    {
+      id: "appointment",
+      title: "Appoinment",
+      content: (
+        <Appointments appointments={appointmentsList} loading={isLoading} />
+      ),
+      link: "appointment",
+    },
+    {
+      id: "requested",
+      title: "Requested",
+      content: <RequestedAppointments />,
+      link: "requested",
+    },
     {
       id: "fasttag",
       title: "Fast Tag",
       content: <AppointmentFasttags />,
+      link: "fasttag",
     },
   ];
 
@@ -36,7 +48,7 @@ function Appointment() {
       <div className="page-wrapper">
         <div className="content">
           <Breadcrumb data={breadCrumpData} />
-          <Tabs tabData={appointmentTab} />
+          <ButtonTabs tabData={appointmentTab} />
         </div>
       </div>
     </Layout>

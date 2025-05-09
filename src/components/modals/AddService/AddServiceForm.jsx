@@ -12,20 +12,19 @@ function AddServiceForm(props) {
   const { hospitalId } = useAuth();
   const { mutate, isLoading } = useCreateService();
   const onCreateService = async (data) => {
-    console.log(data);
-    
     const service = {
       name: data.serviceName,
       description: data.message,
       hospital_id: hospitalId,
-      price: Number(data.price),
-      strike_through_price: Number(data.strikePrice),
+      price: data.price,
+      strike_through_price: data.strikePrice,
     };
-    console.log(service);
-    
-    await mutate(service);
-    // methods.reset();
-    // handleClose(); // Close the modal after successful submission
+    await mutate(service, {
+      onSuccess: () => {
+        methods.reset();
+        handleClose();
+      },
+    });
   };
   return (
     <FormProvider {...methods}>
@@ -75,7 +74,6 @@ function AddServiceForm(props) {
               name="message"
               label="Message"
               placeholder="Type message here"
-              
             />
           </div>
         </div>

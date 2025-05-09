@@ -26,12 +26,17 @@ function HospitalServices() {
   const { hospitalId } = useAuth();
   const [searchTerm, setSearchTerm] = useState("");
   const query = searchTerm ? `name=${searchTerm}` : "";
+  console.log("Search term",query);
+  
   const { data: servicesList } = useHospitalServices(hospitalId, query);
   const handleShow = () => {
     setShow(true);
   };
-
+  console.log(servicesList);
+  
   const handleSearch = (searchTerm) => {
+    console.log("sarch term ",searchTerm);
+    
     setSearchTerm(searchTerm);
   };
   const handleCloseModal = () => {
@@ -48,7 +53,6 @@ function HospitalServices() {
         <div className="content">
           <Breadcrumb data={breadCrumpData} />
           <BasicHero title="Services" />
-          {/* <ServiceSearch /> */}
           <ButtonSerchHero
             handleShow={handleShow}
             title="All Services"
@@ -56,13 +60,14 @@ function HospitalServices() {
             buttonTitle="Add Service"
           />
           <ServicesList servicesData={servicesList} />
-          {/* <HospitalHero tabData={tabData} />
-          <HospitalsList tabData={tabData} /> */}
-          {/* <LoadMore/> */}
         </div>
       </div>
-      <CenteredModal  show={show} handleClose={handleCloseModal} title="Add Services">
-            <AddServiceForm handleClose={handleCloseModal}/>
+      <CenteredModal
+        show={show}
+        handleClose={handleCloseModal}
+        title="Add Services"
+      >
+        <AddServiceForm handleClose={handleCloseModal} />
       </CenteredModal>
     </Layout>
   );

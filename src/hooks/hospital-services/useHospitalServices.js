@@ -6,11 +6,10 @@ import {
 
 export const useHospitalServices = (id, query) => {
   return useQuery({
-    queryKey: ["services", id], // Unique query key
+    queryKey: ["services", id, query], // Unique query key
     queryFn: () =>
       query
         ? getHospitalServicesListByQuery(id, query)
-        : getHospitalServicesList(id),
-        enabled: !!id,
+        : getHospitalServicesList(id)
   });
 };

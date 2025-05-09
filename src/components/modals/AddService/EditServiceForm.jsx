@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import ChooseFile from "../../Hospitals/ChooseFile";
 import { FormProvider, useForm } from "react-hook-form";
 import InputField from "../../Inputfields/InputField";
 import TextArea from "../../Inputfields/TextArea";
-import { useAuth } from "../../../hooks/useAuth";
 import PropTypes from "prop-types";
 import { useViewService } from "../../../hooks/hospital-services/useViewService";
 import { useUpdateService } from "../../../hooks/hospital-services/useUpdateService";
@@ -11,21 +10,16 @@ import { useUpdateService } from "../../../hooks/hospital-services/useUpdateServ
 function EditServiceForm(props) {
   const { handleClose, selectedService } = props;
   const methods = useForm();
-  const { hospitalId } = useAuth();
-  //   const { mutate, isLoading } = useCreateService();
   const { data: service } = useViewService(selectedService);
   const { mutate, isLoading } = useUpdateService();
-  console.log(service);
-
   const onUpdateService = async (data) => {
     const service = {
       name: data.serviceName,
       description: data.message,
-      hospital_id: hospitalId,
-      price: parseInt(data.price),
-      strike_through_price: parseInt(data.strikePrice),
+      // hospital_id: hospitalId,
+      price: data.price,
+      strike_through_price: data.strikePrice,
     };
-    console.log(service);
     await mutate({ id: selectedService, data: service });
     // await mutate(service);
     // methods.reset();
@@ -71,6 +65,7 @@ function EditServiceForm(props) {
               validation={{ required: "Price is required" }}
               placeholder="Enter Price"
               type="text"
+              pattern="[0-9]*[.,]?[0-9]*"
             />
           </div>
           <div className="col-md-6">
@@ -80,6 +75,7 @@ function EditServiceForm(props) {
               validation={{ required: "Strike Price is required" }}
               placeholder="Enter Strike Price"
               type="text"
+              pattern="[0-9]*[.,]?[0-9]*"
             />
           </div>
         </div>

@@ -1,9 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import { getSettlementsByHospitalId } from "../../apis/settlement";
+import {
+  getSettlementsByHospitalId,
+  getSettlementsByHospitalIdQuery,
+} from "../../apis/settlement";
 
-export const useSettlementList = (hospital_id) => {
+export const useSettlementList = (hospital_id, query) => {
   return useQuery({
-    queryKey: ["settlements", hospital_id], // Unique query key
-    queryFn: () => getSettlementsByHospitalId(hospital_id),
+    queryKey: ["settlements", hospital_id, query], // Unique query key
+    queryFn: () =>
+      query
+        ? getSettlementsByHospitalIdQuery(hospital_id, query)
+        : getSettlementsByHospitalId(hospital_id),
   });
 };

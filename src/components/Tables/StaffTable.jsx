@@ -45,7 +45,7 @@ function StaffTable(props) {
     {
       title: "Staff Name",
       dataIndex: "first_name",
-      sorter: (a, b) => a.name.length - b.name.length,
+      // sorter: (a, b) => a.name.length - b.name.length,
       render: (item, record) => (
         <div className="d-flex">
           <img src={user_profile} width={35} height={35} alt="" />

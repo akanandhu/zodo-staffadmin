@@ -1,8 +1,8 @@
 import Layout from "../../layout/Layout";
 import Breadcrumb from "../../breadcrump/Breadcrumb";
-import FinanceTabs from "../../tabs/FinanceTabs";
 import Payout from '../../Finance/Payout';
-import History from '../../Finance/History'
+import History from '../../Finance/History';
+import ButtonTabs from "../../tabs/ButtonTabs";
 function Finance() {
   const breadCrumpData = [
     {
@@ -13,15 +13,15 @@ function Finance() {
   ];
 
   const financeTab = [
-  { id: "payout", title: "Payout", content: <Payout/> },
-  { id: "history", title: "History", content: <History/> },
+  { id: "payout", title: "Payout", content: <Payout/>, link:"payout" },
+  { id: "history", title: "History", content: <History/>, link:"history" },
 ];
   return (
     <Layout activeClassName="finance" id="menu-item5" id1="menu-items5">
       <div className="page-wrapper">
         <div className="content">
           <Breadcrumb data={breadCrumpData} />
-          <FinanceTabs tabData={financeTab} />
+          <ButtonTabs tabData={financeTab} />
         </div>
       </div>
     </Layout>

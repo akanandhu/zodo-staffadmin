@@ -5,6 +5,11 @@ export const getSettlementsByHospitalId = async (id) => {
   return response?.data?.data ?? [];
 };
 
+export const getSettlementsByHospitalIdQuery = async (id,query) => {
+  const response = await apiClient.get(`/settlements?hospital_id=${id}&${query}`);
+  return response?.data?.data ?? [];
+};
+
 export const initiateSettlement = async (settlementData) => {
   const response = await apiClient.post("/settlements", settlementData);
   return response.data;

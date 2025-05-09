@@ -14,6 +14,8 @@ export const getHospitalServicesListByQuery = async (id, query) => {
   const response = await apiClient.get(
     `hospital-services?hospital_id=${id}&${query}`
   );
+  console.log("Response",response);
+  
   return response.data?.data ?? [];
 };
 
@@ -28,7 +30,15 @@ export const addHospitalService = async (serviceData) => {
 };
 
 export const editHospitalService = async ({ id, data }) => {
+  console.log("ID ",id);
+  console.log("Data",data);
+  
   const response = await apiClient.patch(`/hospital-services/${id}`, data);
+  return response.data;
+};
+
+export const deleteHospitalService = async (id) => {
+  const response = await apiClient.delete(`/hospital-services/${id}`);
   return response.data;
 };
 

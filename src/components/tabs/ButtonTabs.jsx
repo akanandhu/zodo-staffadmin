@@ -1,12 +1,11 @@
 import PropTypes from "prop-types";
 import { Link, useSearchParams } from "react-router-dom";
 
-function FinanceTabs(props) {
+function ButtonTabs(props) {
   const { tabData } = props;
   const [searchParams] = useSearchParams();
-  const tab = searchParams.get('tab') || 'payout'
+  const tab = searchParams.get("tab") || tabData[0]?.link;
   console.log(tab);
-  
   return (
     <>
       <div className="d-flex justify-content-between align-items-center">
@@ -42,10 +41,8 @@ function FinanceTabs(props) {
     </>
   );
 }
-
 // validate props
-FinanceTabs.propTypes = {
+ButtonTabs.propTypes = {
   tabData: PropTypes.node,
 };
-
-export default FinanceTabs;
+export default ButtonTabs;
