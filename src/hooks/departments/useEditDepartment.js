@@ -1,18 +1,23 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { updateStaffByUserid } from "../../apis/users";
+import { editDepartment } from "../../apis/departments";
 
-export const useEditStaff = () => {
+export const useEditDepartment = () => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: updateStaffByUserid, // API function to create
+    mutationFn: editDepartment, // API function to create
     onMutate: async () => {
       // Cancel any ongoing queries for hospitals to prevent race conditions
-      await queryClient.cancelQueries({ queryKey: ["staff"] });
+      await queryClient.cancelQueries({ queryKey: ["department"]});
     },
     onSuccess: (data, variables) => {
-      const message = data?.message || "Staff updated successfully";
-      queryClient.invalidateQueries({ queryKey: ["staff", variables.id] });
+      const message = data?.message || "Department updated successfully";
+      // queryClient.invalidateQueries({ queryKey: ["department", variables.id] });
+      console.log("success ",variables.id);
+      
+      // queryClient.invalidateQueries({ queryKey: ["departments", variables.hospital_id]});
+      queryClient.invalidateQueries({ queryKey: ["department", variables.id]});
+      queryClient.invalidateQueries({ queryKey: ["department", variables.hospital_id]});
       toast.success(message, {
         position: "top-right",
         autoClose: 5000,
@@ -25,11 +30,11 @@ export const useEditStaff = () => {
     },
     onError: (error, id, context) => {
       // Rollback if there is an error
-      if (context?.previousStaff) {
-        queryClient.setQueryData(["staff"], context.previousStaff);
+      if (context?.previousDepartments) {
+        queryClient.setQueryData(["department"], context.previousDepartments);
       }
       const errorMessage =
-        error?.response?.data?.message || "Failed to edit staff";
+        error?.response?.data?.message || "Failed to edit department";
       toast.error(errorMessage, {
         position: "top-right",
         autoClose: 5000,

@@ -1648,6 +1648,7 @@ textarea.form-control {
   margin-bottom: 20px;
   padding: 20px;
   position: relative;
+  
 }
 .dash-boxs {
   background: rgba(46, 55, 164, 0.05);
@@ -12010,4 +12011,8 @@ tr.ant-table-row.ant-table-row-level-0.ant-table-row-selected,
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
   z-index: 1050; /* Ensure it's above other content */
+}
+
+.dropdown-menu{
+  z-index: 2000 !important;
 }

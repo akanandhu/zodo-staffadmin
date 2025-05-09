@@ -1,18 +1,22 @@
-// Custom hook for creating hospital
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { addDepartment } from "../../apis/departments";
+import { deleteDepartment } from "../../apis/departments";
 
-export const useAddDepartment = (hospitalId) => {
+const useDeleteDepartment = () => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
-    mutationFn: addDepartment, // API function to create
-    onMutate: async () => {
+    mutationFn: deleteDepartment, // API function to delete hospital
+    onMutate: async (id) => {
+      // Cancel any ongoing queries for hospitals to prevent race conditions
       await queryClient.cancelQueries({ queryKey: ["departments"] });
+      queryClient.setQueryData(["departments"], (oldDepartments) => ({
+        ...oldDepartments,
+        data: oldDepartments?.data?.filter((department) => department.id !== id),
+      }));
     },
     onSuccess: (data) => {
-      const message = data.message || "Department added successfully";
-      queryClient.invalidateQueries(["departments", hospitalId]);
+      const message = data.message;
+      // Invalidate and refetch the hospitals query after a successful mutation
       toast.success(message, {
         position: "top-right",
         autoClose: 5000,
@@ -22,18 +26,19 @@ export const useAddDepartment = (hospitalId) => {
         draggable: true,
         progress: undefined,
       });
+      queryClient.invalidateQueries(["departments"]);
+
     },
     onError: (error, id, context) => {
-      const errorMessage =
-        error?.response?.data?.message || "Failed to add department";
+      console.log(error);
+
+      const errotMessage =
+        error?.response?.data?.message || "Failed to delete Department";
       // Rollback if there is an error
       if (context?.previousDepartments) {
-        queryClient.setQueryData(
-          ["departments", hospitalId],
-          context.previousDepartments
-        );
+        queryClient.setQueryData(["departments"], context.previousDepartments);
       }
-      toast.error(errorMessage, {
+      toast.error(errotMessage, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -50,3 +55,5 @@ export const useAddDepartment = (hospitalId) => {
     isLoading: mutation.isPending,
   };
 };
+
+export default useDeleteDepartment;

@@ -6,12 +6,14 @@ export const getServicesList = async () => {
 };
 
 export const getHospitalServicesList = async (id) => {
-  const response = await apiClient.get(`hospital-services/${id}`);
+  const response = await apiClient.get(`hospital-services?hospital_id=${id}`);
   return response.data?.data ?? [];
 };
 
-export const getHospitalServicesListByQuery = async (id,query) => {
-  const response = await apiClient.get(`hospital-services/${id}`,query);
+export const getHospitalServicesListByQuery = async (id, query) => {
+  const response = await apiClient.get(
+    `hospital-services?hospital_id=${id}&${query}`
+  );
   return response.data?.data ?? [];
 };
 

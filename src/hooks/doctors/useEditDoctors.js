@@ -27,11 +27,11 @@ export const useEditDoctors = () => {
       },
       onError: (error, id, context) => {
         // Rollback if there is an error
-        if (context?.previousHospitals) {
-          queryClient.setQueryData(["doctor"], context.previousHospital);
+        if (context?.previousDoctors) {
+          queryClient.setQueryData(["doctor"], context.previousDoctors);
         }
         const errorMessage =
-          error?.response?.data?.message || "Failed to edit hospital";
+          error?.response?.data?.message || "Failed to edit Doctor";
         toast.error(errorMessage, {
           position: "top-right",
           autoClose: 5000,

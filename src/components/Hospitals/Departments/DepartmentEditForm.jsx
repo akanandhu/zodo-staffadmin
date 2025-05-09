@@ -1,31 +1,40 @@
-import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import InputField from "../../Inputfields/InputField";
 import TextArea from "../../Inputfields/TextArea";
+import { useEditDepartment } from "../../../hooks/departments/useEditDepartment";
 import PropTypes from "prop-types";
-import { useAddDepartment } from "../../../hooks/departments/useAddDepartment";
-import { useAuth } from "../../../hooks/useAuth";
+import { useEffect, useState } from "react";
+import { useViewDepartment } from "../../../hooks/departments/useViewDepartment";
 
-function DepartmentForm(props) {
-  const { handleClose } = props;
+function DepartmentEditForm(props) {
+  const { handleClose, departmentId } = props;
+  const { data: departmentDetails } = useViewDepartment(departmentId);
+  const [status,setStatus] = useState(departmentDetails?.status);
   const methods = useForm();
-  const { hospitalId } = useAuth();
-  const [status, setStatus] = useState("active");
-  const { mutate, isLoading } = useAddDepartment(hospitalId);
+  const { mutate, isLoading } = useEditDepartment();
+
+  useEffect(() => {
+    methods.reset({
+      departmentName: departmentDetails?.name,
+      message: departmentDetails?.description,
+    });
+  }, [departmentDetails]);
 
   const onCreateDepartment = async (data) => {
     const department = {
       name: data.departmentName,
       description: data.message,
-      hospital_id: hospitalId,
       status: status
     };
-    await mutate(department, {
-      onSuccess: () => {
-        methods.reset();
-        handleClose(); // Close the modal after successful submission
-      },
-    });
+    await mutate(
+      { id: departmentId, data: department },
+      {
+        onSuccess: () => {
+          methods.reset();
+          handleClose(); // Close the modal after successful submission
+        },
+      }
+    );
   };
   return (
     <FormProvider {...methods}>
@@ -90,10 +99,9 @@ function DepartmentForm(props) {
     </FormProvider>
   );
 }
-
-//props validation
-DepartmentForm.propTypes = {
+DepartmentEditForm.propTypes = {
+  departmentId: PropTypes.string,
   handleClose: PropTypes.func,
 };
 
-export default DepartmentForm;
+export default DepartmentEditForm;

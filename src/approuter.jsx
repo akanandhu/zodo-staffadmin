@@ -75,85 +75,18 @@ const Approuter = () => {
             }
           >
             <Route path="/" element={<Dashboard />} />
-            {/* <Route path="/appointment" element={<Appointment />} /> */}
             <Route path="/doctor-manage" element={<DoctorManage />} />
             <Route path="/doctor-manage/:id" element={<DoctorDetails />} />
             <Route path="/staff-manage" element={<StaffManage />} />
             <Route path="/staff-manage/:id" element={<StaffDetails />} />
             <Route path="/hospital/services" element={<HospitalServices />} />
-            <Route path="/hospital/services/:id" element={<ViewHospitalService />} />
+            <Route
+              path="/hospital/services/:id"
+              element={<ViewHospitalService />}
+            />
             <Route path="/hospital/departments" element={<Departments />} />
             <Route path="/hospital/edit" element={<EditHospital />} />
-
-
-
-            {/* <Route
-              path="/dashboard/fasttag-revenue"
-              element={<FasttagRevenue />}
-            />
-            <Route
-              path="dashboard/fasttag-issued"
-              element={<FasttagIssued />}
-            />
-            <Route
-              path="/dashboard/settlement-requests"
-              element={<SettlementRequests />}
-            /> */}
-            {/* <Route
-              path="/dashboard/settlement-requests/:id"
-              element={<ManageSettlement />}
-            /> */}
-            {/* <Route
-            path="/dashboard/fasttag-issued/:id"
-            element={<FasttagDetails />}
-            /> */}
-            {/* <Route path="/doctorlist" element={<DoctorList />} /> */}
-            {/* Manage Hospital */}
-            {/* <Route path="/manage-hospitals" element={<Hospitals />} /> */}
-
-            {/* <Route
-              path="/manage-hospitals/add-hospital"
-              element={<AddHospital />}
-            />
-            <Route path="/manage-hospitals/:id" element={<HospitalDetails />} />
-            <Route
-              path="/manage-hospitals/manage-request/:id"
-              element={<ManageRequest />}
-            /> */}
-            {/* <Route
-              path="/manage-hospitals/manage-request/:id/edit"
-              element={<EditHospital />}
-            />
-            <Route
-              path="/manage-hospitals/:id/edit"
-              element={<EditHospital />}
-            /> */}
-            {/* Manage Doctors */}
-            {/* <Route path="/manage-doctors" element={<Doctors />} /> */}
-              <Route path="/finance" element={<Finance />} />
-            {/* <Route path="/manage-doctors/add-doctor" element={<AddDoctors />} /> */}
-            {/* <Route path="/doctor-manage/:id" element={<DoctorDetails />} /> */}
-            {/* <Route
-              path="/manage-doctors/add-doctors"
-              element={<AddDoctors />}
-            /> */}
-            {/* <Route
-              path="/manage-doctors/edit-doctor/:id"
-              element={<AddDoctors />}
-            />
-            <Route
-              path="manage-doctors/request/:id/edit"
-              element={<EditDoctor />}
-            />
-
-            <Route
-              path="/manage-doctors/request/:id"
-              element={<DoctorRequest />}
-            />
-            <Route
-              path="/manage-doctors/specialization"
-              element={<Specialization />}
-            /> */}
+            <Route path="/finance" element={<Finance />} />
           </Route>
         </Routes>
       </BrowserRouter>

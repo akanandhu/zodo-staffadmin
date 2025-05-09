@@ -11,5 +11,6 @@ export const useHospitalServices = (id, query) => {
       query
         ? getHospitalServicesListByQuery(id, query)
         : getHospitalServicesList(id),
+        enabled: !!id,
   });
 };
