@@ -1,36 +1,41 @@
-import React from "react";
 // import AppointmentTable from "../Appointment/AppointmentTable";
 import { DatePicker } from "antd";
 import DataTable from "../Tables/DataTable";
-import { Link } from "react-router-dom";
-import { pdficon } from "../imagepath";
 import SearchBox from "../searchbox/SearchBox";
 import ExportTable from "../assests/ExportTable";
 import { useAuth } from "../../hooks/useAuth";
 import { useSettlementList } from "../../hooks/settlements/useSettlementList";
+import { formatDate } from "../configs/formatDate";
 function History() {
   const { hospitalId } = useAuth();
   const { data: settlements } = useSettlementList(hospitalId);
   const columns = [
     {
-      title: "Booking ID",
+      title: "Transaction Id",
       dataIndex: "bookingid",
-      sorter: (a, b) => a.bookingid.length - b.bookingid.length,
+      // sorter: (a, b) => a.bookingid.length - b.bookingid.length,
     },
     {
-      title: "Patient Name",
-      dataIndex: "patientname",
+      title: "Name",
+      dataIndex: "transactionName",
       sorter: (a, b) => a.patientname.length - b.patientname.length,
     },
     {
-      title: "Type",
+      title: "Payment mode",
       dataIndex: "type",
       sorter: (a, b) => a.type.length - b.type.length,
     },
     {
+      title: "Amount",
+      dataIndex: "amount",
+      // sorter: (a, b) => a.type.length - b.type.length,
+      render:(item)=> <div>₹ {item}</div>
+    },
+    {
       title: "Time",
-      dataIndex: "time",
+      dataIndex: "updated_at",
       sorter: (a, b) => a.time.length - b.time.length,
+      render:(item)=> <div>{formatDate(item)}</div>
     },
     {
       title: "Status",
@@ -39,9 +44,10 @@ function History() {
       render: (item) => (
         <div
           className={`delete-badge ${
-            (item === "Cancelled" && "status-red") ||
-            (item === "Pending" && "status-orange") ||
-            (item === "Completed" && "status-green")
+            (item === "cancelled" && "status-red") ||
+            (item === "pending" && "status-orange") ||
+            (item === "requested" && "status-orange") ||
+            (item === "completed" && "status-green")
           }`}
         >
           {item}
@@ -49,29 +55,10 @@ function History() {
       ),
     },
     {
-      title: "Department",
-      dataIndex: "department",
-      sorter: (a, b) => a.department.length - b.department.length,
-    },
-    {
-      title: "Assigned",
-      dataIndex: "assingned",
-      sorter: (a, b) => a.assingned.length - b.assingned.length,
-    },
-    {
       title: "Action",
       dataIndex: "action",
-      render: () => {
-        return (
-          <div style={{ display: "flex", gap: 8 }}>
-            <Link to>View</Link>
-            <Link to>
-              <img src={pdficon} alt="Pdf Icon" width={17} />
-            </Link>
-          </div>
-        );
-      },
-    },
+      // sorter: (a, b) => a.department.length - b.department.length,
+    }
   ];
   return (
     <div>

@@ -11,13 +11,9 @@ import DepartmentForm from "../../modals/AddDepartment/DepartmentForm";
 function Departments() {
   const [show, setShow] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const query = searchTerm ? `name=${searchTerm}` : "";
-  console.log(query);
-  
+  const query = searchTerm ? `name=${searchTerm}` : "";  
   const { hospitalId } = useAuth();
   const { data: departmentsList } = useDepartmentList(hospitalId, query);
-  console.log("Search term", searchTerm);
-
   const breadCrumpData = [
     {
       name: "Hospitals",
@@ -57,7 +53,6 @@ function Departments() {
             handleSearchterm={handleSearch}
             buttonTitle="Add Department"
           />
-          {/* <DepartmentSearch handleQuery={handleQuery} /> */}
           <Department departmentList={departmentsList ?? []} />
         </div>
       </div>
