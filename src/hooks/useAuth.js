@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { login } from "../apis/auth";
 import { useGetUser } from "./useGetUser";
+import { toast } from "react-toastify";
 // import { useGetUser } from "./useGetUser";
 // import { login, logout, getUser } from "./authService";
 
@@ -51,6 +52,19 @@ export const AuthProvider = ({ children }) => {
   const loginMutation = useMutation({
     mutationFn: login,
     onSuccess: (data) => {
+      console.log("Login ",data);
+      if(data?.data?.user_type ==="superAdmin"){
+        const message = "Invalid credentials";
+        toast.error(message, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              });
+      }
       const token = data?.data?.tokens?.accessToken;
       localStorage.setItem("token", data?.data?.tokens?.accessToken);
       setAccessToken(token);

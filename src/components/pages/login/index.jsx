@@ -24,7 +24,7 @@ const Login = () => {
       onSuccess: () => {
         const userRole = user?.user_type;        
         if (userRole === "hsAdmin") {
-          navigate("/dashboard");
+          navigate("/");
         }
         if (userRole === "staff") {
           navigate("/appointment");

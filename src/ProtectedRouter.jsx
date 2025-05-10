@@ -15,7 +15,7 @@ function ProtectedRouter(props) {
     // localStorage.removeItem("token"); // Remove the token from local storage
     // setUser(null); // Clear the user state
     // navigate("/login"); // Redirect to the login page
-    // return <Navigate to="/unauthorized" replace />;
+    return <Navigate to="/unauthorized" replace />;
   }
   if (!token) return <Navigate to="/login" replace />;
   return <Outlet />;

@@ -1,8 +1,10 @@
 import React from 'react'
 import { dangericon, error1 } from '../../imagepath';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../../hooks/useAuth';
 
 const Error = () => {
+  const {user} = useAuth()
   return (
     <>
       <div className="main-wrapper error-wrapper">
@@ -17,7 +19,7 @@ const Error = () => {
       Service Unavailable
     </h3>
     <p>You may have mistyped the address or the page may have moved.</p>
-    <Link to="/admin-dashboard" className="btn btn-primary go-home">
+    <Link to={user?`${user.user_type === "hsAdmin" && '/' || user.user_type === "staff" && '/appointment'}`:"/login"} className="btn btn-primary go-home">
       Back to Home
     </Link>
   </div>
