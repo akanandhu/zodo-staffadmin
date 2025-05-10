@@ -28,7 +28,7 @@ function CreateStaff(props) {
   }, [hospitalStaffs]);
 
   const onCreateStaff = async (data) => {
-    const departmentIds = data.department.map((item)=> item.value);
+    const departmentIds = Array.isArray(data?.department) && data?.department?.map((item)=> item?.value);
     const staff = {
       first_name: data.staffname,
       last_name: "",

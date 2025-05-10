@@ -5,13 +5,14 @@ import FasttagToggle from "../../../FasttagRevenue/FasttagToggle";
 function Timeslots() {
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
+  const [toggleFasttag, setToggleFasttag] = useState(false);
   return (
     <div>
       <div>
         <div
           style={{ display: "flex", marginTop: 10, gap: 8, fontWeight: 500 }}
         >
-          <FasttagToggle />
+          <FasttagToggle toggleFasttag={toggleFasttag} setToggleFasttag={setToggleFasttag}/>
           Auto Slotting
         </div>
         <h5 className="card-title mt-4">Fasttag</h5>
