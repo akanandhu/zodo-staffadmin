@@ -52,25 +52,26 @@ export const AuthProvider = ({ children }) => {
   const loginMutation = useMutation({
     mutationFn: login,
     onSuccess: (data) => {
-      console.log("Login ",data);
-      if(data?.data?.user_type ==="superAdmin"){
+      console.log("Login ", data);
+      if (data?.data?.user_type === "superAdmin") {
         const message = "Invalid credentials";
         toast.error(message, {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-              });
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      } else {
+        const token = data?.data?.tokens?.accessToken;
+        localStorage.setItem("token", data?.data?.tokens?.accessToken);
+        setAccessToken(token);
+        setUser(data.data);
+        setHospitalId(data?.data?.hospital_id); // Set hospital ID from login response
+        queryClient.invalidateQueries(["user"]); // Refresh user data
       }
-      const token = data?.data?.tokens?.accessToken;
-      localStorage.setItem("token", data?.data?.tokens?.accessToken);
-      setAccessToken(token);
-      setUser(data.data);
-      setHospitalId(data?.data?.hospital_id); // Set hospital ID from login response
-      queryClient.invalidateQueries(["user"]); // Refresh user data
     },
     onError: (error) => {
       const errorMessage = error?.response?.data?.message;
@@ -118,7 +119,7 @@ export const AuthProvider = ({ children }) => {
         setUser,
         // getUser: getUserMutation.mutate,
         // logout: logoutMutation.mutate,
-        hospitalId
+        hospitalId,
       }}
     >
       {children}
