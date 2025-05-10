@@ -15,8 +15,10 @@ function History() {
   const { data: settlements, isLoading } = useSettlementList(hospitalId, query);
 
   const handleDate = (date) => {
-    const utcDate = new Date(date).toISOString();
-    console.log("ISO ", utcDate);
+    // const utcDate = new Date(date).toISOString();
+    console.log("Date ",date);
+    
+    // console.log("ISO ", utcDate);
     setdate(date);
   };
   const handleSearchTerm = (search) => {

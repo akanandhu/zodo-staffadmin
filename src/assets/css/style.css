@@ -12016,3 +12016,15 @@ tr.ant-table-row.ant-table-row-level-0.ant-table-row-selected,
 .dropdown-menu{
   z-index: 2000 !important;
 }
+
+/* .range-picker:focus{
+  color: #008f64;
+} */
+
+.range-picker .ant-picker {
+  border-color: black !important;
+}
+.range-picker .ant-picker-cell-selected .ant-picker-cell-inner {
+  background-color: black !important;
+  color: white !important;
+}

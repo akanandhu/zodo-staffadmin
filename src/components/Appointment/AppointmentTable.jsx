@@ -1,14 +1,13 @@
-import { DatePicker } from "antd";
-import React from "react";
-import ExportTable from "../assests/ExportTable";
-import SearchBox from "../searchbox/SearchBox";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import DataTable from "../Tables/DataTable";
 import { pdficon } from "../imagepath";
+import DateSearchHero from "../heros/DateSearchHero";
 
 function AppointmentTable(props) {
-  const { appointmentList, loading } = props;
+  const { appointmentList, loading, handleDate, handleSearch } = props;
+  console.log("Appointment table",handleDate, handleSearch);
+  
   const columns = [
     {
       title: "Booking ID",
@@ -77,26 +76,12 @@ function AppointmentTable(props) {
   ];
   return (
     <div>
-      <div className="row mt-4">
-        <div className="col-12 col-md-6 col-xl-3">
-          <SearchBox />
-        </div>
-
-        <div className="col-12 col-md-6 col-xl-3">
-          <div className="form-group local-forms cal-icon">
-            <DatePicker
-              className="form-control datetimepicker"
-              // onChange={onChange}
-              suffixIcon={null}
-            />
-          </div>
-        </div>
-
-        <div className="col-12 col-md-6 col-xl-3">
-          <ExportTable />
-        </div>
-      </div>
-      <DataTable columns={columns} dataSource={appointmentList ?? []} loading={loading}/>
+      <DateSearchHero handleDate={handleDate} handleSearch={handleSearch} />
+      <DataTable
+        columns={columns}
+        dataSource={appointmentList ?? []}
+        loading={loading}
+      />
     </div>
   );
 }
@@ -104,6 +89,8 @@ function AppointmentTable(props) {
 AppointmentTable.propTypes = {
   appointmentList: PropTypes.node,
   loading: PropTypes.bool,
+  handleDate: PropTypes.func,
+  handleSearch: PropTypes.func,
 };
 
 export default AppointmentTable;

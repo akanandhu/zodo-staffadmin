@@ -5,7 +5,6 @@ function ButtonTabs(props) {
   const { tabData } = props;
   const [searchParams] = useSearchParams();
   const tab = searchParams.get("tab") || tabData[0]?.link;
-  console.log(tab);
   return (
     <>
       <div className="d-flex justify-content-between align-items-center">
