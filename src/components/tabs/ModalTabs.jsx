@@ -1,11 +1,9 @@
 import PropTypes from "prop-types";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-function TransparentTabs(props) {
+function ModalTabs(props) {
   const { tabData } = props;
-  const [searchParams] = useSearchParams();
-  const tabs = searchParams.get("tab") || tabData[0]?.mainTab;
-  const innerTab = searchParams.get("innertab") || tabData[0]?.link;
+
   return (
     <>
       <div className="profile-tabs">
@@ -13,10 +11,10 @@ function TransparentTabs(props) {
           {tabData.map((tabItem, i) => (
             <li key={tabItem.id + i}>
               <Link
-                className={`nav-link ${tabs === tabItem.mainTab && innerTab === tabItem.link ? "active" : ""}`}
+                className={`nav-link ${i === 0 ? "active" : ""}`}
                 // to={`#${tabItem.id}`}
-                to={`?tab=${tabItem.mainTab}&innertab=${tabItem.link}`}
-                // data-bs-toggle="tab"
+                // to={`?tab=${tabItem.mainTab}&innertab=${tabItem.link}`}
+                data-bs-toggle="tab"
               >
                 {tabItem.title}
               </Link>
@@ -27,7 +25,7 @@ function TransparentTabs(props) {
       <div className="tab-content">
         {tabData.map((tabItem, i) => (
           <div
-            className={`tab-pane ${tabs === tabItem.mainTab && innerTab === tabItem.link ? "show active" : ""}`}
+            className={`tab-pane ${i === 0 ? "show active" : ""}`}
             id={tabItem.id}
             key={tabItem.id + i}
           >
@@ -39,8 +37,8 @@ function TransparentTabs(props) {
   );
 }
 
-TransparentTabs.propTypes = {
+ModalTabs.propTypes = {
   tabData: PropTypes.node,
 };
 
-export default TransparentTabs;
+export default ModalTabs;

@@ -6,7 +6,6 @@ import DateSearchHero from "../heros/DateSearchHero";
 
 function AppointmentTable(props) {
   const { appointmentList, loading, handleDate, handleSearch } = props;
-  console.log("Appointment table",handleDate, handleSearch);
   
   const columns = [
     {

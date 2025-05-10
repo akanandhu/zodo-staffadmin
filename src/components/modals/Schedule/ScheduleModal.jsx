@@ -4,7 +4,7 @@ import { Button, Modal } from "react-bootstrap";
 import ScheduleForm from "./ScheduleForm";
 
 function ScheduleModal(props) {
-  const { show, setShow, title } = props;
+  const { show, setShow, requestDetails } = props;
   const handleClose = () => {
     setShow(false);
   };
@@ -25,13 +25,13 @@ function ScheduleModal(props) {
               <div className="schedule-profile"></div>
               <div className="schedule-modal">
                 <div className="d-flex">
-                  <h5 >{title?.patientname}</h5>
-                  <div className="delete-badge status-green ms-5">Fasttag</div>
+                  <h5 >{requestDetails?.patientname}</h5>
+                  <div className={`delete-badge ms-5 ${requestDetails?.isFasttag ? 'status-green' : 'status-grey'}`}>Fasttag</div>
                 </div>
                 <small>
-                  {title?.age}
+                  {requestDetails?.age}
                   {" yrs "}
-                  {title?.gender} <span className="ms-1">{title?.mobile}</span>
+                  {requestDetails?.gender} <span className="ms-1">{requestDetails?.mobile}</span>
                 </small>
               </div>
             </div>
@@ -61,7 +61,8 @@ function ScheduleModal(props) {
 ScheduleModal.propTypes = {
   show: PropTypes.node,
   setShow: PropTypes.node,
-  title: PropTypes.node,
+  requestDetails: PropTypes.node,
+  
 };
 
 export default ScheduleModal;

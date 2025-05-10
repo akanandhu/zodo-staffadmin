@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Select from "react-select";
-import TransparentTabs from "../../tabs/TransparentTabs";
 import MorningTimeSlot from "./MorningTimeSlot";
 import AfternoonTimeSlot from "./AfternoonTimeSlot";
 import EveningTimeSlot from "./EveningTimeSlot";
+import ModalTabs from "../../tabs/ModalTabs";
 
 function ScheduleForm() {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -14,12 +14,26 @@ function ScheduleForm() {
     { value: "cardiology", label: "Cardiology" },
   ];
   const tabData = [
-    { id: "schedule_morning", title: "Morning", content: <MorningTimeSlot /> },
-    { id: "schedule_afternoon", title: "Afternoon", content: <AfternoonTimeSlot /> },
+    {
+      id: "schedule_morning",
+      title: "Morning",
+      content: <MorningTimeSlot />,
+      link: "morning",
+      mainTab: "requested",
+    },
+    {
+      id: "schedule_afternoon",
+      title: "Afternoon",
+      content: <AfternoonTimeSlot />,
+      link: "afternoon",
+      mainTab: "requested",
+    },
     {
       id: "schedule_evening",
       title: "Evening",
       content: <EveningTimeSlot />,
+      link: "evening",
+      mainTab: "requested",
     },
   ];
   return (
@@ -48,7 +62,7 @@ function ScheduleForm() {
       </div>
 
       <h4 className="card-title mt-2">Time Slot Available</h4>
-      <TransparentTabs tabData={tabData}/>
+      <ModalTabs tabData={tabData} />
     </div>
   );
 }

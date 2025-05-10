@@ -30,7 +30,7 @@ function DateSearchHero(props) {
               className="form-control"
               placeholder="Search"
               onChange={(e) =>
-                handleSearchInput(e.target.value.toLocaleLowerCase())
+                handleSearchInput(e.target.value)
               }
             />
           </div>
@@ -45,7 +45,7 @@ function DateSearchHero(props) {
             onChange={handleDate}
             suffixIcon={null}
           /> */}
-          <RangePicker showTime onChange={handleDate} suffixIcon={null} className="range-picker form-control d-flex datetimepicker"/>
+          <RangePicker showTime onChange={(date)=>handleDate(date)} suffixIcon={null} className="range-picker form-control d-flex datetimepicker"/>
         </div>
       </div>
 

@@ -11,20 +11,30 @@ function Appointment() {
   const { hospitalId } = useAuth();
   const { data: appointmentsList, isLoading } =
     useHospitalAppointments(hospitalId);
-
+  const requestedQuery = `status=started`;
+  const { data: requestedList, isLoading: requestedLoading } =
+    useHospitalAppointments(hospitalId, requestedQuery);
   const appointmentTab = [
     {
       id: "appointment",
       title: "Appoinment",
       content: (
-        <Appointments appointments={appointmentsList} loading={isLoading} />
+        <Appointments
+          appointments={appointmentsList ?? []}
+          loading={isLoading}
+        />
       ),
       link: "appointment",
     },
     {
       id: "requested",
       title: "Requested",
-      content: <RequestedAppointments />,
+      content: (
+        <RequestedAppointments
+          appointments={requestedList ?? []}
+          loading={requestedLoading}
+        />
+      ),
       link: "requested",
     },
     {
