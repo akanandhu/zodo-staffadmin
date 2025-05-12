@@ -3,7 +3,7 @@ import { DatePicker } from "antd";
 import ExportTable from "../assests/ExportTable";
 import { useDebounce } from "../../hooks/useDebounce";
 import PropTypes from "prop-types";
-const {RangePicker} = DatePicker; 
+const { RangePicker } = DatePicker;
 
 function DateSearchHero(props) {
   const { handleSearch, handleDate } = props;
@@ -11,7 +11,7 @@ function DateSearchHero(props) {
   const [searchTerm, setSearchterm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm);
   useEffect(() => {
-    if(handleSearch){
+    if (handleSearch) {
       handleSearch(debouncedSearchTerm);
     }
   }, [debouncedSearchTerm]);
@@ -29,9 +29,7 @@ function DateSearchHero(props) {
               type="text"
               className="form-control"
               placeholder="Search"
-              onChange={(e) =>
-                handleSearchInput(e.target.value)
-              }
+              onChange={(e) => handleSearchInput(e.target.value)}
             />
           </div>
         </div>
@@ -39,13 +37,12 @@ function DateSearchHero(props) {
 
       <div className="col-12 col-md-6 col-xl-4">
         <div className="form-group local-forms cal-icon">
-          {/* <DatePicker
-            className="form-control datetimepicker"
-            // onChange={onChange}
-            onChange={handleDate}
+          <RangePicker
+            showTime
+            onChange={(date) => handleDate(date)}
             suffixIcon={null}
-          /> */}
-          <RangePicker showTime onChange={(date)=>handleDate(date)} suffixIcon={null} className="range-picker form-control d-flex datetimepicker"/>
+            className="range-picker form-control d-flex datetimepicker"
+          />
         </div>
       </div>
 

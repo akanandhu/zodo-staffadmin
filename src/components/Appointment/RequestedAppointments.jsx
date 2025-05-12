@@ -15,7 +15,9 @@ function RequestedAppointments(props) {
       age: record?.user_details?.age,
       gender: record?.user_details?.gender,
       mobile: record?.user?.phone,
-      isFasttag: record?.is_fast_tag
+      isFasttag: record?.is_fast_tag,
+      doctorName: record?.doctor?.name,
+      doctorId:record?.doctor?.id,
     };
     setRequestDetails(detail);
     setShow(true);

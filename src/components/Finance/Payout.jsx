@@ -1,8 +1,7 @@
-import React from "react";
-import BookingsTable from "../Dashboard/BookingsTable";
 import { doctors, fasttag, profile_hospitals } from "../imagepath";
 import Analytics from "../Dashboard/Analytics";
 import SettlementCard from "./SettlementCard";
+import BookingsTable from "../Dashboard/BookingsTable";
 
 function Payout() {
   const basicInformation = [

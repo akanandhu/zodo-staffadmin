@@ -73,7 +73,7 @@ function History() {
       title: <div className="d-flex justify-content-center">Action</div>,
       dataIndex: "action",
       render: () => (
-        <div className="d-flex justify-content-center" title="Download">
+        <div className="d-flex justify-content-center" title="view">
           <i>
             <FeatherIcon icon="download-cloud" />
           </i>

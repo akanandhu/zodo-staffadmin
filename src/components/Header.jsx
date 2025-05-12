@@ -59,7 +59,7 @@ const Header = () => {
     <div className="main-wrapper">
       <div className="header">
         <div className="header-left">
-          <Link to="/" className="logo">
+          <Link to={user?.user_type === "hsAdmin" ? "/" :"/appointment"} className="logo">
             <img src={logo} width={108} height={38} alt="" />{" "}
           </Link>
         </div>
