@@ -12,7 +12,7 @@ function ModalTabs(props) {
             <li key={tabItem.id + i}>
               <Link
                 className={`nav-link ${i === 0 ? "active" : ""}`}
-                // to={`#${tabItem.id}`}
+                to={`#${tabItem.id}`}
                 // to={`?tab=${tabItem.mainTab}&innertab=${tabItem.link}`}
                 data-bs-toggle="tab"
               >
