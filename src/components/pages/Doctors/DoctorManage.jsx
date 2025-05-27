@@ -53,7 +53,7 @@ function DoctorManage() {
         </div>
       </div>
 
-      <SideModal show={show} handleClose={handleCloseModal} title="Add Doctor">
+      <SideModal show={show} handleClose={handleCloseModal} title="Doctor Profile">
         <ModalTabs tabData={tabData} />
       </SideModal>
     </Layout>

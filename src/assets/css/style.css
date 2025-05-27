@@ -180,8 +180,8 @@ textarea.form-control {
 .btn.focus,
 .btn:focus {
   box-shadow: inherit !important;
-  /* border: inherit;
-  background-color: inherit; */
+ /* border: inherit;
+  background-color: inherit;  */
 }
 .list-group-item {
   border: 1px solid #eaeaea;
@@ -505,6 +505,10 @@ table.table td h2 span {
   border-color:#347D73;
   color: #347D73;
 }
+.btn-outline-danger {
+  border: 1px solid #f62d51;
+  color: #f62d51;
+} 
 .btn-outline-primary:hover {
   background-color: #347D73;
   border-color: #347D73;
