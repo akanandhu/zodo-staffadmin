@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import Select from "react-select";
 import PatientChart from "./PaitentChart";
 import PropTypes from "prop-types";
+import { useAnalyticsData } from "../../hooks/useAnalyticsData";
 function Analytics(props) {
   const { bookingType, id } = props;
-  const [selectedOption, setSelectedOption] = useState(bookingType ? bookingType[0] : []);
-  
+  const [selectedOption, setSelectedOption] = useState(
+    bookingType ? bookingType[0] : []
+  );
+  const { data } = useAnalyticsData();
+  const countsPeryear = data?.map((item) => item.count);
   return (
     <>
       <div className="row">
@@ -35,7 +39,9 @@ function Analytics(props) {
                         borderColor: state.isFocused
                           ? "none"
                           : "2px solid rgba(46, 55, 164, 0.1);",
-                        boxShadow: state.isFocused ? "0 0 0 1px #05A95C" : "none",
+                        boxShadow: state.isFocused
+                          ? "0 0 0 1px #05A95C"
+                          : "none",
                         "&:hover": {
                           borderColor: state.isFocused
                             ? "none"
@@ -46,11 +52,15 @@ function Analytics(props) {
                         minHeight: "45px",
                       }),
                       option: (provided, state) => ({
-                          ...provided, 
-                          backgroundColor: state.isSelected ? '#347D73' : provided.backgroundColor,
-                          '&:active':{
-                              backgroundColor: state.isSelected ? '#347D73' : provided.backgroundColor,
-                            }
+                        ...provided,
+                        backgroundColor: state.isSelected
+                          ? "#347D73"
+                          : provided.backgroundColor,
+                        "&:active": {
+                          backgroundColor: state.isSelected
+                            ? "#347D73"
+                            : provided.backgroundColor,
+                        },
                       }),
                       dropdownIndicator: (base, state) => ({
                         ...base,
@@ -66,7 +76,7 @@ function Analytics(props) {
                 </div>
               </div>
               <div id={id} />
-              <PatientChart id={id}/>
+              <PatientChart id={id} data={countsPeryear}/>
             </div>
           </div>
         </div>

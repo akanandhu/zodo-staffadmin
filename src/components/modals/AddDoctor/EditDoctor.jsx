@@ -3,7 +3,7 @@ import { Modal } from "react-bootstrap";
 import DoctorTimeslot from "./DoctorTimeslot";
 import EditOverview from "./EditOverview";
 import PropTypes from "prop-types";
-import TransparentTabs from "../../tabs/TransparentTabs";
+import ModalTabs from "../../tabs/ModalTabs";
 
 function EditDoctor(props) {
   const { show, setShow, title, selectedDoctor } = props;
@@ -11,10 +11,14 @@ function EditDoctor(props) {
     setShow(false);
   };
   const tabData = [
-    { id: "edit_dr_overview", title: "Overview", content: <EditOverview selectedDoctor={selectedDoctor}/> },
-    { id: "dr_timeslot", title: "Time Slot", content: <DoctorTimeslot /> },
+    {
+      id: "edit_dr_overview",
+      title: "Overview",
+      content: <EditOverview selectedDoctor={selectedDoctor} />,
+    },
+    { id: "dr_timeslot", title: "Time Slot", content: <DoctorTimeslot selectedDoctor={selectedDoctor}/> },
   ];
-  
+
   return (
     <Modal
       show={show}
@@ -27,7 +31,7 @@ function EditDoctor(props) {
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body className="pt-0 pb-0 overflow-y-auto">
-        <TransparentTabs tabData={tabData} />
+        <ModalTabs tabData={tabData} />
       </Modal.Body>
     </Modal>
   );

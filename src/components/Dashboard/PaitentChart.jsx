@@ -1,17 +1,23 @@
-import React, { useEffect } from 'react';
-import ApexCharts from 'apexcharts';
-import PropTypes from 'prop-types';
+import React, { useEffect } from "react";
+import ApexCharts from "apexcharts";
+import PropTypes from "prop-types";
 
-const   PatientChart = (props) => {
-  const {id} = props;
-  console.log("ID ",id);
+const PatientChart = (props) => {
+  const { data } = props;
+
+  const chartRef = React.useRef(null);
+  const chartInstanceRef = React.useRef(null);
 
   useEffect(() => {
-    if (document.querySelector(`#${id}`)) {
+    if (chartInstanceRef.current) {
+      chartInstanceRef.current.destroy();
+      chartInstanceRef.current = null;
+    }
+    if (chartRef.current && data) {
       const sColStackedOptions = {
         chart: {
           height: 230,
-          type: 'bar',
+          type: "bar",
           stacked: true,
           toolbar: {
             show: false,
@@ -22,7 +28,7 @@ const   PatientChart = (props) => {
             breakpoint: 480,
             options: {
               legend: {
-                position: 'bottom',
+                position: "bottom",
                 offsetX: -10,
                 offsetY: 0,
               },
@@ -32,7 +38,7 @@ const   PatientChart = (props) => {
         plotOptions: {
           bar: {
             horizontal: false,
-            columnWidth: '15%',
+            columnWidth: "15%",
           },
         },
         dataLabels: {
@@ -40,9 +46,9 @@ const   PatientChart = (props) => {
         },
         series: [
           {
-            name: '',
-            color: '#2E37A4',
-            data: [20, 30, 41, 67, 22, 43, 40, 10, 30, 20, 40,40],
+            name: "",
+            color: "#2E37A4",
+            data: data,
           },
           // {
           //   name: '',
@@ -52,36 +58,49 @@ const   PatientChart = (props) => {
         ],
         xaxis: {
           categories: [
-            'Jan',
-            'Feb',
-            'Mar',
-            'Apr',
-            'May',
-            'Jun',
-            'Jul',
-            'Aug',
-            'Sep',
-            'Oct',
-            'Nov',
-            'Dec',
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
           ],
         },
       };
 
-      const chart = new ApexCharts(
-        document.querySelector(`#${id}`),
+      // const chart = new ApexCharts(
+      //   document.querySelector(`#${id}`),
+      //   sColStackedOptions
+      // );
+
+      // chart.render();
+      chartInstanceRef.current = new ApexCharts(
+        chartRef.current,
         sColStackedOptions
       );
 
-      chart.render();
+      chartInstanceRef.current.render();
     }
-  }, []);
+    return () => {
+      if (chartInstanceRef.current) {
+        chartInstanceRef.current.destroy();
+        chartInstanceRef.current = null;
+      }
+    };
+  }, [data]);
 
-  return <div id={id}></div>;
+  return <div ref={chartRef}></div>;
 };
 
 PatientChart.propTypes = {
   id: PropTypes.node,
+  data: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default PatientChart;
