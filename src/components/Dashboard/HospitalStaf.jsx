@@ -8,7 +8,7 @@ function HospitalStaf() {
   const basicInformation = [
     {
       id: 1,
-      title: "Total Fast Tag/day",
+      title: "Total Doctors",
       icon: profile_hospitals,
       count: 140,
       percentageUp: 20,
@@ -16,7 +16,7 @@ function HospitalStaf() {
     },
     {
       id: 2,
-      title: "Total Issued",
+      title: "Total Nurse",
       icon: doctors,
       count: 250,
       percentageUp: 40,
@@ -24,7 +24,7 @@ function HospitalStaf() {
     },
     {
       id: 3,
-      title: "Total",
+      title: "Total Staff",
       icon: fasttag,
       count: 121,
       percentageUp: 40,
@@ -32,14 +32,17 @@ function HospitalStaf() {
     },
   ];
 
-  const bookingType = [{ value: 1, label: "Fasttag Booking" }, { value: 2, label: "Normal Booking" }];
+  const bookingType = [
+    { value: 1, label: "Fasttag Booking" },
+    { value: 2, label: "Normal Booking" },
+  ];
 
   return (
     <div>
       <div className="row mt-3">
         <InfoCards info={basicInformation} />
       </div>
-      <Analytics bookingType={bookingType} id="staff-chart"/>
+      <Analytics bookingType={bookingType} id="staff-chart" />
       <BookingsTable />
     </div>
   );

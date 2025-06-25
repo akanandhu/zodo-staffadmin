@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ChooseFile from "../../Hospitals/ChooseFile";
 import { FormProvider, useForm } from "react-hook-form";
 import InputField from "../../Inputfields/InputField";
@@ -12,15 +12,18 @@ function EditServiceForm(props) {
   const methods = useForm();
   const { data: service } = useViewService(selectedService);
   const { mutate, isLoading } = useUpdateService();
+  const [fileURL, setFileURL] = useState("");
+
   const onUpdateService = async (data) => {
-    const service = {
+    const serviceData = {
       name: data.serviceName,
       description: data.message,
       // hospital_id: hospitalId,
       price: data.price,
       strike_through_price: data.strikePrice,
     };
-    await mutate({ id: selectedService, data: service });
+
+    await mutate({ id: service?.id, data: serviceData });
     // await mutate(service);
     // methods.reset();
     // handleClose(); // Close the modal after successful submission
@@ -28,6 +31,7 @@ function EditServiceForm(props) {
 
   useEffect(() => {
     if (service) {
+      setFileURL(service.image);
       methods.reset({
         serviceName: service.name,
         price: service.price,
@@ -36,13 +40,15 @@ function EditServiceForm(props) {
       });
     }
   }, [service, methods]);
-
+  const handleFileURL = (url) => {
+    setFileURL(url);
+  };
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onUpdateService)}>
         <div className="row mt-4">
           <div className="col-md-12 ms-md-2">
-            <ChooseFile />
+            <ChooseFile handleFileURL={handleFileURL} fileURL={fileURL} />
           </div>
         </div>
         <div className="form-group mt-2">

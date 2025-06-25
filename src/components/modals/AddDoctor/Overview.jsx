@@ -16,6 +16,7 @@ function Overview(props) {
   const { hospitalId } = useAuth();
   const methods = useForm();
   const [joiningDate, setJoiningDate] = useState();
+  const [fileURL, setFileURL] = useState("");
   const { data: doctorsList } = useDoctorsList(hospitalId);
   const { data: departmentList, isLoading: departmentLoading } =
     useDepartmentList(hospitalId);
@@ -44,7 +45,7 @@ function Overview(props) {
     const doctor = {
       name: data.doctorname,
       email: data.doctoremail,
-      profile_pic: "www.link.com",
+      profile_pic: fileURL,
       // city: "Kochi",
       pricing: parseInt(data.pricing),
       specifications_id: data?.specialisations?.map((item) => item.value),
@@ -58,14 +59,24 @@ function Overview(props) {
         joining_date: joiningDate,
       },
       department_id: data?.departments?.map((item) => item.value),
+      documents: [],
     };
     console.log("Doctor", doctor);
 
     // console.log(mutate);
 
-    await mutate(doctor);
+    await mutate(doctor, {
+      onSuccess: () => {
+        methods.reset();
+        handleClose();
+      },
+    });
     // methods.reset();
     // handleClose();
+  };
+
+  const handleFileURL = (url) => {
+    setFileURL(url);
   };
 
   return (
@@ -76,7 +87,7 @@ function Overview(props) {
       >
         <div className="row">
           <div className="col-md-8 ms-md-3">
-            <ChooseFile />
+            <ChooseFile handleFileURL={handleFileURL} fileURL={fileURL} />
           </div>
         </div>
 

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { bin_icon_red, pencil_icon, three_dots_menu } from "../../imagepath";
 import PropTypes from "prop-types";
-import { apollo_logo } from "../../imagepath";
 import ConfirmDelete from "../../modals/ConfirmDelete";
 import useDeleteHospitalServices from "../../../hooks/hospital-services/useDeleteHospitalService";
 import CenteredModal from "../../modals/CenteredModal";
@@ -27,7 +26,7 @@ function ServiceCard(props) {
         <div className="card-body">
           <div className="row align-items-center hospital-card">
             <div className="col">
-              <img src={apollo_logo} alt="#" />
+              <img src={servicesData?.image} alt="#" />
             </div>
             <div className="col-2 d-flex justify-content-end">
               <div className="dropdown">

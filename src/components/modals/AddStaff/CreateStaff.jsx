@@ -28,7 +28,9 @@ function CreateStaff(props) {
   }, [hospitalStaffs]);
 
   const onCreateStaff = async (data) => {
-    const departmentIds = Array.isArray(data?.department) && data?.department?.map((item)=> item?.value);
+    const departmentIds =
+      Array.isArray(data?.department) &&
+      data?.department?.map((item) => item?.value);
     const staff = {
       first_name: data.staffname,
       last_name: "",
@@ -47,13 +49,16 @@ function CreateStaff(props) {
       },
       job_title: data.jobtitle,
       user_type: userType ?? data.role.value,
-      role: data.role.value,
-      is_active: status,
+      role: userType ?? data.role.value,
+      is_active: Boolean(status),
       hospital_id: hospitalId,
     };
-    await mutate(staff);
-    // methods.reset();
-    // handleClose();
+    await mutate(staff, {
+      onSuccess: () => {
+        methods.reset();
+        handleClose();
+      },
+    });
   };
   const departmentOptions = departmentList?.map((department) => ({
     label: department.name,

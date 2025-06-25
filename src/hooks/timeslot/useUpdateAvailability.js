@@ -9,10 +9,10 @@ export const useUpdateAvailability = () => {
     mutationFn: editAvailability, // API function to create
     onMutate: async () => {
       // Cancel any ongoing queries for hospitals to prevent race conditions
-      await queryClient.cancelQueries({ queryKey: ["departments"] });
+      await queryClient.cancelQueries({ queryKey: ["availabilities"] });
     },
     onSuccess: (data, variables) => {
-      const message = data?.message || "Department updated successfully";
+      const message = data?.message || "Availability updated successfully";
       queryClient.invalidateQueries({ queryKey: ["availabilites"] });
       queryClient.invalidateQueries({
         queryKey: ["availabilities", variables.id],
@@ -25,7 +25,7 @@ export const useUpdateAvailability = () => {
         // queryClient.setQueryData(["departments"], context.previousHospitals);
       }
       const errorMessage =
-        error?.response?.data?.message || "Failed to edit hospital";
+        error?.response?.data?.message || "Failed to update availability";
       toast.error(errorMessage);
     },
   });

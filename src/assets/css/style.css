@@ -12032,3 +12032,38 @@ tr.ant-table-row.ant-table-row-level-0.ant-table-row-selected,
   background-color: black !important;
   color: white !important;
 }
+
+.choose-file-text{
+  font-size: 0.8rem;
+}
+
+
+.preview-container{
+  width: 150px;
+  height: 100px;
+  /* width: 35%; */
+  /* height: 90%; */
+  /* overflow: hidden; */
+}
+.preview-file-text h6{
+  font-size: 0.6em;
+  height: 55px;
+  overflow: hidden;
+}
+.image-placeholder p{
+  font-size: 0.7em;
+  height: 55px;
+  overflow: hidden;
+  text-align: center;
+  padding-top: 20px;
+}
+
+.table-profile h6{
+  font-size: 1em;
+  padding-top: 4px;
+}
+
+.table-profile p{
+  font-size: 0.9em;
+  margin-top: -8px;
+}

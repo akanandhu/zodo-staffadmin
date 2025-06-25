@@ -1,33 +1,115 @@
-import React from "react";
+import PropTypes from "prop-types";
+import { toast } from "react-toastify";
+import ComponentLoader from "../loaders/ComponentLoader";
+import { useUploadFile } from "../../hooks/useUploadFile";
 
-function ChooseFile() {
+function ChooseFile(props) {
+  const { handleFileURL, fileURL } = props;
+  // useEffect(() => {
+  //   setFile(fileURL);
+  // }, [fileURL]);
+
+  // const [loading, setLoading] = useState(false);
+  const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB in bytes
   const handleButtonClick = () => {
     document.getElementById("fileInput").click();
   };
+  const { mutate, isLoading } = useUploadFile();
+  const handleFiles = async (e) => {
+    const file = e.target.files[0];
+    if (file && file.size > MAX_FILE_SIZE) {
+      // setUploadStatus("File size exceeds 2MB limit");
+      e.target.value = ""; // Clear the input
+      const message = "File size exceeds 2MB limit";
+      toast.error(message);
+    } else {
+      // setFile(file);
+      const formData = new FormData();
+      formData.append("file", file);
+      // setLoading(true);
+      try {
+        const response = await mutate(formData, {
+          onSuccess: () => {
+            const message = "File uploaded successfully";
+            toast.success(message);
+          },
+        });
+        console.log("S3 URL ", response?.data?.url);
+        // setFile(response?.data?.url);
+        handleFileURL(response?.data?.url);
+      } catch (error) {
+        handleFileURL("");
+        const message = "File uploaded failed";
+        toast.error(message);
+      }
+    }
+  };
   return (
+    // <div className="row">
+    //   <div className="col-md-1 upload-preview ms-2">
+    //     <small className="text-muted">preview</small>
+    //   </div>
+    //   <div className="col ms-md-2">
+    //     <div className="upload-text">
+    //       <small className="text-muted">
+    //         Please upload square image of size less than 2 MB
+    //       </small>
+    //     </div>
+    //     <button
+    //       className="choose-file-btn mt-2 bg-white"
+    //       onClick={handleButtonClick}
+    //     >
+    //       <input
+    //         type="file"
+    //         className="form-control d-none"
+    //         // id="inputGroupFile02"
+    //         id="fileInput"
+    //       />
+    //       <span className="choose-file-label">Choose file</span>
+    //     </button>
+    //   </div>
+    // </div>
     <div className="row">
       <div className="col-md-1 upload-preview ms-2">
-        <small className="text-muted">preview</small>
+        {!fileURL ? (
+          <small className="text-muted text-center">Perview</small>
+        ) : (
+          <>
+            {!isLoading ? (
+              <img src={fileURL} alt="profile" width={100} height={100} />
+            ) : (
+              <ComponentLoader />
+            )}
+          </>
+        )}
       </div>
       <div className="col ms-md-2">
-        <div className="upload-text">
-          <small className="text-muted">Please upload square image of size less than 2 MB</small>
+        <div>
+          <small className="w-25 text-muted">Please upload square image.</small>
         </div>
-        <button
+        <div>
+          <small className="w-25 text-muted">size less than 2 MB</small>
+        </div>
+        <a
           className="choose-file-btn mt-2 bg-white"
           onClick={handleButtonClick}
         >
           <input
             type="file"
             className="form-control d-none"
-            // id="inputGroupFile02"
             id="fileInput"
+            onChange={handleFiles}
+            accept="image/jpeg, image/png, image/gif"
           />
-          <span className="choose-file-label">Choose file</span>
-        </button>
+          <span className="choose-file-text">Choose file</span>
+        </a>
       </div>
     </div>
   );
 }
 
+ChooseFile.propTypes = {
+  handleFileURL: PropTypes.func,
+  fileURL: PropTypes.string,
+};
 export default ChooseFile;

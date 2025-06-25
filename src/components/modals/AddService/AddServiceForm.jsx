@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useAuth } from "../../../hooks/useAuth";
 import { useCreateService } from "../../../hooks/hospital-services/useCreateService";
@@ -9,7 +9,9 @@ import ChooseFile from "../../Hospitals/ChooseFile";
 function AddServiceForm(props) {
   const { handleClose } = props;
   const methods = useForm();
+  const [fileURL, setFileURL] = useState("");
   const { hospitalId } = useAuth();
+
   const { mutate, isLoading } = useCreateService();
   const onCreateService = async (data) => {
     const service = {
@@ -17,6 +19,7 @@ function AddServiceForm(props) {
       description: data.message,
       hospital_id: hospitalId,
       price: data.price,
+      image: fileURL,
       strike_through_price: data.strikePrice,
     };
     await mutate(service, {
@@ -26,12 +29,15 @@ function AddServiceForm(props) {
       },
     });
   };
+  const handleFileURL = (url) => {
+    setFileURL(url);
+  };
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onCreateService)}>
         <div className="row mt-4">
           <div className="col-md-12 ms-md-2">
-            <ChooseFile />
+            <ChooseFile handleFileURL={handleFileURL} fileURL={fileURL} />
           </div>
         </div>
         <div className="form-group mt-2">

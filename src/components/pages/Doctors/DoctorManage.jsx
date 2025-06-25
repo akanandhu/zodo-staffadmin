@@ -8,8 +8,6 @@ import { useAuth } from "../../../hooks/useAuth";
 import ButtonSerchHero from "../../heros/ButtonSerchHero";
 import SideModal from "../../modals/SideModal";
 import Overview from "../../modals/AddDoctor/Overview";
-import DoctorTimeslot from "../../modals/AddDoctor/DoctorTimeslot";
-import ModalTabs from "../../tabs/ModalTabs";
 
 function DoctorManage() {
   const { hospitalId } = useAuth();
@@ -30,10 +28,10 @@ function DoctorManage() {
   const handleShow = () => {
     setShow(true);
   };
-  const tabData = [
-    { id: "add_dr_overview", title: "Overview", content: <Overview />, link: "overview" },
-    { id: "dr_timeslot", title: "Time Slot", content: <DoctorTimeslot />, link: "timeslot" },
-  ];
+  // const tabData = [
+  //   { id: "add_dr_overview", title: "Overview", content: <Overview />, link: "overview" },
+  //   { id: "dr_timeslot", title: "Time Slot", content: <DoctorTimeslot />, link: "timeslot" },
+  // ];
   const handleCloseModal = () => {
     setShow(false);
   };
@@ -54,7 +52,8 @@ function DoctorManage() {
       </div>
 
       <SideModal show={show} handleClose={handleCloseModal} title="Doctor Profile">
-        <ModalTabs tabData={tabData} />
+        {/* <ModalTabs tabData={tabData} /> */}
+        <Overview />
       </SideModal>
     </Layout>
   );

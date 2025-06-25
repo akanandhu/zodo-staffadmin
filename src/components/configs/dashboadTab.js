@@ -4,11 +4,11 @@ import HospitalStaf from "../Dashboard/HospitalStaf";
 
 export const dashboardTab = [
   { id: "appointment", title: "Appointment", content: <AppointmentInfo /> },
-  { id: "hospitalstaff", title: "Hospital Staff", content: <FastTag /> },
+  { id: "hospitalstaff", title: "Hospital Staff", content: <HospitalStaf /> },
   {
     id: "fasttag",
     title: "Fasttag",
-    content: <HospitalStaf />,
+    content: <FastTag />,
   },
   // {
   //   id: "stafs",

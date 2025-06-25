@@ -30,7 +30,9 @@ export const useAdduser = (hospitalId) => {
     },
     onError: (error, id, context) => {
       const errorMessage =
-        error?.response?.data?.message || "Failed to add user";
+        error?.response?.data?.validationErrors ||
+        error?.response?.data?.message ||
+        "Failed to add user";
       // Rollback if there is an error
       if (context?.previousUser) {
         queryClient.setQueryData(["user"], context.previousUser);

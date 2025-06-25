@@ -18,6 +18,7 @@ function EditOverview(props) {
   const { hospitalId } = useAuth();
   const methods = useForm();
   const [joiningDate, setJoiningDate] = useState();
+  const [fileURL, setFileURL] = useState("");
   const { data: departmentList, isLoading: departmentLoading } =
     useDepartmentList(hospitalId);
   const { data: specialisationList, isLoading: specialisationLoading } =
@@ -38,20 +39,38 @@ function EditOverview(props) {
 
   useEffect(() => {
     if (doctor) {
+      console.log("Doctor data in edit overview: ", doctor);
+
       // const selectedDepartments = doctor?.department.filter((item)=> )
+      setFileURL(doctor?.profile_pic);
+      const specialisation = doctor?.specialisations;
+      const specialisations = specialisation.map((item) => ({
+        label: item.name,
+        value: item.id,
+      }));
+      const departmentList = doctor?.departments || [];
+      const departments = departmentList.map((item) => ({
+        label: item.name,
+        value: item.id,
+      }));
+
+      console.log("Specialisations: ", specialisations);
+      console.log("Departments: ", departments);
+      
+
       methods.reset({
         doctorname: doctor.name,
         doctoremail: doctor.email,
-        profile_pic: "www.link.com",
+        profile_pic: fileURL,
         // city: "Kochi",
-        jobTitle:doctor?.job_title,
+        jobTitle: doctor?.job_title,
         pricing: doctor.pricing,
-        specialisations: doctor.specifications_id?.map((item) => item.value),
+        specialisations: specialisations,
         phone: doctor?.phone_number,
         registrationNumber: doctor?.registration_details?.registration_number,
-        councilName:doctor?.registration_details?.council_name,
+        councilName: doctor?.registration_details?.council_name,
         // joiningDate: doctor?.registration_details?.joining_date,
-        departments: doctor?.departments_id?.map((item) => item.value),
+        departments: departments,
       });
 
       setJoiningDate(doctor?.registration_details?.joining_date);
@@ -59,6 +78,10 @@ function EditOverview(props) {
   }, [doctor, methods]);
 
   const onCreateDoctor = async (data) => {
+    console.log("Data from form: ", data);
+    const departments = data?.departments?.map((item) => item.value);
+    console.log("Selected departments: ", departments);
+    const specialisations = data?.specialisations?.map((item) => item.value);
     const doctor = {
       // name: data.doctorname,
       // email: data.doctoremail,
@@ -74,7 +97,7 @@ function EditOverview(props) {
       // city: "",
       pricing: parseInt(data.pricing),
       // job_title:data.jobTitle,
-      // specifications_id: data?.specialisations?.map((item) => item.value),
+      specifications_id: specialisations,
       phone_number: data.phone,
       hospital_id: hospitalId,
       registration_details: {
@@ -82,11 +105,30 @@ function EditOverview(props) {
         council_name: data.councilName,
         joining_date: joiningDate,
       },
-      // department_id: data?.departments?.map((item) => item.value),
+      department_ids: departments,
     };
-    await mutate({ id: selectedDoctor, data: doctor });
+
+    console.log("Doctor to edit: ", doctor);
+    console.log(mutate);
+
+    await mutate(
+      { id: selectedDoctor, data: doctor },
+      {
+        onSuccess: () => {
+          methods.reset();
+          handleClose();
+        },
+        onError: () => {
+          handleClose();
+        },
+      }
+    );
     // methods.reset();
     // handleClose();
+  };
+
+  const handleFileURL = (url) => {
+    setFileURL(url);
   };
   return (
     <FormProvider {...methods}>
@@ -96,7 +138,7 @@ function EditOverview(props) {
       >
         <div className="row">
           <div className="col-md-8 ms-md-3">
-            <ChooseFile />
+            <ChooseFile handleFileURL={handleFileURL} fileURL={fileURL} />
           </div>
         </div>
 
@@ -151,7 +193,7 @@ function EditOverview(props) {
         </div>
 
         <div className="row">
-          <div className="col-md-4">
+          {/* <div className="col-md-4">
             <div className="form-group">
               <InputField
                 name="jobTitle"
@@ -161,7 +203,7 @@ function EditOverview(props) {
                 type="text"
               />
             </div>
-          </div>
+          </div> */}
           <div className="col-md-4">
             <div className="form-group">
               <SelectField

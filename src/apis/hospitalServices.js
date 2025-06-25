@@ -30,9 +30,6 @@ export const addHospitalService = async (serviceData) => {
 };
 
 export const editHospitalService = async ({ id, data }) => {
-  console.log("ID ",id);
-  console.log("Data",data);
-  
   const response = await apiClient.patch(`/hospital-services/${id}`, data);
   return response.data;
 };

@@ -8,11 +8,17 @@ export const useAddAvailability = () => {
   const mutation = useMutation({
     mutationFn: addAvailability, // API function to create
     onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: ["availability"] });
+      await queryClient.cancelQueries({ queryKey: ["availabilities"] });
+      // await queryClient.cancelQueries(["availabilities"]);
+      // const previousData = queryClient.getQueryData(["availabilities"]) || [];
+      // queryClient.setQueryData(["availabilities"], (old) => [...old, newSlot]);
+      // console.log(previousData);
+      
+      // return { previousData };
     },
     onSuccess: (data) => {
       const message = data.message || "Added availability successfully";
-      // queryClient.invalidateQueries(["departments", hospitalId]);
+      queryClient.invalidateQueries(["availabilities"]);
       toast.success(message, {
         position: "top-right",
         autoClose: 5000,
@@ -26,13 +32,7 @@ export const useAddAvailability = () => {
     onError: (error, id, context) => {
       const errorMessage =
         error?.response?.data?.message || "Failed to add department";
-      // Rollback if there is an error
-      if (context?.previousDepartments) {
-        // queryClient.setQueryData(
-        //   ["departments", hospitalId],
-        //   context.previousDepartments
-        // );
-      }
+      queryClient.setQueryData(["availabilities"], context.previousData);
       toast.error(errorMessage, {
         position: "top-right",
         autoClose: 5000,
@@ -42,6 +42,9 @@ export const useAddAvailability = () => {
         draggable: true,
         progress: undefined,
       });
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries(["availabilities"]);
     },
   });
 

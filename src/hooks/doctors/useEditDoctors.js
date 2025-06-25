@@ -27,6 +27,8 @@ export const useEditDoctors = () => {
       },
       onError: (error, id, context) => {
         // Rollback if there is an error
+        console.log("Mutation error:", error);
+        
         if (context?.previousDoctors) {
           queryClient.setQueryData(["doctor"], context.previousDoctors);
         }
