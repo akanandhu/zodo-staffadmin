@@ -167,7 +167,7 @@ function Availability({ selectedDoctor }) {
             <strong>{day.name}</strong>
           </div>
           <div className="w-75">
-            {sortedAsc(availability[index]?.[0]?.availabilities)?.map(
+            {sortedAsc(availability[index]?.[0]?.availabilities || [])?.map(
               (item, slotIndex) => (
                 <Row key={item.id} className="align-items-center mb-2">
                   <Col xs={3}>
