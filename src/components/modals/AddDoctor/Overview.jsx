@@ -61,7 +61,6 @@ function Overview(props) {
       department_id: data?.departments?.map((item) => item.value),
       documents: [],
     };
-    console.log("Doctor", doctor);
 
     // console.log(mutate);
 

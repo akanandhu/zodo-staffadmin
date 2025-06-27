@@ -2,6 +2,7 @@ import { useQueries } from "@tanstack/react-query";
 import { getWeekAvailability } from "../../apis/timeslots";
 
 export const useGetWeekAvailabilities = (doctor_id, week_ids) => {
+  
   const queries = useQueries({
     queries: week_ids?.map((id) => ({
       queryKey: ["availabilities", doctor_id, id], // ✅ Array format
@@ -9,6 +10,7 @@ export const useGetWeekAvailabilities = (doctor_id, week_ids) => {
       enabled: !!doctor_id && !!id, // Ensure doctor_id and id are defined
     })),
   });
+  
   return {
     data: queries.map((query) => query.data || []), // Return data from all queries
     isLoading: queries.some((query) => query.isLoading), // Check if any query is loading

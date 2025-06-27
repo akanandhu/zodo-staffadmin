@@ -5,7 +5,7 @@ export const getWeeks = async () => {
   return response.data || [];
 };
 
-export const getWeekAvailability = async (doctor_id, week_id) => {
+export const getWeekAvailability = async (doctor_id, week_id) => {  
   const response = await apiClient.get(
     `/availabilities/doctors/${doctor_id}/week?week_id=${week_id}`
   );

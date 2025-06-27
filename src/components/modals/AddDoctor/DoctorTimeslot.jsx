@@ -15,6 +15,7 @@ function DoctorTimeslot(props) {
   return (
     <div className="doctor-timeslot mt-3">
       <Availability selectedDoctor={selectedDoctor}/>
+      {/* <SlotManager selectedDoctor={selectedDoctor}/> */}
       {/* <ModalTabs tabData={tabData} /> */}
     </div>
   );

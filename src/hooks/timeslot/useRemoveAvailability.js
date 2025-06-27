@@ -16,10 +16,9 @@ const useRemoveAvailability = () => {
         ),
       }));
     },
-    onSuccess: (data) => {
-      const message = data.message;
+    onSuccess: () => {
       // Invalidate and refetch the hospitals query after a successful mutation
-      toast.success(message);
+      // toast.success(message);
       queryClient.invalidateQueries(["availabilities"]);
     },
     onError: (error, id, context) => {

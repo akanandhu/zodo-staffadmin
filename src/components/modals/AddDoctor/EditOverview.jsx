@@ -14,7 +14,6 @@ import { useEditDoctors } from "../../../hooks/doctors/useEditDoctors";
 function EditOverview(props) {
   const { handleClose, selectedDoctor } = props;
   const { data: doctor } = useDoctorView(selectedDoctor);
-  console.log("Doctor to edit ", doctor);
   const { hospitalId } = useAuth();
   const methods = useForm();
   const [joiningDate, setJoiningDate] = useState();
@@ -39,7 +38,6 @@ function EditOverview(props) {
 
   useEffect(() => {
     if (doctor) {
-      console.log("Doctor data in edit overview: ", doctor);
 
       // const selectedDepartments = doctor?.department.filter((item)=> )
       setFileURL(doctor?.profile_pic);
@@ -54,8 +52,6 @@ function EditOverview(props) {
         value: item.id,
       }));
 
-      console.log("Specialisations: ", specialisations);
-      console.log("Departments: ", departments);
       
 
       methods.reset({
@@ -78,9 +74,7 @@ function EditOverview(props) {
   }, [doctor, methods]);
 
   const onCreateDoctor = async (data) => {
-    console.log("Data from form: ", data);
     const departments = data?.departments?.map((item) => item.value);
-    console.log("Selected departments: ", departments);
     const specialisations = data?.specialisations?.map((item) => item.value);
     const doctor = {
       // name: data.doctorname,
@@ -108,8 +102,6 @@ function EditOverview(props) {
       department_ids: departments,
     };
 
-    console.log("Doctor to edit: ", doctor);
-    console.log(mutate);
 
     await mutate(
       { id: selectedDoctor, data: doctor },
