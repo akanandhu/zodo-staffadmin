@@ -26,7 +26,12 @@ function EditServiceForm(props) {
       image: fileURL,
     };
 
-    await mutate({ id: service?.id, data: serviceData });
+    await mutate({ id: service?.id, data: serviceData },{
+      onSuccess: () => {
+        handleClose(); // Close the modal after successful submission
+        methods.reset();
+      },
+    });
     // await mutate(service);
     // methods.reset();
     // handleClose(); // Close the modal after successful submission

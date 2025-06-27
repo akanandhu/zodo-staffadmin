@@ -87,7 +87,7 @@ function EditOverview(props) {
 
       name: data.doctorname,
       email: data.doctoremail,
-      profile_pic: "www.link.com",
+      profile_pic: fileURL,
       // city: "",
       pricing: parseInt(data.pricing),
       // job_title:data.jobTitle,

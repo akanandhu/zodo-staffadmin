@@ -16,15 +16,7 @@ export const useAddDoctors = () => {
       const message = data?.message || "Doctor added successfully";
       queryClient.invalidateQueries(["doctors"]);
       //   navigate("/manage-doctors");
-      toast.success(message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.success(message);
     },
     onError: (error, id, context) => {
       // Rollback if there is an error
@@ -35,15 +27,7 @@ export const useAddDoctors = () => {
         error?.response?.data?.validationErrors ||
         error?.response?.data?.message ||
         "Failed to create doctor";
-      toast.error(errorMessage, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.error(errorMessage);
     },
   });
 

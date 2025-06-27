@@ -6,6 +6,7 @@ import ConfirmDelete from "../../modals/ConfirmDelete";
 import useDeleteHospitalServices from "../../../hooks/hospital-services/useDeleteHospitalService";
 import CenteredModal from "../../modals/CenteredModal";
 import EditServiceForm from "../../modals/AddService/EditServiceForm";
+import ImageBox from "../../assests/ImageBox";
 function ServiceCard(props) {
   const { servicesData } = props;
   const [show, setShow] = useState(false);
@@ -25,10 +26,18 @@ function ServiceCard(props) {
       <Link to={`/hospital/services/${servicesData.id}`}>
         <div className="card-body">
           <div className="row align-items-center hospital-card">
-            <div className="col">
-              <img src={servicesData?.image} alt="#" />
+            <div className="col-md-3">
+              {/* <img src={servicesData?.image} alt="#" /> */}
+              <Link to="#">
+                <ImageBox
+                  src={servicesData?.image}
+                  alt="Service Image"
+                  width="75x"
+                  height="75px"
+                />
+              </Link>
             </div>
-            <div className="col-2 d-flex justify-content-end">
+            <div className="col-9 d-flex justify-content-end pe-4">
               <div className="dropdown">
                 <Link
                   // className="dropdown-toggle"
@@ -69,7 +78,7 @@ function ServiceCard(props) {
             </div>
             <div className="row mt-3">
               <div className="col">
-                <h5>{servicesData.name}</h5>
+                <h5 className="service-title">{servicesData.name}</h5>
               </div>
               <div className="col-auto">
                 <h5 className="text-primary">active</h5>

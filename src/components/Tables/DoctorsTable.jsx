@@ -8,6 +8,7 @@ import EditDoctor from "../modals/AddDoctor/EditDoctor";
 import useDeleteDoctor from "../../hooks/doctors/useDeleteDoctor";
 import { useAuth } from "../../hooks/useAuth";
 import { useDoctorsList } from "../../hooks/doctors/useDoctorsList";
+import CircularImage from "../assests/CircularImage";
 
 function DoctorsTable(props) {
   const { doctorsList, loading } = props;
@@ -44,10 +45,17 @@ function DoctorsTable(props) {
       sorter: (a, b) => a.name.length - b.name.length,
       render: (item, record) => (
         <div className="d-flex">
-          <img src={user_profile} width={35} height={35} alt="" />
-          <div className="ms-2 table-text">
-            <h6>{item}</h6>
-            <p>{record.email}</p>
+          <div>
+            <CircularImage
+              src={record?.profile_pic ?? user_profile}
+              alt={record.name}
+              size={40}
+              fallback={user_profile}
+            />
+          </div>
+          <div className="ms-2 table-profile">
+            <h6>{record.name}</h6>
+            <p className="text-muted mb-0">{record.email}</p>
           </div>
         </div>
       ),
@@ -61,7 +69,7 @@ function DoctorsTable(props) {
     {
       title: "Joining Date",
       dataIndex: "work_start_date",
-      render:(item)=><div>{item ? item : "N/A"}</div>
+      render: (item) => <div>{item ? item : "N/A"}</div>,
       // sorter: (a, b) => a.joiningDate.length - b.joiningDate.length,
     },
     {
@@ -139,7 +147,11 @@ function DoctorsTable(props) {
   ];
   return (
     <div className="mt-3">
-      <DataTable columns={columns} dataSource={doctorsList ?? []} loading={loading}/>
+      <DataTable
+        columns={columns}
+        dataSource={doctorsList ?? []}
+        loading={loading}
+      />
       <ConfirmDelete
         setShow={setShow}
         show={show}
@@ -160,6 +172,6 @@ function DoctorsTable(props) {
 // props validation
 DoctorsTable.propTypes = {
   doctorsList: PropTypes.node,
-  loading: PropTypes.bool
+  loading: PropTypes.bool,
 };
 export default DoctorsTable;

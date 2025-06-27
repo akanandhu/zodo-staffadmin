@@ -12,6 +12,7 @@ export const useUpdateService = () => {
     },
     onSuccess: (data, variables) => {
       const message = data?.message || "Service updated successfully";
+      queryClient.invalidateQueries({ queryKey: ["services"] });
       queryClient.invalidateQueries({ queryKey: ["services", variables.id] });
       toast.success(message);
     },
