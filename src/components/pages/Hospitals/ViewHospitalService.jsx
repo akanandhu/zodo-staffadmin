@@ -1,16 +1,13 @@
-import React from "react";
 import Layout from "../../layout/Layout";
 import Breadcrumb from "../../breadcrump/Breadcrumb";
 import { useParams } from "react-router-dom";
-import { useValidateId } from "../../../hooks/useValidateId";
 import { useViewService } from "../../../hooks/hospital-services/useViewService";
 import BasicHero from "../../heros/BasicHero";
 import ServicesTable from "../../Hospitals/Services/ServicesTable";
 
 function ViewHospitalService() {
   const { id } = useParams();
-  const { validId } = useValidateId(id);
-  const { data: service } = useViewService(validId);  
+  const { data: service } = useViewService(id);  
   
   const breadCrumpData = [
     {
@@ -26,7 +23,7 @@ function ViewHospitalService() {
     {
       name: service?.name,
       status: "active",
-      link: `/hospital/services/${validId}`,
+      link: `/hospital/services/${id}`,
     },
   ];
   return (

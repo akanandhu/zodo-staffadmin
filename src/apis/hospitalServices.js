@@ -30,7 +30,7 @@ export const addHospitalService = async (serviceData) => {
 };
 
 export const editHospitalService = async ({ id, data }) => {
-  const response = await apiClient.patch(`/hospital-services/${id}`, data);
+  const response = await apiClient.put(`/hospital-services/${id}`, data);
   return response.data;
 };
 

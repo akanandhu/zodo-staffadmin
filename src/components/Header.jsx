@@ -118,9 +118,9 @@ const Header = () => {
               {/* <Link className="dropdown-item" to="/edit-profile">
                 Edit Profile
               </Link> */}
-              <Link className="dropdown-item" to="/settingssociallink">
+              {/* <Link className="dropdown-item" to="/settingssociallink">
                 Settings
-              </Link>
+              </Link> */}
               <Link className="dropdown-item" to="/login" onClick={handleLogout}>
                 Logout
               </Link>
@@ -148,9 +148,9 @@ const Header = () => {
             <Link className="dropdown-item" to="edit-profile.html">
               Edit Profile
             </Link>
-            <Link className="dropdown-item" to="/settings">
+            {/* <Link className="dropdown-item" to="/settings">
               Settings
-            </Link>
+            </Link> */}
             <Link className="dropdown-item" to onClick={handleLogout}>
               Logout
             </Link>

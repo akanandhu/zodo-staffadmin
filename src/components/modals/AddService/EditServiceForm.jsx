@@ -6,8 +6,10 @@ import TextArea from "../../Inputfields/TextArea";
 import PropTypes from "prop-types";
 import { useViewService } from "../../../hooks/hospital-services/useViewService";
 import { useUpdateService } from "../../../hooks/hospital-services/useUpdateService";
+import { useAuth } from "../../../hooks/useAuth";
 
 function EditServiceForm(props) {
+  const { hospitalId } = useAuth();
   const { handleClose, selectedService } = props;
   const methods = useForm();
   const { data: service } = useViewService(selectedService);
@@ -18,9 +20,10 @@ function EditServiceForm(props) {
     const serviceData = {
       name: data.serviceName,
       description: data.message,
-      // hospital_id: hospitalId,
+      hospital_id: hospitalId,
       price: data.price,
       strike_through_price: data.strikePrice,
+      image: fileURL,
     };
 
     await mutate({ id: service?.id, data: serviceData });

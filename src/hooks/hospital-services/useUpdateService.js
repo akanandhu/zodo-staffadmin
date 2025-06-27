@@ -13,15 +13,7 @@ export const useUpdateService = () => {
     onSuccess: (data, variables) => {
       const message = data?.message || "Service updated successfully";
       queryClient.invalidateQueries({ queryKey: ["services", variables.id] });
-      toast.success(message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.success(message);
     },
     onError: (error, id, context) => {
       // Rollback if there is an error
@@ -30,15 +22,7 @@ export const useUpdateService = () => {
       }
       const errorMessage =
         error?.response?.data?.message || "Failed to update service";
-      toast.error(errorMessage, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.error(errorMessage);
     },
   });
 
