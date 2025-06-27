@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import ChooseFile from "../../Hospitals/ChooseFile";
+import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import InputField from "../../Inputfields/InputField";
 import { Button } from "react-bootstrap";
@@ -18,6 +17,7 @@ function CreateStaff(props) {
   const { data: departmentList, isLoading } = useDepartmentList(hospitalId);
   const { mutate, isLoading: userLoading } = useAdduser(hospitalId);
   const { data: hospitalStaffs } = useHospitalStaffs(hospitalId);
+  // const [fileURL, setFileURL] = useState("");
   const methods = useForm();
 
   useEffect(() => {
@@ -69,6 +69,10 @@ function CreateStaff(props) {
     { label: "Staff", value: "staff" },
   ];
 
+  // const handleFileURL = (url) => {
+  //   setFileURL(url);
+  // };
+
   return (
     <FormProvider {...methods}>
       <form
@@ -77,7 +81,7 @@ function CreateStaff(props) {
       >
         <div className="row">
           <div className="col-md-8">
-            <ChooseFile />
+            {/* <ChooseFile handleFileURL={handleFileURL} fileURL={fileURL}/> */}
           </div>
           <div className="col-md-4 d-flex justify-content-end">
             <select

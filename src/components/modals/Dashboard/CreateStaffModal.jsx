@@ -20,7 +20,6 @@ function CreateStaffModal(props) {
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body className="pt-0 pb-0">
-        {/* <TransparentTabs tabData={tabData} /> */}
         <CreateStaff handleClose={handleClose} userType={userType}/>
       </Modal.Body>
     </Modal>

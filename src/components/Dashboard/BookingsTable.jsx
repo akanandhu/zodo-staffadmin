@@ -16,7 +16,8 @@ function BookingsTable() {
   );
   // console.log(bookings);
   console.log(isLoading);
-
+  console.log("Bookings Data:", bookings);
+  
   const columns = [
     {
       title: "Booking ID",
@@ -66,7 +67,7 @@ function BookingsTable() {
     {
       title: "Assigned",
       dataIndex: "assingned",
-      render: (item, record) => <div>Dr.{record?.doctor?.name}</div>,
+      render: (item, record) => record?.doctor?.name ? <div>Dr.{record?.doctor?.name}</div> : <div>unasigned</div>,
       // sorter: (a, b) => a.assingned.length - b.assingned.length,
     },
     // {
