@@ -5,29 +5,27 @@ import { useAddAvailability } from "../../../../hooks/timeslot/useAddAvailabilit
 import { useGetWeekAvailabilities } from "../../../../hooks/timeslot/useGetWeekAvailabilities";
 import useRemoveAvailability from "../../../../hooks/timeslot/useRemoveAvailability";
 import { useEffect, useState } from "react";
+import { useUpdateAvailability } from "../../../../hooks/timeslot/useUpdateAvailability";
+import { debounce } from "lodash";
 
-function Availability(props) {
-  const { selectedDoctor } = props;
-  // const queryClient = useQueryClient();
+function Availability({ selectedDoctor }) {
   const { mutateAsync } = useAddAvailability();
-  // const { mutate: updateAvailability } = useUpdateAvailability();
+  const { mutate: updateAvailability } = useUpdateAvailability();
   const { mutate: deleteAvailability } = useRemoveAvailability();
   const [slotTimes, setSlotTimes] = useState({});
 
   const { data: weeks } = useWeeks();
-  if (!weeks) {
-    return <div>Loading weeks...</div>;
-  }
-  const week_ids = weeks?.map((week) => week.id);
+  if (!weeks) return <div>Loading weeks...</div>;
+
+  const week_ids = weeks.map((week) => week.id);
+
   const generateTimeOptions = () => {
     const times = [];
     for (let h = 0; h < 24; h++) {
-      for (let m = 0; m < 60; m = m + 30) {
-        // for (let s = 0; s < 60; s++) {
+      for (let m = 0; m < 60; m += 30) {
         times.push(
           `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`
         );
-        // }
       }
     }
     return times;
@@ -38,58 +36,14 @@ function Availability(props) {
     selectedDoctor,
     week_ids
   );
-  const addMinutes = (time, minutesToAdd) => {
-    const [hours, minutes] = time.split(":").map(Number);
+
+  const formatTime = (time) => time?.slice(0, 5);
+
+  const addMinutes = (time, mins) => {
+    const [h, m] = time.split(":").map(Number);
     const date = new Date();
-    date.setHours(hours);
-    date.setMinutes(minutes + minutesToAdd);
-    return `${date.getHours().toString().padStart(2, "0")}:${date
-      .getMinutes()
-      .toString()
-      .padStart(2, "0")}`;
-  };
-
-  const handleAddSlot = async (data) => {
-    const weekId = data?.id;
-    // Find the index of the weekId in weekIds
-    const weekIndex = week_ids.findIndex((id) => id === weekId);
-    const currentWeekData = availability?.[weekIndex];
-    if (!currentWeekData || !currentWeekData[0]) {
-      console.warn("No availability data found for this week");
-      return;
-    }
-    const availabilities = currentWeekData[0]?.availabilities || [];
-    const lastSlot = availabilities[availabilities.length - 1];
-    const defaultStart = lastSlot?.endTime
-      ? formatTime(lastSlot.endTime)
-      : "09:00";
-    const defaultEnd = addMinutes(defaultStart, 30);
-    const slotData = {
-      doctor_id: selectedDoctor,
-      type: "week",
-      week_id: weekId,
-      startTime: defaultStart,
-      endTime: defaultEnd,
-      not_available: false,
-    };
-
-    try {
-      await mutateAsync(slotData);
-    } catch (err) {
-      console.error("Error adding slot", err);
-    }
-  };
-
-  const handleRemoveSlot = (id) => {
-    deleteAvailability(id);
-  };
-
-  const subtractMinutes = (time, minutesToSubtract) => {
-    const [hours, minutes] = time.split(":").map(Number);
-    const date = new Date();
-    date.setHours(hours);
-    date.setMinutes(minutes - minutesToSubtract);
-
+    date.setHours(h);
+    date.setMinutes(m + mins);
     return `${date.getHours().toString().padStart(2, "0")}:${date
       .getMinutes()
       .toString()
@@ -97,7 +51,10 @@ function Availability(props) {
   };
 
   useEffect(() => {
-    if (!availability) return;
+    console.log("Availability Data:", availability);
+
+    if (!availability || Object.keys(slotTimes).length > 0) return;
+
     const initialSlotTimes = {};
     availability.forEach((week) => {
       const slots = week?.[0]?.availabilities || [];
@@ -110,105 +67,92 @@ function Availability(props) {
       });
     });
 
-    // Compare old and new to prevent unnecessary updates
-    const isSame =
-      JSON.stringify(slotTimes) === JSON.stringify(initialSlotTimes);
-    if (!isSame) {
-      setSlotTimes(initialSlotTimes);
-    }
+    setSlotTimes(initialSlotTimes);
   }, [availability]);
-  const handleChange = (day, index, field, value, slotId) => {
-    setSlotTimes((prev) => ({
-      ...prev,
-      [slotId]: {
-        ...(prev[slotId] || {}),
+  const sortedAsc = (data) =>
+    data.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+
+  const handleAddSlot = async (day) => {
+    const weekId = day.id;
+    const weekIndex = week_ids.findIndex((id) => id === weekId);
+    const currentWeek = availability?.[weekIndex];
+    if (!currentWeek?.[0]) return;
+    const availabilities = currentWeek[0].availabilities || [];
+    const last = availabilities[availabilities.length - 1];
+    const defaultStart = last?.endTime ? formatTime(last.endTime) : "09:00";
+    const defaultEnd = addMinutes(defaultStart, 30);
+
+    const slotData = {
+      doctor_id: selectedDoctor,
+      type: "week",
+      week_id: weekId,
+      startTime: defaultStart,
+      endTime: defaultEnd,
+      not_available: false,
+    };
+    try {
+      await mutateAsync(slotData);
+    } catch (err) {
+      console.error("Error adding slot", err);
+    }
+  };
+  const handleRemoveSlot = (id) => deleteAvailability(id);
+  const debouncedUpdate = debounce((slotId, data) => {
+    updateAvailability({ id: slotId, data });
+  }, 500);
+
+  const handleChange = (field, value, slotId) => {
+    setSlotTimes((prev) => {
+      const updated = {
+        ...prev[slotId],
         [field]: value,
-      },
-    }));
-
-    // // const updated = [...slots[day]];
-    // // updated[index][field] = value;
-    // // setSlots((prev) => ({ ...prev, [day]: updated }));
-
-    // if (field === "start") {
-    //   debounce(() => {
-    //     const slotData = {
-    //       // doctor_id: selectedDoctor, //required with type doctor
-    //       // date: "2025-10-22", //required with type date
-    //       // type: "date", //week date
-    //       // week_id: data?.id, //required with type week
-    //       startTime: value, //required not_available false
-    //       // endTime: defaultEnd, //required not_available false
-    //       // not_available: false,
-    //     };
-    //     updateAvailability({ id: id, data: slotData });
-    //     // mutate(slotData);
-    //   }, 500)();
-    // }
-
-    // // setSlots((prev) => {
-    // //   const updated = [...prev[day]];
-    // //   updated[index][field] = value;
-
-    // //   if (field === "start") {
-    // //     const [h, m] = value.split(":").map(Number);
-    // //     const endMinutes = h * 60 + m + 30;
-    // //     if (endMinutes <= 1440) {
-    // //       const eh = String(Math.floor(endMinutes / 60)).padStart(2, "0");
-    // //       const em = String(endMinutes % 60).padStart(2, "0");
-    // //       updated[index].end = `${eh}:${em}`;
-    // //     }
-    // //   }
-    // //   return { ...prev, [day]: updated };
-    // // });
+      };
+      debouncedUpdate(slotId, {
+        startTime: updated.start,
+        endTime: updated.end,
+      });
+      return {
+        ...prev,
+        [slotId]: updated,
+      };
+    });
   };
 
-  const handleSubmit = () => {
-    // Submit logic here
-  };
+  const renderStartForm = (item, day, index, slotIndex, slotId) => {
+    const value = slotTimes[slotId]?.start || formatTime(item.startTime);
 
-  // const convertToMinutes = (time) => {
-  //   const [h, m] = time.split(":").map(Number);
-  //   return h * 60 + m;
-  // };
-  const formatTime = (timeString) => {
-    return timeString.slice(0, 5); // "09:00:00" → "09:00"
-  };
-  // Sort ascending (oldest to newest)
-  const sortedAsc = (data) => {
-    return data.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-  };
-  const renderStartForm = (item, day, index, id) => {
-    const timeOptions = times.filter(
-      (time) => time > subtractMinutes(item?.startTime, 30)
-    );
+    // Find the previous slot's end time
+    const prevSlot = availability[index]?.[0]?.availabilities?.[slotIndex - 1];
+    const minStartTime = prevSlot ? formatTime(prevSlot.endTime) : null;
+
+    // Filter options if not the first slot
+    const options = minStartTime
+      ? times.filter((t) => t >= minStartTime)
+      : times; // show all for first slot
+
     return (
       <Form.Select
-        // value={defaultStartTime}
-        // defaultValue={item?.endTime ? formatTime(item.endTime) : "09:00"}
-        onChange={(e) =>
-          handleChange(day.name, index, "start", e.target.value, id)
-        }
+        value={value}
+        onChange={(e) => handleChange("start", e.target.value, slotId)}
       >
-        {timeOptions?.map((t) => (
+        {options.map((t) => (
           <option key={t}>{t}</option>
         ))}
       </Form.Select>
     );
   };
 
-  const renderEndForm = (item, day, index, id) => {
-    const timeOptions = times.filter(
-      (time) => time > subtractMinutes(item?.endTime, 30)
-    );
+  const renderEndForm = (item, day, slotId) => {
+    const start = slotTimes[slotId]?.start || formatTime(item.startTime);
+    const value = slotTimes[slotId]?.end || formatTime(item.endTime);
+    const options = times.filter((t) => t > start);
 
     return (
       <Form.Select
-        onChange={(e) =>
-          handleChange(day.name, index, "end", e.target.value, id)
-        }
+        value={value}
+        onChange={(e) => handleChange("end", e.target.value, slotId)}
       >
-        {timeOptions?.map((t) => (
+        {options.map((t) => (
           <option key={t}>{t}</option>
         ))}
       </Form.Select>
@@ -217,42 +161,35 @@ function Availability(props) {
 
   return (
     <div className="container my-2">
-      {weeks?.map((day, index) => (
+      {weeks.map((day, index) => (
         <div key={day.id} className="mb-4 border-bottom pb-3 d-flex">
           <div style={{ width: "10%" }}>
-            <strong>{day?.name}</strong>
+            <strong>{day.name}</strong>
           </div>
-
           <div className="w-75">
-            {availability[index] &&
-              availability[index]?.map((slot) =>
-                sortedAsc(slot.availabilities).map((item) => (
-                  <Row key={index} className="align-items-center mb-2">
-                    <Col xs={3}>
-                      {renderStartForm(item, day, index, item?.id)}
-                    </Col>
-                    <Col xs={3}>
-                      {renderEndForm(item, day, index, item?.id)}
-                    </Col>
-                    <Col xs={1}>
-                      <button
-                        className="btn-outline-danger rounded-circle"
-                        style={{ width: "30px", height: "30px" }}
-                        onClick={() => handleRemoveSlot(item.id)}
-                        // disabled={slots[day.name].length === 1}
-                        title="Remove Slot"
-                      >
-                        −
-                      </button>
-                    </Col>
-                  </Row>
-                ))
-              )}
+            {sortedAsc(availability[index]?.[0]?.availabilities)?.map(
+              (item, slotIndex) => (
+                <Row key={item.id} className="align-items-center mb-2">
+                  <Col xs={3}>
+                    {renderStartForm(item, day, index, slotIndex, item.id)}
+                  </Col>
+                  <Col xs={3}>{renderEndForm(item, day, item.id)}</Col>
+                  <Col xs={1}>
+                    <button
+                      className="btn-outline-danger rounded-circle"
+                      style={{ width: "30px", height: "30px" }}
+                      onClick={() => handleRemoveSlot(item.id)}
+                      title="Remove Slot"
+                    >
+                      −
+                    </button>
+                  </Col>
+                </Row>
+              )
+            )}
             <button
               className="btn-outline-primary rounded-circle"
               style={{ width: "30px", height: "30px" }}
-              // type="button"
-              size="sm"
               onClick={() => handleAddSlot(day)}
               title="Add Slot"
             >
@@ -261,35 +198,18 @@ function Availability(props) {
           </div>
         </div>
       ))}
-
       <div className="d-flex justify-content-between mt-4">
-        <Button
-          variant="outline-primary"
-          //   onClick={() => handleClose()}
-          className="ps-5 pe-5"
-        >
+        <Button variant="outline-primary" className="ps-5 pe-5">
           Back
         </Button>
-        <Button
-          variant="primary"
-          type="submit"
-          className="ps-5 pe-5"
-          onClick={handleSubmit}
-        >
-          {/* {isLoading && (
-            <span
-              className="spinner-border spinner-border-sm"
-              aria-hidden="true"
-            ></span>
-          )} */}
-          <span className="ps-2">Edit Now</span>
+        <Button variant="primary" className="ps-5 pe-5">
+          Edit Now
         </Button>
       </div>
     </div>
   );
 }
 
-// props validation
 Availability.propTypes = {
   selectedDoctor: PropTypes.string,
 };

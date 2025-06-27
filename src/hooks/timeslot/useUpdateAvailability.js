@@ -10,14 +10,8 @@ export const useUpdateAvailability = () => {
     onMutate: async () => {
       // Cancel any ongoing queries for hospitals to prevent race conditions
       await queryClient.cancelQueries({ queryKey: ["availabilities"] });
-    },
-    onSuccess: (data, variables) => {
-      const message = data?.message || "Availability updated successfully";
-      queryClient.invalidateQueries({ queryKey: ["availabilites"] });
-      queryClient.invalidateQueries({
-        queryKey: ["availabilities", variables.id],
-      });
-      toast.success(message);
+      const previousData = queryClient.getQueryData(["availabilities"]);
+      return { previousData };
     },
     onError: (error, id, context) => {
       // Rollback if there is an error
@@ -28,6 +22,10 @@ export const useUpdateAvailability = () => {
         error?.response?.data?.message || "Failed to update availability";
       toast.error(errorMessage);
     },
+    onSettled: () => {
+      // Invalidate the query to refetch the updated data
+      queryClient.invalidateQueries({ queryKey: ["availabilities"] });
+    },  
   });
 
   return {
