@@ -80,9 +80,6 @@ function ServiceCard(props) {
               <div className="col">
                 <h5 className="service-title">{servicesData.name}</h5>
               </div>
-              <div className="col-auto">
-                <h5 className="text-primary">active</h5>
-              </div>
             </div>
 
             <div className="row mt-2">

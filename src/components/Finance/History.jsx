@@ -8,36 +8,41 @@ import { useState } from "react";
 import { formatDate } from "../configs/formatDate";
 function History() {
   const { hospitalId } = useAuth();
-  const [searchTerm, setsearchTerm] = useState("");
+  // const [searchTerm, setsearchTerm] = useState("");
   const [date, setdate] = useState(null);
-  const query =
-    searchTerm || date ? `name=${searchTerm}&updated_at=${date}` : "";
+  const query = date ? `updated_at=${date}` : "";
   const { data: settlements, isLoading } = useSettlementList(hospitalId, query);
+  console.log("Settlements", settlements);
 
   const handleDate = (date) => {
     // const utcDate = new Date(date).toISOString();
-    console.log("Date ",date);
-    
+    console.log("Date ", date);
+
     // console.log("ISO ", utcDate);
     setdate(date);
   };
-  const handleSearchTerm = (search) => {
-    setsearchTerm(search);
-  };
+  // const handleSearchTerm = (search) => {
+  //   setsearchTerm(search);
+  // };
   const columns = [
     {
       title: "Transaction ID",
-      dataIndex: "bookingid",
+      dataIndex: "transaction_id",
       // sorter: (a, b) => a.bookingid.length - b.bookingid.length,
     },
     {
-      title: "Name",
-      dataIndex: "transactionName",
+      title: "Initiated by",
+      dataIndex: "",
+      render: (item, record) => (
+        <div className="d-flex align-items-center">
+          {record?.user?.first_name || "N/A"}
+        </div>
+      ),
       // sorter: (a, b) => a.patientname.length - b.patientname.length,
     },
     {
       title: "Payment mode",
-      dataIndex: "type",
+      dataIndex: "payment_method",
       // sorter: (a, b) => a.type.length - b.type.length,
     },
     {
@@ -87,7 +92,7 @@ function History() {
       <div>
         <DateSearchHero
           handleDate={handleDate}
-          handleSearch={handleSearchTerm}
+          // handleSearch={handleSearchTerm}
         />
         <DataTable
           columns={columns}
