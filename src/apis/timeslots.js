@@ -5,7 +5,7 @@ export const getWeeks = async () => {
   return response.data || [];
 };
 
-export const getWeekAvailability = async (doctor_id, week_id) => {  
+export const getWeekAvailability = async (doctor_id, week_id) => {
   const response = await apiClient.get(
     `/availabilities/doctors/${doctor_id}/week?week_id=${week_id}`
   );
@@ -26,4 +26,17 @@ export const editAvailability = async ({ id, data }) => {
 export const deleteAvailabilityById = async (id) => {
   const response = await apiClient.delete(`availabilities/${id}`);
   return response?.data || {};
+};
+
+export const getTimeslot = async (doctor_id,hospital_id, date) => {
+  const response = await apiClient.get(`/time-slots/available?doctor_id=${doctor_id}&hospital_id=${hospital_id}&date=${date}`);
+  return response?.data?.data || [];
+};
+
+export const assignTimeslot = async ({ id, data }) => {
+  const response = await apiClient.patch(
+    `/bookings/${id}/update-time-slot`,
+    data
+  );
+  return response.data;
 };

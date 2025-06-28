@@ -11,9 +11,14 @@ function Appointment() {
   const { hospitalId } = useAuth();
   const { data: appointmentsList, isLoading } =
     useHospitalAppointments(hospitalId);
-  const requestedQuery = `status=started`;
-  const { data: requestedList, isLoading: requestedLoading } =
-    useHospitalAppointments(hospitalId, requestedQuery);
+  console.log("Appointments List: ", appointmentsList);
+    
+  // const requestedQuery = `timeSlot=0`;
+  // const { data: requestedList, isLoading: requestedLoading } =
+  //   useHospitalAppointments(hospitalId, requestedQuery);
+  const requestedList = appointmentsList?.filter(
+    (item) => item.timeSlot === null 
+  );
   const appointmentTab = [
     {
       id: "appointment",
@@ -32,7 +37,7 @@ function Appointment() {
       content: (
         <RequestedAppointments
           appointments={requestedList ?? []}
-          loading={requestedLoading}
+          loading={isLoading}
         />
       ),
       link: "requested",

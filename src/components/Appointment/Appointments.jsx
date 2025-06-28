@@ -14,11 +14,16 @@ function Appointments() {
   const handleSearch = (searchTerm) => {
     setsearchterm(searchTerm);
   };
-  const query = `${searchterm || (date ? "name=${searchterm}&date=${date}":"")}`;
+  const query = `${
+    searchterm || (date ? `name=${searchterm}&date=${date}` : "")
+  }`;
+  
   const { data: appointmentList, isLoading } = useHospitalAppointments(
     hospitalId,
     query
   );
+
+  console.log("Appointment List: >>>>", appointmentList);
 
   const onGoing = appointmentList?.filter((item) => item.status === "started");
   const cancelled = appointmentList?.filter(

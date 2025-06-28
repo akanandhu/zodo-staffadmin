@@ -1,13 +1,41 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import ScheduleForm from "./ScheduleForm";
+import CircularImage from "../../assests/CircularImage";
+import { user_profile } from "../../imagepath";
+import { useAssignAppointments } from "../../../hooks/appointments/useAssignAppointment";
 
 function ScheduleModal(props) {
   const { show, setShow, requestDetails } = props;
+  const { mutate } = useAssignAppointments();
+  const [timeSlot, setTimeslot] = useState(null);
   const handleClose = () => {
     setShow(false);
   };
+  console.log("Request Details in Modal: ", requestDetails);
+
+  const handelAssignment = async () => {
+    const data = {
+      timeSlot: timeSlot,
+    };
+    await mutate(
+      { id: requestDetails?.bookingId, data: data },
+      {
+        onSuccess: () => {
+          handleClose();
+        },
+        onError: () => {
+          handleClose();
+        },
+      }
+    );
+  };
+
+  const handleTime = (time) => {
+    setTimeslot(time);
+  };
+
   return (
     <Modal
       show={show}
@@ -22,16 +50,30 @@ function ScheduleModal(props) {
           <div>
             <div className="d-flex justify-content-center ps-5"></div>
             <div className="d-flex align-items-center">
-              <div className="schedule-profile"></div>
+              <div className="schedule-profile">
+                <CircularImage
+                  src={requestDetails?.profilePicture ?? user_profile}
+                  alt="user"
+                  size={80}
+                  fallback={user_profile}
+                />
+              </div>
               <div className="schedule-modal">
                 <div className="d-flex">
-                  <h5 >{requestDetails?.patientname}</h5>
-                  <div className={`delete-badge ms-5 ${requestDetails?.isFasttag ? 'status-green' : 'status-grey'}`}>Fasttag</div>
+                  <h5>{requestDetails?.patientname}</h5>
+                  <div
+                    className={`delete-badge ms-5 ${
+                      requestDetails?.isFasttag ? "status-green" : "status-grey"
+                    }`}
+                  >
+                    Fasttag
+                  </div>
                 </div>
                 <small>
                   {requestDetails?.age}
                   {" yrs "}
-                  {requestDetails?.gender} <span className="ms-1">{requestDetails?.mobile}</span>
+                  {requestDetails?.gender}{" "}
+                  <span className="ms-1">{requestDetails?.mobile}</span>
                 </small>
               </div>
             </div>
@@ -40,7 +82,7 @@ function ScheduleModal(props) {
       </Modal.Header>
 
       <Modal.Body className="pt-0 pb-0">
-        <ScheduleForm requestDetails={requestDetails}/>
+        <ScheduleForm requestDetails={requestDetails} handleTime={handleTime} />
         <div className="d-flex justify-content-between ps-3 pe-3 pb-5 pt-5">
           <Button
             variant="outline-primary"
@@ -49,7 +91,11 @@ function ScheduleModal(props) {
           >
             Back
           </Button>
-          <Button variant="primary" onClick={handleClose} className="ps-5 pe-5">
+          <Button
+            variant="primary"
+            onClick={handelAssignment}
+            className="ps-5 pe-5"
+          >
             Assign Now
           </Button>
         </div>
@@ -62,7 +108,6 @@ ScheduleModal.propTypes = {
   show: PropTypes.node,
   setShow: PropTypes.node,
   requestDetails: PropTypes.node,
-  
 };
 
 export default ScheduleModal;

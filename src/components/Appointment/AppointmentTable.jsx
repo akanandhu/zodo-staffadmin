@@ -3,10 +3,27 @@ import { Link } from "react-router-dom";
 import DataTable from "../Tables/DataTable";
 import { pdficon } from "../imagepath";
 import DateSearchHero from "../heros/DateSearchHero";
+import { formatTime } from "../configs/formatTime";
+import CenteredModal from "../modals/CenteredModal";
+import { useState } from "react";
+import Prescription from "./Prescription";
 
 function AppointmentTable(props) {
   const { appointmentList, loading, handleDate, handleSearch } = props;
-  
+  console.log("Appointment List: ", appointmentList);
+  const [show,setShow] = useState(false);
+  const [prescriptionUrl, setPrescriptionUrl] = useState("");
+  const handleClose = () => {
+    setShow(false);
+  };
+  const handleView = (url) => {
+    // Logic to handle view action
+    console.log("View action triggered");
+    console.log("Prescription URL: ", url);
+    setPrescriptionUrl(url);
+    // Open the modal to show the prescription
+    setShow(true);
+  };
   const columns = [
     {
       title: "Booking ID",
@@ -17,7 +34,7 @@ function AppointmentTable(props) {
       title: "Patient Name",
       dataIndex: "patientname",
       // sorter: (a, b) => a.patientname.length - b.patientname.length,
-      render: (item, record) => <div>{record?.user_details?.name}</div>,
+      render: (item, record) => <div>{record?.user_details?.name ??  record?.user?.first_name}</div>,
     },
     {
       title: "Type",
@@ -28,7 +45,7 @@ function AppointmentTable(props) {
       title: "Time",
       dataIndex: "timeSlot",
       // sorter: (a, b) => a.time.length - b.time.length,
-      render: (item, record) => <div>{record?.timeSlot ?? "unassigned"}</div>,
+      render: (item, record) => <div>{formatTime(record?.timeSlot) ?? "unassigned"}</div>,
     },
     {
       title: "Status",
@@ -37,7 +54,8 @@ function AppointmentTable(props) {
       render: (item) => (
         <div
           className={`delete-badge ${
-            (item === "Cancelled" && "status-red") ||
+            (item === "accepted" && "status-orange")||
+            (item === "cancelled" && "status-red") ||
             (item === "started" && "status-orange") ||
             (item === "completed" && "status-green")
           }`}
@@ -56,19 +74,22 @@ function AppointmentTable(props) {
       title: "Assigned",
       dataIndex: "assingned",
       // sorter: (a, b) => a.assingned.length - b.assingned.length,
-      render: (item, record) => <div>Dr.{record?.doctor?.name}</div>,
+      render: (item, record) => record?.doctor?.name ? <div>Dr.{record?.doctor?.name}</div> : <div>unassigned</div>,
     },
     {
-      title: "Action",
+      title: "Prescription",
       dataIndex: "action",
-      render: () => {
+      render: (item, record) => {
         return (
-          <div style={{ display: "flex", gap: 8 }}>
-            <Link to>View</Link>
+          record?.prescriptionUrl ?
+          <div style={{ display: "flex", gap: 8, paddingLeft: "20px" }}>
+            <Link to onClick={()=> handleView(record?.prescriptionUrl)}>View</Link>
             <Link to>
               <img src={pdficon} alt="Pdf Icon" width={17} />
             </Link>
           </div>
+          :
+          <div style={{ paddingLeft: "25px" }}>N/A</div>
         );
       },
     },
@@ -81,6 +102,9 @@ function AppointmentTable(props) {
         dataSource={appointmentList ?? []}
         loading={loading}
       />
+      <CenteredModal show={show} handleClose={handleClose}>
+        <Prescription prescriptionUrl={prescriptionUrl}/>
+      </CenteredModal>
     </div>
   );
 }

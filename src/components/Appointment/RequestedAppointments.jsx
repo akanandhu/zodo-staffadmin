@@ -3,21 +3,26 @@ import DataTable from "../Tables/DataTable";
 import ScheduleModal from "../modals/Schedule/ScheduleModal";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import {formatDate} from '../configs/formatDate'
+import { formatDate } from "../configs/formatDate";
 function RequestedAppointments(props) {
   const { appointments, loading } = props;
   const [show, setShow] = useState(false);
   const [requestDetails, setRequestDetails] = useState({});
 
   const handleSchedule = (record) => {
+    console.log("Record in RequestedAppointments: ", record?.appointmentDate);
+
     const detail = {
-      patientname: record?.user_details?.name,
-      age: record?.user_details?.age,
-      gender: record?.user_details?.gender,
+      patientname: record?.user?.first_name,
+      age: record?.user?.age,
+      gender: record?.user?.gender,
       mobile: record?.user?.phone,
       isFasttag: record?.is_fast_tag,
-      doctorName: record?.doctor?.name,
-      doctorId:record?.doctor?.id,
+      profilePicture: record?.user?.profile_picture,
+      bookingId: record?.id,
+      appointmentDate: record?.appointmentDate,
+      // doctorName: record?.doctor?.name,
+      // doctorId:record?.doctor?.id,
     };
     setRequestDetails(detail);
     setShow(true);
@@ -27,13 +32,15 @@ function RequestedAppointments(props) {
       title: "Patient Name",
       dataIndex: "",
       // sorter: (a, b) => a.patientname.length - b.patientname.length,
-      render:(item,record)=><div>{record?.user_details?.name}</div>
+      render: (item, record) => (
+        <div>{record?.user_details?.name ?? record?.user?.first_name}</div>
+      ),
     },
     {
       title: "Date & Time",
       dataIndex: "createdAt",
       // sorter: (a, b) => a.time.length - b.time.length,
-      render:(item)=><div>{formatDate(item)}</div>
+      render: (item) => <div>{formatDate(item)}</div>,
     },
     {
       title: "Type",
@@ -44,20 +51,24 @@ function RequestedAppointments(props) {
       title: "Department",
       dataIndex: "department",
       // sorter: (a, b) => a.department.length - b.department.length,
-      render:(item,record)=><div>{record?.user_details?.department}</div>
+      render: (item, record) => <div>{record?.user_details?.department}</div>,
     },
     {
       title: "Assigned Dr",
       dataIndex: "",
       // sorter: (a, b) => a.assingned.length - b.assingned.length,
-      render:(item,record)=><div>{record?.doctor?.name}</div>
-
+      render: (item, record) =>
+        record?.doctor?.name ? (
+          <div>{record?.doctor?.name}</div>
+        ) : (
+          <div>unassigned</div>
+        ),
     },
     {
       title: "Contact Info",
       dataIndex: "contactinfo",
       // sorter: (a, b) => a.contactinfo.length - b.contactinfo.length,
-      render:(item,record)=><div>{record?.user?.phone}</div>
+      render: (item, record) => <div>{record?.user?.phone}</div>,
     },
     {
       title: "Action",
@@ -76,8 +87,16 @@ function RequestedAppointments(props) {
   ];
   return (
     <div className="card-box mt-3">
-      <DataTable columns={columns} dataSource={appointments} loading={loading}/>
-      <ScheduleModal show={show} setShow={setShow} requestDetails={requestDetails} />
+      <DataTable
+        columns={columns}
+        dataSource={appointments}
+        loading={loading}
+      />
+      <ScheduleModal
+        show={show}
+        setShow={setShow}
+        requestDetails={requestDetails}
+      />
     </div>
   );
 }
@@ -86,6 +105,5 @@ RequestedAppointments.propTypes = {
   appointments: PropTypes.array,
   loading: PropTypes.bool,
 };
-
 
 export default RequestedAppointments;
