@@ -12,7 +12,7 @@ const Header = () => {
   const handlesidebar = () => {
     document.body.classList.toggle("mini-sidebar");
   };
-
+  console.log("USER DATA ",user);
   const handlesidebarmobilemenu = () => {
     document.body.classList.toggle("slide-nav");
     document.getElementsByTagName("html")[0].classList.toggle("menu-opened");
@@ -108,7 +108,7 @@ const Header = () => {
                 <span>{userRole}</span>
               </div>
               <span className="user-img">
-                <img src={user06} alt="Admin" />
+                <img src={user?.profile_picture || user06} alt="Admin" />
               </span>
             </Link>
             <div className="dropdown-menu">
@@ -142,13 +142,13 @@ const Header = () => {
             <i className="fa-solid fa-ellipsis-vertical" />
           </Link>
           <div className="dropdown-menu dropdown-menu-end">
-            <Link className="dropdown-item" to="/profile">
+            {/* <Link className="dropdown-item" to="/profile">
               My Profile
             </Link>
             <Link className="dropdown-item" to="edit-profile.html">
               Edit Profile
             </Link>
-            {/* <Link className="dropdown-item" to="/settings">
+            <Link className="dropdown-item" to="/settings">
               Settings
             </Link> */}
             <Link className="dropdown-item" to onClick={handleLogout}>

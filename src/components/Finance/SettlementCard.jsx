@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import PropTypes from "prop-types";
 import CountUp from "react-countup";
 import RequestPayment from "../modals/RequestPayment/RequestPayment";
@@ -38,7 +37,7 @@ function SettlementCard(props) {
                     </Link>
                   </div>
                 )}
-                <p>
+                {/* <p>
                   <span className="passive-view">
                     <i className="feather-arrow-up-right me-1">
                       <FeatherIcon icon="arrow-up-right" />
@@ -46,7 +45,7 @@ function SettlementCard(props) {
                     {item.percentageUp}%
                   </span>{" "}
                   vs last month
-                </p>
+                </p> */}
               </div>
             </div>
           </Link>

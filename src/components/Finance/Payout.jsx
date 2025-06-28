@@ -2,53 +2,54 @@ import { doctors, fasttag, profile_hospitals } from "../imagepath";
 import Analytics from "../Dashboard/Analytics";
 import SettlementCard from "./SettlementCard";
 import BookingsTable from "../Dashboard/BookingsTable";
+import PropTypes from "prop-types";
 
-function Payout() {
+function Payout({ data }) {
   const basicInformation = [
     {
       id: 1,
       title: "Total Payout Requests",
       icon: profile_hospitals,
-      count: 140,
+      count: data?.settlement?.requested || 0,
       percentageUp: 20,
       link: "",
-      type:"normal"
+      type: "count",
     },
     {
       id: 2,
       title: "Pending Settlement",
       icon: doctors,
-      count: 250,
+      count: data?.settlement?.pending || 0,
       percentageUp: 40,
       link: "",
-      type:"normal"
+      type: "count",
     },
     {
       id: 3,
       title: "Total Transactions",
       icon: fasttag,
-      count: 121,
+      count: data?.settlement?.total || 0,
       percentageUp: 40,
       link: "",
-      type:"normal"
+      type: "count",
     },
     {
       id: 4,
       title: "Normal Booking Revenue",
       icon: fasttag,
-      count: 14000,
+      count: data?.booking?.revenue || 0,
       percentageUp: 40,
       link: "",
-      type:"currency"
+      type: "currency",
     },
     {
       id: 5,
       title: "Fast Tag Revenue",
       icon: fasttag,
-      count: 25000,
+      count: data?.fasttag?.revenue || 0,
       percentageUp: 40,
       link: "",
-      type:"currency"
+      type: "currency",
     },
     {
       id: 6,
@@ -57,7 +58,7 @@ function Payout() {
       count: 121,
       percentageUp: 40,
       link: "",
-      type:"paymentrequest"
+      type: "paymentrequest",
     },
   ];
   const bookingType = [
@@ -67,12 +68,17 @@ function Payout() {
   return (
     <div>
       <div className="row mt-3">
-        <SettlementCard info={basicInformation}/>
+        <SettlementCard info={basicInformation} />
       </div>
       <Analytics bookingType={bookingType} id="appointment-chart" />
       <BookingsTable />
     </div>
   );
 }
+
+// props validation
+Payout.propTypes = {
+  data: PropTypes.object,
+};
 
 export default Payout;

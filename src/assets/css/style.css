@@ -835,8 +835,9 @@ textarea.form-control {
   position: relative;
 }
 .header .user-img img {
-  width: 40px;
+  width: 50px;
   border-radius: 14px;
+  object-fit: contain;
 }
 .user-img .status {
   border: 2px solid #fff;
