@@ -7,6 +7,9 @@ import AppointmentInfo from "../../Dashboard/AppointmentInfo";
 import FastTag from "../../Dashboard/FastTag";
 import HospitalStaf from "../../Dashboard/HospitalStaf";
 import ButtonTabs from "../../tabs/ButtonTabs";
+import { useHospitalAnalytics } from "../../../hooks/hospital/useHospitalAnalytics";
+import { useAuth } from "../../../hooks/useAuth";
+import FullscreenLoader from "../../loaders/FullscreenLoader";
 function Dashboard() {
   const breadCrumpData = [
     {
@@ -16,24 +19,28 @@ function Dashboard() {
     },
   ];
 
+  const { hospitalId } = useAuth();
+  const { data: hospitalAnalytics, isLoading } =
+    useHospitalAnalytics(hospitalId);
+
   const dashboardTab = [
     {
       id: "appointment",
       title: "Appointment",
-      content: <AppointmentInfo />,
+      content: <AppointmentInfo data={hospitalAnalytics?.booking || {}}/>,
       link: "appointment",
     },
     {
       id: "hospitalstaff",
       title: "Hospital Staff",
-      content: <HospitalStaf />,
+      content: <HospitalStaf data={hospitalAnalytics?.user_counts || {}}/>,
       link: "staff",
     },
     {
       id: "fasttag",
       title: "Fasttag",
-      content: <FastTag />,
-      link:"fasttag"
+      content: <FastTag data={hospitalAnalytics?.fast_tag || {}}/>,
+      link: "fasttag",
     },
     // {
     //   id: "stafs",
@@ -41,6 +48,8 @@ function Dashboard() {
     //   content: <HospitalStaffs />,
     // },
   ];
+  console.log("Hospital analytics", hospitalAnalytics);
+  
   return (
     <Layout activeClassName="">
       <div className="page-wrapper">
@@ -48,6 +57,7 @@ function Dashboard() {
           <Breadcrumb data={breadCrumpData} />
           <Hero />
           <ButtonTabs tabData={dashboardTab} />
+          {isLoading && <FullscreenLoader />}
         </div>
       </div>
     </Layout>

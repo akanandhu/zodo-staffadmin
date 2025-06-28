@@ -12078,3 +12078,8 @@ tr.ant-table-row.ant-table-row-level-0.ant-table-row-selected,
   /* font-size: 2rem; */
   font-weight: 600;
 }
+
+.upload-close-btn{
+  top: -10px;
+  right: -10px;
+}

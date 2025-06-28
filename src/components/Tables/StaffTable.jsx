@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import useDeleteStaff from "../../hooks/staff/useDeleteStaff";
 import { formatDate } from "../configs/formatDate";
 import PropTypes from "prop-types";
+import CircularImage from "../assests/CircularImage";
 
 function StaffTable(props) {
   const { staffsList, isLoading } = props;
@@ -19,8 +20,6 @@ function StaffTable(props) {
   const { user } = useAuth();
   // const { data: staffsList, isLoading } = useHospitalStaffs(hospitalId);
   const { mutate, isLoading: deleteLoading } = useDeleteStaff();
-  console.log("staffsList", staffsList);
-  console.log("isLoading", isLoading);
   const filteredStafflist = staffsList
     ? staffsList.filter((item) => item.email !== user.email)
     : [];
@@ -48,12 +47,17 @@ function StaffTable(props) {
       // sorter: (a, b) => a.name.length - b.name.length,
       render: (item, record) => (
         <div className="d-flex">
-          <img src={user_profile} width={35} height={35} alt="" />
-          <div className="ms-2 table-text">
-            <h6>
-              {item} {record?.last_name}
-            </h6>
-            <p>{record.email}</p>
+          <div>
+            <CircularImage
+              src={record?.profile_picture ?? user_profile}
+              alt={item}
+              size={40}
+              fallback={user_profile}
+            />
+          </div>
+          <div className="ms-2 table-profile">
+            <h6>{item}</h6>
+            <p className="text-muted mb-0">{record.email}</p>
           </div>
         </div>
       ),

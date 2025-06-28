@@ -19,6 +19,8 @@ function StaffEditForm(props) {
   const [status, setStatus] = useState(true);
   const methods = useForm();
   const { mutate, isLoading: userLoading } = useEditStaff();
+  const [fileURL, setFileURL] = useState("");
+
   const departmentOptions = departmentList?.map((department) => ({
     label: department.name,
     value: department.id,
@@ -33,7 +35,11 @@ function StaffEditForm(props) {
         const department = { label: item.name, value: item.id };
         return department;
       });
-      const roleOption = roleOptions.find((item)=> item.value === staff.user_type);
+      const roleOption = roleOptions.find(
+        (item) => item.value === staff.user_type
+      );
+      console.log("staff", staff);
+      setFileURL(staff?.profile_picture || "");
       methods.reset({
         staffname: staff.first_name,
         staffemail: staff.email,
@@ -52,8 +58,6 @@ function StaffEditForm(props) {
       });
     }
   }, [selectedStaff, methods, staff]);
-  
-  
 
   const onEditStaff = async (data) => {
     const departmentIds = data.department.map((item) => item.value);
@@ -75,11 +79,25 @@ function StaffEditForm(props) {
       //   role: data.role.value,
       is_active: status,
       hospital_id: hospitalId,
+      profile_picture: fileURL,
     };
-    mutate({ id: selectedStaff, data: staff });
+    mutate(
+      { id: selectedStaff, data: staff },
+      {
+        onSuccess: () => {
+          methods.reset();
+          handleClose();
+        },
+      }
+    );
     // methods.reset();
     // handleClose();
   };
+
+  const handleFileURL = (url) => {
+    setFileURL(url);
+  };
+
   return (
     <FormProvider {...methods}>
       <form
@@ -88,7 +106,7 @@ function StaffEditForm(props) {
       >
         <div className="row">
           <div className="col-md-8">
-            <ChooseFile />
+            <ChooseFile handleFileURL={handleFileURL} fileURL={fileURL} />
           </div>
           <div className="col-md-4 d-flex justify-content-end">
             <select

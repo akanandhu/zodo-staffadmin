@@ -22,7 +22,9 @@ function InfoCards(props) {
               <div className="dash-content dash-count flex-grow-1">
                 <h4>{item.title}</h4>
                 <h2>
-                  {" "}
+                  {item.type === "currency" && (
+                    <span className="currency-symbol">₹</span>
+                  )}{" "}
                   <CountUp delay={0.4} end={item.count} duration={0.6} />
                 </h2>
                 <p>

@@ -1,23 +1,20 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { updateStaffByUserid } from "../../apis/users";
-import { useAuth } from "../useAuth";
+import { deleteDocument } from "../../apis/documents";
 
-export const useEditStaff = () => {
+export const useDeleteDocument = (id) => {
   const queryClient = useQueryClient();
-  const { hospitalId } = useAuth(); // Assuming useAuth provides hospitalId
   const mutation = useMutation({
-    mutationFn: updateStaffByUserid, // API function to create
+    mutationFn: deleteDocument, // API function to delete hospital
     onMutate: async () => {
       // Cancel any ongoing queries for hospitals to prevent race conditions
-      await queryClient.cancelQueries({ queryKey: ["staff"] });
+      await queryClient.cancelQueries({ queryKey: ["documents", id] });
     },
-    onSuccess: (data, variables) => {
-      console.log("Variables:", variables);
-      
-      const message = data?.message || "Staff updated successfully";
-      queryClient.invalidateQueries({ queryKey: ["staff", variables.id] });
-      queryClient.invalidateQueries({ queryKey: ["staffs", hospitalId] });
+    onSuccess: (data) => {
+      const message = data.message;
+      // Invalidate and refetch the hospitals query after a successful mutation
+      queryClient.invalidateQueries(["documents", id]);
+      queryClient.invalidateQueries(["documents"]);
       toast.success(message, {
         position: "top-right",
         autoClose: 5000,
@@ -29,13 +26,15 @@ export const useEditStaff = () => {
       });
     },
     onError: (error, id, context) => {
+      console.log(error);
+
+      const errotMessage =
+        error?.response?.data?.message || "Failed to delete document";
       // Rollback if there is an error
-      if (context?.previousStaff) {
-        queryClient.setQueryData(["staff"], context.previousStaff);
+      if (context?.previousDocuments) {
+        queryClient.setQueryData(["documents"], context.previousDocuments);
       }
-      const errorMessage =
-        error?.response?.data?.message || "Failed to edit staff";
-      toast.error(errorMessage, {
+      toast.error(errotMessage, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -44,6 +43,7 @@ export const useEditStaff = () => {
         draggable: true,
         progress: undefined,
       });
+      queryClient.invalidateQueries(["documents", id]);
     },
   });
 
@@ -52,3 +52,4 @@ export const useEditStaff = () => {
     isLoading: mutation.isPending,
   };
 };
+

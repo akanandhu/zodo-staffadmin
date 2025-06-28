@@ -3,32 +3,37 @@ import InfoCards from "./Info_cards";
 import { doctors, fasttag, profile_hospitals } from "../imagepath";
 import Analytics from "./Analytics";
 import BookingsTable from "./BookingsTable";
+import PropTypes from "prop-types";
 
-function HospitalStaf() {
+function HospitalStaf({ data }) {
+  const { doctors_count, admin_count, staff_count } = data || {};
   const basicInformation = [
     {
       id: 1,
       title: "Total Doctors",
       icon: profile_hospitals,
-      count: 140,
+      count: doctors_count || 0,
       percentageUp: 20,
       link: "",
+      type: "count",
     },
     {
       id: 2,
-      title: "Total Nurse",
+      title: "Total Admins",
       icon: doctors,
-      count: 250,
+      count: admin_count || 0,
       percentageUp: 40,
       link: "",
+      type: "count",
     },
     {
       id: 3,
       title: "Total Staff",
       icon: fasttag,
-      count: 121,
+      count: staff_count || 0,
       percentageUp: 40,
       link: "",
+      type: "count",
     },
   ];
 
@@ -47,5 +52,10 @@ function HospitalStaf() {
     </div>
   );
 }
+
+// props validation 
+HospitalStaf.propTypes = {
+  data: PropTypes.object,
+};
 
 export default HospitalStaf;

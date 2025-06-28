@@ -9,6 +9,7 @@ import { useAuth } from "../../../hooks/useAuth";
 import { useDepartmentList } from "../../../hooks/departments/useDepartmentList";
 import { useAdduser } from "../../../hooks/users/useAdduser";
 import { useHospitalStaffs } from "../../../hooks/users/useHospitalStaffs";
+import ChooseFile from "../../Hospitals/ChooseFile";
 
 function CreateStaff(props) {
   const { handleClose, userType } = props;
@@ -17,7 +18,7 @@ function CreateStaff(props) {
   const { data: departmentList, isLoading } = useDepartmentList(hospitalId);
   const { mutate, isLoading: userLoading } = useAdduser(hospitalId);
   const { data: hospitalStaffs } = useHospitalStaffs(hospitalId);
-  // const [fileURL, setFileURL] = useState("");
+  const [fileURL, setFileURL] = useState("");
   const methods = useForm();
 
   useEffect(() => {
@@ -52,6 +53,7 @@ function CreateStaff(props) {
       role: userType ?? data.role.value,
       is_active: Boolean(status),
       hospital_id: hospitalId,
+      profile_picture: fileURL,
     };
     await mutate(staff, {
       onSuccess: () => {
@@ -69,9 +71,9 @@ function CreateStaff(props) {
     { label: "Staff", value: "staff" },
   ];
 
-  // const handleFileURL = (url) => {
-  //   setFileURL(url);
-  // };
+  const handleFileURL = (url) => {
+    setFileURL(url);
+  };
 
   return (
     <FormProvider {...methods}>
@@ -81,7 +83,7 @@ function CreateStaff(props) {
       >
         <div className="row">
           <div className="col-md-8">
-            {/* <ChooseFile handleFileURL={handleFileURL} fileURL={fileURL}/> */}
+            <ChooseFile handleFileURL={handleFileURL} fileURL={fileURL}/>
           </div>
           <div className="col-md-4 d-flex justify-content-end">
             <select

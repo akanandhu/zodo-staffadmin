@@ -13,9 +13,11 @@ import FullscreenLoader from "../loaders/FullscreenLoader";
 import { toast } from "react-toastify";
 import SelectField from "../Inputfields/SelectField";
 import { useGetDistrict } from "../../hooks/useGetDistrict";
+import { useHospitalDocuments } from "../../hooks/hospital/useHospitalDocuments";
 function EditHospitalForm() {
   const methods = useForm();
   const { hospitalId } = useAuth();
+  const [fileURL, setFileURL] = useState("");
   const navigate = useNavigate();
   const { data: hospitalDetails, isLoading: viewLoading } =
     useViewHospital(hospitalId);
@@ -26,8 +28,37 @@ function EditHospitalForm() {
     label: item.name,
     value: item.name,
   }));
+  const { data: hospitalDocuments, isLoading: documentLoading } =
+    useHospitalDocuments(hospitalId);
+  const [file1, setFile1] = useState(null);
+  const [file2, setFile2] = useState(null);
+  const [file3, setFile3] = useState(null);
+
+  console.log("Hospital documents ", hospitalDocuments);
+
+  useEffect(() => {
+    if (hospitalDocuments?.length > 0) {
+      setFile1({
+        name: hospitalDocuments[0]?.name,
+        key: hospitalDocuments[0]?.key,
+        id: hospitalDocuments[0]?.id,
+      });
+      setFile2({
+        name: hospitalDocuments[1]?.name,
+        key: hospitalDocuments[1]?.key,
+        id: hospitalDocuments[1]?.id,
+      });
+      setFile3({
+        name: hospitalDocuments[2]?.name,
+        key: hospitalDocuments[2]?.key,
+        id: hospitalDocuments[2]?.id,
+      });
+    }
+  }, [hospitalDocuments]);
+
   useEffect(() => {
     if (hospitalDetails) {
+      setFileURL(hospitalDetails?.logo || "");
       const fastTag = hospitalDetails?.fastTag?.enabled;
       setToggleFasttag(fastTag);
       const district = hospitalDetails?.address?.district;
@@ -68,13 +99,32 @@ function EditHospitalForm() {
       });
     }
   }, [hospitalDetails, methods]);
-  
-  
-   const onEditHospital = async (data) => {
+
+  const onEditHospital = async (data) => {
     if (data.accountNumber === data.verifyAccountnumber) {
+      const file1Details = {
+        name: file1?.name,
+        file: file1?.key || file1?.file,
+      };
+      const file2Details = {
+        name: file2?.name,
+        file: file2?.key || file2?.file,
+      };
+      const file3Details = {
+        name: file3?.name,
+        file: file3?.key || file3?.file,
+      };
+      console.log("File 1 details ", file1Details);
+      console.log("File 2 details ", file2Details);
+      console.log("File 3 details ", file3Details);
+      const fileArray = [file1Details, file2Details, file3Details].filter(
+        (file) => file.name && file.file
+      );
+      console.log("File array ", fileArray);
+      
       const hospital = {
         name: data?.hospitalName,
-        logo: "hospital logo",
+        logo: fileURL,
         location: data?.town,
         address: {
           lineOne: data?.companyName,
@@ -112,6 +162,7 @@ function EditHospitalForm() {
           website: data?.website,
         },
         gst: data?.gstnumber,
+        documents: fileArray,
       };
       // console.log("hospital !!", hospital);
       // console.log(mutate);
@@ -130,6 +181,11 @@ function EditHospitalForm() {
       });
     }
   };
+
+  const handleFileURL = (url) => {
+    setFileURL(url);
+  };
+
   return (
     <FormProvider {...methods}>
       <form
@@ -138,7 +194,7 @@ function EditHospitalForm() {
       >
         <div className="row mt-4">
           <div className="col-md-8 ms-md-3">
-            <ChooseFile />
+            <ChooseFile handleFileURL={handleFileURL} fileURL={fileURL} />
           </div>
         </div>
         <div className="w-100 mt-4 mt-md-2">
@@ -514,7 +570,7 @@ function EditHospitalForm() {
           </div>
         </div>
 
-        <div className="mt-4">
+        {/* <div className="mt-4">
           <div className="edit-hospital">
             <h4>Related Documents</h4>
             <p>upload related documents to complete the process</p>
@@ -528,6 +584,36 @@ function EditHospitalForm() {
             </div>
             <div className="col-md-4 mt-2">
               <UploadFiles />
+            </div>
+          </div>
+        </div> */}
+
+        <div className="mt-4">
+          <div className="edit-hospital">
+            <h4>Related Documents</h4>
+            <p>upload related documents to complete the process</p>
+          </div>
+          <div className="row mt-4 pb-5">
+            <div className="col-md-4 mt-2">
+              <UploadFiles
+                // handleFileKey={handleFileKeyDoc1}
+                fileDetails={file1}
+                setFileDetails={setFile1}
+              />
+            </div>
+            <div className="col-md-4 mt-2">
+              <UploadFiles
+                // handleFileKey={handleFileKeyDoc2}
+                fileDetails={file2}
+                setFileDetails={setFile2}
+              />
+            </div>
+            <div className="col-md-4 mt-2">
+              <UploadFiles
+                // handleFileKey={handleFileKeyDoc3}
+                fileDetails={file3}
+                setFileDetails={setFile3}
+              />
             </div>
           </div>
         </div>
@@ -562,7 +648,7 @@ function EditHospitalForm() {
             </div>
           </div>
         </div>
-        {isLoading || (viewLoading && <FullscreenLoader />)}
+        {isLoading || documentLoading || (viewLoading && <FullscreenLoader />)}
       </form>
     </FormProvider>
   );

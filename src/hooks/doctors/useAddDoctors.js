@@ -1,9 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { addDoctors } from "../../apis/doctor";
+import { useAuth } from "../useAuth";
 
 export const useAddDoctors = () => {
   const queryClient = useQueryClient();
+  const { hospitalId } = useAuth();
   const mutation = useMutation({
     mutationFn: addDoctors, // API function to create
     onMutate: async () => {
@@ -14,7 +16,7 @@ export const useAddDoctors = () => {
       console.log(data);
       
       const message = data?.message || "Doctor added successfully";
-      queryClient.invalidateQueries(["doctors"]);
+      queryClient.invalidateQueries(["doctors",hospitalId]);
       //   navigate("/manage-doctors");
       toast.success(message);
     },
