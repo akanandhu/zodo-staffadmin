@@ -1,6 +1,4 @@
-import React from "react";
 import CountUp from "react-countup";
-import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
@@ -27,7 +25,7 @@ function InfoCards(props) {
                   )}{" "}
                   <CountUp delay={0.4} end={item.count} duration={0.6} />
                 </h2>
-                <p>
+                {/* <p>
                   <span className="passive-view">
                     <i className="feather-arrow-up-right me-1">
                       <FeatherIcon icon="arrow-up-right" />
@@ -35,7 +33,7 @@ function InfoCards(props) {
                     {item.percentageUp}%
                   </span>{" "}
                   vs last month
-                </p>
+                </p> */}
               </div>
             </div>
           </Link>
