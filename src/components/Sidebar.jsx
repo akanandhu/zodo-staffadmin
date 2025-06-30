@@ -2,7 +2,17 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { dashboard, doctor, logout_01, menuicon02, menuicon03, menuicon08, menuicon09, menuicon13, profile_hospitals } from "./imagepath";
+import {
+  dashboard,
+  doctor,
+  logout_01,
+  menuicon02,
+  menuicon03,
+  menuicon08,
+  menuicon09,
+  menuicon13,
+  profile_hospitals,
+} from "./imagepath";
 import Scrollbars from "react-custom-scrollbars-2";
 import { useAuth } from "../hooks/useAuth";
 
@@ -44,6 +54,15 @@ const Sidebar = (props) => {
     navigate("/login"); // Redirect to the login page
   };
 
+  const handleMenuClick = () => {
+    // This will remove mobile sidebar overlay & classes
+    document.body.classList.remove("slide-nav");
+    document.documentElement.classList.remove("menu-opened");
+
+    const overlay = document.getElementsByClassName("sidebar-overlay")[0];
+    if (overlay) overlay.classList.remove("opened");
+  };
+
   return (
     <>
       <div className="sidebar" id="sidebar">
@@ -72,6 +91,7 @@ const Sidebar = (props) => {
                       className={props?.activeClassName === "" ? "active" : ""}
                       id="menu-item"
                       to="/"
+                      onClick={handleMenuClick}
                     >
                       <span className="menu-side">
                         <img src={dashboard} alt="" />
@@ -90,6 +110,7 @@ const Sidebar = (props) => {
                       }
                       id="menu-item2"
                       to="/appointment"
+                      onClick={handleMenuClick}
                     >
                       <span className="menu-side">
                         <img src={menuicon08} alt="" />
@@ -109,6 +130,7 @@ const Sidebar = (props) => {
                       }
                       id="menu-item4"
                       to="/doctor-manage"
+                      onClick={handleMenuClick}
                     >
                       <span className="menu-side">
                         <img src={menuicon02} alt="" />
@@ -128,6 +150,7 @@ const Sidebar = (props) => {
                       }
                       id="menu-item5"
                       to="/staff-manage"
+                      onClick={handleMenuClick}
                     >
                       <span className="menu-side">
                         <img src={menuicon03} alt="" />
@@ -173,6 +196,7 @@ const Sidebar = (props) => {
                               : "submenu-normal"
                           }
                           to="/hospital/services"
+                          onClick={handleMenuClick}
                         >
                           Services
                         </Link>
@@ -185,6 +209,7 @@ const Sidebar = (props) => {
                               : "submenu-normal"
                           }
                           to="/hospital/departments"
+                          onClick={handleMenuClick}
                         >
                           Department
                         </Link>
@@ -198,6 +223,7 @@ const Sidebar = (props) => {
                           }
                           // to="#"
                           to="/hospital/edit"
+                          onClick={handleMenuClick}
                         >
                           Edit Hospital
                         </Link>
@@ -214,6 +240,7 @@ const Sidebar = (props) => {
                       }
                       id="menu-item4"
                       to="/finance"
+                      onClick={handleMenuClick}
                     >
                       <span className="menu-side">
                         <img src={menuicon09} alt="" />
