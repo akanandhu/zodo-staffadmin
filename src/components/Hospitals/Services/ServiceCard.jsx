@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { bin_icon_red, pencil_icon, three_dots_menu } from "../../imagepath";
+import { three_dots_menu } from "../../imagepath";
 import PropTypes from "prop-types";
 import ConfirmDelete from "../../modals/ConfirmDelete";
 import useDeleteHospitalServices from "../../../hooks/hospital-services/useDeleteHospitalService";
 import CenteredModal from "../../modals/CenteredModal";
 import EditServiceForm from "../../modals/AddService/EditServiceForm";
 import ImageBox from "../../assests/ImageBox";
+import ServiceModal from "./ServiceModal";
+import ServiceDetails from "./ServiceDetails";
 function ServiceCard(props) {
   const { servicesData } = props;
   const [show, setShow] = useState(false);
@@ -16,14 +18,14 @@ function ServiceCard(props) {
     const depatmentId = servicesData?.id;
     await mutate(depatmentId);
   };
+  const [showService, setShowService] = useState(false);
   const handleCloseEditModal = () => {
     setShowEdit(false);
   };
-  console.log(showEdit);
 
   return (
     <div className="card invoices-grid-card w-100">
-      <Link to={`/hospital/services/${servicesData.id}`}>
+      <Link to>
         <div className="card-body">
           <div className="row align-items-center hospital-card">
             <div className="col-md-3">
@@ -49,6 +51,18 @@ function ServiceCard(props) {
                   <img src={three_dots_menu} alt="" width={15} height={15} />
                 </Link>
                 <div className="dropdown-menu">
+                  {/* <Link
+                    className="dropdown-item"
+                    onClick={() => setShowEdit(true)}
+                  >
+                    <img
+                      src={pencil_icon}
+                      alt="edit"
+                      className="dropdown-menu-icon"
+                    />
+                    <span>Edit</span>
+                  </Link>
+                  <div className="dropdown-divider" />
                   <Link
                     className="dropdown-item"
                     onClick={() => setShowEdit(true)}
@@ -72,6 +86,34 @@ function ServiceCard(props) {
                       className="dropdown-menu-icon"
                     />
                     <span className="text-danger">Delete</span>
+                  </Link> */}
+
+                  <Link
+                    className="dropdown-item"
+                    to
+                    onClick={() => setShowService(true)}
+                  >
+                    <i className="far fa-eye me-2" />
+                    View
+                  </Link>
+                  <div className="dropdown-divider" />
+
+                  <Link
+                    className="dropdown-item"
+                    to
+                    onClick={() => setShowEdit(true)}
+                  >
+                    <i className="far fa-edit me-2" />
+                    Edit
+                  </Link>
+                  <div className="dropdown-divider" />
+
+                  <Link
+                    className="dropdown-item"
+                    to="#"
+                    onClick={() => setShow(true)}
+                  >
+                    <i className="fa fa-trash-alt m-r-5"></i> Delete
                   </Link>
                 </div>
               </div>
@@ -127,6 +169,14 @@ function ServiceCard(props) {
           selectedService={servicesData?.id}
         />
       </CenteredModal>
+
+      <ServiceModal
+        show={showService}
+        handleClose={() => setShowService(false)}
+        title={servicesData?.name || "Service Details"}
+      >
+        <ServiceDetails data={servicesData} />
+      </ServiceModal>
     </div>
   );
 }

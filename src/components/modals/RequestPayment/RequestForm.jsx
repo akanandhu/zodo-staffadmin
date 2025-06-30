@@ -7,6 +7,7 @@ import { useInitiateSettlement } from "../../../hooks/settlements/useInitiateSet
 import { useAuth } from "../../../hooks/useAuth";
 import { useEffect } from "react";
 import { useSettlementList } from "../../../hooks/settlements/useSettlementList";
+import { useFetchWallet } from "../../../hooks/settlements/useFetchWallet";
 
 function RequestForm(props) {
   const { handleClose } = props;
@@ -14,13 +15,14 @@ function RequestForm(props) {
   const { hospitalId } = useAuth();
   const { mutate, isLoading } = useInitiateSettlement();
   const { data: settlements } = useSettlementList(hospitalId);
+  const { data: walletData } = useFetchWallet(hospitalId);
 
+  // Reset form when settlements data changes
   useEffect(() => {
-    if(settlements){
+    if (settlements) {
       methods.reset();
     }
-  }, [settlements])
-  
+  }, [settlements]);
 
   const onRequestPayment = async (data) => {
     const paymentRequest = {
@@ -36,12 +38,12 @@ function RequestForm(props) {
       <div>
         <div className="main-balance">
           <p>Main Balance</p>
-          <h4>₹ 20,000</h4>
+          <h4>₹ {walletData?.balance_amount ?? 0}</h4>
         </div>
         <div className="settlement-card mt-2">
           <div className="settlemet-details">
             <p>Total Earnings</p>
-            <h4 className="text-primary">₹ 20,000</h4>
+            <h4 className="text-primary">₹ {walletData?.total_amount ?? 0}</h4>
           </div>
           <div className="settlemet-details">
             <p>Last Settlement</p>
@@ -58,6 +60,14 @@ function RequestForm(props) {
               validation={{ required: "Amount is required" }}
               placeholder="Enter amount"
               type="text"
+              customValidate={(value) => {
+                const amount = parseFloat(value);
+                const balance = parseFloat(walletData?.balance_amount ?? 0);
+                if (isNaN(amount)) return "Enter a valid number";
+                if (amount > balance)
+                  return `Please enter an amount greater than or equal to ₹${balance}.`;
+                return true;
+              }}
             />
           </div>
 

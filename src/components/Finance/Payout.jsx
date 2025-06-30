@@ -5,15 +5,17 @@ import BookingsTable from "../Dashboard/BookingsTable";
 import PropTypes from "prop-types";
 
 function Payout({ data }) {
+  console.log("PAYOUT DATA", data);
+  
   const basicInformation = [
     {
       id: 1,
-      title: "Total Payout Requests",
+      title: "Total Payout Request",
       icon: profile_hospitals,
       count: data?.settlement?.requested || 0,
       percentageUp: 20,
       link: "",
-      type: "count",
+      type: "currency",
     },
     {
       id: 2,
@@ -22,16 +24,16 @@ function Payout({ data }) {
       count: data?.settlement?.pending || 0,
       percentageUp: 40,
       link: "",
-      type: "count",
+      type: "currency",
     },
     {
       id: 3,
-      title: "Total Transactions",
+      title: "Total Transaction",
       icon: fasttag,
       count: data?.settlement?.total || 0,
       percentageUp: 40,
       link: "",
-      type: "count",
+      type: "currency",
     },
     {
       id: 4,
@@ -53,7 +55,7 @@ function Payout({ data }) {
     },
     {
       id: 6,
-      title: "Next Settlement Date (05 march)",
+      title: "Next Settlement Date",
       icon: fasttag,
       count: 121,
       percentageUp: 40,

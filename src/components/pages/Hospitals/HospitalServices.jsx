@@ -26,16 +26,13 @@ function HospitalServices() {
   const { hospitalId } = useAuth();
   const [searchTerm, setSearchTerm] = useState("");
   const query = searchTerm ? `name=${searchTerm}` : "";
-  console.log("Search term",query);
   
   const { data: servicesList } = useHospitalServices(hospitalId, query);
   const handleShow = () => {
     setShow(true);
   };
-  console.log(servicesList);
   
   const handleSearch = (searchTerm) => {
-    console.log("sarch term ",searchTerm);
     
     setSearchTerm(searchTerm);
   };

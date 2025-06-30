@@ -12084,3 +12084,38 @@ tr.ant-table-row.ant-table-row-level-0.ant-table-row-selected,
   top: -10px;
   right: -10px;
 }
+
+.service-banner{
+  width: 100%;
+  height: 200px;
+}
+.service-banner img{
+  width: 200px;
+  height: 100%;
+  object-fit: cover;
+}
+
+.description-box {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+  transition: all 0.3s ease;
+  min-height: 10vh;
+}
+
+.description-box.expanded {
+  -webkit-line-clamp: unset;
+  display: block;
+}
+
+.description-header{
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.description-box p {
+  font-size: 0.95rem;
+  color: #6c757d;
+}
