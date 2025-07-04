@@ -12,9 +12,7 @@ export const useEditStaff = () => {
       // Cancel any ongoing queries for hospitals to prevent race conditions
       await queryClient.cancelQueries({ queryKey: ["staff"] });
     },
-    onSuccess: (data, variables) => {
-      console.log("Variables:", variables);
-      
+    onSuccess: (data, variables) => {      
       const message = data?.message || "Staff updated successfully";
       queryClient.invalidateQueries({ queryKey: ["staff", variables.id] });
       queryClient.invalidateQueries({ queryKey: ["staffs", hospitalId] });

@@ -11,7 +11,7 @@ import { useDoctorsList } from "../../hooks/doctors/useDoctorsList";
 import CircularImage from "../assests/CircularImage";
 
 function DoctorsTable(props) {
-  const { doctorsList, loading } = props;
+  const { doctorsList, loading } = props;  
   const [show, setShow] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [selectedDoctor, setSelectedDoctor] = useState(null);

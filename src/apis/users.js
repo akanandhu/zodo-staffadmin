@@ -7,7 +7,7 @@ export const addUser = async (userData) => {
 
 export const getHospitalStaffs = async (hospitalId) => {
   const response = await apiClient.get(
-    `/users?page=1&limit=10&hospital_id=${hospitalId}`
+    `/users?hospital_id=${hospitalId}`
   );
   return response?.data?.data || [];
 };

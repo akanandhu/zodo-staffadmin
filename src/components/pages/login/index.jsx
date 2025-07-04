@@ -16,7 +16,7 @@ const Login = () => {
     setPasswordVisible(!passwordVisible);
   };
 
-  const { user, login, validationError, isLoading } = useAuth();
+  const { user, login, validationError, isLoading,  } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = (data) => {
@@ -131,7 +131,7 @@ const Login = () => {
                             {validationError}
                           </div>
                         )}
-                        <div className="forgotpass">
+                        {/* <div className="forgotpass">
                           <div className="remember-me">
                             <label className="custom_check mr-2 mb-0 d-inline-flex remember-me">
                               {" "}
@@ -141,8 +141,8 @@ const Login = () => {
                             </label>
                           </div>
                           <Link to="/forgotpassword">Forgot Password?</Link>
-                        </div>
-                        <div className="form-group login-btn">
+                        </div> */}
+                        <div className="form-group login-btn mt-3">
                           <button
                             type="submit"
                             // to="/dashboard"

@@ -38,7 +38,6 @@ function StaffEditForm(props) {
       const roleOption = roleOptions.find(
         (item) => item.value === staff.user_type
       );
-      console.log("staff", staff);
       setFileURL(staff?.profile_picture || "");
       methods.reset({
         staffname: staff.first_name,

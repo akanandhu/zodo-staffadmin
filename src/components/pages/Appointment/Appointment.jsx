@@ -19,6 +19,8 @@ function Appointment() {
   const requestedList = appointmentsList?.filter(
     (item) => item.timeSlot === null 
   );
+  console.log("Requested appointments",requestedList);
+  
   const appointmentTab = [
     {
       id: "appointment",

@@ -1,18 +1,19 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { logo, baricon1, user06 } from "./imagepath";
+import { logo, baricon1, user_profile } from "./imagepath";
 import { useAuth } from "../hooks/useAuth";
+import { useViewHospital } from "../hooks/hospital/useViewHospital";
+import ConfirmLogout from "./modals/ConfirmLogout";
 
 const Header = () => {
-  const { user, setUser } = useAuth();
+  const { user, setUser, hospitalId } = useAuth();
   const navigate = useNavigate();
   const userName = user?.first_name + user?.last_name || "User";
   const userRole = user?.user_type || "Role";
   const handlesidebar = () => {
     document.body.classList.toggle("mini-sidebar");
   };
-  console.log("USER DATA ",user);
   const handlesidebarmobilemenu = () => {
     document.body.classList.toggle("slide-nav");
     document.getElementsByTagName("html")[0].classList.toggle("menu-opened");
@@ -55,11 +56,17 @@ const Header = () => {
     setUser(null); // Clear the user state
     navigate("/login"); // Redirect to the login page
   };
+  const [isOpen, setIsOpen] = useState(false);
+
+  const { data: hospital } = useViewHospital(hospitalId);
   return (
     <div className="main-wrapper">
       <div className="header">
         <div className="header-left">
-          <Link to={user?.user_type === "hsAdmin" ? "/" :"/appointment"} className="logo">
+          <Link
+            to={user?.user_type === "hsAdmin" ? "/" : "/appointment"}
+            className="logo"
+          >
             <img src={logo} width={108} height={38} alt="" />{" "}
           </Link>
         </div>
@@ -108,7 +115,7 @@ const Header = () => {
                 <span>{userRole}</span>
               </div>
               <span className="user-img">
-                <img src={user?.profile_picture || user06} alt="Admin" />
+                <img src={user?.profile_picture || user_profile} alt="Admin" />
               </span>
             </Link>
             <div className="dropdown-menu">
@@ -121,7 +128,12 @@ const Header = () => {
               {/* <Link className="dropdown-item" to="/settingssociallink">
                 Settings
               </Link> */}
-              <Link className="dropdown-item" to="/login" onClick={handleLogout}>
+              <Link className="dropdown-item">{hospital?.name}</Link>
+              <Link
+                className="dropdown-item"
+                // to="/login"
+                onClick={() => setIsOpen(true)}
+              >
                 Logout
               </Link>
             </div>
@@ -151,12 +163,19 @@ const Header = () => {
             <Link className="dropdown-item" to="/settings">
               Settings
             </Link> */}
-            <Link className="dropdown-item" to onClick={handleLogout}>
+            <Link className="dropdown-item">{hospital?.name}</Link>
+
+            <Link className="dropdown-item" to onClick={() => setIsOpen(true)}>
               Logout
             </Link>
           </div>
         </div>
       </div>
+      <ConfirmLogout
+        show={isOpen}
+        setShow={setIsOpen}
+        handleLogout={handleLogout}
+      />
 
       {/* Notifications */}
       <div className="notification-box">

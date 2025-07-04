@@ -31,7 +31,9 @@ function RequestForm(props) {
       amount: data.requestAmount,
       note: "",
     };
-    await mutate(paymentRequest);
+    await mutate(paymentRequest,{onSuccess:()=>{
+      handleClose()
+    }});
   };
   return (
     <>

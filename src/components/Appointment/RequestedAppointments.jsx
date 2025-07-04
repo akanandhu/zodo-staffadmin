@@ -10,8 +10,6 @@ function RequestedAppointments(props) {
   const [requestDetails, setRequestDetails] = useState({});
 
   const handleSchedule = (record) => {
-    console.log("Record in RequestedAppointments: ", record?.appointmentDate);
-
     const detail = {
       patientname: record?.user?.first_name,
       age: record?.user?.age,

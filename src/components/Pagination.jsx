@@ -26,5 +26,4 @@ export function itemRender(current, type, originalElement) {
 }
 
 export function onShowSizeChange(current, pageSize) {
-  // console.log(current, pageSize);
 }

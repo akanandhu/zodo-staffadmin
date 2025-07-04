@@ -4,7 +4,6 @@ import ImageBox from "../../assests/ImageBox";
 import DescriptionBox from "../../assests/DescriptionBox";
 
 function ServiceDetails({ data }) {
-  console.log("ServiceDetails data:", data);
 
   return (
     <div>

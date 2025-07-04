@@ -51,7 +51,6 @@ function Availability({ selectedDoctor }) {
   };
 
   useEffect(() => {
-    console.log("Availability Data:", availability);
 
     if (!availability || Object.keys(slotTimes).length > 0) return;
 

@@ -13,7 +13,6 @@ function DepartmentForm(props) {
   const { mutate, isLoading } = useAddDepartment();
   const methods = useForm();
   const onCreateDepartment = async (data) => {
-    console.log("Form Data: ", data);
     const department = {
       name: data.department,
       // category: data.category,

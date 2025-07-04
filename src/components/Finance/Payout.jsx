@@ -5,7 +5,6 @@ import BookingsTable from "../Dashboard/BookingsTable";
 import PropTypes from "prop-types";
 
 function Payout({ data }) {
-  console.log("PAYOUT DATA", data);
   
   const basicInformation = [
     {

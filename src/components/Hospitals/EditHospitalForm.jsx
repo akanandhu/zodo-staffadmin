@@ -34,7 +34,6 @@ function EditHospitalForm() {
   const [file2, setFile2] = useState(null);
   const [file3, setFile3] = useState(null);
 
-  console.log("Hospital documents ", hospitalDocuments);
 
   useEffect(() => {
     if (hospitalDocuments?.length > 0) {
@@ -114,9 +113,6 @@ function EditHospitalForm() {
         name: file3?.name,
         file: file3?.key || file3?.file,
       };
-      console.log("File 1 details ", file1Details);
-      console.log("File 2 details ", file2Details);
-      console.log("File 3 details ", file3Details);
       const fileArray = [file1Details, file2Details, file3Details].filter(
         (file) => file.name && file.file
       );

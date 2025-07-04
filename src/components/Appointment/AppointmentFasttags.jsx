@@ -22,9 +22,7 @@ function AppointmentFasttags() {
     (searchterm && `is_fast_tag=1&name=${searchterm}`) ||
     (date && `is_fast_tag=1&date=${date}`) ||
     "is_fast_tag=1";
-
-  console.log(fasttagQuery);
-
+    
   const { data: appointmentList, isLoading } = useHospitalAppointments(
     hospitalId,
     fasttagQuery

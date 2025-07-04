@@ -6,24 +6,18 @@ import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import DateSearchHero from "../heros/DateSearchHero";
 import { useState } from "react";
 import { formatDate } from "../configs/formatDate";
+import StatusBadge from "../assests/StatusBadge";
 function History() {
   const { hospitalId } = useAuth();
   // const [searchTerm, setsearchTerm] = useState("");
   const [date, setdate] = useState(null);
   const query = date ? `updated_at=${date}` : "";
   const { data: settlements, isLoading } = useSettlementList(hospitalId, query);
-  console.log("Settlements", settlements);
-
   const handleDate = (date) => {
-    // const utcDate = new Date(date).toISOString();
-    console.log("Date ", date);
 
-    // console.log("ISO ", utcDate);
     setdate(date);
   };
-  // const handleSearchTerm = (search) => {
-  //   setsearchTerm(search);
-  // };
+  
   const columns = [
     {
       title: "Transaction ID",
@@ -48,6 +42,7 @@ function History() {
     {
       title: "Amount",
       dataIndex: "amount",
+      render:(item)=><div>₹{item}</div>
       // sorter: (a, b) => a.type.length - b.type.length,
       // render: (item) => <div>₹ {item}</div>,
     },
@@ -62,16 +57,7 @@ function History() {
       dataIndex: "status",
       // sorter: (a, b) => a.status.length - b.status.length,
       render: (item) => (
-        <div
-          className={`delete-badge ${
-            (item === "cancelled" && "status-red") ||
-            (item === "pending" && "status-orange") ||
-            (item === "requested" && "status-orange") ||
-            (item === "completed" && "status-green")
-          }`}
-        >
-          {item}
-        </div>
+        <StatusBadge status={item}/>
       ),
     },
     {

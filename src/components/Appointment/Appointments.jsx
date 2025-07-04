@@ -23,7 +23,6 @@ function Appointments() {
     query
   );
 
-  console.log("Appointment List: >>>>", appointmentList);
 
   const onGoing = appointmentList?.filter((item) => item.status === "started");
   const cancelled = appointmentList?.filter(

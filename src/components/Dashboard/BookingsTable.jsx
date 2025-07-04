@@ -15,9 +15,7 @@ function BookingsTable() {
     query
   );
   // console.log(bookings);
-  console.log(isLoading);
-  console.log("Bookings Data:", bookings);
-  
+  console.log(isLoading);  
   const columns = [
     {
       title: "Booking ID",

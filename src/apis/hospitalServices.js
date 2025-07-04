@@ -13,9 +13,7 @@ export const getHospitalServicesList = async (id) => {
 export const getHospitalServicesListByQuery = async (id, query) => {
   const response = await apiClient.get(
     `hospital-services?hospital_id=${id}&${query}`
-  );
-  console.log("Response",response);
-  
+  );  
   return response.data?.data ?? [];
 };
 

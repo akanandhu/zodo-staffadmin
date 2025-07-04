@@ -34,7 +34,6 @@ function ChooseFile(props) {
             toast.success(message);
           },
         });
-        console.log("S3 URL ", response?.data?.url);
         // setFile(response?.data?.url);
         handleFileURL(response?.data?.url);
       } catch (error) {

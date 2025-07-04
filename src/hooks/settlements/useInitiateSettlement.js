@@ -11,8 +11,6 @@ export const useInitiateSettlement = () => {
       await queryClient.cancelQueries({ queryKey: ["settlements"] });
     },
     onSuccess: (data) => {
-      console.log(data);
-
       const message = data?.message || "Settlement initiated successfully";
       queryClient.invalidateQueries(["settlements"]);
       //   navigate("/manage-doctors");

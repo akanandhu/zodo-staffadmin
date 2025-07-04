@@ -33,7 +33,6 @@ function ScheduleForm(props) {
   const [doctorId, setDoctorId] = useState("");
   const { data: timeslots, isLoading: timeslotLoading } =
     useGetTimeslots(doctorId, hospitalId, requestDetails.appointmentDate);
-  console.log("Timeslots: ", timeslots);
   console.log("Doctor ID: ", timeslotLoading);
   if(!timeslots) <div>Loading</div>
   const { morning, evening, afternoon } = categorizeSlots(timeslots || []);

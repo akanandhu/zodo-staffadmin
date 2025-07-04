@@ -29,8 +29,6 @@ export const deleteDepartment = async (id) => {
 };
 
 export const editDepartment = async ({id, data}) => {
-  const response = await apiClient.patch(`/departments/${id}`, data);
-  console.log("Response ",response);
-  
+  const response = await apiClient.patch(`/departments/${id}`, data);  
   return response?.data || {};
 };

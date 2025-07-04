@@ -19,6 +19,5 @@ export const initiateSettlement = async (settlementData) => {
 
 export const fetchWallet = async (hospital_id) => {
   const response = await apiClient.get(`/wallet/hospital/${hospital_id}`);
-  console.log("fetchWallet response:", response?.data?.data);
   return response?.data?.data ?? {};
 };

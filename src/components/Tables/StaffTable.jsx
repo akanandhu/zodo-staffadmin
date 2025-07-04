@@ -12,7 +12,7 @@ import PropTypes from "prop-types";
 import CircularImage from "../assests/CircularImage";
 
 function StaffTable(props) {
-  const { staffsList, isLoading } = props;
+  const { staffsList, isLoading } = props;  
   const [show, setShow] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [selectedStaff, setSelectedStaff] = useState(null);
