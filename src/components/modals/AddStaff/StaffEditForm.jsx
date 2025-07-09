@@ -38,7 +38,11 @@ function StaffEditForm(props) {
       const roleOption = roleOptions.find(
         (item) => item.value === staff.user_type
       );
+      console.log("Staff ", staff);
+
       setFileURL(staff?.profile_picture || "");
+
+      setStatus(staff?.is_active);
       methods.reset({
         staffname: staff.first_name,
         staffemail: staff.email,
@@ -53,7 +57,6 @@ function StaffEditForm(props) {
         address: staff?.address?.line,
         city: staff?.address?.city,
         state: staff?.address?.state,
-        is_active: status,
       });
     }
   }, [selectedStaff, methods, staff]);
@@ -80,6 +83,8 @@ function StaffEditForm(props) {
       hospital_id: hospitalId,
       profile_picture: fileURL,
     };
+    console.log("Staff ", staff);
+
     mutate(
       { id: selectedStaff, data: staff },
       {
@@ -96,6 +101,7 @@ function StaffEditForm(props) {
   const handleFileURL = (url) => {
     setFileURL(url);
   };
+  console.log("Status ", status);
 
   return (
     <FormProvider {...methods}>
@@ -110,7 +116,8 @@ function StaffEditForm(props) {
           <div className="col-md-4 d-flex justify-content-end">
             <select
               className="hospital-draft-btn text-primary status-select"
-              onChange={(e) => setStatus(e.target.value)}
+              onChange={(e) => setStatus(JSON.parse(e.target.value))}
+              value={status}
             >
               <option value={true}>Active</option>
               <option value={false}>In Active</option>

@@ -14,8 +14,8 @@ function SettlementCard(props) {
     <div className="row">
       {info.map((item) => {
         return (
-          <Link
-            to={item.link}
+          <div
+            // to={item.link}
             className="col-md-3 col-sm-3 col-lg-4 col-xl-4"
             key={item.id + item.title}
           >
@@ -48,7 +48,7 @@ function SettlementCard(props) {
                 </p> */}
               </div>
             </div>
-          </Link>
+          </div>
         );
       })}
       <RequestPayment

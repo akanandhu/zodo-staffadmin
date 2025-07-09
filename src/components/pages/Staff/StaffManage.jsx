@@ -47,8 +47,6 @@ function StaffManage() {
           <StaffTable staffsList={staffsList} isLoading={isLoading} />
         </div>
       </div>
-      {/* <AddSaff show={show} setShow={setShow} title="Add Staff" /> */}
-
       <SideModal show={show} handleClose={handleCloseModal} title="Add Staff">
         <CreateStaff handleClose={handleCloseModal} />
       </SideModal>

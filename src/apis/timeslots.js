@@ -28,14 +28,24 @@ export const deleteAvailabilityById = async (id) => {
   return response?.data || {};
 };
 
-export const getTimeslot = async (doctor_id,hospital_id, date) => {
-  const response = await apiClient.get(`/time-slots/available?doctor_id=${doctor_id}&hospital_id=${hospital_id}&date=${date}`);
+export const getTimeslot = async (doctor_id, hospital_id, date) => {
+  const response = await apiClient.get(
+    `/time-slots/available?doctor_id=${doctor_id}&hospital_id=${hospital_id}&date=${date}`
+  );
   return response?.data?.data || [];
 };
 
 export const assignTimeslot = async ({ id, data }) => {
   const response = await apiClient.patch(
     `/bookings/${id}/update-time-slot`,
+    data
+  );
+  return response.data;
+};
+
+export const updateAutoslot = async ({ id, data }) => {
+  const response = await apiClient.patch(
+    `/doctors/${id}/toggle-auto-booking`,
     data
   );
   return response.data;

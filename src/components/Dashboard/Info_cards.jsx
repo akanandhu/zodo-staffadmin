@@ -1,6 +1,5 @@
 import CountUp from "react-countup";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 
 function InfoCards(props) {
   const { info } = props;
@@ -8,10 +7,14 @@ function InfoCards(props) {
     <div className="row">
       {info.map((item) => {
         return (
-          <Link
+          <div
             to={item.link}
-            className="col-md-3 col-sm-3 col-lg-4 col-xl-4"
+            className="col-md-3 col-sm-3 col-lg-4 col-xl-4 info-card-link"
             key={item.id + item.title}
+            onClick={(e)=>{
+              e.stopPropagation()
+              e.preventDefault()
+            }}
           >
             <div className="dash-widget">
               <div className="dash-boxs comman-flex-center">
@@ -36,7 +39,7 @@ function InfoCards(props) {
                 </p> */}
               </div>
             </div>
-          </Link>
+          </div>
         );
       })}
     </div>

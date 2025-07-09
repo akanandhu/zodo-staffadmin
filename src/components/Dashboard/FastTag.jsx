@@ -7,6 +7,8 @@ import PropTypes from "prop-types";
 
 function FastTag({ data }) {
   const { count, revenue } = data || {};
+  console.log("DATA ",data);
+  
   const basicInformation = [
     {
       id: 1,

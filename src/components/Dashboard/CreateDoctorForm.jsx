@@ -65,7 +65,7 @@ function CreateDoctorForm(props) {
   const handleFileURL = (url) => {
     setFileURL(url);
   };
-
+  
   return (
     <div className="bg-white rounded p-4">
       <div className="row">
@@ -164,6 +164,8 @@ function CreateDoctorForm(props) {
               </div>
             </div>
           </div>
+
+          
 
           <div className="row">
             <div className="form-group col-12">

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { formatTime } from "../../configs/formatTime";
 
 function Timeslot({ slots, handelTimeslot }) {
+  
   return (
     <div className="mt-3">
       <div className="d-flex flex-wrap">

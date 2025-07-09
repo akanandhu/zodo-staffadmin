@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ConfirmDelete from "../modals/ConfirmDelete";
 import EditStaff from "../modals/AddStaff/EditStaff";
 import { user_profile } from "../imagepath";
@@ -7,9 +7,9 @@ import { useAuth } from "../../hooks/useAuth";
 // import { useHospitalStaffs } from "../../hooks/users/useHospitalStaffs";
 import { Link } from "react-router-dom";
 import useDeleteStaff from "../../hooks/staff/useDeleteStaff";
-import { formatDate } from "../configs/formatDate";
 import PropTypes from "prop-types";
 import CircularImage from "../assests/CircularImage";
+import { formatToDate } from "../configs/formatToDate";
 
 function StaffTable(props) {
   const { staffsList, isLoading } = props;  
@@ -35,7 +35,6 @@ function StaffTable(props) {
     setShow(true);
   };
   const handleDelete = async () => {
-    console.log("Log click");
 
     await mutate(selectedStaff);
     setShow(false);
@@ -71,7 +70,7 @@ function StaffTable(props) {
     {
       title: "Joining Date",
       dataIndex: "created_at",
-      render: (item) => <div>{formatDate(item)}</div>,
+      render: (item) => <div>{formatToDate(item)}</div>,
       // render:(item, record)=>{
       //   const date = record?.created_at;
       //   const dateOnly = new Date(date).toLocaleDateString();
@@ -84,10 +83,7 @@ function StaffTable(props) {
     {
       title: "Department",
       dataIndex: "",
-      // sorter: (a, b) => a.department.length - b.department.length,
       render: (item, record) => {
-        // const department = record?.departments[0]
-        // console.log("Department ",record?.departments);
         const departmentLen = record?.departments?.length;
         const departments =
           departmentLen !== 0 &&

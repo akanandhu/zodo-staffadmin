@@ -10,6 +10,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useDoctorsList } from "../../hooks/doctors/useDoctorsList";
 import CircularImage from "../assests/CircularImage";
 import { formatToDate } from "../configs/formatToDate";
+import StatusBadge from "../assests/StatusBadge";
 
 function DoctorsTable(props) {
   const { doctorsList, loading } = props;  
@@ -97,8 +98,14 @@ function DoctorsTable(props) {
     {
       title: "Pricing",
       dataIndex: "pricing",
-      sorter: (a, b) => a.pricing.length - b.pricing.length,
+      // sorter: (a, b) => a.pricing.length - b.pricing.length,
       render: (item) => <div>₹{item}</div>,
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      // sorter: (a, b) => a.pricing.length - b.pricing.length,
+      render: (item) => <StatusBadge status={item}/>,
     },
     {
       title: "",

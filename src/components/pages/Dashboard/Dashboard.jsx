@@ -22,7 +22,7 @@ function Dashboard() {
   const { hospitalId } = useAuth();
   const { data: hospitalAnalytics, isLoading } =
     useHospitalAnalytics(hospitalId);
-
+  
   const dashboardTab = [
     {
       id: "appointment",

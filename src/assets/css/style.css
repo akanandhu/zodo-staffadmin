@@ -11057,6 +11057,7 @@ textarea.form-control {
     width: 100%;
     overflow-x: auto;
     -ms-overflow-style: -ms-autohiding-scrollbar;
+    background: white;
   }
   .header .has-arrow .dropdown-toggle > span:nth-child(2) {
     display: none;
@@ -12120,3 +12121,4 @@ tr.ant-table-row.ant-table-row-level-0.ant-table-row-selected,
   font-size: 0.95rem;
   color: #6c757d;
 }
+
