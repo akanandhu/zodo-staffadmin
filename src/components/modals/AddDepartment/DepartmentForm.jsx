@@ -55,7 +55,7 @@ function DepartmentForm(props) {
           <div className="col-md-12">
             <TextArea
               name="message"
-              label="Message"
+              label="Description"
               placeholder="Type message here"
             />
           </div>

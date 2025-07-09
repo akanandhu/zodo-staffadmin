@@ -10,13 +10,15 @@ import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { useDoctorView } from "../../../hooks/doctors/useDoctorView";
 import { useEditDoctors } from "../../../hooks/doctors/useEditDoctors";
+import { toInputDateFormat } from "../../configs/toInputDateFormat";
+import TextArea from "../../Inputfields/TextArea";
 
 function EditOverview(props) {
   const { handleClose, selectedDoctor } = props;
   const { data: doctor } = useDoctorView(selectedDoctor);
   const { hospitalId } = useAuth();
   const methods = useForm();
-  const [joiningDate, setJoiningDate] = useState();
+  // const [joiningDate, setJoiningDate] = useState();
   const [fileURL, setFileURL] = useState("");
   const { data: departmentList, isLoading: departmentLoading } =
     useDepartmentList(hospitalId);
@@ -38,7 +40,6 @@ function EditOverview(props) {
 
   useEffect(() => {
     if (doctor) {
-
       // const selectedDepartments = doctor?.department.filter((item)=> )
       setFileURL(doctor?.profile_pic);
       const specialisation = doctor?.specialisations;
@@ -52,6 +53,11 @@ function EditOverview(props) {
         value: item.id,
       }));
 
+      const workstartDate = toInputDateFormat(doctor?.work_start_date);
+      const joiningDate = toInputDateFormat(
+        doctor?.registration_details?.joining_date
+      );
+      console.log(doctor);
       
 
       methods.reset({
@@ -67,9 +73,13 @@ function EditOverview(props) {
         councilName: doctor?.registration_details?.council_name,
         // joiningDate: doctor?.registration_details?.joining_date,
         departments: departments,
+        workstartDate: workstartDate,
+        joiningDate: joiningDate,
+        duration: doctor?.consultation_duration,
+        about: doctor?.about,
       });
 
-      setJoiningDate(doctor?.registration_details?.joining_date);
+      // setJoiningDate(doctor?.registration_details?.joining_date);
     }
   }, [doctor, methods]);
 
@@ -77,31 +87,23 @@ function EditOverview(props) {
     const departments = data?.departments?.map((item) => item.value);
     const specialisations = data?.specialisations?.map((item) => item.value);
     const doctor = {
-      // name: data.doctorname,
-      // email: data.doctoremail,
-      // phone_number: data.phone,
-      // hospitalId: hospitalId,
-      // // department_id: data.departments.map((item) => item.value),
-      // specifications_id: data?.specialisations?.map((item) => item.value),
-      // pricing: parseInt(data.pricing),
-
       name: data.doctorname,
       email: data.doctoremail,
       profile_pic: fileURL,
-      // city: "",
       pricing: parseInt(data.pricing),
-      // job_title:data.jobTitle,
       specifications_id: specialisations,
       phone_number: data.phone,
       hospital_id: hospitalId,
       registration_details: {
         registration_number: data.registrationNumber,
         council_name: data.councilName,
-        joining_date: joiningDate,
+        joining_date: data?.joiningDate,
       },
       department_ids: departments,
-    };
-
+      consultation_duration: parseInt(data?.duration),
+      work_start_date: data?.workstartDate,
+      about: data?.about,
+    };    
 
     await mutate(
       { id: selectedDoctor, data: doctor },
@@ -160,7 +162,7 @@ function EditOverview(props) {
         </div>
 
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-4">
             <div className="form-group">
               <InputField
                 name="phone"
@@ -171,13 +173,24 @@ function EditOverview(props) {
               />
             </div>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <div className="form-group">
               <InputField
                 name="pricing"
                 label="Pricing"
                 validation={{ required: "Pricing is required" }}
                 placeholder="Enter doctor pricing"
+                type="price"
+              />
+            </div>
+          </div>
+          <div className="col-md-4">
+            <div className="form-group">
+              <InputField
+                name="duration"
+                label="Consultation Duration"
+                validation={{ required: "Consultation duration is required" }}
+                placeholder="Enter duration in minutes"
                 type="number"
               />
             </div>
@@ -185,17 +198,6 @@ function EditOverview(props) {
         </div>
 
         <div className="row">
-          {/* <div className="col-md-4">
-            <div className="form-group">
-              <InputField
-                name="jobTitle"
-                label="Job Title"
-                validation={{ required: "Job title is required" }}
-                placeholder="Enter job title"
-                type="text"
-              />
-            </div>
-          </div> */}
           <div className="col-md-4">
             <div className="form-group">
               <SelectField
@@ -221,6 +223,12 @@ function EditOverview(props) {
                 isLoading={departmentLoading}
               />
             </div>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="form-group col-12">
+            <TextArea name="about" label="About" placeholder="Write here.." />
           </div>
         </div>
 
@@ -262,20 +270,31 @@ function EditOverview(props) {
               />
             </div>
           </div>
-          <div className="col-md-6">
-            <div className="form-group">
-              <label>Joining Date</label>
-              <input
+
+          <div className="row">
+            <div className="form-group col-md-6">
+              <InputField
+                name="joiningDate"
+                label="Joining Date"
+                placeholder="Joining date"
                 type="date"
-                className="form-control"
-                placeholder="Enter joining date"
-                onChange={(e) => setJoiningDate(e.target.value)}
-                value={joiningDate}
+              />
+            </div>
+
+            <div className="form-group col-md-6">
+              <InputField
+                name="workstartDate"
+                label="Work Start Date"
+                validation={{
+                  required: "Work start date is required",
+                }}
+                placeholder="Work start date"
+                type="date"
               />
             </div>
           </div>
 
-          <div className="d-flex justify-content-between ps-3 pe-3 pb-5">
+          <div className="d-flex justify-content-between ps-3 pe-3 pb-5 mt-4">
             <Button
               variant="outline-primary"
               onClick={() => handleClose()}

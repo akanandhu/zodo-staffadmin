@@ -85,7 +85,7 @@ function Hero() {
                 </span>{" "}
                 <span className="ps-1">Create a Doctor</span>
               </Link>
-              <div className="dropdown-divider" />
+              {/* <div className="dropdown-divider" />
               <Link
                 className="dropdown-item"
                 to="#"
@@ -95,7 +95,7 @@ function Hero() {
                   <img src={adduser} alt="create" />
                 </span>{" "}
                 <span className="ps-1">Create a Department</span>
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>

@@ -74,6 +74,7 @@ function AddServiceForm(props) {
             />
           </div>
         </div>
+        
         <div className="form-group">
           <div className="col-md-12">
             <TextArea

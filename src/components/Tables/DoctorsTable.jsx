@@ -9,6 +9,7 @@ import useDeleteDoctor from "../../hooks/doctors/useDeleteDoctor";
 import { useAuth } from "../../hooks/useAuth";
 import { useDoctorsList } from "../../hooks/doctors/useDoctorsList";
 import CircularImage from "../assests/CircularImage";
+import { formatToDate } from "../configs/formatToDate";
 
 function DoctorsTable(props) {
   const { doctorsList, loading } = props;  
@@ -69,7 +70,7 @@ function DoctorsTable(props) {
     {
       title: "Joining Date",
       dataIndex: "work_start_date",
-      render: (item) => <div>{item ? item : "N/A"}</div>,
+      render: (item) => <div>{item ? formatToDate(item) : "N/A"}</div>,
       // sorter: (a, b) => a.joiningDate.length - b.joiningDate.length,
     },
     {

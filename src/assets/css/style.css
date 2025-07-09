@@ -10414,8 +10414,8 @@ textarea.form-control {
 }
 
 .input-group-text {
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #347D73;
+  border-color: #347D73;
   color: #fff;
 }
 .choose-file-btn{
@@ -10438,10 +10438,11 @@ textarea.form-control {
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid gainsboro;
 }
 
 .upload-preview img {
-  width: 100%;
+  width: 75px;
   height: 100%;
   object-fit: cover;
 }

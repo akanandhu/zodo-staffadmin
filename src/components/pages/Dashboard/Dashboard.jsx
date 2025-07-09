@@ -48,7 +48,6 @@ function Dashboard() {
     //   content: <HospitalStaffs />,
     // },
   ];
-  console.log("Hospital analytics", hospitalAnalytics);
   
   return (
     <Layout activeClassName="">

@@ -15,6 +15,7 @@ export const useEditDoctors = () => {
     onSuccess: (data, variables) => {
       const message = data?.message || "Doctor updated successfully";
       // queryClient.setQueryData(["hospital", variables.id], data);
+      queryClient.invalidateQueries({ queryKey: ["doctors"] });
       queryClient.invalidateQueries({ queryKey: ["doctors",hospitalId] });
       queryClient.invalidateQueries({ queryKey: ["doctors", variables.id] });
       toast.success(message);

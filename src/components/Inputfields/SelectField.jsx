@@ -20,7 +20,6 @@ function SelectField(props) {
   const selectStyle = {
     control: (base, state) => ({
       ...base,
-      height: "45px",
       borderRadius: "10px",
       boxShadow: state.isFocused ? 0 : 0,
       borderColor: state.isFocused ? "#0052cc" : "#ced4da",

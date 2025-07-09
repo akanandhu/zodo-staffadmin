@@ -7,6 +7,7 @@ import ConfirmDelete from "../../modals/ConfirmDelete";
 import useDeleteDepartment from "../../../hooks/departments/useDeleteDepartment";
 import CenteredModal from "../../modals/CenteredModal";
 import DepartmentEditForm from "./DepartmentEditForm";
+import StatusBadge from "../../assests/StatusBadge";
 
 function DepartmentCard(props) {
   const { data, setActiveDropdown } = props;
@@ -20,6 +21,8 @@ function DepartmentCard(props) {
   const handleCloseEditModal = ()=>{
     setShowEdit(false);
   }
+  console.log("Department data ",data);
+  
   return (
     <div className="dash-content dash-count flex-grow-1 department-card">
       <div className="row">
@@ -66,15 +69,9 @@ function DepartmentCard(props) {
         </div>
       </div>
       <div className="row">
-        <p className="text-dark col">{data.peopleCount} Person</p>
-        {data?.status === "active" ? (
-          <p className="col-auto text-success">
-            {/* <img src={right_chevron} alt="#" /> */}
-            Active
-          </p>
-        ) : (
-          <p className="col-auto text-danger">Inactive</p>
-        )}
+        <div className="col">
+        <StatusBadge status={data?.status}/>
+        </div>
       </div>
 
       <ConfirmDelete

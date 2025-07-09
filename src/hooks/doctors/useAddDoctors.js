@@ -13,11 +13,11 @@ export const useAddDoctors = () => {
       await queryClient.cancelQueries({ queryKey: ["doctors"] });
     },
     onSuccess: (data) => {
-      console.log(data);
-      
       const message = data?.message || "Doctor added successfully";
       queryClient.invalidateQueries(["doctors",hospitalId]);
       //   navigate("/manage-doctors");
+      console.log("Successs blovk");
+      
       toast.success(message);
     },
     onError: (error, id, context) => {
@@ -25,6 +25,8 @@ export const useAddDoctors = () => {
       if (context?.previousDoctors) {
         queryClient.setQueryData(["doctors"], context.previousDoctors);
       }
+      console.log("Errror block");
+      
       const errorMessage =
         error?.response?.data?.validationErrors ||
         error?.response?.data?.message ||

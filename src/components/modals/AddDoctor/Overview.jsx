@@ -10,12 +10,12 @@ import { useAddDoctors } from "../../../hooks/doctors/useAddDoctors";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { useDoctorsList } from "../../../hooks/doctors/useDoctorsList";
+import TextArea from "../../Inputfields/TextArea";
 
 function Overview(props) {
   const { handleClose } = props;
   const { hospitalId } = useAuth();
   const methods = useForm();
-  const [joiningDate, setJoiningDate] = useState();
   const [fileURL, setFileURL] = useState("");
   const { data: doctorsList } = useDoctorsList(hospitalId);
   const { data: departmentList, isLoading: departmentLoading } =
@@ -46,20 +46,20 @@ function Overview(props) {
       name: data.doctorname,
       email: data.doctoremail,
       profile_pic: fileURL,
-      // city: "Kochi",
       pricing: parseInt(data.pricing),
       specifications_id: data?.specialisations?.map((item) => item.value),
       phone_number: data.phone,
       hospital_id: hospitalId,
-      // job_title: data.jobTitle,
-      // work_start_date: joiningDate,
       registration_details: {
         registration_number: data.registrationNumber,
         council_name: data.councilName,
-        joining_date: joiningDate,
+        joining_date: data?.joiningDate,
       },
       department_id: data?.departments?.map((item) => item.value),
       documents: [],
+      consultation_duration: parseInt(data?.duration),
+      work_start_date: data?.workstartDate,
+      about: data?.about,
     };
 
     // console.log(mutate);
@@ -116,7 +116,7 @@ function Overview(props) {
         </div>
 
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-4">
             <div className="form-group">
               <InputField
                 name="phone"
@@ -127,13 +127,24 @@ function Overview(props) {
               />
             </div>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <div className="form-group">
               <InputField
                 name="pricing"
                 label="Pricing"
                 validation={{ required: "Pricing is required" }}
-                placeholder="Enter doctor pricing"
+                placeholder="Enter pricing"
+                type="price"
+              />
+            </div>
+          </div>
+          <div className="col-md-4">
+            <div className="form-group">
+              <InputField
+                name="duration"
+                label="Consultation Duration"
+                validation={{ required: "Consultation duration is required" }}
+                placeholder="Enter duration in minutes"
                 type="number"
               />
             </div>
@@ -141,17 +152,6 @@ function Overview(props) {
         </div>
 
         <div className="row">
-          <div className="col-md-4">
-            <div className="form-group">
-              <InputField
-                name="jobTitle"
-                label="Job Title"
-                validation={{ required: "Jobtitle is required" }}
-                placeholder="Enter job title"
-                type="text"
-              />
-            </div>
-          </div>
           <div className="col-md-4">
             <div className="form-group">
               <SelectField
@@ -179,23 +179,26 @@ function Overview(props) {
             </div>
           </div>
         </div>
+        <div className="row">
+          <div className="form-group col-12">
+            <TextArea
+              name="about"
+              label="About"
+              // validation={{ required: "Description is required" }}
+              placeholder="Write here.."
+              // disabled={isSameAsCompanyAddress}
+            />
+          </div>
+        </div>
 
         <h4 className="card-title mt-2">Registration Details {"(Optional)"}</h4>
 
         <div className="row">
           <div className="col-md-6">
             <div className="form-group">
-              {/* <label>Registration Number</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Enter registration number"
-              /> */}
-
               <InputField
                 name="registrationNumber"
                 label="Registration Number"
-                // validation={{ required: "Registration number is required" }}
                 placeholder="Enter registration number"
                 type="text"
               />
@@ -203,29 +206,33 @@ function Overview(props) {
           </div>
           <div className="col-md-6">
             <div className="form-group">
-              {/* <label>Council Name</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Enter council name"
-              /> */}
               <InputField
                 name="councilName"
                 label="Council Name"
-                // validation={{ required: "Registration number is required" }}
                 placeholder="Enter council name"
                 type="text"
               />
             </div>
           </div>
-          <div className="col-md-6">
-            <div className="form-group">
-              <label>Joining Date</label>
-              <input
+          <div className="row">
+            <div className="form-group col-md-6">
+              <InputField
+                name="joiningDate"
+                label="Joining Date"
+                placeholder="Joining date"
                 type="date"
-                className="form-control"
-                placeholder="Enter council name"
-                onChange={(e) => setJoiningDate(e.target.value)}
+              />
+            </div>
+
+            <div className="form-group col-md-6">
+              <InputField
+                name="workstartDate"
+                label="Work Start Date"
+                validation={{
+                  required: "Work start date is required",
+                }}
+                placeholder="Work start date"
+                type="date"
               />
             </div>
           </div>

@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 import { useDepartmentList } from "../../hooks/departments/useDepartmentList";
 import { useSpecialisationList } from "../../hooks/specialisation/useSpecialisationList";
 import { useDoctorsList } from "../../hooks/doctors/useDoctorsList";
+import TextArea from "../Inputfields/TextArea";
 function CreateDoctorForm(props) {
   const { handleClose } = props;
   const { hospitalId } = useAuth();
@@ -52,6 +53,9 @@ function CreateDoctorForm(props) {
       registration_details: {},
       department_id: data?.departments?.map((item) => item.value),
       documents: [],
+      consultation_duration: parseInt(data?.duration),
+      work_start_date: data?.workstartDate,
+      about: data?.about,
     };
     await mutate(doctor);
     methods.reset();
@@ -97,7 +101,7 @@ function CreateDoctorForm(props) {
           </div>
 
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-4">
               <div className="form-group">
                 <InputField
                   name="phone"
@@ -108,13 +112,24 @@ function CreateDoctorForm(props) {
                 />
               </div>
             </div>
-            <div className="col-md-6">
+            <div className="col-md-4">
               <div className="form-group">
                 <InputField
                   name="pricing"
                   label="Pricing"
                   validation={{ required: "Pricing is required" }}
                   placeholder="Enter doctor pricing"
+                  type="price"
+                />
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="form-group">
+                <InputField
+                  name="duration"
+                  label="Consultation Duration"
+                  validation={{ required: "Consultation duration is required" }}
+                  placeholder="Enter duration in minutes"
                   type="number"
                 />
               </div>
@@ -122,17 +137,6 @@ function CreateDoctorForm(props) {
           </div>
 
           <div className="row">
-            <div className="col-md-4">
-              <div className="form-group">
-                <InputField
-                  name="jobTitle"
-                  label="Job Title"
-                  validation={{ required: "Job title is required" }}
-                  placeholder="Enter job title"
-                  type="text"
-                />
-              </div>
-            </div>
             <div className="col-md-4">
               <div className="form-group">
                 <SelectField
@@ -161,6 +165,18 @@ function CreateDoctorForm(props) {
             </div>
           </div>
 
+          <div className="row">
+            <div className="form-group col-12">
+              <TextArea
+                name="about"
+                label="About"
+                // validation={{ required: "Description is required" }}
+                placeholder="Write here.."
+                // disabled={isSameAsCompanyAddress}
+              />
+            </div>
+          </div>
+
           {/* <DoctorTimeslot /> */}
           <h4 className="card-title mt-4">
             Registration Details {"(Optional)"}
@@ -186,15 +202,28 @@ function CreateDoctorForm(props) {
                 />
               </div>
             </div>
-            <div className="col-md-6">
-              <div className="form-group">
-                <label>Joining Date</label>
-                <input
-                  type="date"
-                  className="form-control"
-                  placeholder="Enter council name"
-                />
-              </div>
+          </div>
+
+          <div className="row">
+            <div className="form-group col-md-6">
+              <InputField
+                name="joiningDate"
+                label="Joining Date"
+                placeholder="Joining date"
+                type="date"
+              />
+            </div>
+
+            <div className="form-group col-md-6">
+              <InputField
+                name="workstartDate"
+                label="Work Start Date"
+                validation={{
+                  required: "Work start date is required",
+                }}
+                placeholder="Work start date"
+                type="date"
+              />
             </div>
           </div>
           <div className="d-flex justify-content-between ps-3 pe-3 pb-5">

@@ -1,9 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchWallet } from "../../apis/settlement";
 
-export const useFetchWallet = (hospital_id) => {
-  console.log("useFetchWallet called with hospital_id:", hospital_id);
-  
+export const useFetchWallet = (hospital_id) => {  
   return useQuery({
     queryKey: ["wallets", hospital_id], // Unique query key
     queryFn: ()=>fetchWallet(hospital_id),

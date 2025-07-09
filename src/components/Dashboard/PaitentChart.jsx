@@ -4,16 +4,19 @@ import PropTypes from "prop-types";
 
 const PatientChart = (props) => {
   const { data } = props;
-
   const chartRef = React.useRef(null);
   const chartInstanceRef = React.useRef(null);
-
+  console.log("Analytics data ",data);
+  const countsPeryear = data?.map((item) => item.count);
+  const categories = data?.map((item)=> item.month)
+  console.log(categories);
+  
   useEffect(() => {
     if (chartInstanceRef.current) {
       chartInstanceRef.current.destroy();
       chartInstanceRef.current = null;
     }
-    if (chartRef.current && data) {
+    if (chartRef.current && countsPeryear) {
       const sColStackedOptions = {
         chart: {
           height: 230,
@@ -48,38 +51,14 @@ const PatientChart = (props) => {
           {
             name: "",
             color: "#2E37A4",
-            data: data,
+            data: countsPeryear,
           },
-          // {
-          //   name: '',
-          //   color: '#00D3C7',
-          //   data: [13, 23, 20, 8, 13, 27, 30, 25, 10, 15, 20, 20],
-          // },
         ],
         xaxis: {
-          categories: [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
-          ],
+          categories: categories,
         },
       };
 
-      // const chart = new ApexCharts(
-      //   document.querySelector(`#${id}`),
-      //   sColStackedOptions
-      // );
-
-      // chart.render();
       chartInstanceRef.current = new ApexCharts(
         chartRef.current,
         sColStackedOptions
@@ -93,14 +72,13 @@ const PatientChart = (props) => {
         chartInstanceRef.current = null;
       }
     };
-  }, [data]);
+  }, [countsPeryear]);
 
-  return <div ref={chartRef}></div>;
+  return <div id="patient-chart" ref={chartRef}></div>;
 };
 
 PatientChart.propTypes = {
-  id: PropTypes.node,
-  data: PropTypes.arrayOf(PropTypes.object),
+  data: PropTypes.array
 };
 
-export default PatientChart;
+export default React.memo(PatientChart);

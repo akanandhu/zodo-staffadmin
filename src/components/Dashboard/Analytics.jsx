@@ -9,7 +9,8 @@ function Analytics(props) {
     bookingType ? bookingType[0] : []
   );
   const { data } = useAnalyticsData();
-  const countsPeryear = data?.map((item) => item.count);
+  const count = data?.reduce((acc, item) => acc + (item.count || 0), 0);
+
   return (
     <>
       <div className="row">
@@ -20,7 +21,7 @@ function Analytics(props) {
                 <h4>Analytics</h4>
                 <div>
                   <h6>
-                    Total bookings <span className="analytics-count">2000</span>
+                    Total bookings <span className="analytics-count">{count}</span>
                   </h6>
                 </div>
                 <div className="form-group mb-0">
@@ -76,7 +77,7 @@ function Analytics(props) {
                 </div>
               </div>
               <div id={id} />
-              <PatientChart id={id} data={countsPeryear}/>
+              <PatientChart data={data} />
             </div>
           </div>
         </div>

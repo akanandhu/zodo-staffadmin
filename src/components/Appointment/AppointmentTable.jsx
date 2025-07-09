@@ -10,7 +10,6 @@ import Prescription from "./Prescription";
 
 function AppointmentTable(props) {
   const { appointmentList, loading, handleDate, handleSearch } = props;
-  console.log("Appointment List: ", appointmentList);
   const [show,setShow] = useState(false);
   const [prescriptionUrl, setPrescriptionUrl] = useState("");
   const handleClose = () => {
@@ -18,8 +17,6 @@ function AppointmentTable(props) {
   };
   const handleView = (url) => {
     // Logic to handle view action
-    console.log("View action triggered");
-    console.log("Prescription URL: ", url);
     setPrescriptionUrl(url);
     // Open the modal to show the prescription
     setShow(true);
