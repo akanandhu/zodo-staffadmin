@@ -1,9 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import { getDoctorAppointments } from "../../apis/appointments";
+import {
+  getDoctorAppointments,
+  getDoctorAppointmentsByQuery,
+} from "../../apis/appointments";
 
-export const useDoctorAppointments = (id) => {
+export const useDoctorAppointments = (id, query) => {
   return useQuery({
-    queryKey: ["doctorAppointments", id], // Unique query key
-    queryFn: () => getDoctorAppointments(id),
+    queryKey: ["doctorAppointments", id, query], // Unique query key
+    queryFn: () =>
+      query
+        ? getDoctorAppointmentsByQuery(id, query)
+        : getDoctorAppointments(id),
   });
 };

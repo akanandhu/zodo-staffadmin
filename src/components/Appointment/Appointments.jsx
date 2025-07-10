@@ -3,26 +3,19 @@ import TransparentTabs from "../tabs/TransparentTabs";
 import AppointmentTable from "./AppointmentTable";
 import { useAuth } from "../../hooks/useAuth";
 import { useHospitalAppointments } from "../../hooks/appointments/useHospitalAppointments";
+import { generateDateQuery } from "../configs/generateDateQuery";
 
 function Appointments() {
   const { hospitalId } = useAuth();
-  const [date, setdate] = useState(null);
-  const [searchterm, setsearchterm] = useState("");
+  const [dateQuery, setDatequery] = useState(null);
   const handleDate = (date) => {
-    setdate(date);
+    const query = generateDateQuery(date);
+    setDatequery(query);
   };
-  const handleSearch = (searchTerm) => {
-    setsearchterm(searchTerm);
-  };
-  const query = `${
-    searchterm || (date ? `name=${searchterm}&date=${date}` : "")
-  }`;
-  
   const { data: appointmentList, isLoading } = useHospitalAppointments(
     hospitalId,
-    query
+    dateQuery
   );
-
 
   const onGoing = appointmentList?.filter((item) => item.status === "started");
   const cancelled = appointmentList?.filter(
@@ -41,7 +34,6 @@ function Appointments() {
           appointmentList={appointmentList}
           loading={isLoading}
           handleDate={handleDate}
-          handleSearch={handleSearch}
         />
       ),
       link: "all",
@@ -55,7 +47,6 @@ function Appointments() {
           appointmentList={onGoing}
           loading={isLoading}
           handleDate={handleDate}
-          handelSearch={handleSearch}
         />
       ),
       link: "ongoing",
@@ -69,7 +60,6 @@ function Appointments() {
           appointmentList={cancelled}
           loading={isLoading}
           handleDate={handleDate}
-          handleSearch={handleSearch}
         />
       ),
       link: "cancelled",
@@ -83,7 +73,6 @@ function Appointments() {
           appointmentList={completed}
           loading={isLoading}
           handleDate={handleDate}
-          handleSearch={handleSearch}
         />
       ),
       link: "completed",

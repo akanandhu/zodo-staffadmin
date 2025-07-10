@@ -1,29 +1,28 @@
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import DataTable from "../Tables/DataTable";
-import { pdficon, printericon } from "../imagepath";
+import React, { useState } from "react";
 import DateSearchHero from "../heros/DateSearchHero";
-import { formatTime } from "../configs/formatTime";
+import DataTable from "../Tables/DataTable";
 import CenteredModal from "../modals/CenteredModal";
-import { useState } from "react";
 import Prescription from "./Prescription";
-import { generateCaseSheetPDF } from "../../utils/pdfGenerator";
+import PropTypes from "prop-types";
+import { formatTime } from "../configs/formatTime";
 import StatusBadge from "../assests/StatusBadge";
+import { Link } from "react-router-dom";
+import { pdficon, printericon } from "../imagepath";
+import { generateCaseSheetPDF } from "../../utils/pdfGenerator";
 
-function AppointmentTable(props) {
-  const { appointmentList, loading, handleDate } = props;
-  const [show, setShow] = useState(false);
-  const [prescriptionUrl, setPrescriptionUrl] = useState("");
-  const handleClose = () => {
-    setShow(false);
-  };
-  const handleView = (url) => {
-    // Logic to handle view action
-    setPrescriptionUrl(url);
-    // Open the modal to show the prescription
-    setShow(true);
-  };
-
+function DoctorAppointmentTable(props) {
+    const { appointmentList, loading, handleDate } = props;
+      const [show, setShow] = useState(false);
+      const [prescriptionUrl, setPrescriptionUrl] = useState("");
+      const handleClose = () => {
+        setShow(false);
+      };
+      const handleView = (url) => {
+        // Logic to handle view action
+        setPrescriptionUrl(url);
+        // Open the modal to show the prescription
+        setShow(true);
+      };
   const columns = [
     {
       title: "Booking ID",
@@ -52,20 +51,16 @@ function AppointmentTable(props) {
       ),
     },
     {
-      title: "Status",
+      title: <div className="text-center">Status</div>,
       dataIndex: "status",
       // sorter: (a, b) => a.status.length - b.status.length,
-      render: (item) => <StatusBadge status={item} />,
+      render: (item) => <div className="d-flex justify-content-center"><StatusBadge status={item} /></div>,
     },
     {
-      title: "Assigned",
-      dataIndex: "assingned",
-      render: (_item, record) =>
-        record?.doctor?.name ? (
-          <div>Dr.{record?.doctor?.name}</div>
-        ) : (
-          <div>unassigned</div>
-        ),
+      title: "Amount",
+      dataIndex: "amount",
+      // sorter: (a, b) => a.status.length - b.status.length,
+      render: (_item) => _item && <div>₹ {_item}</div>,
     },
     {
       title: "Prescription",
@@ -121,10 +116,10 @@ function AppointmentTable(props) {
   );
 }
 
-AppointmentTable.propTypes = {
+DoctorAppointmentTable.propTypes = {
   appointmentList: PropTypes.node,
   loading: PropTypes.bool,
   handleDate: PropTypes.func,
 };
 
-export default AppointmentTable;
+export default DoctorAppointmentTable;

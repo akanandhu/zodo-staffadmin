@@ -7,17 +7,21 @@ import DateSearchHero from "../heros/DateSearchHero";
 import { useState } from "react";
 import { formatDate } from "../configs/formatDate";
 import StatusBadge from "../assests/StatusBadge";
+import { generateDateQuery } from "../configs/generateDateQuery";
 function History() {
   const { hospitalId } = useAuth();
-  // const [searchTerm, setsearchTerm] = useState("");
-  const [date, setdate] = useState(null);
-  const query = date ? `updated_at=${date}` : "";
-  const { data: settlements, isLoading } = useSettlementList(hospitalId, query);
-  const handleDate = (date) => {
+  const [dateQuery, setDatequery] = useState("");
 
-    setdate(date);
+  const { data: settlements, isLoading } = useSettlementList(
+    hospitalId,
+    dateQuery
+  );
+  const handleDate = (date) => {
+    const query = generateDateQuery(date);
+    setDatequery(query);
+    // setdate(date);
   };
-  
+
   const columns = [
     {
       title: "Transaction ID",
@@ -42,7 +46,7 @@ function History() {
     {
       title: "Amount",
       dataIndex: "amount",
-      render:(item)=><div>₹{item}</div>
+      render: (item) => <div>₹{item}</div>,
       // sorter: (a, b) => a.type.length - b.type.length,
       // render: (item) => <div>₹ {item}</div>,
     },
@@ -56,9 +60,7 @@ function History() {
       title: "Status",
       dataIndex: "status",
       // sorter: (a, b) => a.status.length - b.status.length,
-      render: (item) => (
-        <StatusBadge status={item}/>
-      ),
+      render: (item) => <StatusBadge status={item} />,
     },
     {
       title: <div className="d-flex justify-content-center">Action</div>,

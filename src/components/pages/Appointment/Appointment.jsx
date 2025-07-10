@@ -21,14 +21,9 @@ function Appointment() {
   const handleShow = ()=>{
     setShow(true)
   }
-  // const requestedQuery = `timeSlot=0`;
-  // const { data: requestedList, isLoading: requestedLoading } =
-  //   useHospitalAppointments(hospitalId, requestedQuery);
   const requestedList = appointmentsList?.filter(
     (item) => item.timeSlot === null 
-  );
-  console.log("Requested appointments",requestedList);
-  
+  );  
   const appointmentTab = [
     {
       id: "appointment",

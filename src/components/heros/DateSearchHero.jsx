@@ -33,12 +33,14 @@ function DateSearchHero(props) {
         </div>
       </div> */}
       <div className="col-12 col-md-6 col-xl-4">
-        <div className="form-group local-forms cal-icon">
+        <div className="form-group">
           <RangePicker
-            showTime
+          format="DD/MM/YYYY"
+            // showTime
             onChange={(date) => handleDate(date)}
-            suffixIcon={null}
+            // suffixIcon={null}
             className="range-picker form-control d-flex datetimepicker"
+            allowClear
           />
         </div>
       </div>

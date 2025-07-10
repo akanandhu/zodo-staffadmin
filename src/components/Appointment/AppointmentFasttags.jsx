@@ -3,29 +3,20 @@ import TransparentTabs from "../tabs/TransparentTabs";
 import AppointmentTable from "./AppointmentTable";
 import { useHospitalAppointments } from "../../hooks/appointments/useHospitalAppointments";
 import { useAuth } from "../../hooks/useAuth";
-// import TransparentTabs from '../tabs/TransparentTabs'
-// import { appointmentTab } from '../configs/appointmentTab'
+import { generateDateQuery } from "../configs/generateDateQuery";
 
 function AppointmentFasttags() {
   const { hospitalId } = useAuth();
-  const [date, setdate] = useState(null);
-  const [searchterm, setsearchterm] = useState("");
-  const handleDate = (date) => {
-    setdate(date);
-  };
-  const handleSearch = (searchTerm) => {
-    setsearchterm(searchTerm);
-  };
+  const [dateQuery, setDatequery] = useState("");
 
-  const fasttagQuery =
-    (searchterm && date && `is_fast_tag=1&name=${searchterm}&date=${date}`) ||
-    (searchterm && `is_fast_tag=1&name=${searchterm}`) ||
-    (date && `is_fast_tag=1&date=${date}`) ||
-    "is_fast_tag=1";
-    
+  const handleDate = (date) => {
+    const query = generateDateQuery(date);
+    setDatequery(query);
+  };
+  const query = dateQuery ? `is_fast_tag=0&${dateQuery}` : "is_fast_tag=1" 
   const { data: appointmentList, isLoading } = useHospitalAppointments(
     hospitalId,
-    fasttagQuery
+    query
   );
 
   const onGoing = appointmentList?.filter((item) => item.status === "started");
@@ -41,7 +32,6 @@ function AppointmentFasttags() {
           appointmentList={appointmentList}
           loading={isLoading}
           handleDate={handleDate}
-          handleSearch={handleSearch}
         />
       ),
       link: "all",
@@ -55,7 +45,6 @@ function AppointmentFasttags() {
           appointmentList={onGoing}
           loading={isLoading}
           handleDate={handleDate}
-          handelSearch={handleSearch}
         />
       ),
       link: "ongoing",
@@ -69,7 +58,6 @@ function AppointmentFasttags() {
           appointmentList={completed}
           loading={isLoading}
           handleDate={handleDate}
-          handleSearch={handleSearch}
         />
       ),
       link: "completed",

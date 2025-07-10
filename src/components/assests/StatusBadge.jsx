@@ -1,21 +1,24 @@
 import PropTypes from "prop-types";
-import React from "react";
 
 function StatusBadge(props) {
   const { status } = props;
+  const statusCheck = status?.toLowerCase();
   return (
     <div
       className={`custom-badge ${
-        (status === "active" && "status-green") ||
-        (status === "approved" && "status-green") ||
-        
-        (status === "disabled" && "status-grey") ||
-        (status === "unavailable" && "status-grey") ||
-        (status === "blocked" && "status-grey") ||
-        (status === "inactive" && "status-grey") ||
-        (status === "rejected" && "status-red") ||
-        (status === "pending" && "status-orange") ||
-        (status === "requested" && "status-orange")
+        (statusCheck === "active" && "status-green") ||
+        (statusCheck === "approved" && "status-green") ||
+        (statusCheck === "paid fully" && "status-green") ||
+        (statusCheck === "completed" && "status-green") ||
+        (statusCheck === "disabled" && "status-grey") ||
+        (statusCheck === "unavailable" && "status-grey") ||
+        (statusCheck === "blocked" && "status-grey") ||
+        (statusCheck === "inactive" && "status-grey") ||
+        (statusCheck === "rejected" && "status-red") ||
+        (statusCheck === "pending" && "status-orange") ||
+        (statusCheck === "requested" && "status-orange") ||
+        (statusCheck === "accepted" && "status-orange") ||
+        (statusCheck === "started" && "status-orange")
       }`}
     >
       {status}

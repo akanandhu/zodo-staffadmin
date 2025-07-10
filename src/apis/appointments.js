@@ -24,6 +24,11 @@ export const getDoctorAppointments = async (id) => {
   return response?.data?.data;
 };
 
+export const getDoctorAppointmentsByQuery = async (id, query) => {
+  const response = await apiClient.get(`/bookings/doctor/${id}/bookings?${query}`);
+  return response?.data?.data;
+};
+
 export const createOfflineAppointment = async (data) => {
   const response = await apiClient.post(
     `/bookings/offline-doctor-appointment`,

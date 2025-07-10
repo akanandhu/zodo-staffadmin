@@ -13,7 +13,6 @@ import Select from "react-select";
 import { useDoctorsList } from "../../hooks/doctors/useDoctorsList";
 import { useAuth } from "../../hooks/useAuth";
 import { useEffect, useState } from "react";
-import { useDepartmentList } from "../../hooks/departments/useDepartmentList";
 import { useGetTimeslots } from "../../hooks/timeslot/useGetTimeslots";
 import Timeslot from "../modals/Schedule/Timeslot";
 import ModalTabs from "../tabs/ModalTabs";
@@ -45,13 +44,13 @@ function CreateAppointment({ handleClose }) {
   ];
   const { data: doctorsList, isLoading: doctorLoading } =
     useDoctorsList(hospitalId);
-  const { data: departments, isLoading: departmentLoading } =
-    useDepartmentList(hospitalId);
+  // const { data: departments, isLoading: departmentLoading } =
+  //   useDepartmentList(hospitalId);
   console.log(doctorLoading);
-  const departmentOptions = departments?.map((item) => ({
-    label: item.name,
-    value: item.id,
-  }));
+  // const departmentOptions = departments?.map((item) => ({
+  //   label: item.name,
+  //   value: item.id,
+  // }));
   // const query = doctor ? `doctor_id=${doctor}` : "";
   // const { data: doctorList, isLoading } = useDepartmentList(hospitalId, query);
   // console.log(doctorList);
@@ -61,12 +60,12 @@ function CreateAppointment({ handleClose }) {
     value: item.id,
   }));
   const [doctorId, setDoctorId] = useState("");
-  const [department, setDepartment] = useState();
+  // const [department, setDepartment] = useState();
   const [appointment, setAppointmentType] = useState();
   const [appointmentDate, setAppointmentDate] = useState();
   const [timeSlot, setTimeSlot] = useState("");
   console.log(doctorId);
-  console.log(department);
+  // console.log(department);
   console.log(appointment);
   console.log(appointmentDate);
 
@@ -358,7 +357,7 @@ function CreateAppointment({ handleClose }) {
             </div>
           </div>
 
-          <div className="col-md-4">
+          {/* <div className="col-md-4">
             <div className="form-group">
               <label className="form-label">Department</label>
 
@@ -373,7 +372,7 @@ function CreateAppointment({ handleClose }) {
                 }}
               />
             </div>
-          </div>
+          </div> */}
 
           <div className="col-md-4">
             <div className="form-group">

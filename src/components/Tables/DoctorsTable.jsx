@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import DataTable from "./DataTable";
 import { user_profile } from "../imagepath";
 import { Link } from "react-router-dom";
@@ -11,17 +11,20 @@ import { useDoctorsList } from "../../hooks/doctors/useDoctorsList";
 import CircularImage from "../assests/CircularImage";
 import { formatToDate } from "../configs/formatToDate";
 import StatusBadge from "../assests/StatusBadge";
+import SideModal from "../modals/SideModal";
+import DoctorAppointments from "../Doctors/DoctorsBookings/DoctorAppointments";
 
 function DoctorsTable(props) {
-  const { doctorsList, loading } = props;  
+  const { doctorsList, loading } = props;
   const [show, setShow] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
+  const [showView, setShowView] = useState(false);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const { hospitalId } = useAuth();
   const { data: doctorsData } = useDoctorsList(hospitalId);
   const { mutate, isLoading } = useDeleteDoctor();
-console.log("Doctors data",doctorsData);
-
+  console.log("Doctors data", doctorsData);
+  const [doctorDetails,setDoctorDetails] = useState({});
   useEffect(() => {
     if (doctorsData) {
       setShow(false);
@@ -33,6 +36,12 @@ console.log("Doctors data",doctorsData);
     setSelectedDoctor(id);
   };
 
+  const handleView = (record) => {
+    // setSelectedDoctor(id);
+    setDoctorDetails(record)
+    setShowView(true);
+  };
+
   const handleDeleteClick = (id) => {
     setSelectedDoctor(id);
     setShow(true);
@@ -41,6 +50,10 @@ console.log("Doctors data",doctorsData);
   const handleDelete = async () => {
     await mutate(selectedDoctor);
   };
+
+  const handleClose = ()=>{
+    setShowView(false);
+  }
   const columns = [
     {
       title: "Doctor Name",
@@ -106,7 +119,7 @@ console.log("Doctors data",doctorsData);
       title: "Status",
       dataIndex: "status",
       // sorter: (a, b) => a.pricing.length - b.pricing.length,
-      render: (item) => <StatusBadge status={item}/>,
+      render: (item) => <StatusBadge status={item} />,
     },
     {
       title: "",
@@ -124,14 +137,14 @@ console.log("Doctors data",doctorsData);
                 <i className="fas fa-ellipsis-v" />
               </Link>
               <div className="dropdown-menu dropdown-menu-end">
-                {/* <Link
+                <Link
                   className="dropdown-item"
-                  to={`${record.id}`}
-                  // onClick={()=>setShowEdit(true)}
+                  // to={`${record.id}`}
+                  onClick={()=>handleView(record)}
                 >
                   <i className="far fa-eye me-2" />
                   View
-                </Link> */}
+                </Link>
                 <Link
                   className="dropdown-item"
                   to
@@ -174,6 +187,10 @@ console.log("Doctors data",doctorsData);
         title="Edit Doctor"
         selectedDoctor={selectedDoctor}
       />
+
+      <SideModal show={showView} handleClose={handleClose} title="Doctor Details">
+        <DoctorAppointments doctorDetails={doctorDetails}/>
+      </SideModal>
     </div>
   );
 }

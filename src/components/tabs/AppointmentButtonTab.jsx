@@ -9,7 +9,7 @@ function AppointmentButtonTab(props) {
   const tab = searchParams.get("tab") || tabData[0]?.link;
   return (
     <div>
-      <div className="d-flex justify-content-between align-items-center">
+      <div className="d-md-flex justify-content-between align-items-center">
         <ul className="nav nav-tabs nav-tabs-solid nav-tabs-rounded mt-3 bg-white tabs-list">
           {tabData.map((item, i) => (
             <li
@@ -27,10 +27,7 @@ function AppointmentButtonTab(props) {
         </ul>
         <button
           type="button"
-          className="btn-primary me-1 rounded-pill pt-2 pb-2 text-white pe-3 ps-3"
-          //   data-bs-toggle="dropdown"
-          //   aria-haspopup="true"
-          //   aria-expanded="false"
+          className="btn-primary me-1 rounded-pill pt-2 pb-2 text-white pe-3 ps-3 mt-md-0 mt-3"
           onClick={()=> handleShow()}
         >
           <FeatherIcon icon="plus" />
