@@ -34,7 +34,6 @@ function EditHospitalForm() {
   const [file2, setFile2] = useState(null);
   const [file3, setFile3] = useState(null);
 
-
   useEffect(() => {
     if (hospitalDocuments?.length > 0) {
       setFile1({
@@ -88,6 +87,7 @@ function EditHospitalForm() {
         ifsc: hospitalDetails?.bank_details?.ifsc,
         upiid: hospitalDetails?.bank_details?.upi_id,
         billingAccountHoldername: hospitalDetails?.billing_address?.lineOne,
+        fasttagPrice: hospitalDetails?.fastTag?.price,
 
         billingStreet: hospitalDetails?.billing_address?.city,
         billingAddress: hospitalDetails?.billing_address?.lineTwo,
@@ -117,7 +117,7 @@ function EditHospitalForm() {
         (file) => file.name && file.file
       );
       console.log("File array ", fileArray);
-      
+
       const hospital = {
         name: data?.hospitalName,
         logo: fileURL,
@@ -143,7 +143,7 @@ function EditHospitalForm() {
         fastTag: {
           enabled: toggleFasttag,
           count: parseInt(data?.fastTagcount),
-          price: 0,
+          price: toggleFasttag ? parseInt(data?.fasttagPrice) : 0,
         },
         bank_details: {
           account_number: data?.accountNumber,
@@ -258,7 +258,7 @@ function EditHospitalForm() {
         <h4 className="card-title mt-4">Fast Tag</h4>
         <div className="row">
           <div className="col-md-3">
-            <div className="d-flex pt-2">
+            <div className="d-flex pt-5">
               <label className="">Enable Fast Tag</label>
               <div className="ms-2">
                 <FasttagToggle
@@ -268,16 +268,31 @@ function EditHospitalForm() {
               </div>
             </div>
           </div>
-          <div className="col-md-4">
-            <InputField
-              name="fastTagcount"
-              label=""
-              // validation={{ required: "Fasttag issues per day is required" }}
-              placeholder="Fasttag issues per day"
-              type="number"
-              disabled={!toggleFasttag}
-            />
-          </div>
+          {toggleFasttag && (
+            <div className="col-md-4">
+              <InputField
+                name="fastTagcount"
+                label="Fasttag Count"
+                // validation={{ required: "Fasttag issues per day is required" }}
+                placeholder="Fasttag issues per day"
+                type="number"
+                disabled={!toggleFasttag}
+              />
+            </div>
+          )}
+          {toggleFasttag &&
+          (
+            <div className="col-md-4">
+              <InputField
+                name="fasttagPrice"
+                label="Fasttag Price"
+                // validation={{ required: "Fasttag issues per day is required" }}
+                placeholder="Fasttag Price"
+                type="price"
+                disabled={!toggleFasttag}
+              />
+            </div>
+          )}
         </div>
 
         <div className="row mt-4">

@@ -10,14 +10,17 @@ import useDeleteStaff from "../../hooks/staff/useDeleteStaff";
 import PropTypes from "prop-types";
 import CircularImage from "../assests/CircularImage";
 import { formatToDate } from "../configs/formatToDate";
-
+import SideModal from "../modals/SideModal"
+import StaffAppointments from "../Staffs/StaffAppointments";
 function StaffTable(props) {
   const { staffsList, isLoading } = props;  
   const [show, setShow] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [selectedStaff, setSelectedStaff] = useState(null);
+  const [staffDetails, setStaffDetails] = useState({});
   const [userType, setUserType] = useState("");
   const { user } = useAuth();
+  const [showView, setShowView] = useState(false);
   // const { data: staffsList, isLoading } = useHospitalStaffs(hospitalId);
   const { mutate, isLoading: deleteLoading } = useDeleteStaff();
   const filteredStafflist = staffsList
@@ -29,6 +32,18 @@ function StaffTable(props) {
     setSelectedStaff(id);
     setShowEdit(true);
   };
+
+  const handleView = (record) => {
+    // setSelectedDoctor(id);
+    // setDoctorDetails(record)
+    console.log(record);
+    setStaffDetails(record);
+    setShowView(true);
+  };
+
+  const handleClose = ()=>{
+    setShowView(false);
+  }
 
   const handleDeleteClick = (id) => {
     setSelectedStaff(id);
@@ -114,13 +129,14 @@ function StaffTable(props) {
                 <i className="fas fa-ellipsis-v" />
               </Link>
               <div className="dropdown-menu dropdown-menu-end">
-                {/* <Link
+                <Link
                   className="dropdown-item"
-                  to={`/staff-manage/${record.id}`}
+                  to
+                  onClick={()=> handleView(record)}
                 >
                   <i className="far fa-eye me-2" />
                   View
-                </Link> */}
+                </Link>
                 <Link
                   className="dropdown-item"
                   to
@@ -164,6 +180,10 @@ function StaffTable(props) {
         selectedStaff={selectedStaff}
         userType={userType}
       />
+      <SideModal show={showView} handleClose={handleClose} title="Staff Details">
+        <StaffAppointments staffDetails={staffDetails}/>
+      </SideModal>
+
     </div>
   );
 }

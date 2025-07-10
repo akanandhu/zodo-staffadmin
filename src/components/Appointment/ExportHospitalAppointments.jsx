@@ -29,9 +29,6 @@ function ExportHospitalAppointments() {
     doc.save("hex_dump.pdf");
   };
 
-  //   useEffect(() => {
-  //     handleDownload();
-  //   }, [data]);
 
   return (
     <div className="form-group local-forms">

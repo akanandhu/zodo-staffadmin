@@ -55,7 +55,6 @@ function DoctorManage() {
       </div>
 
       <SideModal show={show} handleClose={handleCloseModal} title="Doctor Profile">
-        {/* <ModalTabs tabData={tabData} /> */}
         <Overview />
       </SideModal>
     </Layout>

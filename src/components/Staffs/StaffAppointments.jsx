@@ -1,14 +1,16 @@
 import PropTypes from "prop-types";
-import CircularImage from "../../assests/CircularImage";
-import StatusBadge from "../../assests/StatusBadge";
-import { user_profile } from "../../imagepath";
+import React, { useState } from "react";
+import CircularImage from "../assests/CircularImage";
+import { user_profile } from "../imagepath";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
-import { useState } from "react";
-import { useDoctorAppointments } from "../../../hooks/appointments/userDoctorAppointments";
-import { generateDateQuery } from "../../configs/generateDateQuery";
-import DoctorAppointmentTable from "../../Appointment/DoctorAppointmentTable";
+import StatusBadge from "../assests/StatusBadge";
+import DoctorAppointmentTable from "../Appointment/DoctorAppointmentTable";
+import { useHospitalAppointments } from "../../hooks/appointments/useHospitalAppointments";
+import { useAuth } from "../../hooks/useAuth";
+import { generateDateQuery } from "../configs/generateDateQuery";
 
-function DoctorAppointments({ doctorDetails }) {
+function StaffAppointments({ staffDetails }) {
+    const{hospitalId} = useAuth();
   const [dateQuery, setDatequery] = useState("");
   function renderSpecialisation(specialisationList) {
     const specialisationLen = specialisationList?.length;
@@ -19,18 +21,20 @@ function DoctorAppointments({ doctorDetails }) {
       }, "");
     return <div>{specialisations}</div>;
   }
-  const { data: appointmentList, isLoading } = useDoctorAppointments(
-    doctorDetails.id,
-    dateQuery
+
+  const query = dateQuery ? `created_by=${staffDetails?.id}&${dateQuery}` : `created_by=${staffDetails?.id}` 
+  const { data: appointmentList, isLoading } = useHospitalAppointments(
+    hospitalId,
+    query
   );
-  console.log("Appointments ", appointmentList);
 
   const handleDate = (date) => {
     const query = generateDateQuery(date);
     setDatequery(query);
     // setDate(date);
   };
-
+  console.log("Staff details ",staffDetails);
+  
   return (
     <div>
       <div>
@@ -38,7 +42,7 @@ function DoctorAppointments({ doctorDetails }) {
           <div className="d-flex align-items-center">
             <div className="schedule-profile">
               <CircularImage
-                src={doctorDetails?.profile_pic ?? user_profile}
+                src={staffDetails?.profile_picture ?? user_profile}
                 alt="user"
                 size={80}
                 fallback={user_profile}
@@ -46,63 +50,39 @@ function DoctorAppointments({ doctorDetails }) {
             </div>
             <div className="schedule-modal">
               <div className="d-flex">
-                <h5>{doctorDetails?.name}</h5>
-                {/* <div
-                className={`delete-badge ms-5 ${
-                  requestDetails?.isFasttag ? "status-green" : "status-grey"
-                }`}
-              >
-                Fasttag
-              </div> */}
+                <h5>{staffDetails?.first_name}</h5>
               </div>
               <small>
-                {/* {doctorDetails?.age && (
+                {staffDetails?.departments?.length > 0 && (
                   <span>
-                    {doctorDetails?.age}
-                    {" yrs "}
-                  </span>
-                )}
-                {doctorDetails?.gender}{" "} */}
-
-                {doctorDetails?.specialisations?.length > 0 && (
-                  <span>
-                    {renderSpecialisation(doctorDetails?.specialisations)}
+                    {renderSpecialisation(staffDetails?.departments)}
                   </span>
                 )}
               </small>
               <div>
-                {[...Array(5)].map((_, index) => (
-                  <i
-                    key={index}
-                    className={`fa fa-star ${
-                      index < parseInt(doctorDetails.total_rating)
-                        ? "text-warning"
-                        : ""
-                    }`}
-                  ></i>
-                ))}
+                {staffDetails?.user_type}
               </div>
             </div>
           </div>
           <div className="mt-md-0 mt-3">
-            {doctorDetails?.phone_number && (
+            {staffDetails?.phone && (
               <div className="d-flex align-items-center">
                 <i className="feather-facebook text-primary">
                   <FeatherIcon icon="phone" />
                 </i>
                 <h6 className="user-details ms-3 pt-2">
-                  {doctorDetails?.phone_number}
+                  {staffDetails?.phone}
                 </h6>
               </div>
             )}
 
-            {doctorDetails?.email && (
+            {staffDetails?.email && (
               <div className="d-flex align-items-center">
                 <i className="feather-facebook text-primary">
                   <FeatherIcon icon="mail" />
                 </i>
                 <h6 className="user-details ms-3 pt-2">
-                  {doctorDetails?.email}
+                  {staffDetails?.email}
                 </h6>
               </div>
             )}
@@ -110,7 +90,7 @@ function DoctorAppointments({ doctorDetails }) {
 
           <div className="mt-md-0 mt-3">
             <StatusBadge
-              status={doctorDetails?.is_active ? "active" : "blocked"}
+              status={staffDetails?.is_active ? "active" : "blocked"}
             />
           </div>
         </div>
@@ -122,14 +102,13 @@ function DoctorAppointments({ doctorDetails }) {
           loading={isLoading}
           handleDate={handleDate}
         />
-        
       </div>
     </div>
   );
 }
 
-DoctorAppointments.propTypes = {
-  doctorDetails: PropTypes.object,
+StaffAppointments.propTypes = {
+  staffDetails: PropTypes.object,
 };
 
-export default DoctorAppointments;
+export default StaffAppointments;
