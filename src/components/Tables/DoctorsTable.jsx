@@ -20,6 +20,7 @@ function DoctorsTable(props) {
   const { hospitalId } = useAuth();
   const { data: doctorsData } = useDoctorsList(hospitalId);
   const { mutate, isLoading } = useDeleteDoctor();
+console.log("Doctors data",doctorsData);
 
   useEffect(() => {
     if (doctorsData) {
@@ -75,8 +76,8 @@ function DoctorsTable(props) {
       // sorter: (a, b) => a.joiningDate.length - b.joiningDate.length,
     },
     {
-      title: "Department",
-      dataIndex: "departments",
+      title: "Specialisations",
+      dataIndex: "specialisations",
       // sorter: (a, b) => a.department.length - b.department.length,
       // render: (item) => (
       //   <div className="table-text">
@@ -86,13 +87,13 @@ function DoctorsTable(props) {
       render: (item, record) => {
         // const department = record?.departments[0]
         // console.log("Department ",record?.departments);
-        const departmentLen = record?.departments?.length;
-        const departments =
-          departmentLen !== 0 &&
-          record?.departments?.reduce((acc, current) => {
+        const specialisationLen = record?.specialisations?.length;
+        const specialisations =
+          specialisationLen !== 0 &&
+          record?.specialisations?.reduce((acc, current) => {
             return acc + current.name + " ";
           }, "");
-        return <div>{departments}</div>;
+        return <div>{specialisations}</div>;
       },
     },
     {

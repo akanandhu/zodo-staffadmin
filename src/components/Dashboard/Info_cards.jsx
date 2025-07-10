@@ -1,5 +1,6 @@
 import CountUp from "react-countup";
 import PropTypes from "prop-types";
+import FasttagToggle from "../FasttagRevenue/FasttagToggle";
 
 function InfoCards(props) {
   const { info } = props;
@@ -11,9 +12,9 @@ function InfoCards(props) {
             to={item.link}
             className="col-md-3 col-sm-3 col-lg-4 col-xl-4 info-card-link"
             key={item.id + item.title}
-            onClick={(e)=>{
-              e.stopPropagation()
-              e.preventDefault()
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
             }}
           >
             <div className="dash-widget">
@@ -22,12 +23,18 @@ function InfoCards(props) {
               </div>
               <div className="dash-content dash-count flex-grow-1">
                 <h4>{item.title}</h4>
-                <h2>
-                  {item.type === "currency" && (
-                    <span className="currency-symbol">₹</span>
-                  )}{" "}
-                  <CountUp delay={0.4} end={item.count} duration={0.6} />
-                </h2>
+                {item.type !== "fasttag" ? (
+                  <h2>
+                    {item.type === "currency" && (
+                      <span className="currency-symbol">₹</span>
+                    )}{" "}
+                    <CountUp delay={0.4} end={item.count} duration={0.6} />
+                  </h2>
+                ) : (
+                  <div className="fasttag-toggle">
+                    <FasttagToggle toggleFasttag={item.count} />
+                  </div>
+                )}
                 {/* <p>
                   <span className="passive-view">
                     <i className="feather-arrow-up-right me-1">

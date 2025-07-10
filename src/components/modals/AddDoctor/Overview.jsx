@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ChooseFile from "../../Hospitals/ChooseFile";
 import { FormProvider, useForm } from "react-hook-form";
 import InputField from "../../Inputfields/InputField";
 import SelectField from "../../Inputfields/SelectField";
 import { useAuth } from "../../../hooks/useAuth";
-import { useDepartmentList } from "../../../hooks/departments/useDepartmentList";
 import { useSpecialisationList } from "../../../hooks/specialisation/useSpecialisationList";
 import { useAddDoctors } from "../../../hooks/doctors/useAddDoctors";
 import PropTypes from "prop-types";
@@ -18,8 +17,8 @@ function Overview(props) {
   const methods = useForm();
   const [fileURL, setFileURL] = useState("");
   const { data: doctorsList } = useDoctorsList(hospitalId);
-  const { data: departmentList, isLoading: departmentLoading } =
-    useDepartmentList(hospitalId);
+  // const { data: departmentList, isLoading: departmentLoading } =
+  //   useDepartmentList(hospitalId);
   const { data: specialisationList, isLoading: specialisationLoading } =
     useSpecialisationList(hospitalId);
   const { mutate, isLoading } = useAddDoctors(hospitalId);
@@ -30,10 +29,10 @@ function Overview(props) {
       }))
     : [];
 
-  const departmentOptions = departmentList?.map((item) => ({
-    value: item.id,
-    label: item.name,
-  }));
+  // const departmentOptions = departmentList?.map((item) => ({
+  //   value: item.id,
+  //   label: item.name,
+  // }));
 
   useEffect(() => {
     if (doctorsList) {
@@ -55,7 +54,7 @@ function Overview(props) {
         council_name: data.councilName,
         joining_date: data?.joiningDate,
       },
-      department_id: data?.departments?.map((item) => item.value),
+      // department_id: data?.departments?.map((item) => item.value),
       documents: [],
       consultation_duration: parseInt(data?.duration),
       work_start_date: data?.workstartDate,
@@ -165,7 +164,7 @@ function Overview(props) {
               />
             </div>
           </div>
-          <div className="col-md-4">
+          {/* <div className="col-md-4">
             <div className="form-group">
               <SelectField
                 options={departmentOptions}
@@ -177,7 +176,7 @@ function Overview(props) {
                 isLoading={departmentLoading}
               />
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="row">
           <div className="form-group col-12">
@@ -237,14 +236,7 @@ function Overview(props) {
             </div>
           </div>
 
-          <div className="d-flex justify-content-between ps-3 pe-3 pb-5">
-            <Button
-              variant="outline-primary"
-              onClick={() => handleClose()}
-              className="ps-5 pe-5"
-            >
-              Back
-            </Button>
+          <div className="d-flex justify-content-end ps-3 pe-3 pb-5 pt-3">
             <Button variant="primary" type="submit" className="ps-5 pe-5">
               {isLoading && (
                 <span

@@ -7,7 +7,6 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useAddDoctors } from "../../hooks/doctors/useAddDoctors";
 import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
-import { useDepartmentList } from "../../hooks/departments/useDepartmentList";
 import { useSpecialisationList } from "../../hooks/specialisation/useSpecialisationList";
 import { useDoctorsList } from "../../hooks/doctors/useDoctorsList";
 import TextArea from "../Inputfields/TextArea";
@@ -17,8 +16,8 @@ function CreateDoctorForm(props) {
   const [fileURL, setFileURL] = useState("");
   const methods = useForm();
   const { data: doctorsList } = useDoctorsList(hospitalId);
-  const { data: departmentList, isLoading: departmentLoading } =
-    useDepartmentList(hospitalId);
+  // const { data: departmentList, isLoading: departmentLoading } =
+  //   useDepartmentList(hospitalId);
   const { data: specialisationList, isLoading: specialisationLoading } =
     useSpecialisationList(hospitalId);
   const { mutate, isLoading } = useAddDoctors(hospitalId);
@@ -30,10 +29,10 @@ function CreateDoctorForm(props) {
       }))
     : [];
 
-  const departmentOptions = departmentList?.map((item) => ({
-    value: item.id,
-    label: item.name,
-  }));
+  // const departmentOptions = departmentList?.map((item) => ({
+  //   value: item.id,
+  //   label: item.name,
+  // }));
 
   useEffect(() => {
     if (doctorsList) {
@@ -51,7 +50,7 @@ function CreateDoctorForm(props) {
       phone_number: data.phone,
       hospital_id: hospitalId,
       registration_details: {},
-      department_id: data?.departments?.map((item) => item.value),
+      // department_id: data?.departments?.map((item) => item.value),
       documents: [],
       consultation_duration: parseInt(data?.duration),
       work_start_date: data?.workstartDate,
@@ -150,7 +149,7 @@ function CreateDoctorForm(props) {
                 />
               </div>
             </div>
-            <div className="col-md-4">
+            {/* <div className="col-md-4">
               <div className="form-group">
                 <SelectField
                   options={departmentOptions}
@@ -162,7 +161,7 @@ function CreateDoctorForm(props) {
                   isLoading={departmentLoading}
                 />
               </div>
-            </div>
+            </div> */}
           </div>
 
           
@@ -228,14 +227,8 @@ function CreateDoctorForm(props) {
               />
             </div>
           </div>
-          <div className="d-flex justify-content-between ps-3 pe-3 pb-5">
-            <Button
-              variant="outline-primary"
-              onClick={() => handleClose()}
-              className="ps-5 pe-5"
-            >
-              Back
-            </Button>
+          <div className="d-flex justify-content-end ps-3 pe-3 pb-5 pt-3">
+            
             <Button variant="primary" type="submit" className="ps-5 pe-5">
               {isLoading && (
                 <span

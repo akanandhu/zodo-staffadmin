@@ -261,14 +261,8 @@ function CreateStaff(props) {
           </div>
         </div>
 
-        <div className="d-flex justify-content-between ps-3 pe-3 pb-5 pt-3">
-          <Button
-            variant="outline-primary"
-            onClick={() => handleClose()}
-            className="ps-5 pe-5"
-          >
-            Back
-          </Button>
+        <div className="d-flex justify-content-end ps-3 pe-3 pb-5 pt-3">
+          
           <Button variant="primary" className="ps-5 pe-5" type="submit">
             {userLoading && (
               <span

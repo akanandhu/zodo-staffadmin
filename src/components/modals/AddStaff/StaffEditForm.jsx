@@ -203,31 +203,6 @@ function StaffEditForm(props) {
           </div>
         </div>
 
-        {/* <div className="row">
-          <div className="col-md-6">
-            <div className="form-group">
-              <InputField
-                name="username"
-                label="User Name"
-                validation={{ required: "Username is required" }}
-                placeholder="Enter user name"
-                type="text"
-              />
-            </div>
-          </div>
-          <div className="col-md-6">
-            <div className="form-group">
-              <InputField
-                name="password"
-                label="Password"
-                validation={{ required: "Password is required" }}
-                placeholder="Enter password"
-                type="password"
-              />
-            </div>
-          </div>
-        </div> */}
-
         <h4 className="card-title mt-2">Address</h4>
         <div className="row">
           <div className="col-md-4">
@@ -288,14 +263,7 @@ function StaffEditForm(props) {
           </div>
         </div>
 
-        <div className="d-flex justify-content-between ps-3 pe-3 pb-5 pt-3">
-          <Button
-            variant="outline-primary"
-            onClick={() => handleClose()}
-            className="ps-5 pe-5"
-          >
-            Back
-          </Button>
+        <div className="d-flex justify-content-end ps-3 pe-3 pb-5 pt-3">
           <Button variant="primary" className="ps-5 pe-5" type="submit">
             {userLoading && (
               <span

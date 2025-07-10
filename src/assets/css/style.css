@@ -12122,3 +12122,7 @@ tr.ant-table-row.ant-table-row-level-0.ant-table-row-selected,
   color: #6c757d;
 }
 
+.fasttag-toggle{
+  padding-top: 25px;
+  padding-bottom: 11px;
+}

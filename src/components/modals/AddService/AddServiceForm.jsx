@@ -21,6 +21,7 @@ function AddServiceForm(props) {
       price: data.price,
       image: fileURL,
       strike_through_price: data.strikePrice,
+      daily_booking_count: parseInt(data.appointmentLimit),
     };
     await mutate(service, {
       onSuccess: () => {
@@ -53,33 +54,43 @@ function AddServiceForm(props) {
         </div>
 
         <div className="form-group mt-2 row">
-          <div className="col-md-6">
+          <div className="col-md-4">
             <InputField
               name="price"
               label="Price"
               validation={{ required: "Price is required" }}
               placeholder="Enter Price"
-              type="text"
+              type="price"
               pattern="[0-9]*[.,]?[0-9]*"
             />
           </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <InputField
               name="strikePrice"
               label="Strike Price"
               validation={{ required: "Strike Price is required" }}
               placeholder="Enter Strike Price"
-              type="text"
+              type="price"
               pattern="[0-9]*[.,]?[0-9]*"
             />
           </div>
+
+          <div className="col-md-4">
+            <InputField
+              name="appointmentLimit"
+              label="Appointment Limit Per Day"
+              validation={{ required: "Appointment limit per day is required" }}
+              placeholder="Enter appointment limit / day"
+              type="number"
+            />
+          </div>
         </div>
-        
+
         <div className="form-group">
           <div className="col-md-12">
             <TextArea
               name="message"
-              label="Message"
+              label="Description"
               placeholder="Type message here"
             />
           </div>

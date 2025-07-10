@@ -1,23 +1,28 @@
-import React from "react";
 import InfoCards from "./Info_cards";
 import { doctors, fasttag, profile_hospitals } from "../imagepath";
 import Analytics from "./Analytics";
 import BookingsTable from "./BookingsTable";
 import PropTypes from "prop-types";
+import { useAuth } from "../../hooks/useAuth";
+import { useViewHospital } from "../../hooks/hospital/useViewHospital";
 
 function FastTag({ data }) {
   const { count, revenue } = data || {};
-  console.log("DATA ",data);
+  console.log("DATA ", data);
+  const { hospitalId } = useAuth();
+  console.log(hospitalId);
+  const { data: hospitalData } = useViewHospital(hospitalId)
+  console.log(hospitalData);
   
   const basicInformation = [
     {
       id: 1,
-      title: "Total FASTag/day",
+      title: "Fasttag Status",
       icon: profile_hospitals,
-      count: 140,
+      count: hospitalData?.fastTag?.enabled,
       percentageUp: 20,
       link: "",
-      type: "count",
+      type: "fasttag",
     },
     {
       id: 2,

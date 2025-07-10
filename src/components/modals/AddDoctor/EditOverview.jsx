@@ -4,7 +4,6 @@ import { FormProvider, useForm } from "react-hook-form";
 import InputField from "../../Inputfields/InputField";
 import SelectField from "../../Inputfields/SelectField";
 import { useAuth } from "../../../hooks/useAuth";
-import { useDepartmentList } from "../../../hooks/departments/useDepartmentList";
 import { useSpecialisationList } from "../../../hooks/specialisation/useSpecialisationList";
 import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
@@ -20,8 +19,8 @@ function EditOverview(props) {
   const methods = useForm();
   // const [joiningDate, setJoiningDate] = useState();
   const [fileURL, setFileURL] = useState("");
-  const { data: departmentList, isLoading: departmentLoading } =
-    useDepartmentList(hospitalId);
+  // const { data: departmentList, isLoading: departmentLoading } =
+  //   useDepartmentList(hospitalId);
   const { data: specialisationList, isLoading: specialisationLoading } =
     useSpecialisationList(hospitalId);
   const { mutate, isLoading } = useEditDoctors();
@@ -33,10 +32,10 @@ function EditOverview(props) {
       }))
     : [];
 
-  const departmentOptions = departmentList?.map((item) => ({
-    value: item.id,
-    label: item.name,
-  }));
+  // const departmentOptions = departmentList?.map((item) => ({
+  //   value: item.id,
+  //   label: item.name,
+  // }));
 
   useEffect(() => {
     if (doctor) {
@@ -47,11 +46,11 @@ function EditOverview(props) {
         label: item.name,
         value: item.id,
       }));
-      const departmentList = doctor?.departments || [];
-      const departments = departmentList.map((item) => ({
-        label: item.name,
-        value: item.id,
-      }));
+      // const departmentList = doctor?.departments || [];
+      // const departments = departmentList.map((item) => ({
+      //   label: item.name,
+      //   value: item.id,
+      // }));
 
       const workstartDate = toInputDateFormat(doctor?.work_start_date);
       const joiningDate = toInputDateFormat(
@@ -72,7 +71,7 @@ function EditOverview(props) {
         registrationNumber: doctor?.registration_details?.registration_number,
         councilName: doctor?.registration_details?.council_name,
         // joiningDate: doctor?.registration_details?.joining_date,
-        departments: departments,
+        // departments: departments,
         workstartDate: workstartDate,
         joiningDate: joiningDate,
         duration: doctor?.consultation_duration,
@@ -84,7 +83,7 @@ function EditOverview(props) {
   }, [doctor, methods]);
 
   const onCreateDoctor = async (data) => {
-    const departments = data?.departments?.map((item) => item.value);
+    // const departments = data?.departments?.map((item) => item.value);
     const specialisations = data?.specialisations?.map((item) => item.value);
     const doctor = {
       name: data.doctorname,
@@ -99,7 +98,7 @@ function EditOverview(props) {
         council_name: data.councilName,
         joining_date: data?.joiningDate,
       },
-      department_ids: departments,
+      // department_ids: departments,
       consultation_duration: parseInt(data?.duration),
       work_start_date: data?.workstartDate,
       about: data?.about,
@@ -211,7 +210,7 @@ function EditOverview(props) {
               />
             </div>
           </div>
-          <div className="col-md-4">
+          {/* <div className="col-md-4">
             <div className="form-group">
               <SelectField
                 options={departmentOptions}
@@ -223,7 +222,7 @@ function EditOverview(props) {
                 isLoading={departmentLoading}
               />
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div className="row">
@@ -294,14 +293,7 @@ function EditOverview(props) {
             </div>
           </div>
 
-          <div className="d-flex justify-content-between ps-3 pe-3 pb-5 mt-4">
-            <Button
-              variant="outline-primary"
-              onClick={() => handleClose()}
-              className="ps-5 pe-5"
-            >
-              Back
-            </Button>
+          <div className="d-flex justify-content-end ps-3 pe-3 pb-5 mt-3">
             <Button variant="primary" type="submit" className="ps-5 pe-5">
               {isLoading && (
                 <span

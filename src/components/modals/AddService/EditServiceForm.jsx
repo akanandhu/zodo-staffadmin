@@ -24,14 +24,19 @@ function EditServiceForm(props) {
       price: data.price,
       strike_through_price: data.strikePrice,
       image: fileURL,
+      daily_booking_count: parseInt(data.appointmentLimit),
+
     };
 
-    await mutate({ id: service?.id, data: serviceData },{
-      onSuccess: () => {
-        handleClose(); // Close the modal after successful submission
-        methods.reset();
-      },
-    });
+    await mutate(
+      { id: service?.id, data: serviceData },
+      {
+        onSuccess: () => {
+          handleClose(); // Close the modal after successful submission
+          methods.reset();
+        },
+      }
+    );
     // await mutate(service);
     // methods.reset();
     // handleClose(); // Close the modal after successful submission
@@ -45,6 +50,7 @@ function EditServiceForm(props) {
         price: service.price,
         strikePrice: service.strike_through_price,
         message: service.description,
+        appointmentLimit: service?.daily_booking_count
       });
     }
   }, [service, methods]);
@@ -72,24 +78,33 @@ function EditServiceForm(props) {
         </div>
 
         <div className="form-group mt-2 row">
-          <div className="col-md-6">
+          <div className="col-md-4">
             <InputField
               name="price"
               label="Price"
               validation={{ required: "Price is required" }}
               placeholder="Enter Price"
-              type="text"
+              type="price"
               pattern="[0-9]*[.,]?[0-9]*"
             />
           </div>
-          <div className="col-md-6">
+          <div className="col-md-4">
             <InputField
               name="strikePrice"
               label="Strike Price"
               validation={{ required: "Strike Price is required" }}
               placeholder="Enter Strike Price"
-              type="text"
+              type="price"
               pattern="[0-9]*[.,]?[0-9]*"
+            />
+          </div>
+          <div className="col-md-4">
+            <InputField
+              name="appointmentLimit"
+              label="Appointment Limit Per Day"
+              validation={{ required: "Appointment limit per day is required" }}
+              placeholder="Enter appointment limit / day"
+              type="number"
             />
           </div>
         </div>
