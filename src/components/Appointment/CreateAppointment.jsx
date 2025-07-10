@@ -20,8 +20,6 @@ import { categorizeSlots } from "../configs/categoriseSlots";
 import { useCreateOfflineAppointments } from "../../hooks/appointments/useCreateOfflineAppointment";
 
 function CreateAppointment({ handleClose }) {
-  console.log(handleClose);
-
   const { hospitalId } = useAuth();
   const { mutate: createAppointment, isLoading: appointmentLoading } =
     useCreateOfflineAppointments();
@@ -42,6 +40,12 @@ function CreateAppointment({ handleClose }) {
     { value: "fast_tag", label: "Fast Tag" },
     { value: "consultation", label: "Consultation" },
   ];
+
+  const paymentType = [
+    { value: "online", label: "Online" },
+    { value: "offline", label: "Cash on Hospital" },
+  ];
+
   const { data: doctorsList, isLoading: doctorLoading } =
     useDoctorsList(hospitalId);
   // const { data: departments, isLoading: departmentLoading } =
@@ -62,6 +66,7 @@ function CreateAppointment({ handleClose }) {
   const [doctorId, setDoctorId] = useState("");
   // const [department, setDepartment] = useState();
   const [appointment, setAppointmentType] = useState();
+  const [paymentTypes, setPaymentType] = useState();
   const [appointmentDate, setAppointmentDate] = useState();
   const [timeSlot, setTimeSlot] = useState("");
   console.log(doctorId);
@@ -138,6 +143,7 @@ function CreateAppointment({ handleClose }) {
       },
       hospital_id: hospitalId,
       timeSlot: timeSlot,
+      payment_type: paymentTypes
       // type:appointment
     };
     createAppointment(appointmentData, {
@@ -385,6 +391,22 @@ function CreateAppointment({ handleClose }) {
                 // isLoading={doctorLoading}
                 onChange={(selectedOption) => {
                   setAppointmentType(selectedOption.value ?? "");
+                }}
+              />
+            </div>
+          </div>
+
+          <div className="col-md-4">
+            <div className="form-group">
+              <label className="form-label">Payment Type</label>
+              <Select
+                options={paymentType}
+                placeholder="Payment Type"
+                name="paymentType"
+                isMultiSelect={false}
+                // isLoading={doctorLoading}
+                onChange={(selectedOption) => {
+                  setPaymentType(selectedOption.value ?? "");
                 }}
               />
             </div>

@@ -24,7 +24,7 @@ function ServiceDetails({ data }) {
 
         <div className="ps-3 pe-3 mt-3 mb-3">
             <h6 className="description-header">About {data?.name}</h6>
-            <DescriptionBox text={data?.description}/>
+           {data?.description && <DescriptionBox text={data?.description}/>}
         </div>
 
         <div className="settlement-card mt-2">
