@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { useDoctorsList } from "../../../hooks/doctors/useDoctorsList";
 import TextArea from "../../Inputfields/TextArea";
+import { useDepartmentList } from "../../../hooks/departments/useDepartmentList";
 
 function Overview(props) {
   const { handleClose } = props;
@@ -17,8 +18,8 @@ function Overview(props) {
   const methods = useForm();
   const [fileURL, setFileURL] = useState("");
   const { data: doctorsList } = useDoctorsList(hospitalId);
-  // const { data: departmentList, isLoading: departmentLoading } =
-  //   useDepartmentList(hospitalId);
+  const { data: departmentList, isLoading: departmentLoading } =
+    useDepartmentList(hospitalId);
   const { data: specialisationList, isLoading: specialisationLoading } =
     useSpecialisationList(hospitalId);
   const { mutate, isLoading } = useAddDoctors(hospitalId);
@@ -29,10 +30,10 @@ function Overview(props) {
       }))
     : [];
 
-  // const departmentOptions = departmentList?.map((item) => ({
-  //   value: item.id,
-  //   label: item.name,
-  // }));
+  const departmentOptions = departmentList?.map((item) => ({
+    value: item.id,
+    label: item.name,
+  }));
 
   useEffect(() => {
     if (doctorsList) {
@@ -54,7 +55,7 @@ function Overview(props) {
         council_name: data.councilName,
         joining_date: data?.joiningDate,
       },
-      // department_id: data?.departments?.map((item) => item.value),
+      department_id: data?.departments?.map((item) => item.value),
       documents: [],
       consultation_duration: parseInt(data?.duration),
       work_start_date: data?.workstartDate,
@@ -164,7 +165,7 @@ function Overview(props) {
               />
             </div>
           </div>
-          {/* <div className="col-md-4">
+          <div className="col-md-4">
             <div className="form-group">
               <SelectField
                 options={departmentOptions}
@@ -176,7 +177,7 @@ function Overview(props) {
                 isLoading={departmentLoading}
               />
             </div>
-          </div> */}
+          </div>
         </div>
         <div className="row">
           <div className="form-group col-12">

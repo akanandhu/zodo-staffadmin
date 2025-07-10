@@ -13,7 +13,7 @@ function AppointmentFasttags() {
     const query = generateDateQuery(date);
     setDatequery(query);
   };
-  const query = dateQuery ? `is_fast_tag=0&${dateQuery}` : "is_fast_tag=1" 
+  const query = dateQuery ? `type=fast_tag&${dateQuery}` : "type=fast_tag"
   const { data: appointmentList, isLoading } = useHospitalAppointments(
     hospitalId,
     query

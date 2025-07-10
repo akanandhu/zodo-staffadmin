@@ -14,6 +14,8 @@ function Appointment() {
   const { hospitalId } = useAuth();
   const { data: appointmentsList, isLoading } =
     useHospitalAppointments(hospitalId);
+  console.log(appointmentsList);
+    
   const [show,setShow] = useState(false);  
   const handleClose = ()=>{
     setShow(false);

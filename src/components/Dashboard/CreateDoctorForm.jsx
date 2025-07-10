@@ -10,14 +10,15 @@ import PropTypes from "prop-types";
 import { useSpecialisationList } from "../../hooks/specialisation/useSpecialisationList";
 import { useDoctorsList } from "../../hooks/doctors/useDoctorsList";
 import TextArea from "../Inputfields/TextArea";
+import { useDepartmentList } from "../../hooks/departments/useDepartmentList";
 function CreateDoctorForm(props) {
   const { handleClose } = props;
   const { hospitalId } = useAuth();
   const [fileURL, setFileURL] = useState("");
   const methods = useForm();
   const { data: doctorsList } = useDoctorsList(hospitalId);
-  // const { data: departmentList, isLoading: departmentLoading } =
-  //   useDepartmentList(hospitalId);
+  const { data: departmentList, isLoading: departmentLoading } =
+    useDepartmentList(hospitalId);
   const { data: specialisationList, isLoading: specialisationLoading } =
     useSpecialisationList(hospitalId);
   const { mutate, isLoading } = useAddDoctors(hospitalId);
@@ -29,10 +30,10 @@ function CreateDoctorForm(props) {
       }))
     : [];
 
-  // const departmentOptions = departmentList?.map((item) => ({
-  //   value: item.id,
-  //   label: item.name,
-  // }));
+  const departmentOptions = departmentList?.map((item) => ({
+    value: item.id,
+    label: item.name,
+  }));
 
   useEffect(() => {
     if (doctorsList) {
@@ -50,7 +51,7 @@ function CreateDoctorForm(props) {
       phone_number: data.phone,
       hospital_id: hospitalId,
       registration_details: {},
-      // department_id: data?.departments?.map((item) => item.value),
+      department_ids: data?.departments?.map((item) => item.value),
       documents: [],
       consultation_duration: parseInt(data?.duration),
       work_start_date: data?.workstartDate,
@@ -149,7 +150,7 @@ function CreateDoctorForm(props) {
                 />
               </div>
             </div>
-            {/* <div className="col-md-4">
+            <div className="col-md-4">
               <div className="form-group">
                 <SelectField
                   options={departmentOptions}
@@ -161,7 +162,7 @@ function CreateDoctorForm(props) {
                   isLoading={departmentLoading}
                 />
               </div>
-            </div> */}
+            </div>
           </div>
 
           

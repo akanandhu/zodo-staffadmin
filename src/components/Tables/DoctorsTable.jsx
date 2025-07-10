@@ -89,8 +89,8 @@ function DoctorsTable(props) {
       // sorter: (a, b) => a.joiningDate.length - b.joiningDate.length,
     },
     {
-      title: "Specialisations",
-      dataIndex: "specialisations",
+      title: "Departments",
+      dataIndex: "departments",
       // sorter: (a, b) => a.department.length - b.department.length,
       // render: (item) => (
       //   <div className="table-text">
@@ -100,13 +100,13 @@ function DoctorsTable(props) {
       render: (item, record) => {
         // const department = record?.departments[0]
         // console.log("Department ",record?.departments);
-        const specialisationLen = record?.specialisations?.length;
-        const specialisations =
-          specialisationLen !== 0 &&
-          record?.specialisations?.reduce((acc, current) => {
+        const departmentLen = record?.departments?.length;
+        const departments =
+          departmentLen !== 0 &&
+          record?.departments?.reduce((acc, current) => {
             return acc + current.name + " ";
           }, "");
-        return <div>{specialisations}</div>;
+        return <div >{departments}</div>;
       },
     },
     {

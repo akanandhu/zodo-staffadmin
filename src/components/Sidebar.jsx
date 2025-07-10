@@ -13,11 +13,14 @@ import {
 } from "./imagepath";
 import Scrollbars from "react-custom-scrollbars-2";
 import { useAuth } from "../hooks/useAuth";
+import ConfirmLogout from "./modals/ConfirmLogout";
 
 const Sidebar = (props) => {
   const [sidebar, setSidebar] = useState("");
   const { user, setUser } = useAuth();
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+
   const userRole = user?.user_type;
   const handleClick = (e, item, item1, item3) => {
     const div = document.querySelector(`#${item}`);
@@ -249,7 +252,7 @@ const Sidebar = (props) => {
               <div className="logout-btn submenu">
                 <Link
                   to
-                  onClick={handleLogout}
+                onClick={() => setIsOpen(true)}
                   className={
                     props?.activeClassName === "dashboard" ? "active" : ""
                   }
@@ -259,6 +262,11 @@ const Sidebar = (props) => {
                   </span>{" "}
                   <span>Logout</span>
                 </Link>
+                <ConfirmLogout
+                        show={isOpen}
+                        setShow={setIsOpen}
+                        handleLogout={handleLogout}
+                      />
               </div>
             </div>
           </div>

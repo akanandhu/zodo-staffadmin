@@ -108,7 +108,7 @@ function AppointmentTable(props) {
   ];
   return (
     <div>
-      <DateSearchHero handleDate={handleDate} />
+      <DateSearchHero handleDate={handleDate} type="hospital-bookings"/>
       <DataTable
         columns={columns}
         dataSource={appointmentList ?? []}

@@ -1,37 +1,12 @@
 import { DatePicker } from "antd";
-import ExportTable from "../assests/ExportTable";
 import PropTypes from "prop-types";
+import ExportHospitalAppointments from "../Appointment/ExportHospitalAppointments";
 const { RangePicker } = DatePicker;
 
 function DateSearchHero(props) {
-  const { handleDate } = props;
-  //   const [show, setShow] = useState(false);
-  // const [searchTerm, setSearchterm] = useState("");
-  // const debouncedSearchTerm = useDebounce(searchTerm);
-  // useEffect(() => {
-  //   if (handleSearch) {
-  //     handleSearch(debouncedSearchTerm);
-  //   }
-  // }, [debouncedSearchTerm]);
-
-  // const handleSearchInput = (searchTerm) => {
-  //   setSearchterm(searchTerm);
-  // };
+  const { handleDate, type } = props;
   return (
     <div className="row mt-4">
-      {/* <div className="col-12 col-md-6 col-xl-3">
-        <div>
-          <div className="form-group has-search">
-            <span className="fa fa-search form-control-feedback"></span>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Search"
-              onChange={(e) => handleSearchInput(e.target.value)}
-            />
-          </div>
-        </div>
-      </div> */}
       <div className="col-12 col-md-6 col-xl-4">
         <div className="form-group">
           <RangePicker
@@ -46,7 +21,7 @@ function DateSearchHero(props) {
       </div>
 
       <div className="col-12 col-md-6 col-xl-3">
-        <ExportTable />
+        {type === "hospital-bookings" &&   <ExportHospitalAppointments />}
       </div>
     </div>
   );
@@ -55,7 +30,7 @@ function DateSearchHero(props) {
 // validate props
 DateSearchHero.propTypes = {
   handleDate: PropTypes.func.isRequired,
-  // handleSearch: PropTypes.func.isRequired,
+  type: PropTypes.string,
 };
 
 export default DateSearchHero;
