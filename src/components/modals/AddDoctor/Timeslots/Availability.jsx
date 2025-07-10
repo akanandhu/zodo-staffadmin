@@ -1,4 +1,4 @@
-import { Button, Row, Col, Form } from "react-bootstrap";
+import { Row, Col, Form } from "react-bootstrap";
 import { useWeeks } from "../../../../hooks/timeslot/useWeeks";
 import PropTypes from "prop-types";
 import { useAddAvailability } from "../../../../hooks/timeslot/useAddAvailability";
@@ -22,7 +22,7 @@ function Availability({ selectedDoctor }) {
   const generateTimeOptions = () => {
     const times = [];
     for (let h = 0; h < 24; h++) {
-      for (let m = 0; m < 60; m += 30) {
+      for (let m = 0; m < 60; m += selectedDoctor?.consultation_duration) {
         times.push(
           `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`
         );
@@ -33,7 +33,7 @@ function Availability({ selectedDoctor }) {
 
   const times = generateTimeOptions();
   const { data: availability } = useGetWeekAvailabilities(
-    selectedDoctor,
+    selectedDoctor?.id,
     week_ids
   );
 
@@ -51,7 +51,6 @@ function Availability({ selectedDoctor }) {
   };
 
   useEffect(() => {
-
     if (!availability || Object.keys(slotTimes).length > 0) return;
 
     const initialSlotTimes = {};
@@ -82,7 +81,7 @@ function Availability({ selectedDoctor }) {
     const defaultEnd = addMinutes(defaultStart, 30);
 
     const slotData = {
-      doctor_id: selectedDoctor,
+      doctor_id: selectedDoctor?.id,
       type: "week",
       week_id: weekId,
       startTime: defaultStart,
@@ -133,6 +132,7 @@ function Availability({ selectedDoctor }) {
       <Form.Select
         value={value}
         onChange={(e) => handleChange("start", e.target.value, slotId)}
+        disabled={selectedDoctor?.auto_booking_enabled}
       >
         {options.map((t) => (
           <option key={t}>{t}</option>
@@ -150,6 +150,7 @@ function Availability({ selectedDoctor }) {
       <Form.Select
         value={value}
         onChange={(e) => handleChange("end", e.target.value, slotId)}
+        disabled={selectedDoctor?.auto_booking_enabled}
       >
         {options.map((t) => (
           <option key={t}>{t}</option>
@@ -179,6 +180,7 @@ function Availability({ selectedDoctor }) {
                       style={{ width: "30px", height: "30px" }}
                       onClick={() => handleRemoveSlot(item.id)}
                       title="Remove Slot"
+                      disabled={selectedDoctor?.auto_booking_enabled}
                     >
                       −
                     </button>
@@ -191,26 +193,27 @@ function Availability({ selectedDoctor }) {
               style={{ width: "30px", height: "30px" }}
               onClick={() => handleAddSlot(day)}
               title="Add Slot"
+              disabled={selectedDoctor?.auto_booking_enabled}
             >
               +
             </button>
           </div>
         </div>
       ))}
-      <div className="d-flex justify-content-between mt-4">
+      {/* <div className="d-flex justify-content-between mt-4">
         <Button variant="outline-primary" className="ps-5 pe-5">
           Back
         </Button>
         <Button variant="primary" className="ps-5 pe-5">
           Edit Now
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 }
 
 Availability.propTypes = {
-  selectedDoctor: PropTypes.string,
+  selectedDoctor: PropTypes.object,
 };
 
 export default Availability;
