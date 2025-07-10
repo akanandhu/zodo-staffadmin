@@ -11,9 +11,16 @@ function TextArea(props) {
   } = useFormContext();
   return (
     <div>
-      <label htmlFor={name} className="form-label">
-        {label}
-      </label>
+      {label && (
+        <label htmlFor={name} className="form-label">
+          {label}
+          {validation?.required && (
+            <span style={{ color: "red" }} className="ms-1">
+              *
+            </span>
+          )}
+        </label>
+      )}
       <textarea
         rows={5}
         cols={5}

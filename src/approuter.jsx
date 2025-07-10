@@ -62,13 +62,13 @@ const Approuter = () => {
           {/* <Route path="*" element={<ServerError />} /> */}
           <Route path="*" element={<Error />} />
 
-          <Route
+          {/* <Route
             element={
               <ProtectedRouter allowedRoles={user?.user_type && ["staff"]} />
             }
-          >
+          > */}
             <Route path="/appointment" element={<Appointment />} />
-          </Route>
+          {/* </Route> */}
 
           <Route
             element={

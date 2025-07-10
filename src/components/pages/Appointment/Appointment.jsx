@@ -5,14 +5,22 @@ import AppointmentFasttags from "../../Appointment/AppointmentFasttags";
 import Appointments from "../../Appointment/Appointments";
 import { useAuth } from "../../../hooks/useAuth";
 import { useHospitalAppointments } from "../../../hooks/appointments/useHospitalAppointments";
-import ButtonTabs from "../../tabs/ButtonTabs";
+import AppointmentButtonTab from "../../tabs/AppointmentButtonTab";
+import SideModal from "../../modals/SideModal";
+import { useState } from "react";
+import CreateAppointment from "../../Appointment/CreateAppointment";
 // import Appointments from '../../Appointment/Appointments'
 function Appointment() {
   const { hospitalId } = useAuth();
   const { data: appointmentsList, isLoading } =
     useHospitalAppointments(hospitalId);
-  console.log("Appointments List: ", appointmentsList);
-    
+  const [show,setShow] = useState(false);  
+  const handleClose = ()=>{
+    setShow(false);
+  }
+  const handleShow = ()=>{
+    setShow(true)
+  }
   // const requestedQuery = `timeSlot=0`;
   // const { data: requestedList, isLoading: requestedLoading } =
   //   useHospitalAppointments(hospitalId, requestedQuery);
@@ -65,7 +73,10 @@ function Appointment() {
       <div className="page-wrapper">
         <div className="content">
           <Breadcrumb data={breadCrumpData} />
-          <ButtonTabs tabData={appointmentTab} />
+          <AppointmentButtonTab tabData={appointmentTab} handleShow={handleShow}/>
+          <SideModal show={show} handleClose={handleClose} title="Add Appointment">
+            <CreateAppointment handleClose={handleClose}/>
+          </SideModal>
         </div>
       </div>
     </Layout>

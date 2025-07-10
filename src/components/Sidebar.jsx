@@ -1,17 +1,15 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   dashboard,
-  doctor,
   logout_01,
   menuicon02,
   menuicon03,
   menuicon08,
   menuicon09,
   menuicon13,
-  profile_hospitals,
 } from "./imagepath";
 import Scrollbars from "react-custom-scrollbars-2";
 import { useAuth } from "../hooks/useAuth";
@@ -102,23 +100,21 @@ const Sidebar = (props) => {
                   </li>
                 )}
 
-                {userRole === "staff" && (
-                  <li className="submenu">
-                    <Link
-                      className={
-                        props?.activeClassName === "appointment" ? "active" : ""
-                      }
-                      id="menu-item2"
-                      to="/appointment"
-                      onClick={handleMenuClick}
-                    >
-                      <span className="menu-side">
-                        <img src={menuicon08} alt="" />
-                      </span>{" "}
-                      <span> Appointment </span>
-                    </Link>
-                  </li>
-                )}
+                <li className="submenu">
+                  <Link
+                    className={
+                      props?.activeClassName === "appointment" ? "active" : ""
+                    }
+                    id="menu-item2"
+                    to="/appointment"
+                    onClick={handleMenuClick}
+                  >
+                    <span className="menu-side">
+                      <img src={menuicon08} alt="" />
+                    </span>{" "}
+                    <span> Appointment </span>
+                  </Link>
+                </li>
 
                 {userRole === "hsAdmin" && (
                   <li className="submenu">

@@ -1,12 +1,14 @@
 import PropTypes from "prop-types";
+import React from "react";
 import { Link, useSearchParams } from "react-router-dom";
+import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 
-function ButtonTabs(props) {
-  const { tabData } = props;
+function AppointmentButtonTab(props) {
+  const { tabData, handleShow } = props;
   const [searchParams] = useSearchParams();
   const tab = searchParams.get("tab") || tabData[0]?.link;
   return (
-    <>
+    <div>
       <div className="d-flex justify-content-between align-items-center">
         <ul className="nav nav-tabs nav-tabs-solid nav-tabs-rounded mt-3 bg-white tabs-list">
           {tabData.map((item, i) => (
@@ -23,6 +25,17 @@ function ButtonTabs(props) {
             </li>
           ))}
         </ul>
+        <button
+          type="button"
+          className="btn-primary me-1 rounded-pill pt-2 pb-2 text-white pe-3 ps-3"
+          //   data-bs-toggle="dropdown"
+          //   aria-haspopup="true"
+          //   aria-expanded="false"
+          onClick={()=> handleShow()}
+        >
+          <FeatherIcon icon="plus" />
+          Add Appointment
+        </button>
       </div>
       <div className="tab-content">
         {tabData.map((item) => (
@@ -35,11 +48,11 @@ function ButtonTabs(props) {
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 }
-// validate props
-ButtonTabs.propTypes = {
-  tabData: PropTypes.node,
+AppointmentButtonTab.propTypes = {
+  tabData: PropTypes.array,
+  handleShow: PropTypes.func,
 };
-export default ButtonTabs;
+export default AppointmentButtonTab;
