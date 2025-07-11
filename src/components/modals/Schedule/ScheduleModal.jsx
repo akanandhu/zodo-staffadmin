@@ -83,14 +83,8 @@ function ScheduleModal(props) {
 
       <Modal.Body className="pt-0 pb-0">
         <ScheduleForm requestDetails={requestDetails} handleTime={handleTime} />
-        <div className="d-flex justify-content-between ps-3 pe-3 pb-5 pt-5">
-          <Button
-            variant="outline-primary"
-            onClick={handleClose}
-            className="ps-5 pe-5"
-          >
-            Back
-          </Button>
+        <div className="d-flex justify-content-end ps-3 pe-3 pb-5 pt-5">
+          
           <Button
             variant="primary"
             onClick={handelAssignment}

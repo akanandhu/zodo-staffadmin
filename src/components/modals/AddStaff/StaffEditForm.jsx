@@ -166,7 +166,7 @@ function StaffEditForm(props) {
               <InputField
                 name="jobtitle"
                 label="Job Title"
-                validation={{ required: "Job title is required" }}
+                // validation={{ required: "Job title is required" }}
                 placeholder="Enter job title"
                 type="text"
               />

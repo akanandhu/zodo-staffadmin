@@ -14,53 +14,73 @@ function ScheduleForm(props) {
   const { hospitalId } = useAuth();
   const methods = useForm();
   const [doctor, setDoctor] = useState(requestDetails.doctorId ?? "");
-  const department = [
-    { value: "ent", label: "ENT" },
-    { value: "gynaecology", label: "Gynaecology" },
-    { value: "pediatry", label: "Pediatry" },
-    { value: "cardiology", label: "Cardiology" },
-  ];
+  // const { data: departmentList, isLoading: departmentLoading } =
+  //   useDepartmentList(hospitalId);
+
+  // const departmentOptions = departmentList?.map((item) => ({
+  //   value: item.id,
+  //   label: item.name,
+  // }));
+  // const department = [
+  //   { value: "ent", label: "ENT" },
+  //   { value: "gynaecology", label: "Gynaecology" },
+  //   { value: "pediatry", label: "Pediatry" },
+  //   { value: "cardiology", label: "Cardiology" },
+  // ];
   const { data: doctorsList, isLoading: doctorLoading } =
     useDoctorsList(hospitalId);
   const query = doctor ? `doctor_id=${doctor}` : "";
-  const { data: doctorList, isLoading } = useDepartmentList(hospitalId, query);
-  console.log(doctorList);
-
+  const { data: departmentList, isLoading: departmentLoading } =
+    useDepartmentList(hospitalId, query);
   const doctorOptions = doctorsList?.map((item) => ({
     label: item.name,
     value: item.id,
   }));
+
+  const departmentOptions = departmentList?.map((item) => ({
+    value: item.id,
+    label: item.name,
+  }));
   const [doctorId, setDoctorId] = useState("");
-  const { data: timeslots, isLoading: timeslotLoading } =
-    useGetTimeslots(doctorId, hospitalId, requestDetails.appointmentDate);
+  const { data: timeslots, isLoading: timeslotLoading } = useGetTimeslots(
+    doctorId,
+    hospitalId,
+    requestDetails.appointmentDate
+  );
   console.log("Doctor ID: ", timeslotLoading);
-  if(!timeslots) <div>Loading</div>
+  if (!timeslots) <div>Loading</div>;
   const { morning, evening, afternoon } = categorizeSlots(timeslots || []);
   console.log("Morning Slots: ", morning);
   console.log("Afternoon Slots: ", afternoon);
   console.log("Evening Slots: ", evening);
   const handelTimeslot = (slot) => {
     handleTime(slot);
-  };  
+  };
   const tabData = [
     {
       id: "schedule_morning",
       title: "Morning",
-      content: <Timeslot slots={morning || []} handelTimeslot={handelTimeslot}/>,
+      content: (
+        <Timeslot slots={morning || []} handelTimeslot={handelTimeslot} />
+      ),
       link: "morning",
       mainTab: "requested",
     },
     {
       id: "schedule_afternoon",
       title: "Afternoon",
-      content: <Timeslot slots={afternoon || []} handelTimeslot={handelTimeslot}/>,
+      content: (
+        <Timeslot slots={afternoon || []} handelTimeslot={handelTimeslot} />
+      ),
       link: "afternoon",
       mainTab: "requested",
     },
     {
       id: "schedule_evening",
       title: "Evening",
-      content: <Timeslot slots={evening || []} handelTimeslot={handelTimeslot}/>,
+      content: (
+        <Timeslot slots={evening || []} handelTimeslot={handelTimeslot} />
+      ),
       link: "evening",
       mainTab: "requested",
     },
@@ -130,6 +150,7 @@ function ScheduleForm(props) {
       <div className="row mt-2">
         <div className="col-md-6">
           <div className="form-group">
+            <label className="form-label">Doctor</label>
             <Select
               options={doctorOptions}
               label="Assign doctor"
@@ -145,15 +166,16 @@ function ScheduleForm(props) {
         </div>
         <div className="col-md-6">
           <div className="form-group">
+            <label className="form-label">Department</label>
             <Select
-              options={department}
+              options={departmentOptions}
               label="Department"
               name="department"
               isMultiSelect={false}
               placeholder="Select department"
               // validationMessage="Specialisations are required"
-              // isLoading={specialisationLoading}
-              isLoading={isLoading}
+              // isLoading={departmentLoading}
+              isLoading={departmentLoading}
             />
           </div>
         </div>

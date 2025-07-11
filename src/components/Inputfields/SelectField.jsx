@@ -31,8 +31,13 @@ function SelectField(props) {
   return (
     <div>
       {label && (
-        <label htmlFor={name} className="mb-2">
+        <label htmlFor={name} className="form-label">
           {label}
+          {validationMessage && (
+            <span style={{ color: "red" }} className="ms-1">
+              *
+            </span>
+          )}
         </label>
       )}
       <Controller

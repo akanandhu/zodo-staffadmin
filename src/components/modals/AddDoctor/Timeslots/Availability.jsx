@@ -18,11 +18,11 @@ function Availability({ selectedDoctor }) {
   if (!weeks) return <div>Loading weeks...</div>;
 
   const week_ids = weeks.map((week) => week.id);
-
+  const consultationDuration = selectedDoctor?.consultation_duration;
   const generateTimeOptions = () => {
     const times = [];
     for (let h = 0; h < 24; h++) {
-      for (let m = 0; m < 60; m += selectedDoctor?.consultation_duration) {
+      for (let m = 0; m < 60; m += consultationDuration) {
         times.push(
           `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`
         );
@@ -78,7 +78,7 @@ function Availability({ selectedDoctor }) {
     const availabilities = currentWeek[0].availabilities || [];
     const last = availabilities[availabilities.length - 1];
     const defaultStart = last?.endTime ? formatTime(last.endTime) : "09:00";
-    const defaultEnd = addMinutes(defaultStart, 30);
+    const defaultEnd = addMinutes(defaultStart, consultationDuration);
 
     const slotData = {
       doctor_id: selectedDoctor?.id,
