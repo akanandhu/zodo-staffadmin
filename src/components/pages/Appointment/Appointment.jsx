@@ -24,7 +24,7 @@ function Appointment() {
     setShow(true)
   }
   const requestedList = appointmentsList?.filter(
-    (item) => item.timeSlot === null 
+    (item) => item.timeSlot === null && item.type !== "service"
   );  
   const appointmentTab = [
     {

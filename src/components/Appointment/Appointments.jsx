@@ -17,7 +17,7 @@ function Appointments() {
     dateQuery
   );
 
-  const onGoing = appointmentList?.filter((item) => item.status === "started");
+  const onGoing = appointmentList?.filter((item) => item.status === "accepted" || item.status === "started");
   const cancelled = appointmentList?.filter(
     (item) => item.status === "cancelled"
   );

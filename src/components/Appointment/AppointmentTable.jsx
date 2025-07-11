@@ -1,34 +1,58 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import DataTable from "../Tables/DataTable";
-import { pdficon, printericon } from "../imagepath";
+import { printericon } from "../imagepath";
 import DateSearchHero from "../heros/DateSearchHero";
 import { formatTime } from "../configs/formatTime";
-import CenteredModal from "../modals/CenteredModal";
-import { useState } from "react";
-import Prescription from "./Prescription";
 import { generateCaseSheetPDF } from "../../utils/pdfGenerator";
 import StatusBadge from "../assests/StatusBadge";
+import { useApproveAppointment } from "../../hooks/appointments/useApproveAppointment";
+import { formatToDate } from "../configs/formatToDate";
+import ConfirmModal from "../modals/ConfirmModal";
+import { useState } from "react";
 
 function AppointmentTable(props) {
   const { appointmentList, loading, handleDate } = props;
-  const [show, setShow] = useState(false);
-  const [prescriptionUrl, setPrescriptionUrl] = useState("");
-  const handleClose = () => {
-    setShow(false);
+  // const [prescriptionUrl, setPrescriptionUrl] = useState("");
+  const { mutate } = useApproveAppointment();
+  const [showApprove, setShowApprove] = useState(false);
+  const [appointmentId,setAppointmentId] = useState("");
+  // const handleClose = () => {
+  //   setShow(false);
+  // };
+  // const handleView = (url) => {
+  //   // Logic to handle view action
+  //   setPrescriptionUrl(url);
+  //   // Open the modal to show the prescription
+  //   setShow(true);
+  // };
+
+  const handleAppointment = (id) => {
+    setAppointmentId(id);
+    setShowApprove(true);
+    // mutate(id);
   };
-  const handleView = (url) => {
-    // Logic to handle view action
-    setPrescriptionUrl(url);
-    // Open the modal to show the prescription
-    setShow(true);
-  };
+
+  const approveAppointment = ()=>{
+    mutate(appointmentId, {
+      onSuccess:()=>{
+        setShowApprove(false);
+      }
+    })
+  }
+  
+  console.log("Appointment list", appointmentList);
 
   const columns = [
     {
       title: "Booking ID",
       dataIndex: "booking_id",
       // sorter: (a, b) => a.bookingid.length - b.bookingid.length,
+    },
+    {
+      title: "Type",
+      dataIndex: "type",
+      // sorter: (a, b) => a.type.length - b.type.length,
     },
     {
       title: "Patient Name",
@@ -39,26 +63,7 @@ function AppointmentTable(props) {
       ),
     },
     {
-      title: "Type",
-      dataIndex: "type",
-      // sorter: (a, b) => a.type.length - b.type.length,
-    },
-    {
-      title: "Time",
-      dataIndex: "timeSlot",
-      // sorter: (a, b) => a.time.length - b.time.length,
-      render: (_item, record) => (
-        <div>{formatTime(record?.timeSlot) ?? "unassigned"}</div>
-      ),
-    },
-    {
-      title: "Status",
-      dataIndex: "status",
-      // sorter: (a, b) => a.status.length - b.status.length,
-      render: (item) => <StatusBadge status={item} />,
-    },
-    {
-      title: "Assigned",
+      title: "Assigned Doctor",
       dataIndex: "assingned",
       render: (_item, record) =>
         record?.doctor?.name ? (
@@ -67,24 +72,50 @@ function AppointmentTable(props) {
           <div>unassigned</div>
         ),
     },
+
     {
-      title: "Prescription",
-      dataIndex: "prescription",
-      render: (_item, record) => {
-        return record?.prescriptionUrl ? (
-          <div style={{ display: "flex", gap: 8, paddingLeft: "20px" }}>
-            <Link to onClick={() => handleView(record?.prescriptionUrl)}>
-              View
-            </Link>
-            <Link to>
-              <img src={pdficon} alt="Pdf Icon" width={17} />
-            </Link>
-          </div>
-        ) : (
-          <div style={{ paddingLeft: "25px" }}>N/A</div>
-        );
-      },
+      title: "Time Slot",
+      dataIndex: "timeSlot",
+      // sorter: (a, b) => a.time.length - b.time.length,
+      render: (_item, record) => (
+        <div>{formatTime(record?.timeSlot) ?? "unassigned"}</div>
+      ),
     },
+    {
+      title: <div className="text-center">Appointment Date</div>,
+      dataIndex: "appointmentDate",
+      render: (item) => <div className="text-center">{formatToDate(item)}</div>,
+      // sorter: (a, b) => a.time.length - b.time.length,
+    },
+    {
+      title: <div className="text-center">Status</div>,
+      dataIndex: "status",
+      // sorter: (a, b) => a.status.length - b.status.length,
+      render: (item) => (
+        <div className="d-flex justify-content-center">
+          <StatusBadge status={item} />
+        </div>
+      ),
+    },
+
+    // {
+    //   title: "Prescription",
+    //   dataIndex: "prescription",
+    //   render: (_item, record) => {
+    //     return record?.prescriptionUrl ? (
+    //       <div style={{ display: "flex", gap: 8, paddingLeft: "20px" }}>
+    //         <Link to onClick={() => handleView(record?.prescriptionUrl)}>
+    //           View
+    //         </Link>
+    //         <Link to>
+    //           <img src={pdficon} alt="Pdf Icon" width={17} />
+    //         </Link>
+    //       </div>
+    //     ) : (
+    //       <div style={{ paddingLeft: "25px" }}>N/A</div>
+    //     );
+    //   },
+    // },
     {
       title: "Actions",
       dataIndex: "actions",
@@ -105,18 +136,71 @@ function AppointmentTable(props) {
         );
       },
     },
+    {
+      title: "",
+      dataIndex: "FIELD8",
+      render: (item, record) => (
+        <>
+          <div className="text-end">
+            <div className="dropdown dropdown-action">
+              {console.log(item)}
+              <Link
+                to="#"
+                className="action-icon dropdown-toggle"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i className="fas fa-ellipsis-v" />
+              </Link>
+              <div className="dropdown-menu dropdown-menu-end">
+                <button
+                  className="dropdown-item"
+                  // to={`${record.id}`}
+                  onClick={() => handleAppointment(record.id)}
+                >
+                  <i className="fa fa-check me-2" />
+                  Approve
+                </button>
+                {/* <Link
+                  className="dropdown-item"
+                  to
+                  // onClick={() => handleEdit(record.id)}
+                >
+                  <i className="far fa-edit me-2" />
+                  Edit
+                </Link>
+                <Link
+                  className="dropdown-item"
+                  to="#"
+                  // onClick={() => handleDeleteClick(record.id)}
+                >
+                  <i className="fa fa-trash-alt m-r-5"></i> Delete
+                </Link> */}
+              </div>
+            </div>
+          </div>
+        </>
+      ),
+    },
   ];
   return (
     <div>
-      <DateSearchHero handleDate={handleDate} type="hospital-bookings"/>
+      <DateSearchHero handleDate={handleDate} type="hospital-bookings" />
       <DataTable
         columns={columns}
         dataSource={appointmentList ?? []}
         loading={loading}
       />
-      <CenteredModal show={show} handleClose={handleClose}>
+      {/* <CenteredModal show={show} handleClose={handleClose}>
         <Prescription prescriptionUrl={prescriptionUrl} />
-      </CenteredModal>
+      </CenteredModal> */}
+
+      <ConfirmModal
+        show={showApprove}
+        setShow={setShowApprove}
+        title="Are you sure you want to approve this appointment"
+        handleClick={approveAppointment}
+      />
     </div>
   );
 }

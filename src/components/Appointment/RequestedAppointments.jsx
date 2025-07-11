@@ -19,13 +19,18 @@ function RequestedAppointments(props) {
       profilePicture: record?.user?.profile_picture,
       bookingId: record?.id,
       appointmentDate: record?.appointmentDate,
-      // doctorName: record?.doctor?.name,
-      // doctorId:record?.doctor?.id,
     };
     setRequestDetails(detail);
     setShow(true);
   };
+  console.log("Request details",appointments)
+
   const columns = [
+    {
+      title: "Booking ID",
+      dataIndex: "booking_id",
+      // sorter: (a, b) => a.bookingid.length - b.bookingid.length,
+    },
     {
       title: "Patient Name",
       dataIndex: "",
@@ -44,12 +49,6 @@ function RequestedAppointments(props) {
       title: "Type",
       dataIndex: "type",
       // sorter: (a, b) => a.type.length - b.type.length,
-    },
-    {
-      title: "Department",
-      dataIndex: "department",
-      // sorter: (a, b) => a.department.length - b.department.length,
-      render: (item, record) => <div>{record?.user_details?.department}</div>,
     },
     {
       title: "Assigned Dr",

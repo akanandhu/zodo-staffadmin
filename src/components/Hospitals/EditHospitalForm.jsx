@@ -341,7 +341,7 @@ function EditHospitalForm() {
           </div>
         </div>
 
-        <div className="form-group">
+        <div className="form-group mt-2">
           <TextArea
             name="address"
             label=""

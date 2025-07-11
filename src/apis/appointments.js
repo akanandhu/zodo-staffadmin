@@ -39,9 +39,23 @@ export const createOfflineAppointment = async (data) => {
   return response?.data?.data;
 };
 
+export const createOfflineServiceAppointment = async (data) => {
+  const response = await apiClient.post(
+    `/bookings/offline-hospital-service`,
+    data
+  );
+  return response?.data?.data;
+};
+
 export const exportHospitalBookings = async (hospital_id) => {
   const response = await apiClient.get(
     `/bookings/hospital/${hospital_id}/export`
   );
   return response?.data;
+};
+
+
+export const approveAppiontment = async (id) => {
+  const response = await apiClient.patch(`/bookings/${id}/mark-complete`);
+  return response.data;
 };
