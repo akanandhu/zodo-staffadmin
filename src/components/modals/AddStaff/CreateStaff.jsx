@@ -13,7 +13,7 @@ import ChooseFile from "../../Hospitals/ChooseFile";
 
 function CreateStaff(props) {
   const { handleClose, userType } = props;
-  const [status, setStatus] = useState(true);
+  // const [status, setStatus] = useState(true);
   const { hospitalId } = useAuth();
   const { data: departmentList, isLoading } = useDepartmentList(hospitalId);
   const { mutate, isLoading: userLoading } = useAdduser(hospitalId);
@@ -51,7 +51,7 @@ function CreateStaff(props) {
       job_title: data.jobtitle,
       user_type: userType ?? data.role.value,
       role: userType ?? data.role.value,
-      is_active: Boolean(status),
+      is_active: true,
       hospital_id: hospitalId,
       profile_picture: fileURL,
     };
@@ -85,7 +85,7 @@ function CreateStaff(props) {
           <div className="col-md-8">
             <ChooseFile handleFileURL={handleFileURL} fileURL={fileURL}/>
           </div>
-          <div className="col-md-4 d-flex justify-content-end">
+          {/* <div className="col-md-4 d-flex justify-content-end">
             <select
               className="hospital-draft-btn text-primary status-select"
               onChange={(e) => setStatus(e.target.value)}
@@ -93,7 +93,7 @@ function CreateStaff(props) {
               <option value={true}>Active</option>
               <option value={false}>In Active</option>
             </select>
-          </div>
+          </div> */}
         </div>
 
         <div className="row mt-2">

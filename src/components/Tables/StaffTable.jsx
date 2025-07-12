@@ -13,6 +13,7 @@ import { formatToDate } from "../configs/formatToDate";
 import SideModal from "../modals/SideModal";
 import StaffAppointments from "../Staffs/StaffAppointments";
 import { Tag } from "antd";
+import StatusBadge from "../assests/StatusBadge";
 function StaffTable(props) {
   const { staffsList, isLoading } = props;
   const [show, setShow] = useState(false);
@@ -114,6 +115,16 @@ function StaffTable(props) {
       dataIndex: "user_type",
       // sorter: (a, b) => a.pricing.length - b.pricing.length,
     },
+    {
+          title: <div className="text-center">Status</div>,
+          dataIndex: "is_active",
+          // sorter: (a, b) => a.status.length - b.status.length,
+          render: (status) => (
+            <div className="d-flex justify-content-center">
+              <StatusBadge status={status ? "active":"blocked"} />
+            </div>
+          ),
+        },
     {
       title: "",
       dataIndex: "",

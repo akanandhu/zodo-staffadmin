@@ -38,8 +38,8 @@ function HospitalStaf({ data }) {
   ];
 
   const bookingType = [
-    { value: 1, label: "Fasttag Booking" },
-    { value: 2, label: "Normal Booking" },
+    { value: "fast_tag", label: "Fasttag Booking" },
+    { value: "normal", label: "Normal Booking" },
   ];
 
   return (
