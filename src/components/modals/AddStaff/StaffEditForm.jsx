@@ -16,7 +16,7 @@ function StaffEditForm(props) {
   const { hospitalId } = useAuth();
   const { data: staff } = useViewStaff(selectedStaff);
   const { data: departmentList, isLoading } = useDepartmentList(hospitalId);
-  // const [status, setStatus] = useState(true);
+  const [status, setStatus] = useState(true);
   const methods = useForm();
   const { mutate, isLoading: userLoading } = useEditStaff();
   const [fileURL, setFileURL] = useState("");
@@ -41,7 +41,7 @@ function StaffEditForm(props) {
 
       setFileURL(staff?.profile_picture || "");
 
-      // setStatus(staff?.is_active);
+      setStatus(staff?.is_active);
       methods.reset({
         staffname: staff.first_name,
         staffemail: staff.email,
@@ -78,7 +78,7 @@ function StaffEditForm(props) {
       },
       user_type: userType,
       //   role: data.role.value,
-      // is_active: status,
+      is_active: status,
       hospital_id: hospitalId,
       profile_picture: fileURL,
     };
@@ -108,7 +108,7 @@ function StaffEditForm(props) {
           <div className="col-md-8">
             <ChooseFile handleFileURL={handleFileURL} fileURL={fileURL} />
           </div>
-          {/* <div className="col-md-4 d-flex justify-content-end">
+          <div className="col-md-4 d-flex justify-content-end">
             <select
               className="hospital-draft-btn text-primary status-select"
               onChange={(e) => setStatus(JSON.parse(e.target.value))}
@@ -117,7 +117,7 @@ function StaffEditForm(props) {
               <option value={true}>Active</option>
               <option value={false}>In Active</option>
             </select>
-          </div> */}
+          </div>
         </div>
 
         <div className="row mt-2">

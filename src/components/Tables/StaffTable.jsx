@@ -121,7 +121,7 @@ function StaffTable(props) {
           // sorter: (a, b) => a.status.length - b.status.length,
           render: (status) => (
             <div className="d-flex justify-content-center">
-              <StatusBadge status={status ? "active":"blocked"} />
+              <StatusBadge status={status ? "active":"inactive"} />
             </div>
           ),
         },
