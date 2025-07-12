@@ -18,7 +18,7 @@ function RequestedAppointments() {
   const requestedList =
     appointmentsList &&
     appointmentsList?.filter(
-      (item) => item.timeSlot === null && item.type === "service"
+      (item) => item.timeSlot === null
     );
 
   console.log("Requested list ",requestedList);
@@ -27,17 +27,19 @@ function RequestedAppointments() {
   const [requestDetails, setRequestDetails] = useState({});
 
   const handleSchedule = (record) => {
-    const detail = {
-      patientname: record?.user_details?.name || record?.user?.first_name,
-      age: record?.user_details?.age || record?.user?.age,
-      gender: record?.user_details?.gender || record?.user?.gender,
-      mobile: record?.user_details?.phone_number || record?.user?.phone,
-      isFasttag: record?.is_fast_tag,
-      profilePicture: record?.user?.profile_picture,
-      bookingId: record?.id,
-      appointmentDate: record?.appointmentDate,
-    };
-    setRequestDetails(detail);
+    // console.log("Record",record);
+    // const detail = {
+    //   patientname: record?.user_details?.name || record?.user?.first_name,
+    //   age: record?.user_details?.age || record?.user?.age,
+    //   gender: record?.user_details?.gender || record?.user?.gender,
+    //   mobile: record?.user_details?.phone_number || record?.user?.phone,
+    //   isFasttag: record?.is_fast_tag,
+    //   profilePicture: record?.user?.profile_picture,
+    //   bookingId: record?.id,
+    //   appointmentDate: record?.appointmentDate,
+    //   appointmentType: record.type
+    // };
+    setRequestDetails(record);
     setShow(true);
   };
 

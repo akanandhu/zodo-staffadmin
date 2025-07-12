@@ -21,3 +21,19 @@ export const fetchWallet = async (hospital_id) => {
   const response = await apiClient.get(`/wallet/hospital/${hospital_id}`);
   return response?.data?.data ?? {};
 };
+
+export const exportHospitalSettlements = async (hospital_id) => {
+  const response = await apiClient.get(
+    `transactions/hospitals/${hospital_id}/export`,
+    {
+      responseType: "blob",
+    }
+  );
+  return response.data;
+};
+
+
+export const getHospitalTransactions = async (id,query) => {
+  const response = await apiClient.get(`transactions/hospitals/${id}?${query}`);
+  return response?.data?.data ?? [];
+};

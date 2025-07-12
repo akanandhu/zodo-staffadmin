@@ -31,6 +31,7 @@ function DateSearchHero(props) {
         )}
         {type === "doctor-booking" && <ExportDoctorAppointments id={id} />}
         {type === "service-booking" && <ServiceAppointments id={id} />}
+        {type === "settlement" && <ServiceAppointments />}
       </div>
     </div>
   );

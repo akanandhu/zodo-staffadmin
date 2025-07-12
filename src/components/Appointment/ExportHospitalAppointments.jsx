@@ -10,7 +10,7 @@ import { useViewHospital } from "../../hooks/hospital/useViewHospital";
 function ExportHospitalAppointments({ query }) {
   const { hospitalId } = useAuth();
   const { data: hospital } = useViewHospital(hospitalId);
-  const hospitalName = hospital.name ?? "";
+  const hospitalName = hospital?.name ?? "";
   const exportMutation = useMutation({
     mutationFn: () => exportHospitalBookings(hospitalId, query),
     onSuccess: (data) => {

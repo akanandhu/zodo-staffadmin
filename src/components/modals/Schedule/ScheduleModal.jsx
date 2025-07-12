@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import ScheduleForm from "./ScheduleForm";
 import { useAssignAppointments } from "../../../hooks/appointments/useAssignAppointment";
+import ServiceScheduleForm from "./ServiceScheduleForm";
 
 function ScheduleModal(props) {
   const { show, setShow, requestDetails} = props;
@@ -18,7 +19,7 @@ function ScheduleModal(props) {
       timeSlot: timeSlot,
     };
     await mutate(
-      { id: requestDetails?.bookingId, data: data },
+      { id: requestDetails?.id, data: data },
       {
         onSuccess: () => {
           handleClose();
@@ -32,6 +33,8 @@ function ScheduleModal(props) {
 
   const handleTime = (time) => {
     setTimeslot(time);
+    console.log(time);
+    
   };
 
   return (
@@ -58,7 +61,7 @@ function ScheduleModal(props) {
               </div> */}
               <div className="schedule-modal">
                 <div className="d-flex">
-                  <h5>{requestDetails?.patientname}</h5>
+                  <h5>{requestDetails?.user_details?.name || requestDetails?.user?.first_name}</h5>
                   {/* <div
                     className={`delete-badge ms-5 ${
                       requestDetails?.isFasttag ? "status-green" : "status-grey"
@@ -68,10 +71,10 @@ function ScheduleModal(props) {
                   </div> */}
                 </div>
                 <small>
-                  {requestDetails?.age}
+                  {requestDetails?.user_details?.age || requestDetails?.user?.age}
                   {" yrs "}
-                  {requestDetails?.gender}{" "}
-                  <span className="ms-1">{requestDetails?.mobile}</span>
+                  {requestDetails?.user_details?.gender || requestDetails?.user?.gender}{" "}
+                  <span className="ms-1">{ requestDetails?.user_details?.phone_number || requestDetails?.user?.phone}</span>
                 </small>
               </div>
             </div>
@@ -80,7 +83,8 @@ function ScheduleModal(props) {
       </Modal.Header>
 
       <Modal.Body className="pt-0 pb-0">
-        <ScheduleForm requestDetails={requestDetails} handleTime={handleTime} />
+        {requestDetails?.type !== "consultation" && <ScheduleForm requestDetails={requestDetails} handleTime={handleTime} />}
+        {requestDetails?.type === "service" && <ServiceScheduleForm requestDetails={requestDetails} handleTime={handleTime} />}
         <div className="d-flex justify-content-end ps-3 pe-3 pb-5 pt-5">
           <Button
             variant="primary"

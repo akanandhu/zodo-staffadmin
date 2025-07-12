@@ -2,12 +2,13 @@
 import DataTable from "../Tables/DataTable";
 import { useAuth } from "../../hooks/useAuth";
 import { useSettlementList } from "../../hooks/settlements/useSettlementList";
-import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import DateSearchHero from "../heros/DateSearchHero";
 import { useState } from "react";
-import { formatDate } from "../configs/formatDate";
 import StatusBadge from "../assests/StatusBadge";
 import { generateDateQuery } from "../configs/generateDateQuery";
+import { formatToDate } from "../configs/formatToDate";
+import { message, Tooltip } from "antd";
+import { Clipboard } from "react-feather";
 function History() {
   const { hospitalId } = useAuth();
   const [dateQuery, setDatequery] = useState("");
@@ -24,9 +25,33 @@ function History() {
 
   const columns = [
     {
-      title: "Transaction ID",
-      dataIndex: "transaction_id",
+      title: "Order ID",
+      dataIndex: "order_id",
       // sorter: (a, b) => a.bookingid.length - b.bookingid.length,
+      render: (text) => (
+        <div className="d-flex align-items-center gap-2">
+          <span
+            style={{
+              maxWidth: 120,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+            title={text}
+          >
+            {text.slice(0, 16)}...
+          </span>
+          <Tooltip title="Copy Transaction ID">
+            <Clipboard
+              size={16}
+              style={{ cursor: "pointer", color: "#347D73" }}
+              onClick={() => {
+                navigator.clipboard.writeText(text);
+                message.success("Copied to clipboard");
+              }}
+            />
+          </Tooltip>
+        </div>
+      ),
     },
     {
       title: "Initiated by",
@@ -39,9 +64,18 @@ function History() {
       // sorter: (a, b) => a.patientname.length - b.patientname.length,
     },
     {
-      title: "Payment mode",
-      dataIndex: "payment_method",
+      title: "Type",
+      dataIndex: "type",
+      render: (item) => <div>{item || "N/A"}</div>,
+      // sorter: (a, b) => a.patientname.length - b.patientname.length,
+    },
+    {
+      title: <div className="text-center">Payment mode</div>,
+      dataIndex: "payment_type",
       // sorter: (a, b) => a.type.length - b.type.length,
+      render: (item) => (
+        <div className="text-center">{item ? item : "unknown"}</div>
+      ),
     },
     {
       title: "Amount",
@@ -51,34 +85,28 @@ function History() {
       // render: (item) => <div>₹ {item}</div>,
     },
     {
-      title: "Time",
+      title: "Settlement Date",
       dataIndex: "updated_at",
-      sorter: (a, b) => a.time.length - b.time.length,
-      render: (item) => <div>{formatDate(item)}</div>,
+      // sorter: (a, b) => a.time.length - b.time.length,
+      render: (item) => <div>{formatToDate(item)}</div>,
+      sorter: (a, b) => new Date(a.updated_at) - new Date(b.updated_at),
+       sortDirections: ["descend", "ascend"]
     },
     {
-      title: "Status",
+      title: <div className="text-center">Status</div>,
       dataIndex: "status",
       // sorter: (a, b) => a.status.length - b.status.length,
-      render: (item) => <StatusBadge status={item} />,
-    },
-    {
-      title: <div className="d-flex justify-content-center">Action</div>,
-      dataIndex: "action",
-      render: () => (
-        <div className="d-flex justify-content-center" title="view">
-          <i>
-            <FeatherIcon icon="download-cloud" />
-          </i>
+      render: (item) => (
+        <div className="d-flex justify-content-center">
+          <StatusBadge status={item} />
         </div>
       ),
-      // sorter: (a, b) => a.department.length - b.department.length,
     },
   ];
   return (
     <div>
       <div>
-         <DateSearchHero handleDate={handleDate} type="settlement" />
+        <DateSearchHero handleDate={handleDate} type="settlement" />
         <DataTable
           columns={columns}
           dataSource={settlements ? settlements : []}

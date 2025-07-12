@@ -67,17 +67,6 @@ export const exportDoctotBookings = async (doctor_id) => {
   return response.data; 
 };
 
-export const exportServiceBookings = async (hospital_id) => {
-  const response = await apiClient.get(
-    `/bookings/hospital/${hospital_id}/export`,
-    {
-      responseType: 'blob',
-    }
-  );
-  return response.data; 
-};
-
-
 export const approveAppiontment = async (id) => {
   const response = await apiClient.patch(`/bookings/${id}/mark-complete`);
   return response.data;

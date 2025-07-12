@@ -12150,3 +12150,9 @@ tr.ant-table-row.ant-table-row-level-0.ant-table-row-selected,
   font-size: 0.90rem;
   color: gray;
 }
+
+/* In your main CSS/SCSS file */
+.ant-table-column-sorter-up.active,
+.ant-table-column-sorter-down.active {
+  color: #28a745 !important; /* Bootstrap green */
+}
