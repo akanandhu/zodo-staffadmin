@@ -41,8 +41,6 @@ function AppointmentTable(props) {
     })
   }
   
-  console.log("Appointment list", appointmentList);
-
   const columns = [
     {
       title: "Booking ID",
@@ -143,7 +141,6 @@ function AppointmentTable(props) {
         <>
           <div className="text-end">
             <div className="dropdown dropdown-action">
-              {console.log(item)}
               <Link
                 to="#"
                 className="action-icon dropdown-toggle"

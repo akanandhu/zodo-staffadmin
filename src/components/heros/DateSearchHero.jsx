@@ -3,10 +3,13 @@ import PropTypes from "prop-types";
 import ExportHospitalAppointments from "../Appointment/ExportHospitalAppointments";
 import ExportDoctorAppointments from "../Appointment/ExportDoctorAppointments";
 import ServiceAppointments from "../Appointment/ServiceAppointments";
+import { useSearchParams } from "react-router-dom";
 const { RangePicker } = DatePicker;
 
 function DateSearchHero(props) {
   const { handleDate, type, id, query } = props;
+  const [searchParams] = useSearchParams();
+  const tab = searchParams.get("tab");
   return (
     <div className="row mt-4">
       <div className="col-12 col-md-6 col-xl-4">
@@ -23,7 +26,9 @@ function DateSearchHero(props) {
       </div>
 
       <div className="col-12 col-md-6 col-xl-3">
-        {type === "hospital-bookings" && <ExportHospitalAppointments  query={query}/>}
+        {type === "hospital-bookings" && tab !== "requested" && (
+          <ExportHospitalAppointments query={query} />
+        )}
         {type === "doctor-booking" && <ExportDoctorAppointments id={id} />}
         {type === "service-booking" && <ServiceAppointments id={id} />}
       </div>
