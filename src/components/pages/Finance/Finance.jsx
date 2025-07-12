@@ -17,7 +17,6 @@ function Finance() {
       link: "/finance",
     },
   ];
-  console.log("Hospital analytics", hospitalAnalytics);
   
   const financeTab = [
     { id: "payout", title: "Payout", content: <Payout data={hospitalAnalytics}/>, link: "payout" },

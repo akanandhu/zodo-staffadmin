@@ -23,8 +23,6 @@ function DoctorAppointments({ doctorDetails }) {
     doctorDetails.id,
     dateQuery
   );
-  console.log("Appointments ", appointmentList);
-
   const handleDate = (date) => {
     const query = generateDateQuery(date);
     setDatequery(query);
@@ -47,23 +45,8 @@ function DoctorAppointments({ doctorDetails }) {
             <div className="schedule-modal">
               <div className="d-flex">
                 <h5>{doctorDetails?.name}</h5>
-                {/* <div
-                className={`delete-badge ms-5 ${
-                  requestDetails?.isFasttag ? "status-green" : "status-grey"
-                }`}
-              >
-                Fasttag
-              </div> */}
               </div>
               <small>
-                {/* {doctorDetails?.age && (
-                  <span>
-                    {doctorDetails?.age}
-                    {" yrs "}
-                  </span>
-                )}
-                {doctorDetails?.gender}{" "} */}
-
                 {doctorDetails?.specialisations?.length > 0 && (
                   <span>
                     {renderSpecialisation(doctorDetails?.specialisations)}
@@ -107,20 +90,22 @@ function DoctorAppointments({ doctorDetails }) {
               </div>
             )}
           </div>
-
+            {console.log("Doctor details",doctorDetails)}
+            
           <div className="mt-md-0 mt-3">
             <StatusBadge
-              status={doctorDetails?.is_active ? "active" : "blocked"}
+              status={doctorDetails?.status}
             />
           </div>
         </div>
       </div>
       <div className="ms-2 me-2 mt-4">
-        <h4>Appointments</h4>
+        <h4>Appointmentsss</h4>
         <DoctorAppointmentTable
           appointmentList={appointmentList}
           loading={isLoading}
           handleDate={handleDate}
+          id={doctorDetails?.id}
         />
         
       </div>

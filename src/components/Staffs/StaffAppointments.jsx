@@ -90,7 +90,7 @@ function StaffAppointments({ staffDetails }) {
 
           <div className="mt-md-0 mt-3">
             <StatusBadge
-              status={staffDetails?.is_active ? "active" : "blocked"}
+              status={staffDetails?.is_active ? "active" : "inactive"}
             />
           </div>
         </div>

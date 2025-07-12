@@ -78,10 +78,7 @@ function History() {
   return (
     <div>
       <div>
-        <DateSearchHero
-          handleDate={handleDate}
-          // handleSearch={handleSearchTerm}
-        />
+         <DateSearchHero handleDate={handleDate} type="settlement" />
         <DataTable
           columns={columns}
           dataSource={settlements ? settlements : []}

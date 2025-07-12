@@ -1,24 +1,28 @@
+import PropTypes from "prop-types";
+import React from "react";
+import { exportDoctotBookings } from "../../apis/appointments";
 import { Link } from "react-router-dom";
-import { exporticon } from "../imagepath";
-import { useAuth } from "../../hooks/useAuth";
-import { useMutation } from "@tanstack/react-query";
-import { exportHospitalBookings } from "../../apis/appointments";
 import { toast } from "react-toastify";
+import { useMutation } from "@tanstack/react-query";
+import { exporticon } from "../imagepath";
+import { useDoctorView } from "../../hooks/doctors/useDoctorView";
 
-function ExportHospitalAppointments() {
-  const { hospitalId } = useAuth();
+function ExportDoctorAppointments(props) {
+  const { id: doctorId } = props;
+  const { data: doctorDetails } = useDoctorView(doctorId);
   const exportMutation = useMutation({
-    mutationFn: () => exportHospitalBookings(hospitalId),
+    mutationFn: () => exportDoctotBookings(doctorId),
     onSuccess: (data) => {
       if (!data || !(data instanceof Blob)) {
         toast.error("Failed to export data - invalid response format");
         return;
       }
-
       const url = window.URL.createObjectURL(data);
       const link = document.createElement("a");
       link.href = url;
-      link.download = `hospital_appointments_${
+      link.download = `doctor_${
+        doctorDetails.name +
+        "_appointments_" +
         new Date().toISOString().split("T")[0]
       }.xlsx`;
 
@@ -32,13 +36,12 @@ function ExportHospitalAppointments() {
     onError: (error) => {
       console.error("Export failed:", error);
       toast.error("Failed to export appointments. Please try again.");
-    }
+    },
   });
 
   const handleDownload = () => {
     exportMutation.mutate();
   };
-
   return (
     <div className="form-group local-forms">
       <Link
@@ -62,4 +65,8 @@ function ExportHospitalAppointments() {
   );
 }
 
-export default ExportHospitalAppointments;
+ExportDoctorAppointments.propTypes = {
+  id: PropTypes.string,
+};
+
+export default ExportDoctorAppointments;

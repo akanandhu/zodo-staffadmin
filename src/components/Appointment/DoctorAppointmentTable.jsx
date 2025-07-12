@@ -1,28 +1,25 @@
-import React, { useState } from "react";
 import DateSearchHero from "../heros/DateSearchHero";
 import DataTable from "../Tables/DataTable";
-import CenteredModal from "../modals/CenteredModal";
-import Prescription from "./Prescription";
 import PropTypes from "prop-types";
 import { formatTime } from "../configs/formatTime";
 import StatusBadge from "../assests/StatusBadge";
 import { Link } from "react-router-dom";
-import { pdficon, printericon } from "../imagepath";
+import { printericon } from "../imagepath";
 import { generateCaseSheetPDF } from "../../utils/pdfGenerator";
 
 function DoctorAppointmentTable(props) {
-    const { appointmentList, loading, handleDate } = props;
-      const [show, setShow] = useState(false);
-      const [prescriptionUrl, setPrescriptionUrl] = useState("");
-      const handleClose = () => {
-        setShow(false);
-      };
-      const handleView = (url) => {
-        // Logic to handle view action
-        setPrescriptionUrl(url);
-        // Open the modal to show the prescription
-        setShow(true);
-      };
+    const { appointmentList, loading, handleDate, id } = props;
+      // const [show, setShow] = useState(false);
+      // const [prescriptionUrl, setPrescriptionUrl] = useState("");
+      // const handleClose = () => {
+      //   setShow(false);
+      // };
+      // const handleView = (url) => {
+      //   // Logic to handle view action
+      //   setPrescriptionUrl(url);
+      //   // Open the modal to show the prescription
+      //   setShow(true);
+      // };
   const columns = [
     {
       title: "Booking ID",
@@ -62,24 +59,24 @@ function DoctorAppointmentTable(props) {
       // sorter: (a, b) => a.status.length - b.status.length,
       render: (_item) => _item && <div>₹ {_item}</div>,
     },
-    {
-      title: "Prescription",
-      dataIndex: "prescription",
-      render: (_item, record) => {
-        return record?.prescriptionUrl ? (
-          <div style={{ display: "flex", gap: 8, paddingLeft: "20px" }}>
-            <Link to onClick={() => handleView(record?.prescriptionUrl)}>
-              View
-            </Link>
-            <Link to>
-              <img src={pdficon} alt="Pdf Icon" width={17} />
-            </Link>
-          </div>
-        ) : (
-          <div style={{ paddingLeft: "25px" }}>N/A</div>
-        );
-      },
-    },
+    // {
+    //   title: "Prescription",
+    //   dataIndex: "prescription",
+    //   render: (_item, record) => {
+    //     return record?.prescriptionUrl ? (
+    //       <div style={{ display: "flex", gap: 8, paddingLeft: "20px" }}>
+    //         <Link to onClick={() => handleView(record?.prescriptionUrl)}>
+    //           View
+    //         </Link>
+    //         <Link to>
+    //           <img src={pdficon} alt="Pdf Icon" width={17} />
+    //         </Link>
+    //       </div>
+    //     ) : (
+    //       <div style={{ paddingLeft: "25px" }}>N/A</div>
+    //     );
+    //   },
+    // },
     {
       title: "Actions",
       dataIndex: "actions",
@@ -100,18 +97,19 @@ function DoctorAppointmentTable(props) {
         );
       },
     },
+    
   ];
   return (
     <div>
-      <DateSearchHero handleDate={handleDate} />
+      <DateSearchHero handleDate={handleDate} type="doctor-booking" id={id}/>
       <DataTable
         columns={columns}
         dataSource={appointmentList ?? []}
         loading={loading}
       />
-      <CenteredModal show={show} handleClose={handleClose}>
+      {/* <CenteredModal show={show} handleClose={handleClose}>
         <Prescription prescriptionUrl={prescriptionUrl} />
-      </CenteredModal>
+      </CenteredModal> */}
     </div>
   );
 }
@@ -120,6 +118,7 @@ DoctorAppointmentTable.propTypes = {
   appointmentList: PropTypes.node,
   loading: PropTypes.bool,
   handleDate: PropTypes.func,
+  id: PropTypes.string
 };
 
 export default DoctorAppointmentTable;
