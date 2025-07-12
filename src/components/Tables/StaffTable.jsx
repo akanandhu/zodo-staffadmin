@@ -10,10 +10,11 @@ import useDeleteStaff from "../../hooks/staff/useDeleteStaff";
 import PropTypes from "prop-types";
 import CircularImage from "../assests/CircularImage";
 import { formatToDate } from "../configs/formatToDate";
-import SideModal from "../modals/SideModal"
+import SideModal from "../modals/SideModal";
 import StaffAppointments from "../Staffs/StaffAppointments";
+import { Tag } from "antd";
 function StaffTable(props) {
-  const { staffsList, isLoading } = props;  
+  const { staffsList, isLoading } = props;
   const [show, setShow] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [selectedStaff, setSelectedStaff] = useState(null);
@@ -41,16 +42,15 @@ function StaffTable(props) {
     setShowView(true);
   };
 
-  const handleClose = ()=>{
+  const handleClose = () => {
     setShowView(false);
-  }
+  };
 
   const handleDeleteClick = (id) => {
     setSelectedStaff(id);
     setShow(true);
   };
   const handleDelete = async () => {
-
     await mutate(selectedStaff);
     setShow(false);
   };
@@ -97,16 +97,17 @@ function StaffTable(props) {
     },
     {
       title: "Department",
-      dataIndex: "",
-      render: (item, record) => {
-        const departmentLen = record?.departments?.length;
-        const departments =
-          departmentLen !== 0 &&
-          record?.departments?.reduce((acc, current) => {
-            return acc + current.name + " ";
-          }, "");
-        return <div>{departments}</div>;
-      },
+      dataIndex: "departments",
+      key: "departments",
+      render: (departments) => (
+        <div className="d-flex flex-wrap gap-2" style={{ maxWidth: "200px" }}>
+          {departments?.map((dept) => (
+            <Tag key={dept.id} color="cyan">
+              {dept.name}
+            </Tag>
+          ))}
+        </div>
+      ),
     },
     {
       title: "Type",
@@ -132,7 +133,7 @@ function StaffTable(props) {
                 <Link
                   className="dropdown-item"
                   to
-                  onClick={()=> handleView(record)}
+                  onClick={() => handleView(record)}
                 >
                   <i className="far fa-eye me-2" />
                   View
@@ -180,10 +181,13 @@ function StaffTable(props) {
         selectedStaff={selectedStaff}
         userType={userType}
       />
-      <SideModal show={showView} handleClose={handleClose} title="Staff Details">
-        <StaffAppointments staffDetails={staffDetails}/>
+      <SideModal
+        show={showView}
+        handleClose={handleClose}
+        title="Staff Details"
+      >
+        <StaffAppointments staffDetails={staffDetails} />
       </SideModal>
-
     </div>
   );
 }

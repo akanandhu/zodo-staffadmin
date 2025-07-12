@@ -5,12 +5,15 @@ import PropTypes from "prop-types";
 import { useAnalyticsData } from "../../hooks/useAnalyticsData";
 function Analytics(props) {
   const { bookingType, id } = props;
+
   const [selectedOption, setSelectedOption] = useState(
     bookingType ? bookingType[0] : []
   );
-  const { data } = useAnalyticsData();
+  console.log("Selected option ",selectedOption);
+  const query = `type=${selectedOption.value}`
+  const { data } = useAnalyticsData(query)
   const count = data?.reduce((acc, item) => acc + (item.count || 0), 0);
-
+  
   return (
     <>
       <div className="row">

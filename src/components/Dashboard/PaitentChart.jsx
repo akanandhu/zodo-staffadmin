@@ -12,6 +12,7 @@ const PatientChart = (props) => {
   console.log(categories);
   
   useEffect(() => {
+    console.log("Data change");
     if (chartInstanceRef.current) {
       chartInstanceRef.current.destroy();
       chartInstanceRef.current = null;
@@ -72,7 +73,7 @@ const PatientChart = (props) => {
         chartInstanceRef.current = null;
       }
     };
-  }, [countsPeryear]);
+  }, [countsPeryear, data]);
 
   return <div id="patient-chart" ref={chartRef}></div>;
 };

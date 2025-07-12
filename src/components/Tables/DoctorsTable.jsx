@@ -13,6 +13,7 @@ import { formatToDate } from "../configs/formatToDate";
 import StatusBadge from "../assests/StatusBadge";
 import SideModal from "../modals/SideModal";
 import DoctorAppointments from "../Doctors/DoctorsBookings/DoctorAppointments";
+import { Tag } from "antd";
 
 function DoctorsTable(props) {
   const { doctorsList, loading } = props;
@@ -24,7 +25,7 @@ function DoctorsTable(props) {
   const { data: doctorsData } = useDoctorsList(hospitalId);
   const { mutate, isLoading } = useDeleteDoctor();
   console.log("Doctors data", doctorsData);
-  const [doctorDetails,setDoctorDetails] = useState({});
+  const [doctorDetails, setDoctorDetails] = useState({});
   useEffect(() => {
     if (doctorsData) {
       setShow(false);
@@ -38,7 +39,7 @@ function DoctorsTable(props) {
 
   const handleView = (record) => {
     // setSelectedDoctor(id);
-    setDoctorDetails(record)
+    setDoctorDetails(record);
     setShowView(true);
   };
 
@@ -51,9 +52,9 @@ function DoctorsTable(props) {
     await mutate(selectedDoctor);
   };
 
-  const handleClose = ()=>{
+  const handleClose = () => {
     setShowView(false);
-  }
+  };
   const columns = [
     {
       title: "Doctor Name",
@@ -97,17 +98,16 @@ function DoctorsTable(props) {
       //     <h6>{item}hs</h6>
       //   </div>
       // ),
-      render: (item, record) => {
-        // const department = record?.departments[0]
-        // console.log("Department ",record?.departments);
-        const departmentLen = record?.departments?.length;
-        const departments =
-          departmentLen !== 0 &&
-          record?.departments?.reduce((acc, current) => {
-            return acc + current.name + " ";
-          }, "");
-        return <div >{departments}</div>;
-      },
+      key:"departments",
+      render: (departments) => (
+        <div className="d-flex flex-wrap gap-2" style={{ maxWidth: "200px" }}>
+          {departments?.map((dept) => (
+            <Tag key={dept.id} color="cyan">
+              {dept.name}
+            </Tag>
+          ))}
+        </div>
+      ),
     },
     {
       title: "Pricing",
@@ -140,7 +140,7 @@ function DoctorsTable(props) {
                 <Link
                   className="dropdown-item"
                   // to={`${record.id}`}
-                  onClick={()=>handleView(record)}
+                  onClick={() => handleView(record)}
                 >
                   <i className="far fa-eye me-2" />
                   View
@@ -188,8 +188,12 @@ function DoctorsTable(props) {
         selectedDoctor={selectedDoctor}
       />
 
-      <SideModal show={showView} handleClose={handleClose} title="Doctor Details">
-        <DoctorAppointments doctorDetails={doctorDetails}/>
+      <SideModal
+        show={showView}
+        handleClose={handleClose}
+        title="Doctor Details"
+      >
+        <DoctorAppointments doctorDetails={doctorDetails} />
       </SideModal>
     </div>
   );

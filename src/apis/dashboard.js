@@ -5,8 +5,8 @@ export const getDashboardData = async () => {
   return response?.data || {};
 };
 
-export const getAnalyticsData = async () => {
-  const response = await apiClient.get(`/dashboard/bookings-by-month`);
+export const getAnalyticsData = async (query) => {
+  const response = await apiClient.get(`/dashboard/bookings-by-month?${query}`);
   return response?.data || [];
 };
 

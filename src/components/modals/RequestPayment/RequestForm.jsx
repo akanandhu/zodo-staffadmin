@@ -35,6 +35,7 @@ function RequestForm(props) {
       handleClose()
     }});
   };
+  
   return (
     <>
       <div>
@@ -48,8 +49,8 @@ function RequestForm(props) {
             <h4 className="text-primary">₹ {walletData?.total_amount ?? 0}</h4>
           </div>
           <div className="settlemet-details">
-            <p>Last Settlement</p>
-            <h4>₹ 20,000</h4>
+            <p>Withdrawal Amount</p>
+            <h4>₹ {walletData?.withdrawal_amount}</h4>
           </div>
         </div>
       </div>
