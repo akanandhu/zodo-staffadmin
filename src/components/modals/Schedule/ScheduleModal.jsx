@@ -12,8 +12,6 @@ function ScheduleModal(props) {
   const handleClose = () => {
     setShow(false);
   };
-  console.log("Request Details in Modal: ", requestDetails);
-
   const handelAssignment = async () => {
     const data = {
       timeSlot: timeSlot,
@@ -46,29 +44,14 @@ function ScheduleModal(props) {
       style={{ maxWidth: "none" }}
     >
       <Modal.Header closeButton className="border-0">
-        {/* <Modal.Title>Modal heading</Modal.Title>{" "} */}
         <Modal.Title>
           <div>
             <div className="d-flex justify-content-center ps-5"></div>
             <div className="d-flex align-items-center">
-              {/* <div className="schedule-profile">
-                <CircularImage
-                  src={requestDetails?.profilePicture ?? user_profile}
-                  alt="user"
-                  size={80}
-                  fallback={user_profile}
-                />
-              </div> */}
               <div className="schedule-modal">
                 <div className="d-flex">
                   <h5>{requestDetails?.user_details?.name || requestDetails?.user?.first_name}</h5>
-                  {/* <div
-                    className={`delete-badge ms-5 ${
-                      requestDetails?.isFasttag ? "status-green" : "status-grey"
-                    }`}
-                  >
-                    Fasttag
-                  </div> */}
+                  
                 </div>
                 <small>
                   {requestDetails?.user_details?.age || requestDetails?.user?.age}
@@ -83,7 +66,7 @@ function ScheduleModal(props) {
       </Modal.Header>
 
       <Modal.Body className="pt-0 pb-0">
-        {requestDetails?.type !== "consultation" && <ScheduleForm requestDetails={requestDetails} handleTime={handleTime} />}
+        {requestDetails?.type === "consultation" && <ScheduleForm requestDetails={requestDetails} handleTime={handleTime} />}
         {requestDetails?.type === "service" && <ServiceScheduleForm requestDetails={requestDetails} handleTime={handleTime} />}
         <div className="d-flex justify-content-end ps-3 pe-3 pb-5 pt-5">
           <Button

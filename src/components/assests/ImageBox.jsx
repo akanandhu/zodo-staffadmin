@@ -3,11 +3,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import PropTypes from "prop-types";
 
 function ImageBox(props) {
-  const { src, alt, width = "100%", height = "200px" } = props;
+  const { src, alt, width = "100%", height = "200px", className } = props;
   const [hasError, setHasError] = useState(false);
   return (
     <div
-      className="d-flex align-items-center justify-content-center"
+      className={`d-flex align-items-center justify-content-center ${className}`}
       style={{ width, height, backgroundColor: "#f8f9fa", overflow: "hidden" }}
     >
       {hasError || !src ? (
@@ -33,6 +33,7 @@ ImageBox.propTypes = {
   alt: PropTypes.string,
   width: PropTypes.string,
   height: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default ImageBox;

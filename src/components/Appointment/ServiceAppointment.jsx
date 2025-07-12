@@ -7,11 +7,13 @@ import SelectField from "../Inputfields/SelectField";
 import PropTypes from "prop-types";
 import { useHospitalServices } from "../../hooks/hospital-services/useHospitalServices";
 import { useCreteServiceAppointment } from "../../hooks/appointments/useCreateServiceAppointment";
-
+import ServiceTimeSlot from "../modals/Schedule/ServiceTimeSlot";
+import { useState } from "react";
 function ServiceAppointment({ handleClose }) {
   const { hospitalId } = useAuth();
   const { mutate: createAppointment, isLoading: appointmentLoading } =
     useCreteServiceAppointment();
+  const [selectedTimeSlot, setSelectedTimeslot] = useState("");
   //   const [timeSlot, setTimeSlot] = useState("");
   //   const [appointmentDate, setAppointmentDate] = useState();
   const { data: servicesList, isLoading: servicesLoading } =
@@ -32,7 +34,10 @@ function ServiceAppointment({ handleClose }) {
     value: item.id,
   }));
 
-  console.log("Options", serviceOptions);
+  const handleTime = (time) => {
+    setSelectedTimeslot(time);
+  };
+
 
   //   const WatchAppointmentChange = () => {
   //     const { control } = useFormContext();
@@ -51,13 +56,11 @@ function ServiceAppointment({ handleClose }) {
   const methods = useForm();
 
   const onCreateAppointment = (data) => {
-    console.log(data?.service.value);
-
     const appointmentData = {
       //   doctor_id: doctorId,
       hospital_service_id: data?.service?.value,
       appointmentDate: data.appointmentDate,
-        amount: data.amount,
+      amount: data.amount,
       user_details: {
         name: data.patientname,
         age: parseInt(data.patientAge),
@@ -66,16 +69,13 @@ function ServiceAppointment({ handleClose }) {
         address: data.address,
       },
       hospital_id: hospitalId,
-      //   timeSlot: timeSlot,
+      timeSlot: selectedTimeSlot,
       payment_type: data?.paymentType?.value,
-      patient_note: data?.note
+      reason: data?.note,
 
       // type:appointment
     };
-    console.log("Appointment data ", appointmentData);
 
-    console.log(createAppointment);
-    console.log(handleClose);
 
     createAppointment(appointmentData, {
       onSuccess: () => {
@@ -159,8 +159,7 @@ function ServiceAppointment({ handleClose }) {
           </div>
         </div>
 
-        {/* 📝 Address and Note */}
-        <div className="row">
+        <div className="row mt-2">
           <div className="col">
             <TextArea
               name="address"
@@ -170,7 +169,7 @@ function ServiceAppointment({ handleClose }) {
             />
           </div>
         </div>
-        <div className="row">
+        <div className="row mt-2">
           <div className="col">
             <TextArea
               name="note"
@@ -181,7 +180,7 @@ function ServiceAppointment({ handleClose }) {
         </div>
 
         <>
-          <h4 className="card-title mt-2">More Information</h4>
+          <h4 className="card-title mt-4">More Information</h4>
           <div className="row">
             <div className="col-md-4">
               <div className="form-group">
@@ -220,10 +219,10 @@ function ServiceAppointment({ handleClose }) {
             </div>
           </div>
         </>
+        <h4 className="card-title mt-4">Avaliable Timeslots</h4>
 
-        {/* <WatchAppointmentChange /> */}
+        <ServiceTimeSlot handleTime={handleTime} />
 
-        {/* 📤 Submit */}
         <div className="d-flex justify-content-end ps-3 pe-3 pb-5 pt-3">
           <Button variant="primary" className="ps-5 pe-5" type="submit">
             {appointmentLoading && (

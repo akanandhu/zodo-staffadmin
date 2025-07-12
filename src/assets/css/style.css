@@ -12156,3 +12156,32 @@ tr.ant-table-row.ant-table-row-level-0.ant-table-row-selected,
 .ant-table-column-sorter-down.active {
   color: #28a745 !important; /* Bootstrap green */
 }
+
+.service-price p{
+  font-size: 0.85rem;
+}
+.service-price h4{
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.service-schedule-details h4{
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+.service-schedule-details-price{
+  height: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.service-schedule-details-price h6{
+  font-weight: 500;
+  font-size: 0.9rem;
+  width: 200px;
+}
+
+.service-schedule-details-price .price{
+  font-weight: 400;
+  width: 100%;
+}

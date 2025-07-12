@@ -96,7 +96,6 @@ function ConsultationAppointment({ handleClose }) {
       mainTab: "requested",
     },
   ];
-  console.log("Doctor id ", doctorId);
 
   const WatchAppointmentChange = () => {
     const { control } = useFormContext();
@@ -132,13 +131,10 @@ function ConsultationAppointment({ handleClose }) {
       hospital_id: hospitalId,
       timeSlot: timeSlot,
       payment_type: data?.paymentType?.value,
-      patient_note: data?.note
+      reason: data?.note
       // type:appointment
     };
-    console.log("Appointment data ", appointmentData);
 
-    console.log(createAppointment);
-    console.log(handleClose);
 
     createAppointment(appointmentData, {
       onSuccess: () => {
@@ -222,8 +218,7 @@ function ConsultationAppointment({ handleClose }) {
           </div>
         </div>
 
-        {/* 📝 Address and Note */}
-        <div className="row">
+        <div className="row mt-2">
           <div className="col">
             <TextArea
               name="address"
@@ -233,7 +228,7 @@ function ConsultationAppointment({ handleClose }) {
             />
           </div>
         </div>
-        <div className="row">
+        <div className="row mt-2">
           <div className="col">
             <TextArea
               name="note"
@@ -244,7 +239,7 @@ function ConsultationAppointment({ handleClose }) {
         </div>
 
         <>
-          <h4 className="card-title mt-2">More Information</h4>
+          <h4 className="card-title mt-4">More Information</h4>
           <div className="row">
             <div className="col-md-4">
               {/* <label className="form-label">Assign Doctor</label>
@@ -286,7 +281,7 @@ function ConsultationAppointment({ handleClose }) {
             </div>
           </div>
 
-          <h4 className="card-title mt-2">Available Timeslots</h4>
+          <h4 className="card-title mt-4">Available Timeslots</h4>
           <ModalTabs tabData={tabData} />
         </>
 

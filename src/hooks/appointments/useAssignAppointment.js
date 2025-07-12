@@ -15,6 +15,7 @@ export const useAssignAppointments = () => {
       // queryClient.setQueryData(["hospital", variables.id], data);
     //   queryClient.invalidateQueries({ queryKey: ["doctors", hospitalId] });
       queryClient.invalidateQueries({ queryKey: ["doctors", variables.id] });
+      queryClient.invalidateQueries({ queryKey: ["appointments"] });
       toast.success(message);
     },
     onError: (error, id, context) => {

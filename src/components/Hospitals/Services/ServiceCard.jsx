@@ -29,7 +29,6 @@ function ServiceCard(props) {
         <div className="card-body">
           <div className="row align-items-center hospital-card">
             <div className="col-md-3">
-              {/* <img src={servicesData?.image} alt="#" /> */}
               <Link to="#">
                 <ImageBox
                   src={servicesData?.image}

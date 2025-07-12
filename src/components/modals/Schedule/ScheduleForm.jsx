@@ -1,36 +1,36 @@
 import ModalTabs from "../../tabs/ModalTabs";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAuth } from "../../../hooks/useAuth";
-import { useDoctorsList } from "../../../hooks/doctors/useDoctorsList";
-import { useDepartmentList } from "../../../hooks/departments/useDepartmentList";
-import Select from "react-select";
 import { useGetTimeslots } from "../../../hooks/timeslot/useGetTimeslots";
 import { categorizeSlots } from "../../configs/categoriseSlots";
 import Timeslot from "./Timeslot";
+import CircularImage from "../../assests/CircularImage";
+import { user_profile } from "../../imagepath";
 function ScheduleForm(props) {
   const { requestDetails, handleTime } = props;
-  console.log("Request details",requestDetails);
-  
+  console.log("Request details", requestDetails);
+
   const { hospitalId } = useAuth();
   const methods = useForm();
-  const [doctor, setDoctor] = useState(requestDetails.doctorId ?? "");
-  const { data: doctorsList, isLoading: doctorLoading } =
-    useDoctorsList(hospitalId);
-  const query = doctor ? `doctor_id=${doctor}` : "";
-  const { data: departmentList, isLoading: departmentLoading } =
-    useDepartmentList(hospitalId, query);
-  const doctorOptions = doctorsList?.map((item) => ({
-    label: item.name,
-    value: item.id,
-  }));
+  // const [doctor, setDoctor] = useState(requestDetails.doctorId ?? "");
+  // const { data: doctorsList, isLoading: doctorLoading } =
+  //   useDoctorsList(hospitalId);
+  // const query = doctor ? `doctor_id=${doctor}` : "";
+  // const { data: departmentList, isLoading: departmentLoading } =
+  //   useDepartmentList(hospitalId, query);
+  // const doctorOptions = doctorsList?.map((item) => ({
+  //   label: item.name,
+  //   value: item.id,
+  // }));
 
-  const departmentOptions = departmentList?.map((item) => ({
-    value: item.id,
-    label: item.name,
-  }));
-  const [doctorId, setDoctorId] = useState("");
+  // const departmentOptions = departmentList?.map((item) => ({
+  //   value: item.id,
+  //   label: item.name,
+  // }));
+  // const [doctorId, setDoctorId] = useState("");
+  const doctorId = requestDetails?.doctor_id;
   const { data: timeslots, isLoading: timeslotLoading } = useGetTimeslots(
     doctorId,
     hospitalId,
@@ -80,11 +80,11 @@ function ScheduleForm(props) {
       },
     });
   }, [requestDetails]);
-  const control = methods.control;
-  const selectedDoctor = useWatch({ control, name: "doctor" });
-  useEffect(() => {
-    setDoctor(selectedDoctor?.value ?? "");
-  }, [selectedDoctor]);
+  // const control = methods.control;
+  // const selectedDoctor = useWatch({ control, name: "doctor" });
+  // useEffect(() => {
+  //   setDoctor(selectedDoctor?.value ?? "");
+  // }, [selectedDoctor]);
 
   // const onAssignAppointment = () => {
   //   console.log("logic");
@@ -133,7 +133,7 @@ function ScheduleForm(props) {
       className="schedule-form"
       // onSubmit={methods.handleSubmit(onAssignAppointment)}
     >
-      <div className="row mt-2">
+      {/* <div className="row mt-2">
         <div className="col-md-6">
           <div className="form-group">
             <label className="form-label">Doctor</label>
@@ -165,9 +165,32 @@ function ScheduleForm(props) {
             />
           </div>
         </div>
+      </div> */}
+      <h4 className="card-title mt-2">Assigned Doctor</h4>
+
+      <div className="d-flex align-items-center mt-3">
+        <div className="schedule-profile">
+          <CircularImage
+            src={requestDetails?.doctor?.profile_pic ?? user_profile}
+            alt="user"
+            size={80}
+            fallback={user_profile}
+          />
+        </div>
+        <div className="schedule-modal">
+          <div className="d-flex">
+            <h5>{requestDetails?.doctor?.name}</h5>
+          </div>
+          <small>
+            {requestDetails?.doctor?.departments?.length > 0 && (
+              <span>{requestDetails?.doctor?.departments?.map((dept)=> dept.name).join(", ")}</span>
+            )}
+          </small>
+          {/* <div>{requestDetails?.user_type}</div> */}
+        </div>
       </div>
 
-      <h4 className="card-title mt-2">Time Slot Available</h4>
+      <h4 className="card-title mt-5">Time Slot Available</h4>
       <ModalTabs tabData={tabData} />
     </form>
   );

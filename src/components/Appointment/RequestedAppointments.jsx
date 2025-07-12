@@ -57,7 +57,7 @@ function RequestedAppointments() {
       ),
     },
     {
-      title: "Date & Time",
+      title: "Initiated Date & Time",
       dataIndex: "createdAt",
       // sorter: (a, b) => a.time.length - b.time.length,
       render: (item) => <div>{formatDate(item)}</div>,
