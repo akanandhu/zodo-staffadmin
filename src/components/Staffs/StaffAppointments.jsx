@@ -1,10 +1,9 @@
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import { useState } from "react";
 import CircularImage from "../assests/CircularImage";
 import { user_profile } from "../imagepath";
 import FeatherIcon from "feather-icons-react/build/FeatherIcon";
 import StatusBadge from "../assests/StatusBadge";
-import DoctorAppointmentTable from "../Appointment/DoctorAppointmentTable";
 import { useHospitalAppointments } from "../../hooks/appointments/useHospitalAppointments";
 import { useAuth } from "../../hooks/useAuth";
 import { generateDateQuery } from "../configs/generateDateQuery";

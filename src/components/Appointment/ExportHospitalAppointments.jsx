@@ -1,40 +1,63 @@
 import { Link } from "react-router-dom";
 import { exporticon } from "../imagepath";
 import { useAuth } from "../../hooks/useAuth";
-import { useExportHospitalBookings } from "../../hooks/appointments/useExportHospitalBookings";
-import jsPDF from "jspdf";
+import { useMutation } from "@tanstack/react-query";
+import { exportHospitalBookings } from "../../apis/appointments";
+import { toast } from "react-toastify";
 
 function ExportHospitalAppointments() {
   const { hospitalId } = useAuth();
-  console.log(hospitalId);
-  const { data, isLoading } = useExportHospitalBookings(hospitalId);
-  console.log(data);
-    console.log(isLoading);
-    
+
+  const exportMutation = useMutation({
+    mutationFn: () => exportHospitalBookings(hospitalId),
+    onSuccess: (data) => {
+      if (!data || !(data instanceof Blob)) {
+        toast.error("Failed to export data - invalid response format");
+        return;
+      }
+
+      const url = window.URL.createObjectURL(data);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `hospital_appointments_${
+        new Date().toISOString().split("T")[0]
+      }.xlsx`;
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      toast.success("Appointments exported successfully!");
+    },
+    onError: (error) => {
+      console.error("Export failed:", error);
+      toast.error("Failed to export appointments. Please try again.");
+    }
+  });
+
   const handleDownload = () => {
-    const doc = new jsPDF({
-      orientation: "portrait",
-      unit: "pt",
-      format: "a4",
-    });
-
-    const lineHeight = 14;
-    const margin = 40;
-    const lines = data.split("\n");
-
-    lines.forEach((line, index) => {
-      doc.text(line, margin, margin + index * lineHeight);
-    });
-
-    doc.save("hex_dump.pdf");
+    exportMutation.mutate();
   };
-
 
   return (
     <div className="form-group local-forms">
-      <Link to className="outlined-btn form-control" onClick={handleDownload}>
+      <Link
+        to="#"
+        className="outlined-btn form-control"
+        onClick={(e) => {
+          e.preventDefault();
+          handleDownload();
+        }}
+        style={{
+          opacity: exportMutation.isPending ? 0.6 : 1,
+          pointerEvents: exportMutation.isPending ? "none" : "auto",
+        }}
+      >
         <img src={exporticon} alt="" />
-        <span className="ms-2 me-2 text-primary">Export</span>
+        <span className="ms-2 me-2 text-primary">
+          {exportMutation.isPending ? "Exporting..." : "Export"}
+        </span>
       </Link>
     </div>
   );
