@@ -3,18 +3,24 @@ import DescriptionBox from "../../assests/DescriptionBox";
 import ImageBox from "../../assests/ImageBox";
 import { useAuth } from "../../../hooks/useAuth";
 import ServiceAppointmentTable from "./ServiceAppointmentTable";
+import { useHospitalAppointments } from "../../../hooks/appointments/useHospitalAppointments";
+import { useState } from "react";
+import { generateDateQuery } from "../../configs/generateDateQuery";
 
 function ServiceDetails({ data }) {
   console.log("Data", data);
   const { hospitalId } = useAuth();
-  console.log(hospitalId);
-
+  const [dateQuery,setDateQuery] =useState("")
+   console.log(hospitalId);
+  const query = dateQuery ? `type=service&hospital_service_id=${data.id}&${dateQuery}` : `type=service&hospital_service_id=${data.id}`
+  const {data: appointmentList, isLoading} = useHospitalAppointments(hospitalId, query);
   // const query =
   // const {} = useHospitalAppointments(hospitalId)
-  const appointmentList = [];
-  const isLoading = false;
+ 
   const handleDate = (date) => {
     console.log(date);
+    const query = generateDateQuery(date);
+    setDateQuery(query);
   };
   return (
     <div>

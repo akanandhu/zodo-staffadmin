@@ -97,7 +97,7 @@ function StaffTable(props) {
       // sorter: (a, b) => a.joiningDate.length - b.joiningDate.length,
     },
     {
-      title: "Department",
+      title: "Departments",
       dataIndex: "departments",
       key: "departments",
       render: (departments) => (
