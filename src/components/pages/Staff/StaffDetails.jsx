@@ -10,7 +10,6 @@ function StaffDetails() {
   const { id } = useParams();
   const { validId } = useValidateId(id);
   const { data: staff, isLoading } = useViewStaff(validId);
-  console.log(staff);
   console.log(isLoading)    
   
   const breadCrumpData = [

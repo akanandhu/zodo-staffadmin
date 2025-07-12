@@ -31,17 +31,16 @@ function ScheduleModal(props) {
 
   const handleTime = (time) => {
     setTimeslot(time);
-    console.log(time);
     
   };
 
   return (
     <Modal
       show={show}
-      onHide={handleClose}
-      className="custom-modal"
-      backdropClassName="hospital-modal-backdrop"
+      onHide={()=>handleClose()}
+      className="doctor-custom-modal"
       style={{ maxWidth: "none" }}
+      backdropClassName="hospital-modal-backdrop"
     >
       <Modal.Header closeButton className="border-0">
         <Modal.Title>
@@ -65,9 +64,13 @@ function ScheduleModal(props) {
         </Modal.Title>
       </Modal.Header>
 
-      <Modal.Body className="pt-0 pb-0">
+      <Modal.Body className="pt-0 pb-0"> 
         {requestDetails?.type === "consultation" && <ScheduleForm requestDetails={requestDetails} handleTime={handleTime} />}
         {requestDetails?.type === "service" && <ServiceScheduleForm requestDetails={requestDetails} handleTime={handleTime} />}
+        
+      </Modal.Body>
+
+      <Modal.Footer>
         <div className="d-flex justify-content-end ps-3 pe-3 pb-5 pt-5">
           <Button
             variant="primary"
@@ -77,7 +80,7 @@ function ScheduleModal(props) {
             Assign Now
           </Button>
         </div>
-      </Modal.Body>
+      </Modal.Footer>
     </Modal>
   );
 }

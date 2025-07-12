@@ -17,7 +17,6 @@ function DoctorTimeslot(props) {
   //     content: <Timeslots />,
   //   },
   // ];
-  console.log("Auto booking ", doctor?.auto_booking_enabled);
   
   const handleSlot = async () => {
     const data = {

@@ -24,7 +24,6 @@ function DoctorsTable(props) {
   const { hospitalId } = useAuth();
   const { data: doctorsData } = useDoctorsList(hospitalId);
   const { mutate, isLoading } = useDeleteDoctor();
-  console.log("Doctors data", doctorsData);
   const [doctorDetails, setDoctorDetails] = useState({});
   useEffect(() => {
     if (doctorsData) {

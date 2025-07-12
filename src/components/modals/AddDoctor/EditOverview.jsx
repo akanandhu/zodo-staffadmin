@@ -57,7 +57,6 @@ function EditOverview(props) {
       const joiningDate = toInputDateFormat(
         doctor?.registration_details?.joining_date
       );
-      console.log(doctor);
       
 
       methods.reset({
@@ -86,8 +85,6 @@ function EditOverview(props) {
   const onCreateDoctor = async (data) => {
     const departments = data?.departments?.map((item) => item.value);
     const specialisations = data?.specialisations?.map((item) => item.value);
-    console.log("Department ",departments);
-    console.log("Specialisation ",specialisations)
     const doctor = {
       name: data.doctorname,
       email: data.doctoremail,
@@ -106,7 +103,6 @@ function EditOverview(props) {
       work_start_date: data?.workstartDate,
       about: data?.about,
     };    
-    console.log("Doctor ",doctor);
     
     await mutate(
       { id: selectedDoctor, data: doctor },
@@ -122,7 +118,6 @@ function EditOverview(props) {
     );
     // methods.reset();
     // handleClose();
-    console.log(handleClose, mutate);
     
   };
 

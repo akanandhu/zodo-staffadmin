@@ -22,24 +22,24 @@ function Dashboard() {
   const { hospitalId } = useAuth();
   const { data: hospitalAnalytics, isLoading } =
     useHospitalAnalytics(hospitalId);
-  
+
   const dashboardTab = [
     {
       id: "appointment",
       title: "Appointment",
-      content: <AppointmentInfo data={hospitalAnalytics?.booking || {}}/>,
+      content: <AppointmentInfo data={hospitalAnalytics?.booking || {}} />,
       link: "appointment",
     },
     {
       id: "hospitalstaff",
       title: "Hospital Staff",
-      content: <HospitalStaf data={hospitalAnalytics?.user_counts || {}}/>,
+      content: <HospitalStaf data={hospitalAnalytics?.user_counts || {}} />,
       link: "staff",
     },
     {
       id: "fasttag",
       title: "Fasttag",
-      content: <FastTag data={hospitalAnalytics?.fast_tag || {}}/>,
+      content: <FastTag data={hospitalAnalytics?.fast_tag || {}} />,
       link: "fasttag",
     },
     // {
@@ -48,7 +48,7 @@ function Dashboard() {
     //   content: <HospitalStaffs />,
     // },
   ];
-  
+
   return (
     <Layout activeClassName="">
       <div className="page-wrapper">

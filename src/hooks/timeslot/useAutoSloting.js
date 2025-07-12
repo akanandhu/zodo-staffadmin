@@ -7,8 +7,7 @@ export const useAutoSloting = () => {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: updateAutoslot, // API function to create
-    onMutate: async (data) => {
-      console.log("On mutate data ",data);
+    onMutate: async () => {
       
       // Cancel any ongoing queries for hospitals to prevent race conditions
       await queryClient.cancelQueries({ queryKey: ["doctors"] });
@@ -18,7 +17,6 @@ export const useAutoSloting = () => {
     onSuccess: (data)=>{
       const doctor_id = data?.data?.id;
       toast.success(data?.message || "Auto booking setting updated successfully");
-      console.log("Success data ",data?.data?.id);
       queryClient.invalidateQueries({ queryKey: ["doctor", doctor_id] });
     },
     onError: (error, id, context) => {

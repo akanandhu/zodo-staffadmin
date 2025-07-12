@@ -4,9 +4,7 @@ import { Link, useSearchParams } from "react-router-dom";
 function FinanceTabs(props) {
   const { tabData } = props;
   const [searchParams] = useSearchParams();
-  const tab = searchParams.get('tab') || 'payout'
-  console.log(tab);
-  
+  const tab = searchParams.get('tab') || 'payout'  
   return (
     <>
       <div className="d-flex justify-content-between align-items-center">

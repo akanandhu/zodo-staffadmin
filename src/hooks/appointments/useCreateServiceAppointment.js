@@ -10,9 +10,7 @@ export const useCreteServiceAppointment = () => {
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: ["appointments"] });
     },
-    onSuccess: (data) => {
-      console.log("Response data");
-        
+    onSuccess: (data) => {        
       const message = data.message || "Appointment initiated successfully";
       queryClient.invalidateQueries(["appointments"]);
       toast.success(message);

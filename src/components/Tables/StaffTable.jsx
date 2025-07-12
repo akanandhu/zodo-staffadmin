@@ -36,9 +36,6 @@ function StaffTable(props) {
   };
 
   const handleView = (record) => {
-    // setSelectedDoctor(id);
-    // setDoctorDetails(record)
-    console.log(record);
     setStaffDetails(record);
     setShowView(true);
   };

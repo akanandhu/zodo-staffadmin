@@ -13,25 +13,25 @@ function Appointment() {
   // const { data: appointmentsList, isLoading } =
   //   useHospitalAppointments(hospitalId);
   // console.log(appointmentsList);
-    
-  const [show,setShow] = useState(false);  
-  const handleClose = ()=>{
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => {
     setShow(false);
-  }
-  const handleShow = ()=>{
-    setShow(true)
-  }
+  };
+  const handleShow = () => {
+    setShow(true);
+  };
   // const requestedList = appointmentsList?.filter(
   //   (item) => item.timeSlot === null && item.type !== "service"
-  // );  
+  // );
   const appointmentTab = [
     {
       id: "appointment",
       title: "Appoinment",
       content: (
         <Appointments
-          // appointments={appointmentsList ?? []}
-          // loading={isLoading}
+        // appointments={appointmentsList ?? []}
+        // loading={isLoading}
         />
       ),
       link: "appointment",
@@ -41,8 +41,8 @@ function Appointment() {
       title: "Requested",
       content: (
         <RequestedAppointments
-          // appointments={requestedList ?? []}
-          // loading={isLoading}
+        // appointments={requestedList ?? []}
+        // loading={isLoading}
         />
       ),
       link: "requested",
@@ -68,9 +68,16 @@ function Appointment() {
       <div className="page-wrapper">
         <div className="content">
           <Breadcrumb data={breadCrumpData} />
-          <AppointmentButtonTab tabData={appointmentTab} handleShow={handleShow}/>
-          <SideModal show={show} handleClose={handleClose} title="Add Appointment">
-            <CreateAppointment handleClose={handleClose}/>
+          <AppointmentButtonTab
+            tabData={appointmentTab}
+            handleShow={handleShow}
+          />
+          <SideModal
+            show={show}
+            handleClose={handleClose}
+            title="Add Appointment"
+          >
+            <CreateAppointment handleClose={handleClose} />
           </SideModal>
         </div>
       </div>

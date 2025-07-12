@@ -15,18 +15,14 @@ export const useAddDoctors = () => {
     onSuccess: (data) => {
       const message = data?.message || "Doctor added successfully";
       queryClient.invalidateQueries(["doctors",hospitalId]);
-      //   navigate("/manage-doctors");
-      console.log("Successs blovk");
-      
+      //   navigate("/manage-doctors");      
       toast.success(message);
     },
     onError: (error, id, context) => {
       // Rollback if there is an error
       if (context?.previousDoctors) {
         queryClient.setQueryData(["doctors"], context.previousDoctors);
-      }
-      console.log("Errror block");
-      
+      }      
       const errorMessage =
         error?.response?.data?.validationErrors ||
         error?.response?.data?.message ||

@@ -108,7 +108,7 @@ function StaffEditForm(props) {
           <div className="col-md-8">
             <ChooseFile handleFileURL={handleFileURL} fileURL={fileURL} />
           </div>
-          <div className="col-md-4 d-flex justify-content-end">
+          <div className="col-md-4 d-flex justify-content-md-end mt-md-0 mt-2">
             <select
               className="hospital-draft-btn text-primary status-select"
               onChange={(e) => setStatus(JSON.parse(e.target.value))}
@@ -258,7 +258,7 @@ function StaffEditForm(props) {
           </div>
         </div>
 
-        <div className="d-flex justify-content-end ps-3 pe-3 pb-5 pt-3">
+        <div className="d-flex justify-content-md-end  justify-content-center ps-md-3 pe-md-3 ps-0 pe-0 pb-5 pt-3">
           <Button variant="primary" className="ps-5 pe-5" type="submit">
             {userLoading && (
               <span

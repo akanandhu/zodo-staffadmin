@@ -288,7 +288,7 @@ function ConsultationAppointment({ handleClose }) {
         <WatchAppointmentChange />
 
         {/* 📤 Submit */}
-        <div className="d-flex justify-content-end ps-3 pe-3 pb-5 pt-3">
+        <div className="d-flex justify-content-md-end justify-content-center ps-3 pe-3 pb-5 pt-3">
           <Button variant="primary" className="ps-5 pe-5" type="submit">
             {appointmentLoading && (
               <span

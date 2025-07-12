@@ -28,13 +28,13 @@ function ServiceCard(props) {
       <Link to>
         <div className="card-body">
           <div className="row align-items-center hospital-card">
-            <div className="col-md-3">
+            <div className="col-3">
               <Link to="#">
                 <ImageBox
                   src={servicesData?.image}
                   alt="Service Image"
-                  width="75x"
-                  height="75px"
+                  width="100px"
+                  height="100%"
                 />
               </Link>
             </div>

@@ -20,9 +20,7 @@ function DepartmentCard(props) {
   };
   const handleCloseEditModal = ()=>{
     setShowEdit(false);
-  }
-  console.log("Department data ",data);
-  
+  }  
   return (
     <div className="dash-content dash-count flex-grow-1 department-card">
       <div className="row">

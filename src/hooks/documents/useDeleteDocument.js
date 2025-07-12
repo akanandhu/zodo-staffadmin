@@ -26,8 +26,6 @@ export const useDeleteDocument = (id) => {
       });
     },
     onError: (error, id, context) => {
-      console.log(error);
-
       const errotMessage =
         error?.response?.data?.message || "Failed to delete document";
       // Rollback if there is an error

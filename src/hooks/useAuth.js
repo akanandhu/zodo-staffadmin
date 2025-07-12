@@ -52,7 +52,6 @@ export const AuthProvider = ({ children }) => {
   const loginMutation = useMutation({
     mutationFn: login,
     onSuccess: (data) => {
-      console.log("Login ", data);
       if (data?.data?.user_type === "superAdmin") {
         const message = "Invalid credentials";
         toast.error(message, {

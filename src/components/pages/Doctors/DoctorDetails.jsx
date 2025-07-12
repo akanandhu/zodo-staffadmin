@@ -13,7 +13,6 @@ function DoctorDetails() {
 
   const { data: doctorsList } = useDoctorsList(hospital_id);
   const doctorDetails = doctorsList?.find((doctor) => doctor.id === id);
-  console.log("doctor details",doctorDetails?.id);
   
   const breadCrumpData = [
     {

@@ -8,12 +8,8 @@ import { useViewHospital } from "../../hooks/hospital/useViewHospital";
 
 function FastTag({ data }) {
   const { count, revenue } = data || {};
-  console.log("DATA ", data);
   const { hospitalId } = useAuth();
-  console.log(hospitalId);
-  const { data: hospitalData } = useViewHospital(hospitalId)
-  console.log(hospitalData);
-  
+  const { data: hospitalData } = useViewHospital(hospitalId);
   const basicInformation = [
     {
       id: 1,
@@ -43,7 +39,7 @@ function FastTag({ data }) {
       type: "currency",
     },
   ];
- const bookingType = [
+  const bookingType = [
     { value: "fast_tag", label: "Fasttag Booking" },
     { value: "normal", label: "Normal Booking" },
   ];

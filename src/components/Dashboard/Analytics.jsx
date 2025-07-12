@@ -9,13 +9,12 @@ function Analytics(props) {
   const [selectedOption, setSelectedOption] = useState(
     bookingType ? bookingType[0] : []
   );
-  console.log("Selected option ",selectedOption);
   const query = `type=${selectedOption.value}`
   const { data } = useAnalyticsData(query)
   const count = data?.reduce((acc, item) => acc + (item.count || 0), 0);
   
   return (
-    <>
+    <div className="card-box">
       <div className="row">
         <div className="col-12 col-md-12 col-lg-6 col-xl-12">
           <div className="card">
@@ -85,7 +84,7 @@ function Analytics(props) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

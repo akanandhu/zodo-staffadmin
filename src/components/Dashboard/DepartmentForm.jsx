@@ -24,8 +24,6 @@ function DepartmentForm(props) {
     methods.reset();
     // handleClose();
   };
-  console.log(isLoading);
-
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onCreateDepartment)}>

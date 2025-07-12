@@ -6,14 +6,6 @@ import { arrow_left, dr_profile, email_icon, phone_icon } from "../imagepath";
 function StaffView(props) {
   const { staffDetails } = props;
   const navigate = useNavigate();
-  // const [show, setShow] = useState(false);
-  // const [disableshow, setdisableShow] = useState(false);
-  // const [disable, setdisable] = useState(false);
-
-  // const handleTogglebtn = (e) => {
-  //   e.stopPropagation();
-  //   setdisableShow(true);
-  // };
   return (
     <div>
       <div className="card-box profile-header mt-3">

@@ -116,7 +116,6 @@ function EditHospitalForm() {
       const fileArray = [file1Details, file2Details, file3Details].filter(
         (file) => file.name && file.file
       );
-      console.log("File array ", fileArray);
 
       const hospital = {
         name: data?.hospitalName,

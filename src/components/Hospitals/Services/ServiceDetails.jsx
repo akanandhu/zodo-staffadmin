@@ -16,11 +16,9 @@ function ServiceDetails({ data }) {
   // const {} = useHospitalAppointments(hospitalId)
  
   const handleDate = (date) => {
-    console.log(date);
     const query = generateDateQuery(date);
     setDateQuery(query);
   };
-  console.log("SERVICE DATA ",data);
   
   const exportQuery = `?type=service&hospital_service_id=${data?.id}`
   return (

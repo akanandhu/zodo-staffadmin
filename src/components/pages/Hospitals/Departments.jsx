@@ -13,9 +13,7 @@ function Departments() {
   const [searchTerm, setSearchTerm] = useState("");
   const query = searchTerm ? `name=${searchTerm}` : "";  
   const { hospitalId } = useAuth();
-  const { data: departmentsList } = useDepartmentList(hospitalId, query);
-  console.log(departmentsList);
-  
+  const { data: departmentsList } = useDepartmentList(hospitalId, query);  
   const breadCrumpData = [
     {
       name: "Hospitals",

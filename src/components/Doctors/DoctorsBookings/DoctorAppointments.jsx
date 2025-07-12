@@ -90,7 +90,6 @@ function DoctorAppointments({ doctorDetails }) {
               </div>
             )}
           </div>
-            {console.log("Doctor details",doctorDetails)}
             
           <div className="mt-md-0 mt-3">
             <StatusBadge

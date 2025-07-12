@@ -9,8 +9,6 @@ function ServiceScheduleForm({ handleTime, requestDetails }) {
   const serviceId = requestDetails?.hospital_service_id ?? "";
   const { data: service, isLoading } = useViewService(serviceId);
   console.log("Service", service, isLoading);
-  // console.log(re);
-  console.log("Req details", requestDetails);
 
   return (
     <div>
@@ -42,6 +40,7 @@ function ServiceScheduleForm({ handleTime, requestDetails }) {
           </div>
         </div>
       )}
+      <h4 className="card-title mt-5">Available Time SLot</h4>
 
       <ServiceTimeSlot handleTime={handleTime}/>
       

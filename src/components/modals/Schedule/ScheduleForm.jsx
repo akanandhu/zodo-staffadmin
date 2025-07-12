@@ -10,8 +10,6 @@ import CircularImage from "../../assests/CircularImage";
 import { user_profile } from "../../imagepath";
 function ScheduleForm(props) {
   const { requestDetails, handleTime } = props;
-  console.log("Request details", requestDetails);
-
   const { hospitalId } = useAuth();
   const methods = useForm();
   // const [doctor, setDoctor] = useState(requestDetails.doctorId ?? "");

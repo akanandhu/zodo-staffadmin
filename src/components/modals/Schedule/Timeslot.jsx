@@ -4,7 +4,6 @@ import { formatTime } from "../../configs/formatTime";
 import ComponentLoader from "../../loaders/ComponentLoader";
 
 function Timeslot({ slots, handelTimeslot, loading }) {
-  console.log("Slots", slots);
   const filteredSlots = slots.filter((slot) => slot.isAvailable);
   return (
     <div className="mt-3">
