@@ -7,22 +7,18 @@ const DescriptionBox = ({ text }) => {
   const descriptionRef = useRef(null);
 
   useEffect(() => {
-    const checkHeight = () => {
-      const el = descriptionRef.current;
-      if (!el) return;
+    const el = descriptionRef.current;
+    if (!el) return;
 
-      const lineHeight = parseFloat(getComputedStyle(el).lineHeight);
-      const maxLines = 3;
-      const maxHeight = lineHeight * maxLines;
-
-      if (el.scrollHeight > maxHeight) {
-        setShowButton(true);
-      }
+    const checkOverflow = () => {
+      const isOverflowing = el.scrollHeight > el.clientHeight;
+      setShowButton(isOverflowing);
     };
 
-    checkHeight();
-    window.addEventListener("resize", checkHeight);
-    return () => window.removeEventListener("resize", checkHeight);
+    checkOverflow();
+    window.addEventListener("resize", checkOverflow);
+
+    return () => window.removeEventListener("resize", checkOverflow);
   }, [text]);
 
   const toggleExpand = () => setExpanded((prev) => !prev);
@@ -33,7 +29,7 @@ const DescriptionBox = ({ text }) => {
         className={`description-box ${expanded ? "expanded" : ""}`}
         ref={descriptionRef}
       >
-        <p>{text}</p>
+        <p className="mb-0">{text}</p>
       </div>
       {showButton && (
         <button
@@ -47,7 +43,6 @@ const DescriptionBox = ({ text }) => {
     </div>
   );
 };
-
 DescriptionBox.propTypes = {
   text: PropTypes.string.isRequired,
 };

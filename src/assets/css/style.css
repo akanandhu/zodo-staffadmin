@@ -12012,6 +12012,8 @@ tr.ant-table-row.ant-table-row-level-0.ant-table-row-selected,
   font-weight: 600;
 }
 
+
+
 .payment-request-form-container{
   height: 42vh;
 }
@@ -12107,7 +12109,6 @@ tr.ant-table-row.ant-table-row-level-0.ant-table-row-selected,
   -webkit-box-orient: vertical;
   white-space: normal;
   transition: all 0.3s ease;
-  min-height: 10vh;
 }
 
 .description-box.expanded {
@@ -12139,5 +12140,13 @@ tr.ant-table-row.ant-table-row-level-0.ant-table-row-selected,
 
 .timeslot-container p{
   font-size: 0.85rem;
+  color: gray;
+}
+
+.service-details h6{
+  font-size: 1.12rem;
+}
+.service-details p{
+  font-size: 0.90rem;
   color: gray;
 }

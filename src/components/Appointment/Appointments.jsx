@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import TransparentTabs from "../tabs/TransparentTabs";
 import AppointmentTable from "./AppointmentTable";
 import { useAuth } from "../../hooks/useAuth";

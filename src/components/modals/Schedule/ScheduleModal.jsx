@@ -1,13 +1,11 @@
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import ScheduleForm from "./ScheduleForm";
-import CircularImage from "../../assests/CircularImage";
-import { user_profile } from "../../imagepath";
 import { useAssignAppointments } from "../../../hooks/appointments/useAssignAppointment";
 
 function ScheduleModal(props) {
-  const { show, setShow, requestDetails } = props;
+  const { show, setShow, requestDetails} = props;
   const { mutate } = useAssignAppointments();
   const [timeSlot, setTimeslot] = useState(null);
   const handleClose = () => {
@@ -50,24 +48,24 @@ function ScheduleModal(props) {
           <div>
             <div className="d-flex justify-content-center ps-5"></div>
             <div className="d-flex align-items-center">
-              <div className="schedule-profile">
+              {/* <div className="schedule-profile">
                 <CircularImage
                   src={requestDetails?.profilePicture ?? user_profile}
                   alt="user"
                   size={80}
                   fallback={user_profile}
                 />
-              </div>
+              </div> */}
               <div className="schedule-modal">
                 <div className="d-flex">
                   <h5>{requestDetails?.patientname}</h5>
-                  <div
+                  {/* <div
                     className={`delete-badge ms-5 ${
                       requestDetails?.isFasttag ? "status-green" : "status-grey"
                     }`}
                   >
                     Fasttag
-                  </div>
+                  </div> */}
                 </div>
                 <small>
                   {requestDetails?.age}
@@ -84,7 +82,6 @@ function ScheduleModal(props) {
       <Modal.Body className="pt-0 pb-0">
         <ScheduleForm requestDetails={requestDetails} handleTime={handleTime} />
         <div className="d-flex justify-content-end ps-3 pe-3 pb-5 pt-5">
-          
           <Button
             variant="primary"
             onClick={handelAssignment}
@@ -99,9 +96,9 @@ function ScheduleModal(props) {
 }
 
 ScheduleModal.propTypes = {
-  show: PropTypes.node,
-  setShow: PropTypes.node,
-  requestDetails: PropTypes.node,
+  show: PropTypes.bool,
+  setShow: PropTypes.func,
+  requestDetails: PropTypes.object,
 };
 
 export default ScheduleModal;

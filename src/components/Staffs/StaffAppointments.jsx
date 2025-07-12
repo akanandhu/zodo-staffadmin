@@ -8,6 +8,7 @@ import DoctorAppointmentTable from "../Appointment/DoctorAppointmentTable";
 import { useHospitalAppointments } from "../../hooks/appointments/useHospitalAppointments";
 import { useAuth } from "../../hooks/useAuth";
 import { generateDateQuery } from "../configs/generateDateQuery";
+import ServiceAppointmentTable from "../Hospitals/Services/ServiceAppointmentTable";
 
 function StaffAppointments({ staffDetails }) {
     const{hospitalId} = useAuth();
@@ -97,7 +98,7 @@ function StaffAppointments({ staffDetails }) {
       </div>
       <div className="ms-2 me-2 mt-4">
         <h4>Appointments</h4>
-        <DoctorAppointmentTable
+        <ServiceAppointmentTable
           appointmentList={appointmentList}
           loading={isLoading}
           handleDate={handleDate}

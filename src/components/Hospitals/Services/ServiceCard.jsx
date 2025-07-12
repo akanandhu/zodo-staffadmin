@@ -7,8 +7,8 @@ import useDeleteHospitalServices from "../../../hooks/hospital-services/useDelet
 import CenteredModal from "../../modals/CenteredModal";
 import EditServiceForm from "../../modals/AddService/EditServiceForm";
 import ImageBox from "../../assests/ImageBox";
-import ServiceModal from "./ServiceModal";
 import ServiceDetails from "./ServiceDetails";
+import SideModal from "../../modals/SideModal";
 function ServiceCard(props) {
   const { servicesData } = props;
   const [show, setShow] = useState(false);
@@ -51,43 +51,6 @@ function ServiceCard(props) {
                   <img src={three_dots_menu} alt="" width={15} height={15} />
                 </Link>
                 <div className="dropdown-menu">
-                  {/* <Link
-                    className="dropdown-item"
-                    onClick={() => setShowEdit(true)}
-                  >
-                    <img
-                      src={pencil_icon}
-                      alt="edit"
-                      className="dropdown-menu-icon"
-                    />
-                    <span>Edit</span>
-                  </Link>
-                  <div className="dropdown-divider" />
-                  <Link
-                    className="dropdown-item"
-                    onClick={() => setShowEdit(true)}
-                  >
-                    <img
-                      src={pencil_icon}
-                      alt="edit"
-                      className="dropdown-menu-icon"
-                    />
-                    <span>Edit</span>
-                  </Link>
-                  <div className="dropdown-divider" />
-                  <Link
-                    className="dropdown-item"
-                    to="#"
-                    onClick={() => setShow(true)}
-                  >
-                    <img
-                      src={bin_icon_red}
-                      alt="delete"
-                      className="dropdown-menu-icon"
-                    />
-                    <span className="text-danger">Delete</span>
-                  </Link> */}
-
                   <Link
                     className="dropdown-item"
                     to
@@ -126,10 +89,10 @@ function ServiceCard(props) {
 
             <div className="row mt-2">
               <div className="col text-secondary align-middle">
-                <p>TOTAL FAST TAG</p>
+                <p>DAILY BOOKINGS COUNT</p>
               </div>
               <div className="col-auto">
-                <h5>0</h5>
+                <h5>{servicesData?.daily_booking_count}</h5>
               </div>
             </div>
             <div className="row mt-2">
@@ -170,13 +133,13 @@ function ServiceCard(props) {
         />
       </CenteredModal>
 
-      <ServiceModal
+      <SideModal
         show={showService}
         handleClose={() => setShowService(false)}
-        title={servicesData?.name || "Service Details"}
+        title={"Service Details"}
       >
         <ServiceDetails data={servicesData} />
-      </ServiceModal>
+      </SideModal>
     </div>
   );
 }

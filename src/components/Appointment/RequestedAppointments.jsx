@@ -2,19 +2,36 @@ import { useState } from "react";
 import DataTable from "../Tables/DataTable";
 import ScheduleModal from "../modals/Schedule/ScheduleModal";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
 import { formatDate } from "../configs/formatDate";
-function RequestedAppointments(props) {
-  const { appointments, loading } = props;
+import { useHospitalAppointments } from "../../hooks/appointments/useHospitalAppointments";
+import { useAuth } from "../../hooks/useAuth";
+import DateSearchHero from "../heros/DateSearchHero";
+import { generateDateQuery } from "../configs/generateDateQuery";
+function RequestedAppointments() {
+  const { hospitalId } = useAuth();
+  const [dateQuery, setDatequery] = useState(null);
+  const { data: appointmentsList, isLoading } = useHospitalAppointments(
+    hospitalId,
+    dateQuery
+  );
+
+  const requestedList =
+    appointmentsList &&
+    appointmentsList?.filter(
+      (item) => item.timeSlot === null && item.type === "service"
+    );
+
+  console.log("Requested list ",requestedList);
+    
   const [show, setShow] = useState(false);
   const [requestDetails, setRequestDetails] = useState({});
 
   const handleSchedule = (record) => {
     const detail = {
-      patientname: record?.user?.first_name,
-      age: record?.user?.age,
-      gender: record?.user?.gender,
-      mobile: record?.user?.phone,
+      patientname: record?.user_details?.name || record?.user?.first_name,
+      age: record?.user_details?.age || record?.user?.age,
+      gender: record?.user_details?.gender || record?.user?.gender,
+      mobile: record?.user_details?.phone_number || record?.user?.phone,
       isFasttag: record?.is_fast_tag,
       profilePicture: record?.user?.profile_picture,
       bookingId: record?.id,
@@ -23,13 +40,11 @@ function RequestedAppointments(props) {
     setRequestDetails(detail);
     setShow(true);
   };
-  console.log("Request details",appointments)
 
   const columns = [
     {
       title: "Booking ID",
       dataIndex: "booking_id",
-      // sorter: (a, b) => a.bookingid.length - b.bookingid.length,
     },
     {
       title: "Patient Name",
@@ -68,9 +83,16 @@ function RequestedAppointments(props) {
       render: (item, record) => <div>{record?.user?.phone}</div>,
     },
     {
-      title: "Action",
-      dataIndex: "action",
+      title: <div className="text-center">Action</div>,
+      dataIndex: "",
       render: (item, record) => (
+        record?.type === "fast_tag" ?
+        
+        <div className="text-center">N/A</div>
+        
+        :
+        <div className="d-flex justify-content-center">
+
         <Link
           to="?tab=requested"
           className="hospital-add-btn rounded-pill ms-md-1 text-white schedule-btn"
@@ -79,15 +101,24 @@ function RequestedAppointments(props) {
         >
           Schedule Now
         </Link>
+          </div>
       ),
     },
   ];
+
+  const handleDate = (date) => {
+    console.log(date);
+    const query = generateDateQuery(date);
+    setDatequery(query);
+  };
   return (
     <div className="card-box mt-3">
+      <DateSearchHero handleDate={handleDate} type="hospital-bookings" />
+
       <DataTable
         columns={columns}
-        dataSource={appointments}
-        loading={loading}
+        dataSource={requestedList || []}
+        loading={isLoading}
       />
       <ScheduleModal
         show={show}
@@ -97,10 +128,5 @@ function RequestedAppointments(props) {
     </div>
   );
 }
-
-RequestedAppointments.propTypes = {
-  appointments: PropTypes.array,
-  loading: PropTypes.bool,
-};
 
 export default RequestedAppointments;

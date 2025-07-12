@@ -14,19 +14,6 @@ function ScheduleForm(props) {
   const { hospitalId } = useAuth();
   const methods = useForm();
   const [doctor, setDoctor] = useState(requestDetails.doctorId ?? "");
-  // const { data: departmentList, isLoading: departmentLoading } =
-  //   useDepartmentList(hospitalId);
-
-  // const departmentOptions = departmentList?.map((item) => ({
-  //   value: item.id,
-  //   label: item.name,
-  // }));
-  // const department = [
-  //   { value: "ent", label: "ENT" },
-  //   { value: "gynaecology", label: "Gynaecology" },
-  //   { value: "pediatry", label: "Pediatry" },
-  //   { value: "cardiology", label: "Cardiology" },
-  // ];
   const { data: doctorsList, isLoading: doctorLoading } =
     useDoctorsList(hospitalId);
   const query = doctor ? `doctor_id=${doctor}` : "";
@@ -50,9 +37,6 @@ function ScheduleForm(props) {
   console.log("Doctor ID: ", timeslotLoading);
   if (!timeslots) <div>Loading</div>;
   const { morning, evening, afternoon } = categorizeSlots(timeslots || []);
-  console.log("Morning Slots: ", morning);
-  console.log("Afternoon Slots: ", afternoon);
-  console.log("Evening Slots: ", evening);
   const handelTimeslot = (slot) => {
     handleTime(slot);
   };

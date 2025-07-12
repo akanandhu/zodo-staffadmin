@@ -3,18 +3,16 @@ import Breadcrumb from "../../breadcrump/Breadcrumb";
 import RequestedAppointments from "../../Appointment/RequestedAppointments";
 import AppointmentFasttags from "../../Appointment/AppointmentFasttags";
 import Appointments from "../../Appointment/Appointments";
-import { useAuth } from "../../../hooks/useAuth";
-import { useHospitalAppointments } from "../../../hooks/appointments/useHospitalAppointments";
 import AppointmentButtonTab from "../../tabs/AppointmentButtonTab";
 import SideModal from "../../modals/SideModal";
 import { useState } from "react";
 import CreateAppointment from "../../Appointment/CreateAppointment";
 // import Appointments from '../../Appointment/Appointments'
 function Appointment() {
-  const { hospitalId } = useAuth();
-  const { data: appointmentsList, isLoading } =
-    useHospitalAppointments(hospitalId);
-  console.log(appointmentsList);
+  // const { hospitalId } = useAuth();
+  // const { data: appointmentsList, isLoading } =
+  //   useHospitalAppointments(hospitalId);
+  // console.log(appointmentsList);
     
   const [show,setShow] = useState(false);  
   const handleClose = ()=>{
@@ -23,17 +21,17 @@ function Appointment() {
   const handleShow = ()=>{
     setShow(true)
   }
-  const requestedList = appointmentsList?.filter(
-    (item) => item.timeSlot === null && item.type !== "service"
-  );  
+  // const requestedList = appointmentsList?.filter(
+  //   (item) => item.timeSlot === null && item.type !== "service"
+  // );  
   const appointmentTab = [
     {
       id: "appointment",
       title: "Appoinment",
       content: (
         <Appointments
-          appointments={appointmentsList ?? []}
-          loading={isLoading}
+          // appointments={appointmentsList ?? []}
+          // loading={isLoading}
         />
       ),
       link: "appointment",
@@ -43,8 +41,8 @@ function Appointment() {
       title: "Requested",
       content: (
         <RequestedAppointments
-          appointments={requestedList ?? []}
-          loading={isLoading}
+          // appointments={requestedList ?? []}
+          // loading={isLoading}
         />
       ),
       link: "requested",

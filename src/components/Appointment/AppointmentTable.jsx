@@ -63,13 +63,13 @@ function AppointmentTable(props) {
       ),
     },
     {
-      title: "Assigned Doctor",
+      title: <div className="text-center">Assigned Doctor</div>,
       dataIndex: "assingned",
       render: (_item, record) =>
         record?.doctor?.name ? (
-          <div>Dr.{record?.doctor?.name}</div>
+          <div className="text-start">Dr.{record?.doctor?.name}</div>
         ) : (
-          <div>unassigned</div>
+          <div className="text-center">N/A</div>
         ),
     },
 
@@ -157,6 +157,7 @@ function AppointmentTable(props) {
                   className="dropdown-item"
                   // to={`${record.id}`}
                   onClick={() => handleAppointment(record.id)}
+                  disabled={record?.status === "completed"}
                 >
                   <i className="fa fa-check me-2" />
                   Approve
