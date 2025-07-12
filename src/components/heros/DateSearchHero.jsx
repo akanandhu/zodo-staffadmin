@@ -6,13 +6,13 @@ import ServiceAppointments from "../Appointment/ServiceAppointments";
 const { RangePicker } = DatePicker;
 
 function DateSearchHero(props) {
-  const { handleDate, type, id } = props;
+  const { handleDate, type, id, query } = props;
   return (
     <div className="row mt-4">
       <div className="col-12 col-md-6 col-xl-4">
         <div className="form-group">
           <RangePicker
-          format="DD/MM/YYYY"
+            format="DD/MM/YYYY"
             // showTime
             onChange={(date) => handleDate(date)}
             // suffixIcon={null}
@@ -23,11 +23,9 @@ function DateSearchHero(props) {
       </div>
 
       <div className="col-12 col-md-6 col-xl-3">
-        {type === "hospital-bookings" &&   <ExportHospitalAppointments />}
-        {type === "doctor-booking" && <ExportDoctorAppointments id={id}/>}
-        {type === "service-booking" && <ServiceAppointments id={id}/>}
-
-
+        {type === "hospital-bookings" && <ExportHospitalAppointments  query={query}/>}
+        {type === "doctor-booking" && <ExportDoctorAppointments id={id} />}
+        {type === "service-booking" && <ServiceAppointments id={id} />}
       </div>
     </div>
   );
@@ -37,7 +35,8 @@ function DateSearchHero(props) {
 DateSearchHero.propTypes = {
   handleDate: PropTypes.func.isRequired,
   type: PropTypes.string,
-  id: PropTypes.string
+  id: PropTypes.string,
+  query: PropTypes.string,
 };
 
 export default DateSearchHero;

@@ -34,7 +34,7 @@ function StaffAppointments({ staffDetails }) {
     // setDate(date);
   };
   console.log("Staff details ",staffDetails);
-  
+  const exportQuery = staffDetails?.id ? `?created_by=${staffDetails?.id}` : ""
   return (
     <div>
       <div>
@@ -101,6 +101,7 @@ function StaffAppointments({ staffDetails }) {
           appointmentList={appointmentList}
           loading={isLoading}
           handleDate={handleDate}
+          query={exportQuery}
         />
       </div>
     </div>

@@ -197,7 +197,7 @@ function StaffTable(props) {
         handleClose={handleClose}
         title="Staff Details"
       >
-        <StaffAppointments staffDetails={staffDetails} />
+        <StaffAppointments staffDetails={staffDetails}/>
       </SideModal>
     </div>
   );

@@ -8,10 +8,8 @@ import { useState } from "react";
 import { generateDateQuery } from "../../configs/generateDateQuery";
 
 function ServiceDetails({ data }) {
-  console.log("Data", data);
   const { hospitalId } = useAuth();
   const [dateQuery,setDateQuery] =useState("")
-   console.log(hospitalId);
   const query = dateQuery ? `type=service&hospital_service_id=${data.id}&${dateQuery}` : `type=service&hospital_service_id=${data.id}`
   const {data: appointmentList, isLoading} = useHospitalAppointments(hospitalId, query);
   // const query =
@@ -22,6 +20,9 @@ function ServiceDetails({ data }) {
     const query = generateDateQuery(date);
     setDateQuery(query);
   };
+  console.log("SERVICE DATA ",data);
+  
+  const exportQuery = `?type=service&hospital_service_id=${data?.id}`
   return (
     <div>
       <div>
@@ -74,6 +75,7 @@ function ServiceDetails({ data }) {
             appointmentList={appointmentList}
             loading={isLoading}
             handleDate={handleDate}
+            query={exportQuery}
           />
         </div>
       </div>

@@ -12,7 +12,7 @@ import ConfirmModal from "../modals/ConfirmModal";
 import { useState } from "react";
 
 function AppointmentTable(props) {
-  const { appointmentList, loading, handleDate } = props;
+  const { appointmentList, loading, handleDate, query } = props;
   // const [prescriptionUrl, setPrescriptionUrl] = useState("");
   const { mutate } = useApproveAppointment();
   const [showApprove, setShowApprove] = useState(false);
@@ -186,7 +186,7 @@ function AppointmentTable(props) {
   ];
   return (
     <div>
-      <DateSearchHero handleDate={handleDate} type="hospital-bookings" />
+      <DateSearchHero handleDate={handleDate} type="hospital-bookings" query={query}/>
       <DataTable
         columns={columns}
         dataSource={appointmentList ?? []}
@@ -210,6 +210,7 @@ AppointmentTable.propTypes = {
   appointmentList: PropTypes.node,
   loading: PropTypes.bool,
   handleDate: PropTypes.func,
+  query: PropTypes.string,
 };
 
 export default AppointmentTable;

@@ -47,9 +47,9 @@ export const createOfflineServiceAppointment = async (data) => {
   return response?.data?.data;
 };
 
-export const exportHospitalBookings = async (hospital_id) => {
+export const exportHospitalBookings = async (hospital_id, query="") => {
   const response = await apiClient.get(
-    `/bookings/hospital/${hospital_id}/export`,
+    `/bookings/hospital/${hospital_id}/export${query}`,
     {
       responseType: 'blob',
     }

@@ -4,11 +4,15 @@ import { useAuth } from "../../hooks/useAuth";
 import { useMutation } from "@tanstack/react-query";
 import { exportHospitalBookings } from "../../apis/appointments";
 import { toast } from "react-toastify";
+import PropTypes from "prop-types";
+import { useViewHospital } from "../../hooks/hospital/useViewHospital";
 
-function ExportHospitalAppointments() {
+function ExportHospitalAppointments({ query }) {
   const { hospitalId } = useAuth();
+  const { data: hospital } = useViewHospital(hospitalId);
+  const hospitalName = hospital.name ?? "";
   const exportMutation = useMutation({
-    mutationFn: () => exportHospitalBookings(hospitalId),
+    mutationFn: () => exportHospitalBookings(hospitalId, query),
     onSuccess: (data) => {
       if (!data || !(data instanceof Blob)) {
         toast.error("Failed to export data - invalid response format");
@@ -18,7 +22,7 @@ function ExportHospitalAppointments() {
       const url = window.URL.createObjectURL(data);
       const link = document.createElement("a");
       link.href = url;
-      link.download = `hospital_appointments_${
+      link.download = `${hospitalName}_appointments_${
         new Date().toISOString().split("T")[0]
       }.xlsx`;
 
@@ -32,7 +36,7 @@ function ExportHospitalAppointments() {
     onError: (error) => {
       console.error("Export failed:", error);
       toast.error("Failed to export appointments. Please try again.");
-    }
+    },
   });
 
   const handleDownload = () => {
@@ -61,5 +65,10 @@ function ExportHospitalAppointments() {
     </div>
   );
 }
+
+// validate props
+ExportHospitalAppointments.propTypes = {
+  query: PropTypes.string,
+};
 
 export default ExportHospitalAppointments;

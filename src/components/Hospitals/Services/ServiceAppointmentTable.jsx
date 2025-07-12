@@ -8,7 +8,7 @@ import DateSearchHero from "../../heros/DateSearchHero";
 import DataTable from "../../Tables/DataTable";
 
 function ServiceAppointmentTable(props) {
-  const { appointmentList, loading, handleDate } = props;
+  const { appointmentList, loading, handleDate, query } = props;
   const columns = [
     {
       title: "Booking ID",
@@ -75,7 +75,7 @@ function ServiceAppointmentTable(props) {
   ];
   return (
     <div>
-      <DateSearchHero handleDate={handleDate} type="service-bookings"/>
+      <DateSearchHero handleDate={handleDate} type="hospital-bookings" query={query}/>
       <DataTable
         columns={columns}
         dataSource={appointmentList ?? []}
@@ -88,6 +88,7 @@ ServiceAppointmentTable.propTypes = {
   appointmentList: PropTypes.node,
   loading: PropTypes.bool,
   handleDate: PropTypes.func,
+  query: PropTypes.string
 };
 
 export default ServiceAppointmentTable;

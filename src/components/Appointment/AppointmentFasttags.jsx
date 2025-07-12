@@ -23,6 +23,7 @@ function AppointmentFasttags() {
   const completed = appointmentList?.filter(
     (item) => item.status === "completed"
   );
+  const fasttagQuery = `?type=fast_tag`
   const appointmentRequestTab = [
     {
       id: "allFasttagAppointments",
@@ -32,6 +33,7 @@ function AppointmentFasttags() {
           appointmentList={appointmentList}
           loading={isLoading}
           handleDate={handleDate}
+          query={fasttagQuery}
         />
       ),
       link: "all",
@@ -45,6 +47,7 @@ function AppointmentFasttags() {
           appointmentList={onGoing}
           loading={isLoading}
           handleDate={handleDate}
+          query={fasttagQuery}
         />
       ),
       link: "ongoing",
@@ -58,6 +61,8 @@ function AppointmentFasttags() {
           appointmentList={completed}
           loading={isLoading}
           handleDate={handleDate}
+          query={fasttagQuery}
+
         />
       ),
       link: "completed",
