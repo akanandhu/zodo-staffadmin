@@ -57,15 +57,18 @@ function CreateDoctorForm(props) {
       work_start_date: data?.workstartDate,
       about: data?.about,
     };
-    await mutate(doctor);
-    methods.reset();
-    handleClose();
+    await mutate(doctor, {
+      onSuccess: () => {
+        methods.reset();
+        handleClose();
+      },
+    });
   };
 
   const handleFileURL = (url) => {
     setFileURL(url);
   };
-  
+
   return (
     <div className="bg-white rounded p-4">
       <div className="row">
@@ -165,8 +168,6 @@ function CreateDoctorForm(props) {
             </div>
           </div>
 
-          
-
           <div className="row">
             <div className="form-group col-12">
               <TextArea
@@ -229,7 +230,6 @@ function CreateDoctorForm(props) {
             </div>
           </div>
           <div className="d-flex justify-content-end ps-3 pe-3 pb-5 pt-3">
-            
             <Button variant="primary" type="submit" className="ps-5 pe-5">
               {isLoading && (
                 <span

@@ -68,7 +68,7 @@ function Overview(props) {
       onSuccess: () => {
         methods.reset();
         handleClose();
-      },
+      }
     });
     // methods.reset();
     // handleClose();

@@ -14,19 +14,20 @@ export const useAddDoctors = () => {
     },
     onSuccess: (data) => {
       const message = data?.message || "Doctor added successfully";
-      queryClient.invalidateQueries(["doctors",hospitalId]);
-      //   navigate("/manage-doctors");      
+      queryClient.invalidateQueries(["doctors", hospitalId]);
+      //   navigate("/manage-doctors");
       toast.success(message);
     },
     onError: (error, id, context) => {
+      const errorMessage =
+        error?.response?.data?.message || "Failed to create doctor";
       // Rollback if there is an error
       if (context?.previousDoctors) {
-        queryClient.setQueryData(["doctors"], context.previousDoctors);
-      }      
-      const errorMessage =
-        error?.response?.data?.validationErrors ||
-        error?.response?.data?.message ||
-        "Failed to create doctor";
+        queryClient.setQueryData(
+          ["doctors", hospitalId],
+          context.previousDoctors
+        );
+      }
       toast.error(errorMessage);
     },
   });

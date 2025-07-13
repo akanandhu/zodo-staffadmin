@@ -13,15 +13,7 @@ export const useAddDepartment = (hospitalId) => {
     onSuccess: (data) => {
       const message = data.message || "Department added successfully";
       queryClient.invalidateQueries(["departments", hospitalId]);
-      toast.success(message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.success(message);
     },
     onError: (error, id, context) => {
       const errorMessage =
@@ -33,15 +25,7 @@ export const useAddDepartment = (hospitalId) => {
           context.previousDepartments
         );
       }
-      toast.error(errorMessage, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.error(errorMessage);
     },
   });
 

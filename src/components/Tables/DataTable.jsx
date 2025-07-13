@@ -14,7 +14,7 @@ const DataTable = (props) => {
           itemRender: itemRender,
         }}
         columns={columns}
-        dataSource={dataSource}
+        dataSource={dataSource || []}
         loading={loading}
         // rowSelection={rowSelection}
         // rowKey={(record) => record.id}

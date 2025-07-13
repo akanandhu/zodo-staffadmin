@@ -55,7 +55,7 @@ function DoctorManage() {
       </div>
 
       <SideModal show={show} handleClose={handleCloseModal} title="Doctor Profile">
-        <Overview />
+        <Overview handleClose={handleCloseModal}/>
       </SideModal>
     </Layout>
   );

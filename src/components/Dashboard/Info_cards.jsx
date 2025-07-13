@@ -1,6 +1,5 @@
 import CountUp from "react-countup";
 import PropTypes from "prop-types";
-import FasttagToggle from "../FasttagRevenue/FasttagToggle";
 
 function InfoCards(props) {
   const { info } = props;
@@ -32,7 +31,8 @@ function InfoCards(props) {
                   </h2>
                 ) : (
                   <div className="fasttag-toggle">
-                    <FasttagToggle toggleFasttag={item.count} />
+                    <h6>{item.count ? <span className="text-primary fasttag-status">Active</span>: <div className="text-secondary fasttag-status">Disabled</div>}</h6>
+                    {/* <FasttagToggle toggleFasttag={item.count} /> */}
                   </div>
                 )}
                 {/* <p>

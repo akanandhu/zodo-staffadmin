@@ -6,6 +6,7 @@ import ButtonTabs from "../../tabs/ButtonTabs";
 import { useAuth } from "../../../hooks/useAuth";
 import { useHospitalAnalytics } from "../../../hooks/hospital/useHospitalAnalytics";
 import FullscreenLoader from "../../loaders/FullscreenLoader";
+import Settlements from "../../Finance/Settlements";
 function Finance() {
   const { hospitalId } = useAuth();
   const { data: hospitalAnalytics, isLoading } =
@@ -21,6 +22,7 @@ function Finance() {
   const financeTab = [
     { id: "payout", title: "Payout", content: <Payout data={hospitalAnalytics}/>, link: "payout" },
     { id: "history", title: "History", content: <History />, link: "history" },
+    { id: "settlements", title: "settlements", content: <Settlements />, link: "settlements" },
   ];
   return (
     <Layout activeClassName="finance" id="menu-item5" id1="menu-items5">

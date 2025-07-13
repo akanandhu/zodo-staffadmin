@@ -53,7 +53,7 @@ function Payout({ data }) {
     },
     {
       id: 6,
-      title: "Next Settlement Date",
+      title: "Intitiate Settlement Request",
       icon: fasttag,
       count: 121,
       percentageUp: 40,

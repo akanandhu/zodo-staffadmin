@@ -4,6 +4,7 @@ import ExportHospitalAppointments from "../Appointment/ExportHospitalAppointment
 import ExportDoctorAppointments from "../Appointment/ExportDoctorAppointments";
 import ServiceAppointments from "../Appointment/ServiceAppointments";
 import { useSearchParams } from "react-router-dom";
+import ExportHospitalSettlements from "../Finance/ExportHospitalSettlements";
 const { RangePicker } = DatePicker;
 
 function DateSearchHero(props) {
@@ -30,8 +31,11 @@ function DateSearchHero(props) {
           <ExportHospitalAppointments query={query} />
         )}
         {type === "doctor-booking" && <ExportDoctorAppointments id={id} />}
-        {type === "service-booking" && <ServiceAppointments id={id} />}
-        {type === "settlement" && <ServiceAppointments />}
+        {type === "service-booking" && (
+          <ServiceAppointments id={id} query={query} />
+        )}
+        {type === "transaction" && <ServiceAppointments query={query} />}
+        {type === "settlement" && <ExportHospitalSettlements query={query} />}
       </div>
     </div>
   );

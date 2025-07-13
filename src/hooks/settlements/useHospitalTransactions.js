@@ -3,9 +3,9 @@ import {
   getHospitalTransactions
 } from "../../apis/settlement";
 
-export const useSettlementList = (hospital_id, query) => {
+export const useHospitalTransactions = (hospital_id, query) => {
   return useQuery({
-    queryKey: ["settlements", hospital_id, query], // Unique query key
+    queryKey: ["transactions", hospital_id, query], // Unique query key
     queryFn: () => getHospitalTransactions(hospital_id, query),
     enabled: !!hospital_id
   });

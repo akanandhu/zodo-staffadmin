@@ -1,20 +1,20 @@
 import PropTypes from "prop-types";
-import React from "react";
 import { Button } from "react-bootstrap";
 import { FormProvider, useForm } from "react-hook-form";
 import InputField from "../../Inputfields/InputField";
 import { useInitiateSettlement } from "../../../hooks/settlements/useInitiateSettlement";
 import { useAuth } from "../../../hooks/useAuth";
 import { useEffect } from "react";
-import { useSettlementList } from "../../../hooks/settlements/useSettlementList";
+import { useHospitalTransactions } from "../../../hooks/settlements/useHospitalTransactions";
 import { useFetchWallet } from "../../../hooks/settlements/useFetchWallet";
+import { toast } from "react-toastify";
 
 function RequestForm(props) {
   const { handleClose } = props;
   const methods = useForm();
   const { hospitalId } = useAuth();
   const { mutate, isLoading } = useInitiateSettlement();
-  const { data: settlements } = useSettlementList(hospitalId);
+  const { data: settlements } = useHospitalTransactions(hospitalId);
   const { data: walletData } = useFetchWallet(hospitalId);
 
   // Reset form when settlements data changes
@@ -31,11 +31,18 @@ function RequestForm(props) {
       amount: data.requestAmount,
       note: "",
     };
-    await mutate(paymentRequest,{onSuccess:()=>{
-      handleClose()
-    }});
+    if (data?.requestAmount <= 0) {
+      const errorMessage = "Please enter a valid amount";
+      toast.error(errorMessage);
+    } else {
+      await mutate(paymentRequest, {
+        onSuccess: () => {
+          handleClose();
+        },
+      });
+    }
   };
-  
+
   return (
     <>
       <div>
@@ -74,14 +81,7 @@ function RequestForm(props) {
             />
           </div>
 
-          <div className="d-flex justify-content-between ps-3 pe-3 mt-3 mb-4">
-            <Button
-              variant="outline-primary"
-              onClick={() => handleClose()}
-              className="ps-5 pe-5"
-            >
-              Back
-            </Button>
+          <div className="d-flex justify-content-end ps-3 pe-3 mt-3 mb-4">
             <Button
               variant="primary"
               // onClick={handleClose}
