@@ -42,12 +42,7 @@ function Dashboard() {
       title: "Fasttag",
       content: <FastTag data={hospitalAnalytics?.fast_tag || {}} />,
       link: "fasttag",
-    },
-    // {
-    //   id: "stafs",
-    //   title: "Hospital Staffs",
-    //   content: <HospitalStaffs />,
-    // },
+    }
   ];
 
   return (

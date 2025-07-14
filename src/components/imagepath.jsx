@@ -10,6 +10,9 @@ export { default as user_profile } from "../assets/img/user-profile.png";
 
 export { default as baricon } from "../assets/img/icons/bar-icon.svg";
 export { default as baricon1 } from "../assets/img/icons/bar-icon.svg";
+export { default as circular_tick } from "../assets/img/icons/tick-circle.svg";
+export { default as circular_exclamation } from "../assets/img/icons/exclamation-circle.svg";
+
 
 export { default as searchnormal } from "../assets/img/icons/search-normal.svg";
 export { default as adduser } from "../assets/img/icons/add-user.svg";
@@ -24,6 +27,7 @@ export { default as logout_01 } from "../assets/img/icons/logout_01.svg";
 export { default as menuicon02 } from "../assets/img/icons/menu-icon-02.svg";
 export { default as menuicon03 } from "../assets/img/icons/menu-icon-03.svg";
 export { default as menuicon04 } from "../assets/img/icons/menu-icon-04.svg";
+export { default as menuicon05 } from "../assets/img/icons/menu-icon-05.svg";
 export { default as menuicon06 } from "../assets/img/icons/menu-icon-06.svg";
 export { default as menuicon09 } from "../assets/img/icons/menu-icon-09.svg";
 export { default as menuicon10 } from "../assets/img/icons/menu-icon-10.svg";
@@ -282,7 +286,7 @@ export { default as fasttag_revenue } from "../assets/img/icons/fasttag-revenue.
 
 export { default as profile_add } from "../assets/img/icons/profile-add.svg";
 export { default as scissor } from "../assets/img/icons/scissor.svg";
-export { default as empty_wallet } from "../assets/img/icons/empty-wallet.svg";
+export { default as emptyWallet } from "../assets/img/icons/empty-wallet.svg";
 export { default as user001 } from "../assets/img/icons/user-icon.svg";
 export { default as dep_icon1 } from "../assets/img/icons/dep-icon-01.svg";
 export { default as dep_icon2 } from "../assets/img/icons/dep-icon-02.svg";

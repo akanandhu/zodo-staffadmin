@@ -1,6 +1,5 @@
-import React from "react";
 import InfoCards from "./Info_cards";
-import { doctors, fasttag, profile_hospitals } from "../imagepath";
+import { dep_icon1, doctors, ProfileUser } from "../imagepath";
 import Analytics from "./Analytics";
 import BookingsTable from "./BookingsTable";
 import PropTypes from "prop-types";
@@ -11,7 +10,7 @@ function HospitalStaf({ data }) {
     {
       id: 1,
       title: "Total Doctors",
-      icon: profile_hospitals,
+      icon: dep_icon1,
       count: doctors_count || 0,
       percentageUp: 20,
       link: "",
@@ -29,7 +28,7 @@ function HospitalStaf({ data }) {
     {
       id: 3,
       title: "Total Staff",
-      icon: fasttag,
+      icon: ProfileUser,
       count: staff_count || 0,
       percentageUp: 40,
       link: "",

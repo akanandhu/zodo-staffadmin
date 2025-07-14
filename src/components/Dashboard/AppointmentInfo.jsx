@@ -1,6 +1,5 @@
-import React from "react";
 import InfoCards from "./Info_cards";
-import { doctors, fasttag, profile_hospitals } from "../imagepath";
+import { emptyWallet, menuicon04, menuicon05 } from "../imagepath";
 import Analytics from "./Analytics";
 import BookingsTable from "./BookingsTable";
 import PropTypes from "prop-types";
@@ -11,7 +10,7 @@ function AppointmentInfo({ data }) {
     {
       id: 1,
       title: "Appointment Requests",
-      icon: profile_hospitals,
+      icon: menuicon04,
       count: request_count || 0,
       percentageUp: 20,
       link: "",
@@ -20,7 +19,7 @@ function AppointmentInfo({ data }) {
     {
       id: 2,
       title: "Total Appointments",
-      icon: doctors,
+      icon: menuicon05,
       count: count || 0,
       percentageUp: 40,
       link: "",
@@ -29,7 +28,7 @@ function AppointmentInfo({ data }) {
     {
       id: 3,
       title: "Appointment Revenue",
-      icon: fasttag,
+      icon: emptyWallet,
       count: revenue || 0,
       percentageUp: 40,
       link: "",

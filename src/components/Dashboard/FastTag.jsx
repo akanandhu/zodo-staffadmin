@@ -1,5 +1,10 @@
 import InfoCards from "./Info_cards";
-import { doctors, fasttag, profile_hospitals } from "../imagepath";
+import {
+  circular_exclamation,
+  circular_tick,
+  emptyWallet,
+  tag,
+} from "../imagepath";
 import Analytics from "./Analytics";
 import BookingsTable from "./BookingsTable";
 import PropTypes from "prop-types";
@@ -14,7 +19,9 @@ function FastTag({ data }) {
     {
       id: 1,
       title: "Fasttag Status",
-      icon: profile_hospitals,
+      icon: hospitalData?.fastTag?.enabled
+        ? circular_tick
+        : circular_exclamation,
       count: hospitalData?.fastTag?.enabled,
       percentageUp: 20,
       link: "",
@@ -23,7 +30,7 @@ function FastTag({ data }) {
     {
       id: 2,
       title: "Total FASTag Issued",
-      icon: doctors,
+      icon: tag,
       count: count || 0,
       percentageUp: 40,
       link: "",
@@ -32,7 +39,7 @@ function FastTag({ data }) {
     {
       id: 3,
       title: "Total FASTag Revenue",
-      icon: fasttag,
+      icon: emptyWallet,
       count: revenue || 0,
       percentageUp: 40,
       link: "",

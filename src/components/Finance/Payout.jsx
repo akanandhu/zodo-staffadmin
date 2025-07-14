@@ -1,33 +1,33 @@
-import { doctors, fasttag, profile_hospitals } from "../imagepath";
+import { clock, emptyWallet, fasttag, inboxicon } from "../imagepath";
 import Analytics from "../Dashboard/Analytics";
 import SettlementCard from "./SettlementCard";
-import BookingsTable from "../Dashboard/BookingsTable";
 import PropTypes from "prop-types";
+import PayoutTable from "./PayoutTable";
 
 function Payout({ data }) {
   const basicInformation = [
     {
       id: 1,
-      title: "Total Payout Request",
-      icon: profile_hospitals,
+      title: "Total Payout Requests",
+      icon: fasttag,
       count: data?.settlement?.requested || 0,
       percentageUp: 20,
       link: "",
-      type: "currency",
+      type: "",
     },
     {
       id: 2,
-      title: "Pending Settlement",
-      icon: doctors,
+      title: "Pending Settlements",
+      icon: clock,
       count: data?.settlement?.pending || 0,
       percentageUp: 40,
       link: "",
-      type: "currency",
+      type: "count",
     },
     {
       id: 3,
-      title: "Total Transaction",
-      icon: fasttag,
+      title: "Total Revenue",
+      icon: emptyWallet,
       count: data?.settlement?.total || 0,
       percentageUp: 40,
       link: "",
@@ -36,7 +36,7 @@ function Payout({ data }) {
     {
       id: 4,
       title: "Normal Booking Revenue",
-      icon: fasttag,
+      icon: emptyWallet,
       count: data?.booking?.revenue || 0,
       percentageUp: 40,
       link: "",
@@ -45,7 +45,7 @@ function Payout({ data }) {
     {
       id: 5,
       title: "Fast Tag Revenue",
-      icon: fasttag,
+      icon: emptyWallet,
       count: data?.fasttag?.revenue || 0,
       percentageUp: 40,
       link: "",
@@ -54,7 +54,7 @@ function Payout({ data }) {
     {
       id: 6,
       title: "Intitiate Settlement Request",
-      icon: fasttag,
+      icon: inboxicon,
       count: 121,
       percentageUp: 40,
       link: "",
@@ -71,7 +71,7 @@ function Payout({ data }) {
         <SettlementCard info={basicInformation} />
       </div>
       <Analytics bookingType={bookingType} id="appointment-chart" />
-      <BookingsTable />
+      <PayoutTable />
     </div>
   );
 }

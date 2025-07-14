@@ -10,6 +10,7 @@ import {
   menuicon08,
   menuicon09,
   menuicon13,
+  menuicon04
 } from "./imagepath";
 import Scrollbars from "react-custom-scrollbars-2";
 import { useAuth } from "../hooks/useAuth";
@@ -113,7 +114,7 @@ const Sidebar = (props) => {
                     onClick={handleMenuClick}
                   >
                     <span className="menu-side">
-                      <img src={menuicon08} alt="" />
+                      <img src={menuicon04} alt="" />
                     </span>{" "}
                     <span> Appointment </span>
                   </Link>

@@ -33,12 +33,6 @@ function BookingsTable() {
       dataIndex: "type",
       // sorter: (a, b) => a.type.length - b.type.length,
     },
-    // {
-    //   title: "Assigned",
-    //   dataIndex: "assingned",
-    //   render: (item, record) => record?.doctor?.name ? <div>Dr.{record?.doctor?.name}</div> : <div>unasigned</div>,
-    //   // sorter: (a, b) => a.assingned.length - b.assingned.length,
-    // },
     {
       title: "Time",
       dataIndex: "timeSlot",
@@ -69,17 +63,6 @@ function BookingsTable() {
         </div>
       ),
     },
-    // {
-    //   title: "Department",
-    //   dataIndex: "department",
-    //   // sorter: (a, b) => a.department.length - b.department.length,
-    // },
-    
-    // {
-    //   title: "Action",
-    //   dataIndex: "action",
-    //   render: () => <Link to>View</Link>,
-    // },
   ];
 
   return (
