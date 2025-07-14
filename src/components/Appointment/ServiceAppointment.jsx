@@ -1,4 +1,9 @@
-import { FormProvider, useForm } from "react-hook-form";
+import {
+  FormProvider,
+  useForm,
+  useFormContext,
+  useWatch,
+} from "react-hook-form";
 import InputField from "../Inputfields/InputField";
 import TextArea from "../Inputfields/TextArea";
 import { Button } from "react-bootstrap";
@@ -7,17 +12,37 @@ import SelectField from "../Inputfields/SelectField";
 import PropTypes from "prop-types";
 import { useHospitalServices } from "../../hooks/hospital-services/useHospitalServices";
 import { useCreteServiceAppointment } from "../../hooks/appointments/useCreateServiceAppointment";
-import ServiceTimeSlot from "../modals/Schedule/ServiceTimeSlot";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useViewService } from "../../hooks/hospital-services/useViewService";
 function ServiceAppointment({ handleClose }) {
   const { hospitalId } = useAuth();
   const { mutate: createAppointment, isLoading: appointmentLoading } =
     useCreteServiceAppointment();
-  const [selectedTimeSlot, setSelectedTimeslot] = useState("");
+  const [serviceId, setServiceId] = useState("");
+  const [gender, setGender] = useState("");
+  const [paymentType, setPaymentType] = useState("");
+  // const [selectedTimeSlot, setSelectedTimeslot] = useState("");
   //   const [timeSlot, setTimeSlot] = useState("");
   //   const [appointmentDate, setAppointmentDate] = useState();
   const { data: servicesList, isLoading: servicesLoading } =
     useHospitalServices(hospitalId);
+  const { data: serviceDetails } = useViewService(serviceId);
+
+  useEffect(() => {
+    if (serviceDetails) {
+      const selectedService = {
+        value: serviceDetails?.id,
+        label: serviceDetails?.name,
+      };
+      methods.reset({
+        amount: serviceDetails?.strike_through_price ? parseInt(serviceDetails?.strike_through_price) : 0,
+        service: selectedService,
+        gender: gender,
+        paymentType: paymentType,
+      });
+    }
+  }, [serviceDetails]);
+
   const genderOptions = [
     { value: "male", label: "Male" },
     { value: "female", label: "Female" },
@@ -30,28 +55,35 @@ function ServiceAppointment({ handleClose }) {
   ];
 
   const serviceOptions = servicesList?.map((item) => ({
-    label: item.name,
-    value: item.id,
+    label: item?.name,
+    value: item?.id,
   }));
 
-  const handleTime = (time) => {
-    setSelectedTimeslot(time);
+  // const handleTime = (time) => {
+  //   setSelectedTimeslot(time);
+  // };
+
+  const WatchAppointmentChange = () => {
+    const { control } = useFormContext();
+    const service = useWatch({ control, name: "service" }); // replace with your actual `name`
+    const gender = useWatch({ control, name: "gender" });
+    const paymentType = useWatch({ control, name: "paymentType" });
+
+    useEffect(() => {
+      if (
+        service !== undefined ||
+        gender !== undefined ||
+        paymentType !== undefined
+      ) {
+        // You can trigger any side-effect here
+        setPaymentType(paymentType);
+        setGender(gender);
+        setServiceId(service?.value);
+      }
+    }, [service, gender, paymentType]);
+
+    return null; // no UI output
   };
-
-
-  //   const WatchAppointmentChange = () => {
-  //     const { control } = useFormContext();
-  //     const appointment = useWatch({ control, name: "appointmentDate" }); // replace with your actual `name`
-
-  //     useEffect(() => {
-  //       if (appointment !== undefined) {
-  //         // You can trigger any side-effect here
-  //         setAppointmentDate(appointment);
-  //       }
-  //     }, [appointment]);
-
-  //     return null; // no UI output
-  //   };
 
   const methods = useForm();
 
@@ -69,13 +101,12 @@ function ServiceAppointment({ handleClose }) {
         address: data.address,
       },
       hospital_id: hospitalId,
-      timeSlot: selectedTimeSlot,
+      // timeSlot: selectedTimeSlot,
       payment_type: data?.paymentType?.value,
       reason: data?.note,
 
       // type:appointment
     };
-
 
     createAppointment(appointmentData, {
       onSuccess: () => {
@@ -141,7 +172,33 @@ function ServiceAppointment({ handleClose }) {
               type="text"
             />
           </div>
-          <div className="col-md-4">
+
+          <div className="col-md-5">
+            <div className="form-group">
+              <SelectField
+                options={serviceOptions}
+                label="Services"
+                name="service"
+                isMultiSelect={false}
+                placeholder="Select service"
+                validationMessage="Service is required"
+                isLoading={servicesLoading}
+              />
+            </div>
+          </div>
+          <div className="col-md-3">
+            <InputField
+              name="amount"
+              label="Amount"
+              validation={{ required: "Amount is required" }}
+              type="price"
+              disabled={true}
+            />
+          </div>
+        </div>
+
+        <div className="row mt-2">
+          <div className="col-md-3">
             <InputField
               name="appointmentDate"
               label="Appointment Date"
@@ -150,11 +207,33 @@ function ServiceAppointment({ handleClose }) {
             />
           </div>
           <div className="col-md-4">
+            {/* <label className="form-label">Payment Type</label>
+              <Select
+                options={paymentType}
+                placeholder="Payment Type"
+                isMultiSelect={false}
+                onChange={(selectedOption) =>
+                  setPaymentType(selectedOption.value ?? "")
+                }
+              /> */}
+            <div className="form-group">
+              <SelectField
+                options={paymentTypeOptions}
+                label="Payment Type"
+                name="paymentType"
+                isMultiSelect={false}
+                placeholder="Select payment type"
+                validationMessage="Payment type is required"
+                //   isLoading={servicesLoading}
+              />
+            </div>
+          </div>
+          <div className="col-md-4">
             <InputField
-              name="amount"
-              label="Amount"
-              validation={{ required: "Amount is required" }}
-              type="price"
+              name="coupencode"
+              label="Coupen Code"
+              placeholder="Coupen code"
+              type="text"
             />
           </div>
         </div>
@@ -179,49 +258,10 @@ function ServiceAppointment({ handleClose }) {
           </div>
         </div>
 
-        <>
-          <h4 className="card-title mt-4">More Information</h4>
-          <div className="row">
-            <div className="col-md-4">
-              <div className="form-group">
-                <SelectField
-                  options={serviceOptions}
-                  label="Services"
-                  name="service"
-                  isMultiSelect={false}
-                  placeholder="Select service"
-                  validationMessage="Service is required"
-                  isLoading={servicesLoading}
-                />
-              </div>
-            </div>
-            <div className="col-md-4">
-              {/* <label className="form-label">Payment Type</label>
-              <Select
-                options={paymentType}
-                placeholder="Payment Type"
-                isMultiSelect={false}
-                onChange={(selectedOption) =>
-                  setPaymentType(selectedOption.value ?? "")
-                }
-              /> */}
-              <div className="form-group">
-                <SelectField
-                  options={paymentTypeOptions}
-                  label="Payment Type"
-                  name="paymentType"
-                  isMultiSelect={false}
-                  placeholder="Select payment type"
-                  validationMessage="Payment type is required"
-                  //   isLoading={servicesLoading}
-                />
-              </div>
-            </div>
-          </div>
-        </>
-        <h4 className="card-title mt-4">Avaliable Timeslots</h4>
+        {/* <h4 className="card-title mt-4">Avaliable Timeslots</h4>
 
-        <ServiceTimeSlot handleTime={handleTime} />
+        <ServiceTimeSlot handleTime={handleTime} /> */}
+        <WatchAppointmentChange />
 
         <div className="d-flex  justify-content-md-end justify-content-center  ps-3 pe-3 pb-5 pt-3 ">
           <Button variant="primary" className="ps-5 pe-5" type="submit">

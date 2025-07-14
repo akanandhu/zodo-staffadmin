@@ -10,7 +10,12 @@ import ButtonTabs from "../../tabs/ButtonTabs";
 import { useHospitalAnalytics } from "../../../hooks/hospital/useHospitalAnalytics";
 import { useAuth } from "../../../hooks/useAuth";
 import FullscreenLoader from "../../loaders/FullscreenLoader";
+// import { useViewHospital } from "../../../hooks/hospital/useViewHospital";
 function Dashboard() {
+  const { hospitalId } = useAuth();
+  const { data: hospitalAnalytics, isLoading } =
+    useHospitalAnalytics(hospitalId);
+  
   const breadCrumpData = [
     {
       name: "Dashboard",
@@ -18,10 +23,6 @@ function Dashboard() {
       link: "/",
     },
   ];
-
-  const { hospitalId } = useAuth();
-  const { data: hospitalAnalytics, isLoading } =
-    useHospitalAnalytics(hospitalId);
 
   const dashboardTab = [
     {

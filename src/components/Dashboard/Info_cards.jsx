@@ -32,18 +32,8 @@ function InfoCards(props) {
                 ) : (
                   <div className="fasttag-toggle">
                     <h6>{item.count ? <span className="text-primary fasttag-status">Active</span>: <div className="text-secondary fasttag-status">Disabled</div>}</h6>
-                    {/* <FasttagToggle toggleFasttag={item.count} /> */}
                   </div>
                 )}
-                {/* <p>
-                  <span className="passive-view">
-                    <i className="feather-arrow-up-right me-1">
-                      <FeatherIcon icon="arrow-up-right" />
-                    </i>
-                    {item.percentageUp}%
-                  </span>{" "}
-                  vs last month
-                </p> */}
               </div>
             </div>
           </div>

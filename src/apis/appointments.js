@@ -44,7 +44,7 @@ export const createOfflineServiceAppointment = async (data) => {
     `/bookings/offline-hospital-service`,
     data
   );
-  return response?.data?.data;
+  return response?.data;
 };
 
 export const exportHospitalBookings = async (hospital_id, query="") => {

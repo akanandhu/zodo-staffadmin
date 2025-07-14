@@ -1,17 +1,20 @@
 {
   /* /Page Header */
 }
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { adduser } from "../imagepath";
 import CreateStaffModal from "../modals/Dashboard/CreateStaffModal";
 import CreateDoctorModal from "../modals/Dashboard/CreateDoctorModal";
 import DepartmentMoadl from "../modals/Dashboard/DepartmentMoadl";
 import { useAuth } from "../../hooks/useAuth";
+import { useViewHospital } from "../../hooks/hospital/useViewHospital";
 // import AddSaff from "../modals/AddStaff/AddSaff";
 // import { morning_img_01 } from "../imagepath";
 function Hero() {
-  const { user } = useAuth();
+  const { user, hospitalId } = useAuth();
+  const { data: hospital } =
+    useViewHospital(hospitalId);
   const username = user?.first_name + user?.last_name || "User";
   const [showCreateStaff, setShowCreateStaff] = useState(false);
   const [showAdminStaff, setShowAdminStaff] = useState(false);
@@ -20,8 +23,8 @@ function Hero() {
 
   const getGreeting = () => {
     const hour = new Date().getHours();
-    if (hour < 12) return (<span className="text-black">Good Morning,</span>);
-    if (hour < 18) return (<span className="text-black">Good Afternoon,</span>);
+    if (hour < 12) return <span className="text-black">Good Morning,</span>;
+    if (hour < 18) return <span className="text-black">Good Afternoon,</span>;
     return <span className="text-black">Good Evening,</span>;
   };
 
@@ -33,7 +36,7 @@ function Hero() {
             <h2>
               {getGreeting()} <span>{username}</span>
             </h2>
-            <p>Have a nice day</p>
+            <p>Welcome {`to ${hospital?.name}` || ""}</p>
           </div>
         </div>
         {/* <div className="col-md-6 position-blk">

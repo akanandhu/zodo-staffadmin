@@ -12188,3 +12188,11 @@ tr.ant-table-row.ant-table-row-level-0.ant-table-row-selected,
 .fasttag-status{
   font-weight: 600;
 }
+
+.confirm-logout-title{
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+}

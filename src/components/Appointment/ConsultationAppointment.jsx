@@ -17,6 +17,7 @@ import { useDoctorsList } from "../../hooks/doctors/useDoctorsList";
 import { useAuth } from "../../hooks/useAuth";
 import SelectField from "../Inputfields/SelectField";
 import PropTypes from "prop-types";
+import { useDoctorView } from "../../hooks/doctors/useDoctorView";
 
 function ConsultationAppointment({ handleClose }) {
   const { hospitalId } = useAuth();
@@ -24,7 +25,8 @@ function ConsultationAppointment({ handleClose }) {
     useCreateOfflineAppointments();
   const [timeSlot, setTimeSlot] = useState("");
   const [appointmentDate, setAppointmentDate] = useState();
-
+  const [gender, setGender] = useState("");
+  const [paymentType, setPaymentType] = useState("");
   const genderOptions = [
     { value: "male", label: "Male" },
     { value: "female", label: "Female" },
@@ -44,6 +46,24 @@ function ConsultationAppointment({ handleClose }) {
     value: item.id,
   }));
   const [doctorId, setDoctorId] = useState("");
+  const { data: doctor } = useDoctorView(doctorId);
+  const isAutoBookingEnabled = doctor?.auto_booking_enabled;
+
+  useEffect(() => {
+    if (doctor) {
+      const selectedDoctor = {
+        value: doctor?.id,
+        label: doctor?.name,
+      };
+      methods.reset({
+        amount: doctor?.pricing ? parseInt(doctor?.pricing) : 0,
+        doctor: selectedDoctor,
+        gender: gender,
+        paymentType: paymentType,
+      });
+    }
+  }, [doctor]);
+
   const { data: timeslots, isLoading: timeslotLoading } = useGetTimeslots(
     doctorId,
     hospitalId,
@@ -101,14 +121,17 @@ function ConsultationAppointment({ handleClose }) {
     const { control } = useFormContext();
     const appointment = useWatch({ control, name: "appointmentDate" }); // replace with your actual `name`
     const doctor = useWatch({ control, name: "doctor" }); // replace with your actual `name`
-
+    const gender = useWatch({ control, name: "gender" });
+    const paymentType = useWatch({ control, name: "paymentType" });
     useEffect(() => {
-      if (appointment !== undefined) {
+      if (appointment !== undefined || doctorId !== undefined) {
         // You can trigger any side-effect here
         setAppointmentDate(appointment);
         setDoctorId(doctor?.value ?? "");
+        setGender(gender);
+        setPaymentType(paymentType);
       }
-    }, [appointment, doctor]);
+    }, [appointment, doctor, gender, paymentType]);
 
     return null; // no UI output
   };
@@ -125,16 +148,15 @@ function ConsultationAppointment({ handleClose }) {
         name: data.patientname,
         age: parseInt(data.patientAge),
         gender: data.gender.value,
-        phone_number: data.contactNumber,      
-        address: data.address
-    },
+        phone_number: data.contactNumber,
+        address: data.address,
+      },
       hospital_id: hospitalId,
       timeSlot: timeSlot,
       payment_type: data?.paymentType?.value,
-      reason: data?.note
+      reason: data?.note,
       // type:appointment
     };
-
 
     createAppointment(appointmentData, {
       onSuccess: () => {
@@ -200,7 +222,34 @@ function ConsultationAppointment({ handleClose }) {
               type="text"
             />
           </div>
-          <div className="col-md-4">
+
+          <div className="col-md-5">
+            <div className="form-group">
+              <SelectField
+                options={doctorOptions}
+                label="Assign Doctor"
+                name="doctor"
+                isMultiSelect={false}
+                placeholder="Select doctor"
+                validationMessage="Doctor is required"
+                isLoading={doctorLoading}
+              />
+            </div>
+          </div>
+          <div className="col-md-3">
+            <InputField
+              name="amount"
+              label="Amount"
+              // validation={{ required: "Amount is required" }}
+              type="price"
+              disabled
+            />
+          </div>
+        </div>
+
+        {/* <h4 className="card-title mt-4">More Information</h4> */}
+        <div className="row mt-2">
+          <div className="col-md-3">
             <InputField
               name="appointmentDate"
               label="Appointment Date"
@@ -208,12 +257,27 @@ function ConsultationAppointment({ handleClose }) {
               type="date"
             />
           </div>
+
+          <div className="col-md-4">
+            <div className="form-group">
+              <SelectField
+                options={paymentTypeOptions}
+                label="Payment Type"
+                name="paymentType"
+                isMultiSelect={false}
+                placeholder="Select payment type"
+                validationMessage="Payment type is required"
+                //   isLoading={servicesLoading}
+              />
+            </div>
+          </div>
+
           <div className="col-md-4">
             <InputField
-              name="amount"
-              label="Amount"
-              validation={{ required: "Amount is required" }}
-              type="price"
+              name="coupencode"
+              label="Coupen Code"
+              placeholder="Coupen code"
+              type="text"
             />
           </div>
         </div>
@@ -238,52 +302,12 @@ function ConsultationAppointment({ handleClose }) {
           </div>
         </div>
 
-        <>
-          <h4 className="card-title mt-4">More Information</h4>
-          <div className="row">
-            <div className="col-md-4">
-              {/* <label className="form-label">Assign Doctor</label>
-              <Select
-                options={doctorOptions}
-                placeholder="Assign doctor"
-                isMultiSelect={false}
-                isLoading={doctorLoading}
-                onChange={(selectedOption) =>
-                  setDoctorId(selectedOption.value ?? "")
-                }
-              /> */}
-
-              <div className="form-group">
-                <SelectField
-                  options={doctorOptions}
-                  label="Assign Doctor"
-                  name="doctor"
-                  isMultiSelect={false}
-                  placeholder="Select doctor"
-                  validationMessage="Doctor is required"
-                  isLoading={doctorLoading}
-                />
-              </div>
-            </div>
-
-            <div className="col-md-4">
-              <div className="form-group">
-                <SelectField
-                  options={paymentTypeOptions}
-                  label="Payment Type"
-                  name="paymentType"
-                  isMultiSelect={false}
-                  placeholder="Select payment type"
-                  validationMessage="Payment type is required"
-                  //   isLoading={servicesLoading}
-                />
-              </div>
-            </div>
-          </div>
-
-          <h4 className="card-title mt-4">Available Timeslots</h4>
-          <ModalTabs tabData={tabData} />
-        </>
+        {!isAutoBookingEnabled && doctorId && (
+          <>
+            <h4 className="card-title mt-4">Available Timeslots</h4>
+            <ModalTabs tabData={tabData} />
+          </>
+        )}
 
         <WatchAppointmentChange />
 

@@ -31,7 +31,7 @@ function DoctorTimeslot(props) {
         <div className="col-md-4">
           <div className="form-group">
             <label className="custom_check mr-2 mb-0 d-inline-flex remember-me ms-3">
-              Auto slot
+              Auto Slotting
               <input
                 type="checkbox"
                 name="autoslot"
