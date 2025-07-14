@@ -1,0 +1,114 @@
+import React, { useRef } from "react";
+import { login02, loginlogo } from "../../imagepath";
+import { Link } from "react-router-dom";
+
+const VerifyOtp = () => {
+  const otpRefs = [useRef(), useRef(), useRef(), useRef()];
+
+  const handleChange = (e, index) => {
+    const value = e.target.value;
+
+    if (/^[0-9]$/.test(value)) {
+      e.target.value = value;
+      if (index < 3) {
+        otpRefs[index + 1].current.focus();
+      }
+    } else if (value === "") {
+      // Allow clearing
+      e.target.value = "";
+    } else {
+      // Invalid character
+      e.preventDefault();
+    }
+  };
+
+  // const handlePaste = (e) => {
+  //   const paste = e.clipboardData.getData("text").trim();
+  //   if (/^\d{4}$/.test(paste)) {
+  //     paste.split("").forEach((char, i) => {
+  //       if (otpRefs[i].current) {
+  //         otpRefs[i].current.value = char;
+  //       }
+  //     });
+  //     otpRefs[3].current.focus();
+  //   }
+  //   e.preventDefault();
+  // };
+
+  const handleKeyDown = (e, index) => {
+    if (e.key === "Backspace" && !e.target.value && index > 0) {
+      otpRefs[index - 1].current.focus();
+    }
+  };
+
+  return (
+    <div className="main-wrapper login-body">
+      <div className="container-fluid px-0">
+        <div className="row">
+          {/* Login logo */}
+          <div className="col-lg-6 login-wrap">
+            <div className="login-sec">
+              <div className="log-img">
+                <img className="img-fluid" src={login02} alt="Logo" />
+              </div>
+            </div>
+          </div>
+
+          {/* Login Content */}
+          <div className="col-lg-6 login-wrap-bg">
+            <div className="login-wrapper">
+              <div className="loginbox">
+                <div className="login-right">
+                  <div className="login-right-wrap">
+                    <div className="account-logo">
+                      <Link to="/admin-dashboard">
+                        <img src={loginlogo} alt="Logo" />
+                      </Link>
+                    </div>
+                    <h2>Enter OTP</h2>
+
+                    <label style={{ fontSize: "0.9rem" }}>
+                      Enter 4-digit OTP <span className="login-danger">*</span>
+                    </label>
+                    <form action="#">
+                      <div className="form-group">
+                        <div className="d-flex gap-2 mt-2 w-50">
+                          {otpRefs.map((ref, index) => (
+                            <input
+                                key={index}
+                              type="text"
+                              maxLength="1"
+                              inputMode="numeric"
+                              pattern="[0-9]*"
+                              className="form-control text-center"
+                              ref={ref}
+                              onChange={(e) => handleChange(e, index)}
+                              onKeyDown={(e) => handleKeyDown(e, index)}
+                            //   onPaste={handlePaste}
+                            />
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="form-group login-btn">
+                        <button
+                          className="btn btn-primary btn-block"
+                          type="submit"
+                        >
+                          Verify OTP
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* /Login Content */}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default VerifyOtp;

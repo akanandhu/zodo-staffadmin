@@ -10,7 +10,7 @@ import {
   menuicon08,
   menuicon09,
   menuicon13,
-  menuicon04
+  menuicon04,
 } from "./imagepath";
 import Scrollbars from "react-custom-scrollbars-2";
 import { useAuth } from "../hooks/useAuth";
@@ -18,7 +18,7 @@ import ConfirmLogout from "./modals/ConfirmLogout";
 
 const Sidebar = (props) => {
   const [sidebar, setSidebar] = useState("");
-  const { user, setUser } = useAuth();
+  const { user, setUser, setHospitalId } = useAuth();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -53,6 +53,7 @@ const Sidebar = (props) => {
   const handleLogout = () => {
     localStorage.removeItem("token"); // Remove the token from local storage
     setUser(null); // Clear the user state
+    setHospitalId(null);
     navigate("/login"); // Redirect to the login page
   };
 
@@ -253,7 +254,7 @@ const Sidebar = (props) => {
               <div className="logout-btn submenu">
                 <Link
                   to
-                onClick={() => setIsOpen(true)}
+                  onClick={() => setIsOpen(true)}
                   className={
                     props?.activeClassName === "dashboard" ? "active" : ""
                   }
@@ -264,10 +265,10 @@ const Sidebar = (props) => {
                   <span>Logout</span>
                 </Link>
                 <ConfirmLogout
-                        show={isOpen}
-                        setShow={setIsOpen}
-                        handleLogout={handleLogout}
-                      />
+                  show={isOpen}
+                  setShow={setIsOpen}
+                  handleLogout={handleLogout}
+                />
               </div>
             </div>
           </div>

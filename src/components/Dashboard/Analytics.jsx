@@ -1,18 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import PatientChart from "./PaitentChart";
 import PropTypes from "prop-types";
 import { useAnalyticsData } from "../../hooks/useAnalyticsData";
+import { useAuth } from "../../hooks/useAuth";
 function Analytics(props) {
   const { bookingType, id } = props;
-
+  const { hospitalId } = useAuth();
+  const [query,setQuery] = useState("");
   const [selectedOption, setSelectedOption] = useState(
     bookingType ? bookingType[0] : []
   );
-  const query = `type=${selectedOption.value}`
-  const { data } = useAnalyticsData(query)
-  const count = data?.reduce((acc, item) => acc + (item.count || 0), 0);
+  console.log("Hospital id ",hospitalId);
+  console.log(selectedOption);
+  console.log(query);
   
+  useEffect(() => {
+    setQuery(`type=${selectedOption?.value}`)
+  }, [selectedOption])
+  
+  
+  const { data } = useAnalyticsData(hospitalId, query);
+  
+  const count = data && data?.reduce((acc, item) => acc + (item.count || 0), 0);
+
   return (
     <div className="card-box">
       <div className="row">
@@ -23,14 +34,15 @@ function Analytics(props) {
                 <h4>Analytics</h4>
                 <div>
                   <h6>
-                    Total bookings <span className="analytics-count">{count}</span>
+                    Total bookings{" "}
+                    <span className="analytics-count">{count}</span>
                   </h6>
                 </div>
                 <div className="form-group mb-0">
                   <Select
                     className="custom-react-select"
                     defaultValue={selectedOption}
-                    onChange={setSelectedOption}
+                    onChange={(option)=>setSelectedOption(option)}
                     options={bookingType}
                     id="search-commodity"
                     components={{
@@ -79,7 +91,7 @@ function Analytics(props) {
                 </div>
               </div>
               <div id={id} />
-              <PatientChart data={data} />
+              <PatientChart data={data || []} />
             </div>
           </div>
         </div>

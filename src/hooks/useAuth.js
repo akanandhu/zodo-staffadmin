@@ -116,6 +116,7 @@ export const AuthProvider = ({ children }) => {
         clearAccessToken,
         accessToken,
         setUser,
+        setHospitalId,
         // getUser: getUserMutation.mutate,
         // logout: logoutMutation.mutate,
         hospitalId,

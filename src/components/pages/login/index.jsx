@@ -131,7 +131,7 @@ const Login = () => {
                             {validationError}
                           </div>
                         )}
-                        {/* <div className="forgotpass">
+                        <div className="forgotpass">
                           <div className="remember-me">
                             <label className="custom_check mr-2 mb-0 d-inline-flex remember-me">
                               {" "}
@@ -140,8 +140,8 @@ const Login = () => {
                               <span className="checkmark" />
                             </label>
                           </div>
-                          <Link to="/forgotpassword">Forgot Password?</Link>
-                        </div> */}
+                          <Link to="/forgotpassword" className="text-primary">Forgot Password?</Link>
+                        </div>
                         <div className="form-group login-btn mt-3">
                           <button
                             type="submit"

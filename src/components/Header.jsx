@@ -7,7 +7,7 @@ import { useViewHospital } from "../hooks/hospital/useViewHospital";
 import ConfirmLogout from "./modals/ConfirmLogout";
 
 const Header = () => {
-  const { user, setUser, hospitalId } = useAuth();
+  const { user, setUser, hospitalId, setHospitalId } = useAuth();
   const navigate = useNavigate();
   const userName = user?.first_name + user?.last_name || "User";
   const userRole = user?.user_type || "Role";
@@ -54,6 +54,7 @@ const Header = () => {
     localStorage.removeItem("token"); // Remove the token from local storage
     const token = localStorage.getItem("token"); // Check if the token is removed
     setUser(null); // Clear the user state
+    setHospitalId(null);
     navigate("/login"); // Redirect to the login page
   };
   const [isOpen, setIsOpen] = useState(false);

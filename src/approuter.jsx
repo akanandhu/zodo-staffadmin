@@ -29,6 +29,7 @@ import Departments from "./components/pages/Hospitals/Departments";
 import ViewHospitalService from "./components/pages/Hospitals/ViewHospitalService";
 import StaffDetails from "./components/pages/Staff/StaffDetails";
 import Dashboard from "./components/pages/Dashboard/Dashboard";
+import VerifyOtp from "./components/pages/login/Verify";
 //Accounts
 const Approuter = () => {
   // eslint-disable-next-line no-unused-vars
@@ -46,6 +47,7 @@ const Approuter = () => {
             <Route path="/register" element={<Register />} />
             <Route path="/lockscreen" element={<LockScreen />} />
             <Route path="/changepassword" element={<ChangePassword />} />
+            <Route path="/verify" element={<VerifyOtp />} />
             <Route path="/error" element={<Error />} />
             <Route path="/blankpage" element={<BlankPage />} />
             <Route path="/settings" element={<Setting />} />
