@@ -46,8 +46,8 @@ const Approuter = () => {
             <Route path="/signup" element={<Signup />} />
             <Route path="/register" element={<Register />} />
             <Route path="/lockscreen" element={<LockScreen />} />
-            <Route path="/changepassword" element={<ChangePassword />} />
-            <Route path="/verify" element={<VerifyOtp />} />
+            <Route path="/forgotpassword/:user_id/reset_password" element={<ChangePassword />} />
+            <Route path="/forgotpassword/:user_id" element={<VerifyOtp />} />
             <Route path="/error" element={<Error />} />
             <Route path="/blankpage" element={<BlankPage />} />
             <Route path="/settings" element={<Setting />} />

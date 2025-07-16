@@ -58,7 +58,7 @@ const Login = () => {
                   <div className="login-right">
                     <div className="login-right-wrap">
                       <div className="account-logo">
-                        <Link to="/admin-dashboard">
+                        <Link to="/login">
                           <img src={loginlogo} alt="#" width={150} />
                         </Link>
                       </div>
@@ -131,7 +131,7 @@ const Login = () => {
                             {validationError}
                           </div>
                         )}
-                        {/* <div className="forgotpass">
+                        <div className="forgotpass">
                           <div className="remember-me">
                             <label className="custom_check mr-2 mb-0 d-inline-flex remember-me">
                               {" "}
@@ -141,7 +141,7 @@ const Login = () => {
                             </label>
                           </div>
                           <Link to="/forgotpassword" className="text-primary">Forgot Password?</Link>
-                        </div> */}
+                        </div>
                         <div className="form-group login-btn mt-3">
                           <button
                             type="submit"
