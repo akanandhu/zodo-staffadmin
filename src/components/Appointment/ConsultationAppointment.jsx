@@ -272,14 +272,14 @@ function ConsultationAppointment({ handleClose }) {
             </div>
           </div>
 
-          <div className="col-md-4">
+          {/* <div className="col-md-4">
             <InputField
               name="coupencode"
               label="Coupen Code"
               placeholder="Coupen code"
               type="text"
             />
-          </div>
+          </div> */}
         </div>
 
         <div className="row mt-2">

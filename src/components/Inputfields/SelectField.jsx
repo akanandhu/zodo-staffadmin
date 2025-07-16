@@ -22,10 +22,10 @@ function SelectField(props) {
       ...base,
       borderRadius: "10px",
       boxShadow: state.isFocused ? 0 : 0,
-      borderColor: state.isFocused ? "#0052cc" : "#ced4da",
+      borderColor: state.isFocused ? "#347D73" : "#ced4da",
       minHeight: "45px",
       "&:hover": {
-        borderColor: state.isFocused ? "#0052cc" : "#ced4da",
+        borderColor: state.isFocused ? "#347D73" : "#ced4da",
       },
     }),
   };
