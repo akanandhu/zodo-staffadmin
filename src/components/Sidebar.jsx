@@ -52,6 +52,7 @@ const Sidebar = (props) => {
 
   const handleLogout = () => {
     localStorage.removeItem("token"); // Remove the token from local storage
+    sessionStorage.removeItem("token"); // Remove the token from session storage
     setUser(null); // Clear the user state
     setHospitalId(null);
     navigate("/login"); // Redirect to the login page

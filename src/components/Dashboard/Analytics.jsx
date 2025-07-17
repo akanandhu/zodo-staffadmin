@@ -11,9 +11,6 @@ function Analytics(props) {
   const [selectedOption, setSelectedOption] = useState(
     bookingType ? bookingType[0] : []
   );
-  console.log("Hospital id ",hospitalId);
-  console.log(selectedOption);
-  console.log(query);
   
   useEffect(() => {
     setQuery(`type=${selectedOption?.value}`)

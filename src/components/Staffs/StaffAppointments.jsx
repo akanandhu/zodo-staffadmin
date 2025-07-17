@@ -33,7 +33,6 @@ function StaffAppointments({ staffDetails }) {
     setDatequery(query);
     // setDate(date);
   };
-  console.log("Staff details ",staffDetails);
   const exportQuery = staffDetails?.id ? `?created_by=${staffDetails?.id}` : ""
   return (
     <div>

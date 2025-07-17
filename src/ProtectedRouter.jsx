@@ -8,7 +8,8 @@ function ProtectedRouter(props) {
   const { allowedRoles } = props;
   const { user, isLoading } = useAuth();
   const userRole = user?.user_type;  
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+  
   // const { data: user, isLoading } = useGetUser();
   if (isLoading) return <FullscreenLoader />;  
   if (user && allowedRoles && !allowedRoles.includes(userRole)) {

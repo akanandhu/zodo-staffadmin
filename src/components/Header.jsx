@@ -52,7 +52,7 @@ const Header = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token"); // Remove the token from local storage
-    const token = localStorage.getItem("token"); // Check if the token is removed
+    sessionStorage.removeItem("token"); // Remove the token from session storage
     setUser(null); // Clear the user state
     setHospitalId(null);
     navigate("/login"); // Redirect to the login page

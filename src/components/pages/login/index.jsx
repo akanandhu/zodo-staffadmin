@@ -11,18 +11,33 @@ import { useForm } from "react-hook-form";
 
 const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
 
-  const { user, login, validationError, isLoading,  } = useAuth();
+  const { login, validationError, isLoading } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = (data) => {
     login(data, {
-      onSuccess: () => {
-        const userRole = user?.user_type;        
+      onSuccess: (userData) => {
+        const token = userData?.data?.tokens?.accessToken;
+
+        if (rememberMe) {
+          localStorage.setItem("token", token);
+        } else {
+          console.log("else block");
+          
+          sessionStorage.setItem("token", token);
+        }
+        console.log(sessionStorage.getItem("token"));
+        console.log(userData?.data?.user_type);
+        
+        const userRole = userData?.data?.user_type;
+        console.log("userRole ", userRole);
+
         if (userRole === "hsAdmin") {
           navigate("/");
         }
@@ -136,11 +151,18 @@ const Login = () => {
                             <label className="custom_check mr-2 mb-0 d-inline-flex remember-me">
                               {" "}
                               Remember me
-                              <input type="checkbox" name="radio" />
+                              <input
+                                type="checkbox"
+                                name="radio"
+                                checked={rememberMe}
+                                onClick={(e) => setRememberMe(e.target.checked)}
+                              />
                               <span className="checkmark" />
                             </label>
                           </div>
-                          <Link to="/forgotpassword" className="text-primary">Forgot Password?</Link>
+                          <Link to="/forgotpassword" className="text-primary">
+                            Forgot Password?
+                          </Link>
                         </div>
                         <div className="form-group login-btn mt-3">
                           <button

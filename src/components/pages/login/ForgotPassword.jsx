@@ -28,7 +28,6 @@ const ForgotPassword = () => {
   });
 
   const handleResetPassword = (data) => {
-    console.log(data);
     const user = {
       email: data.email,
     };

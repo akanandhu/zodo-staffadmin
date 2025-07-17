@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
 
   // Fetch user data when the component mounts
   const fetchUserData = async () => {
-    const token = localStorage.getItem("token"); // Get the token from local storage
+    const token = localStorage.getItem("token") || sessionStorage.getItem("token"); // Get the token from local storage
     if (token) {
       const user = await getUser(); // Fetch user data if token exists
       // console.log("User data from local storage", user);
@@ -54,18 +54,10 @@ export const AuthProvider = ({ children }) => {
     onSuccess: (data) => {
       if (data?.data?.user_type === "superAdmin") {
         const message = "Invalid credentials";
-        toast.error(message, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+        toast.error(message);
       } else {
         const token = data?.data?.tokens?.accessToken;
-        localStorage.setItem("token", data?.data?.tokens?.accessToken);
+        // localStorage.setItem("token", data?.data?.tokens?.accessToken);
         setAccessToken(token);
         setUser(data.data);
         setHospitalId(data?.data?.hospital_id); // Set hospital ID from login response
