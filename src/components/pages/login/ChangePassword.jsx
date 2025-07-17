@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { login02, loginlogo } from "../../imagepath";
+import { useState } from "react";
+import { login02, mainLogo } from "../../imagepath";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Eye, EyeOff } from "react-feather";
@@ -37,9 +37,9 @@ const ChangePassword = () => {
     const resetPwdData = {
       user_id: user_id,
       newPassword: data.password,
-      confirmPassword: data?.confirmpassword
+      confirmPassword: data?.confirmpassword,
     };
-    mutation.mutate(resetPwdData)
+    mutation.mutate(resetPwdData);
   };
   return (
     <>
@@ -61,9 +61,9 @@ const ChangePassword = () => {
                 <div className="loginbox">
                   <div className="login-right">
                     <div className="login-right-wrap">
-                      <div className="account-logo">
+                      <div className="account-logo d-flex justify-content-md-start justify-content-center">
                         <Link to="/login">
-                          <img src={loginlogo} alt="#" />
+                          <img src={mainLogo} alt="#" width={150} />
                         </Link>
                       </div>
                       <h2>Change Password</h2>

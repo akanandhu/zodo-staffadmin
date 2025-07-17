@@ -1,6 +1,5 @@
-import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { login02, loginlogo } from "../../imagepath";
+import { login02, mainLogo } from "../../imagepath";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import { useState } from "react";
@@ -28,16 +27,10 @@ const Login = () => {
         if (rememberMe) {
           localStorage.setItem("token", token);
         } else {
-          console.log("else block");
-          
           sessionStorage.setItem("token", token);
         }
-        console.log(sessionStorage.getItem("token"));
-        console.log(userData?.data?.user_type);
-        
-        const userRole = userData?.data?.user_type;
-        console.log("userRole ", userRole);
 
+        const userRole = userData?.data?.user_type;
         if (userRole === "hsAdmin") {
           navigate("/");
         }
@@ -72,9 +65,9 @@ const Login = () => {
                 <div className="loginbox">
                   <div className="login-right">
                     <div className="login-right-wrap">
-                      <div className="account-logo">
+                      <div className="account-logo d-flex justify-content-md-start justify-content-center">
                         <Link to="/login">
-                          <img src={loginlogo} alt="#" width={150} />
+                          <img src={mainLogo} alt="#" width={150} />
                         </Link>
                       </div>
                       <h2>Login</h2>

@@ -1,5 +1,5 @@
-import React, { useRef, useState } from "react";
-import { login02, loginlogo } from "../../imagepath";
+import { useRef, useState } from "react";
+import { login02, mainLogo } from "../../imagepath";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { verifyOTP } from "../../../apis/auth";
@@ -79,9 +79,14 @@ const VerifyOtp = () => {
               <div className="loginbox">
                 <div className="login-right">
                   <div className="login-right-wrap">
-                    <div className="account-logo">
+                    {/* <div className="account-logo">
                       <Link to="/login">
                         <img src={loginlogo} alt="Logo" />
+                      </Link>
+                    </div> */}
+                    <div className="account-logo d-flex justify-content-md-start justify-content-center">
+                      <Link to="/login">
+                        <img src={mainLogo} alt="#" width={150} />
                       </Link>
                     </div>
                     <h2>Enter OTP</h2>

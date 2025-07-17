@@ -20,7 +20,7 @@ function ButtonSerchHero(props) {
     <div className="page-header invoices-page-header">
       <div className="d-flex flex-column flex-md-row">
         <div className="w-md-50 w-100 d-flex align-items-md-center flex-column flex-md-row">
-          <div className="search-hero-header">
+          <div className="search-hero-header w-25">
             <h3>{title}</h3>
           </div>
           <div className="ms-md-3 w-md-50 w-100">

@@ -1,6 +1,5 @@
-import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { login02, loginlogo } from "../../imagepath";
+import { login02, mainLogo } from "../../imagepath";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { forgotPassword } from "../../../apis/auth";
@@ -53,9 +52,14 @@ const ForgotPassword = () => {
                 <div className="loginbox">
                   <div className="login-right">
                     <div className="login-right-wrap">
-                      <div className="account-logo">
+                      {/* <div className="account-logo">
                         <Link to="/">
-                          <img src={loginlogo} alt="#" />
+                          <img src={mainLogo} alt="#" />
+                        </Link>
+                      </div> */}
+                      <div className="account-logo d-flex justify-content-md-start justify-content-center">
+                        <Link to="/login">
+                          <img src={mainLogo} alt="#" width={150} />
                         </Link>
                       </div>
                       <h2>Reset Password</h2>
@@ -85,7 +89,7 @@ const ForgotPassword = () => {
                             className="btn btn-primary btn-block"
                             type="submit"
                           >
-                            <Link to="/login" />
+                            {/* <Link to="/login" /> */}
                             Reset Password
                           </button>
                         </div>

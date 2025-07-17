@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { logo, baricon1, user_profile } from "./imagepath";
+import { baricon1, user_profile, mainLogo } from "./imagepath";
 import { useAuth } from "../hooks/useAuth";
 import { useViewHospital } from "../hooks/hospital/useViewHospital";
 import ConfirmLogout from "./modals/ConfirmLogout";
@@ -68,7 +68,7 @@ const Header = () => {
             to={user?.user_type === "hsAdmin" ? "/" : "/appointment"}
             className="logo"
           >
-            <img src={logo} width={108} height={38} alt="" />{" "}
+            <img src={mainLogo} width={108} height={38} alt="" />{" "}
           </Link>
         </div>
         <Link

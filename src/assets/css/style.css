@@ -1519,7 +1519,7 @@ textarea.form-control {
 }
 .account-logo {
   margin-bottom: 40px;
-  text-align: left;
+  /* text-align: left; */
 }
 /* .login-right .btn-primary {
   color: white!important;
@@ -11971,6 +11971,7 @@ tr.ant-table-row.ant-table-row-level-0.ant-table-row-selected,
 .search-hero-header h3{
   font-size: 18px;
   font-weight: 600;
+  min-width: 200px;
 }
 
 .main-balance{
