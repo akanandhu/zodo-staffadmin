@@ -88,7 +88,7 @@ const Sidebar = (props) => {
               className="sidebar-menu"
               onMouseLeave={expandMenu}
               onMouseOver={expandMenuOpen}
-            >
+            > 
               <ul className="mt-5">
                 {userRole === "hsAdmin" && (
                   <li className="submenu">

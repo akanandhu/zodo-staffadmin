@@ -30,6 +30,7 @@ apiClient.interceptors.response.use(
     if (error.response?.status === 401) {
       console.error("Token expired. Logging out...");
       localStorage.removeItem("token"); // Remove the token from local storage
+      sessionStorage.removeItem("token");
       window.location.href = "/login"; // Redirect to login page
     }
     return Promise.reject(error);

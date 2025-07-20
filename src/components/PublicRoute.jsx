@@ -4,7 +4,7 @@ import { Navigate, Outlet } from "react-router-dom";
 
 function PublicRoute() {
   const { user } = useAuth();
-  const accessToken = localStorage.getItem("token");
+  const accessToken = localStorage.getItem("token") || sessionStorage.getItem("token");
   if (accessToken && user?.user_type === "hsAdmin") {
     return <Navigate to="/" replace />;
   }
